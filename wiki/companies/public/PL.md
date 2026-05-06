@@ -58,26 +58,26 @@ Government imagery contract growth and AI analytics adding margin. Profitability
 
 | Date | Signal | Return | Alpha vs Sector | Source |
 |------|--------|--------|-----------------|--------|
+| 2024-12-20 | [volume_anomaly_5_60_t2.0_space_defense](../signals/volume_anomaly_5_60_t2.0_space_defense.md) | +52.0% | +44.3% | [run #9](signal_run:9) |
+| 2024-12-20 | [volume_anomaly_5_60_t3.0_space_defense](../signals/volume_anomaly_5_60_t3.0_space_defense.md) | +52.0% | +44.3% | [run #11](signal_run:11) |
 | 2024-12-20 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +52.0% | +44.3% | [run #2](signal_run:2) |
+| 2024-12-12 | [volume_anomaly_5_60_t2.0_space_defense](../signals/volume_anomaly_5_60_t2.0_space_defense.md) | +45.7% | +40.8% | [run #9](signal_run:9) |
 | 2024-12-12 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +45.7% | +40.8% | [run #2](signal_run:2) |
+| 2024-12-10 | [volume_anomaly_5_60_t3.0_space_defense](../signals/volume_anomaly_5_60_t3.0_space_defense.md) | +32.6% | +28.3% | [run #11](signal_run:11) |
 | 2024-12-09 | [8k_any](../signals/8k_any.md) | +41.5% | +37.1% | [run #5](signal_run:5) |
+| 2024-12-04 | [volume_anomaly_5_60_t2.0_space_defense](../signals/volume_anomaly_5_60_t2.0_space_defense.md) | +12.5% | +11.0% | [run #9](signal_run:9) |
 | 2024-12-04 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +12.5% | +11.0% | [run #2](signal_run:2) |
+| 2024-12-02 | [volume_anomaly_5_60_t3.0_space_defense](../signals/volume_anomaly_5_60_t3.0_space_defense.md) | -16.4% | -15.3% | [run #11](signal_run:11) |
 | 2024-11-25 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | -3.6% | +2.3% | [run #2](signal_run:2) |
+| 2024-11-25 | [volume_anomaly_5_60_t2.0_space_defense](../signals/volume_anomaly_5_60_t2.0_space_defense.md) | -3.6% | +2.3% | [run #9](signal_run:9) |
 | 2024-11-14 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +41.2% | +43.9% | [run #2](signal_run:2) |
+| 2024-11-14 | [volume_anomaly_5_60_t2.0_space_defense](../signals/volume_anomaly_5_60_t2.0_space_defense.md) | +41.2% | +43.9% | [run #9](signal_run:9) |
 | 2024-09-06 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +24.0% | +13.5% | [run #2](signal_run:2) |
+| 2024-09-06 | [volume_anomaly_5_60_t2.0_space_defense](../signals/volume_anomaly_5_60_t2.0_space_defense.md) | +24.0% | +13.5% | [run #9](signal_run:9) |
 | 2024-09-05 | [8k_any](../signals/8k_any.md) | +3.9% | -5.0% | [run #5](signal_run:5) |
+| 2024-08-20 | [volume_anomaly_5_60_t3.0_space_defense](../signals/volume_anomaly_5_60_t3.0_space_defense.md) | -21.0% | -26.6% | [run #11](signal_run:11) |
 | 2024-08-16 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | -12.3% | -16.1% | [run #2](signal_run:2) |
-| 2024-07-17 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +8.4% | +0.8% | [run #2](signal_run:2) |
-| 2024-07-11 | [8k_any](../signals/8k_any.md) | +31.4% | +24.0% | [run #5](signal_run:5) |
-| 2024-07-11 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +31.4% | +24.0% | [run #6](signal_run:6) |
-| 2024-06-28 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +12.3% | +6.3% | [run #2](signal_run:2) |
-| 2024-06-26 | [8k_any](../signals/8k_any.md) | +14.3% | +8.9% | [run #5](signal_run:5) |
-| 2024-06-26 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +14.3% | +8.9% | [run #6](signal_run:6) |
-| 2024-06-06 | [8k_any](../signals/8k_any.md) | +26.4% | +26.4% | [run #5](signal_run:5) |
-| 2024-05-09 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -5.4% | -2.8% | [run #6](signal_run:6) |
-| 2024-05-09 | [8k_any](../signals/8k_any.md) | -5.4% | -2.8% | [run #5](signal_run:5) |
-| 2024-04-05 | [8k_any](../signals/8k_any.md) | -5.8% | -9.1% | [run #5](signal_run:5) |
-| 2024-04-05 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -5.8% | -9.1% | [run #6](signal_run:6) |
+| 2024-08-16 | [volume_anomaly_5_60_t2.0_space_defense](../signals/volume_anomaly_5_60_t2.0_space_defense.md) | -12.3% | -16.1% | [run #9](signal_run:9) |
 <!-- AUTOGEN:END signal_history -->
 
 ## Watch list

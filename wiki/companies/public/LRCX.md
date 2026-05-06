@@ -63,21 +63,21 @@ Memory capex recovery continuing through 2025-2026 and logic etch share gains. C
 | 2024-10-23 | [8k_any](../signals/8k_any.md) | -1.5% | +2.7% | [run #5](signal_run:5) |
 | 2024-10-02 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -5.7% | -3.5% | [run #6](signal_run:6) |
 | 2024-10-02 | [8k_any](../signals/8k_any.md) | -5.7% | -3.5% | [run #5](signal_run:5) |
-| 2024-09-25 | [8k_any](../signals/8k_any.md) | -9.6% | -7.1% | [run #5](signal_run:5) |
 | 2024-09-25 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -9.6% | -7.1% | [run #6](signal_run:6) |
-| 2024-09-18 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -4.5% | -4.2% | [run #6](signal_run:6) |
+| 2024-09-25 | [8k_any](../signals/8k_any.md) | -9.6% | -7.1% | [run #5](signal_run:5) |
 | 2024-09-18 | [8k_any](../signals/8k_any.md) | -4.5% | -4.2% | [run #5](signal_run:5) |
+| 2024-09-18 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -4.5% | -4.2% | [run #6](signal_run:6) |
 | 2024-08-30 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +6.7% | +1.0% | [run #6](signal_run:6) |
 | 2024-08-30 | [8k_any](../signals/8k_any.md) | +6.7% | +1.0% | [run #5](signal_run:5) |
+| 2024-08-02 | [volume_anomaly_5_60_t2.0_ai_infra](../signals/volume_anomaly_5_60_t2.0_ai_infra.md) | +4.5% | -10.8% | [run #8](signal_run:8) |
 | 2024-08-02 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +4.5% | -10.8% | [run #2](signal_run:2) |
 | 2024-07-31 | [8k_any](../signals/8k_any.md) | -11.7% | -7.1% | [run #5](signal_run:5) |
 | 2024-05-21 | [8k_any](../signals/8k_any.md) | +12.2% | +2.6% | [run #5](signal_run:5) |
 | 2024-05-21 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +12.2% | +2.6% | [run #6](signal_run:6) |
 | 2024-04-24 | [8k_any](../signals/8k_any.md) | +6.8% | -8.9% | [run #5](signal_run:5) |
+| 2024-01-25 | [volume_anomaly_5_60_t2.0_ai_infra](../signals/volume_anomaly_5_60_t2.0_ai_infra.md) | +10.5% | -2.0% | [run #8](signal_run:8) |
 | 2024-01-25 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +10.5% | -2.0% | [run #2](signal_run:2) |
 | 2024-01-24 | [8k_any](../signals/8k_any.md) | +13.1% | -1.0% | [run #5](signal_run:5) |
-| 2023-11-09 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +18.7% | -0.4% | [run #6](signal_run:6) |
-| 2023-11-09 | [8k_any](../signals/8k_any.md) | +18.7% | -0.4% | [run #5](signal_run:5) |
 <!-- AUTOGEN:END signal_history -->
 
 ## Watch list

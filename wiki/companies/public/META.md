@@ -63,21 +63,21 @@ AI ad efficiency gains sustaining 15-20% revenue growth and Reality Labs losses 
 | 2024-09-10 | [8k_any](../signals/8k_any.md) | +14.4% | +6.5% | [run #5](signal_run:5) |
 | 2024-08-09 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +9.6% | +2.8% | [run #6](signal_run:6) |
 | 2024-08-09 | [8k_any](../signals/8k_any.md) | +9.6% | +2.8% | [run #5](signal_run:5) |
+| 2024-08-05 | [volume_anomaly_5_60_t2.0_ai_infra](../signals/volume_anomaly_5_60_t2.0_ai_infra.md) | +12.1% | +4.3% | [run #8](signal_run:8) |
 | 2024-08-05 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +12.1% | +4.3% | [run #2](signal_run:2) |
 | 2024-07-31 | [8k_any](../signals/8k_any.md) | -0.2% | +4.3% | [run #5](signal_run:5) |
 | 2024-05-31 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +1.8% | -4.7% | [run #6](signal_run:6) |
 | 2024-05-31 | [8k_any](../signals/8k_any.md) | +1.8% | -4.7% | [run #5](signal_run:5) |
 | 2024-04-25 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +11.8% | -0.5% | [run #2](signal_run:2) |
+| 2024-04-25 | [volume_anomaly_5_60_t2.0_ai_infra](../signals/volume_anomaly_5_60_t2.0_ai_infra.md) | +11.8% | -0.5% | [run #8](signal_run:8) |
 | 2024-04-24 | [8k_any](../signals/8k_any.md) | +17.6% | +1.8% | [run #5](signal_run:5) |
 | 2024-02-14 | [8k_any](../signals/8k_any.md) | +2.5% | -4.7% | [run #5](signal_run:5) |
 | 2024-02-14 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +2.5% | -4.7% | [run #6](signal_run:6) |
 | 2024-02-02 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +3.9% | -3.7% | [run #2](signal_run:2) |
-| 2024-02-01 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +7.0% | -6.3% | [run #6](signal_run:6) |
+| 2024-02-02 | [volume_anomaly_5_60_t2.0_ai_infra](../signals/volume_anomaly_5_60_t2.0_ai_infra.md) | +3.9% | -3.7% | [run #8](signal_run:8) |
 | 2024-02-01 | [8k_any](../signals/8k_any.md) | +7.0% | -6.3% | [run #5](signal_run:5) |
+| 2024-02-01 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +7.0% | -6.3% | [run #6](signal_run:6) |
 | 2024-01-18 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +32.8% | +15.4% | [run #6](signal_run:6) |
-| 2024-01-18 | [8k_any](../signals/8k_any.md) | +32.8% | +15.4% | [run #5](signal_run:5) |
-| 2023-10-25 | [8k_any](../signals/8k_any.md) | +9.4% | -6.9% | [run #5](signal_run:5) |
-| 2023-10-25 | [earnings_surprise_q75](../signals/earnings_surprise_q75.md) | +9.4% | -6.9% | [run #3](signal_run:3) |
 <!-- AUTOGEN:END signal_history -->
 
 ## Watch list

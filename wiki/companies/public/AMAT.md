@@ -61,15 +61,16 @@ HBM capacity build and leading-edge logic capex sustaining above-trend spending.
 | 2024-11-14 | [8k_any](../signals/8k_any.md) | -2.2% | -3.9% | [run #5](signal_run:5) |
 | 2024-08-15 | [8k_any](../signals/8k_any.md) | -1.8% | -2.2% | [run #5](signal_run:5) |
 | 2024-08-05 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +4.2% | -3.7% | [run #2](signal_run:2) |
+| 2024-08-05 | [volume_anomaly_5_60_t2.0_ai_infra](../signals/volume_anomaly_5_60_t2.0_ai_infra.md) | +4.2% | -3.7% | [run #8](signal_run:8) |
+| 2024-06-11 | [8k_item_1_01](../signals/8k_item_1_01.md) | -10.7% | -3.4% | [run #7](signal_run:7) |
 | 2024-06-11 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -10.7% | -3.4% | [run #6](signal_run:6) |
 | 2024-06-11 | [8k_any](../signals/8k_any.md) | -10.7% | -3.4% | [run #5](signal_run:5) |
-| 2024-06-11 | [8k_item_1_01](../signals/8k_item_1_01.md) | -10.7% | -3.4% | [run #7](signal_run:7) |
-| 2024-05-16 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +8.7% | +2.4% | [run #6](signal_run:6) |
 | 2024-05-16 | [8k_any](../signals/8k_any.md) | +8.7% | +2.4% | [run #5](signal_run:5) |
+| 2024-05-16 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +8.7% | +2.4% | [run #6](signal_run:6) |
 | 2024-03-11 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -3.0% | +4.2% | [run #6](signal_run:6) |
 | 2024-03-11 | [8k_any](../signals/8k_any.md) | -3.0% | +4.2% | [run #5](signal_run:5) |
-| 2024-02-29 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +3.9% | +3.3% | [run #6](signal_run:6) |
 | 2024-02-29 | [8k_any](../signals/8k_any.md) | +3.9% | +3.3% | [run #5](signal_run:5) |
+| 2024-02-29 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +3.9% | +3.3% | [run #6](signal_run:6) |
 | 2024-02-15 | [8k_any](../signals/8k_any.md) | +2.3% | -4.1% | [run #5](signal_run:5) |
 | 2023-12-13 | [8k_any](../signals/8k_any.md) | +6.0% | -2.2% | [run #5](signal_run:5) |
 | 2023-12-13 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +6.0% | -2.2% | [run #6](signal_run:6) |
@@ -77,7 +78,6 @@ HBM capacity build and leading-edge logic capex sustaining above-trend spending.
 | 2023-08-17 | [8k_any](../signals/8k_any.md) | +1.2% | +0.5% | [run #5](signal_run:5) |
 | 2023-05-18 | [8k_any](../signals/8k_any.md) | +12.6% | -2.1% | [run #5](signal_run:5) |
 | 2023-03-13 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -6.5% | -5.1% | [run #6](signal_run:6) |
-| 2023-03-13 | [8k_any](../signals/8k_any.md) | -6.5% | -5.1% | [run #5](signal_run:5) |
 <!-- AUTOGEN:END signal_history -->
 
 ## Watch list

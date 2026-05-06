@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.python-version
+
+# Environments / tooling
+.env
+.envrc
+.ruff_cache/
+.pytest_cache/
+
+# Build / dist
+build/
+dist/
+
+# DuckDB and large data files (regeneratable)
+data/*.duckdb
+data/*.duckdb.wal
+data/cache/
+data/raw/
+
+# Reports
+reports/
+
+# OS
+.DS_Store

@@ -76,8 +76,8 @@ Industrial cycle recovery in 2025 and automotive electrification content growth.
 | 2023-09-21 | [8k_any](../signals/8k_any.md) | -7.0% | -7.7% | [run #5](signal_run:5) |
 | 2023-09-21 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -7.0% | -7.7% | [run #6](signal_run:6) |
 | 2023-07-26 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | -6.9% | -1.2% | [run #2](signal_run:2) |
+| 2023-07-26 | [volume_anomaly_5_60_t2.0_ai_infra](../signals/volume_anomaly_5_60_t2.0_ai_infra.md) | -6.9% | -1.2% | [run #8](signal_run:8) |
 | 2023-07-25 | [8k_any](../signals/8k_any.md) | -5.7% | -2.6% | [run #5](signal_run:5) |
-| 2023-05-18 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +4.7% | -10.0% | [run #6](signal_run:6) |
 <!-- AUTOGEN:END signal_history -->
 
 ## Watch list

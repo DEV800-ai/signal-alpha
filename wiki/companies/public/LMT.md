@@ -63,10 +63,12 @@ F-35 production ramping and international sales pipeline converting. NATO budget
 | 2024-11-13 | [8k_any](../signals/8k_any.md) | -13.0% | -5.9% | [run #5](signal_run:5) |
 | 2024-11-13 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -13.0% | -5.9% | [run #6](signal_run:6) |
 | 2024-10-22 | [8k_any](../signals/8k_any.md) | -9.9% | -12.3% | [run #5](signal_run:5) |
+| 2024-08-27 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +8.3% | +3.7% | [run #6](signal_run:6) |
 | 2024-08-27 | [8k_item_1_01](../signals/8k_item_1_01.md) | +8.3% | +3.7% | [run #7](signal_run:7) |
 | 2024-08-27 | [8k_any](../signals/8k_any.md) | +8.3% | +3.7% | [run #5](signal_run:5) |
-| 2024-08-27 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +8.3% | +3.7% | [run #6](signal_run:6) |
 | 2024-07-25 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +9.2% | +8.9% | [run #2](signal_run:2) |
+| 2024-07-25 | [volume_anomaly_5_60_t2.0_space_defense](../signals/volume_anomaly_5_60_t2.0_space_defense.md) | +9.2% | +8.9% | [run #9](signal_run:9) |
+| 2024-07-25 | [volume_anomaly_5_60_t2.0_defense_excl_speculative](../signals/volume_anomaly_5_60_t2.0_defense_excl_speculative.md) | +9.2% | +8.9% | [run #10](signal_run:10) |
 | 2024-07-23 | [8k_any](../signals/8k_any.md) | +14.4% | +10.9% | [run #5](signal_run:5) |
 | 2024-07-19 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +20.0% | +10.7% | [run #6](signal_run:6) |
 | 2024-07-19 | [8k_any](../signals/8k_any.md) | +20.0% | +10.7% | [run #5](signal_run:5) |
@@ -76,8 +78,6 @@ F-35 production ramping and international sales pipeline converting. NATO budget
 | 2024-05-22 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -0.8% | +1.6% | [run #6](signal_run:6) |
 | 2024-05-03 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -0.2% | -0.4% | [run #6](signal_run:6) |
 | 2024-05-03 | [8k_any](../signals/8k_any.md) | -0.2% | -0.4% | [run #5](signal_run:5) |
-| 2024-04-23 | [8k_any](../signals/8k_any.md) | +1.1% | -4.2% | [run #5](signal_run:5) |
-| 2024-01-29 | [8k_any](../signals/8k_any.md) | +1.7% | -1.8% | [run #5](signal_run:5) |
 <!-- AUTOGEN:END signal_history -->
 
 ## Watch list

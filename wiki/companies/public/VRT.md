@@ -58,24 +58,24 @@ AI data center buildout sustaining through 2026-2027 and liquid cooling becoming
 
 | Date | Signal | Return | Alpha vs Sector | Source |
 |------|--------|--------|-----------------|--------|
-| 2024-12-13 | [8k_item_1_01](../signals/8k_item_1_01.md) | -6.6% | -4.9% | [run #7](signal_run:7) |
-| 2024-12-13 | [8k_any](../signals/8k_any.md) | -6.6% | -4.9% | [run #5](signal_run:5) |
 | 2024-12-13 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -6.6% | -4.9% | [run #6](signal_run:6) |
-| 2024-11-19 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -6.7% | -13.5% | [run #6](signal_run:6) |
+| 2024-12-13 | [8k_any](../signals/8k_any.md) | -6.6% | -4.9% | [run #5](signal_run:5) |
+| 2024-12-13 | [8k_item_1_01](../signals/8k_item_1_01.md) | -6.6% | -4.9% | [run #7](signal_run:7) |
 | 2024-11-19 | [8k_any](../signals/8k_any.md) | -6.7% | -13.5% | [run #5](signal_run:5) |
-| 2024-11-18 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -3.6% | -6.1% | [run #6](signal_run:6) |
+| 2024-11-19 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -6.7% | -13.5% | [run #6](signal_run:6) |
 | 2024-11-18 | [8k_any](../signals/8k_any.md) | -3.6% | -6.1% | [run #5](signal_run:5) |
-| 2024-11-12 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -7.2% | -7.6% | [run #6](signal_run:6) |
+| 2024-11-18 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -3.6% | -6.1% | [run #6](signal_run:6) |
 | 2024-11-12 | [8k_any](../signals/8k_any.md) | -7.2% | -7.6% | [run #5](signal_run:5) |
+| 2024-11-12 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -7.2% | -7.6% | [run #6](signal_run:6) |
 | 2024-11-12 | [8k_item_1_01](../signals/8k_item_1_01.md) | -7.2% | -7.6% | [run #7](signal_run:7) |
 | 2024-10-23 | [8k_any](../signals/8k_any.md) | +23.2% | +27.4% | [run #5](signal_run:5) |
 | 2024-10-23 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +23.2% | +27.4% | [run #6](signal_run:6) |
-| 2024-09-04 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +52.7% | +42.0% | [run #6](signal_run:6) |
 | 2024-09-04 | [8k_any](../signals/8k_any.md) | +52.7% | +42.0% | [run #5](signal_run:5) |
-| 2024-07-24 | [8k_any](../signals/8k_any.md) | -4.9% | +2.2% | [run #5](signal_run:5) |
+| 2024-09-04 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +52.7% | +42.0% | [run #6](signal_run:6) |
 | 2024-07-24 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -4.9% | +2.2% | [run #6](signal_run:6) |
-| 2024-07-23 | [earnings_surprise_q75](../signals/earnings_surprise_q75.md) | -15.8% | -4.1% | [run #3](signal_run:3) |
+| 2024-07-24 | [8k_any](../signals/8k_any.md) | -4.9% | +2.2% | [run #5](signal_run:5) |
 | 2024-07-23 | [earnings_surprise_q75](../signals/earnings_surprise_q75.md) | +28.8% | +31.0% | [run #4](signal_run:4) |
+| 2024-07-23 | [earnings_surprise_q75](../signals/earnings_surprise_q75.md) | -15.8% | -4.1% | [run #3](signal_run:3) |
 | 2024-06-21 | [8k_any](../signals/8k_any.md) | -22.9% | -5.7% | [run #5](signal_run:5) |
 | 2024-06-21 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -22.9% | -5.7% | [run #6](signal_run:6) |
 <!-- AUTOGEN:END signal_history -->

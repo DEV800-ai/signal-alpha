@@ -1,0 +1,74 @@
+sector,ticker,name,active_from,active_to,notes
+ai_infra,NVDA,NVIDIA Corporation,1999-01-22,,GPU / data-center compute
+ai_infra,AMD,Advanced Micro Devices,1980-01-01,,CPU / GPU / data-center
+ai_infra,AVGO,Broadcom,2009-08-06,,Networking + AI ASICs
+ai_infra,INTC,Intel,1980-01-01,,CPU / foundry pivot
+ai_infra,CSCO,Cisco Systems,1990-02-16,,Data-center networking
+ai_infra,MSFT,Microsoft,1986-03-13,,Hyperscaler / Copilot
+ai_infra,MRVL,Marvell Technology,2000-06-27,,Custom silicon for AI
+ai_infra,ANET,Arista Networks,2014-06-06,,Data-center switching
+ai_infra,SMCI,Super Micro Computer,2007-03-29,,AI server systems
+ai_infra,DELL,Dell Technologies,2018-12-28,,AI server systems (Class C re-listing)
+ai_infra,ORCL,Oracle,1986-03-12,,Cloud / OCI / OpenAI deal
+ai_infra,GOOGL,Alphabet,2004-08-19,,Hyperscaler / TPU
+ai_infra,META,Meta Platforms,2012-05-18,,Hyperscaler / AI capex
+ai_infra,AMZN,Amazon,1997-05-15,,Hyperscaler / AWS
+ai_infra,IBM,International Business Machines,1980-01-01,,Hybrid cloud / Watsonx
+ai_infra,HPE,Hewlett Packard Enterprise,2015-11-02,,AI server systems
+ai_infra,CRWD,CrowdStrike,2019-06-12,,AI security
+ai_infra,PLTR,Palantir,2020-09-30,,AIP / commercial AI
+ai_infra,SNPS,Synopsys,1992-02-26,,EDA for AI chips
+ai_infra,CDNS,Cadence Design Systems,1988-01-01,,EDA for AI chips
+ai_infra,LRCX,Lam Research,1984-05-11,,Semi capital equipment
+ai_infra,AMAT,Applied Materials,1980-01-01,,Semi capital equipment
+ai_infra,KLAC,KLA Corporation,1980-01-01,,Semi process control
+ai_infra,ASML,ASML Holding,1995-03-14,,EUV lithography
+ai_infra,TSM,Taiwan Semiconductor,1997-10-08,,Leading-edge foundry
+ai_infra,TXN,Texas Instruments,1980-01-01,,Analog / embedded
+ai_infra,MU,Micron Technology,1984-06-01,,HBM memory
+ai_infra,VRT,Vertiv Holdings,2020-02-10,,Data-center power & cooling
+space_defense,RKLB,Rocket Lab USA,2021-08-25,,Small launch / Neutron
+space_defense,LMT,Lockheed Martin,1995-03-15,,Prime defense contractor
+space_defense,NOC,Northrop Grumman,1994-04-01,,Prime defense contractor
+space_defense,LHX,L3Harris Technologies,2019-06-29,,Comms / electronic warfare
+space_defense,RTX,RTX Corporation,2020-04-03,,United Tech + Raytheon merger
+space_defense,BA,Boeing,1980-01-01,,Defense + space
+space_defense,GD,General Dynamics,1980-01-01,,Defense
+space_defense,HII,Huntington Ingalls Industries,2011-04-01,,Naval shipbuilding
+space_defense,TDG,TransDigm Group,2006-03-15,,Aerospace components
+space_defense,HEI,HEICO,1980-01-01,,Aerospace aftermarket
+space_defense,KTOS,Kratos Defense,1999-12-22,,Drones / hypersonics
+space_defense,IRDM,Iridium Communications,2009-09-29,,Satellite comms (LEO)
+space_defense,GSAT,Globalstar,2006-11-02,,Satellite comms / Apple deal
+space_defense,ASTS,AST SpaceMobile,2021-04-07,,Direct-to-cell satellite
+space_defense,PL,Planet Labs,2021-12-08,,Earth-observation imagery
+space_defense,SPCE,Virgin Galactic,2019-10-28,,Suborbital / specul. position
+space_defense,LDOS,Leidos Holdings,2013-10-01,,Defense IT
+space_defense,CACI,CACI International,1980-01-01,,Defense IT / intel
+space_defense,SAIC,Science Applications,2013-09-30,,Defense IT
+space_defense,HWM,Howmet Aerospace,2020-04-01,,Aerospace components
+telecom,ERIC,Telefonaktiebolaget LM Ericsson,2000-01-01,,5G RAN equipment
+telecom,NOK,Nokia,1994-07-01,,5G RAN equipment
+telecom,QCOM,Qualcomm,1991-12-13,,5G modems / handset SoC
+telecom,TMUS,T-Mobile US,2007-04-25,,US wireless carrier
+telecom,VZ,Verizon Communications,2000-06-30,,US wireless carrier
+telecom,T,AT&T,1983-11-21,,US wireless carrier
+telecom,CHTR,Charter Communications,2009-12-02,,Cable / broadband
+telecom,CMCSA,Comcast,1980-01-01,,Cable / broadband
+telecom,JNPR,Juniper Networks,1999-06-25,,Routing (HPE acquisition pending)
+telecom,CIEN,Ciena,1997-02-07,,Optical networking
+telecom,COMM,CommScope,2013-10-25,,Network infrastructure
+telecom,VIAV,Viavi Solutions,1993-11-01,,Network test & measurement
+telecom,LITE,Lumentum Holdings,2015-08-04,,Optical components
+telecom,LBRDK,Liberty Broadband,2014-11-04,,Charter holding
+telecom,TDS,Telephone & Data Systems,1981-01-01,,Regional wireless / fiber
+telecom,SATS,EchoStar,2008-01-01,,Satellite + wireless spectrum
+telecom,USM,United States Cellular,1988-01-01,,Regional wireless
+telecom,IDCC,InterDigital,1980-01-01,,Wireless IP licensing
+telecom,LUMN,Lumen Technologies,1980-01-01,,Fiber / enterprise
+telecom,FYBR,Frontier Communications,2021-05-04,,Fiber (Verizon acquisition pending)
+benchmark,SOXX,iShares Semiconductor ETF,2001-07-13,,AI infra benchmark
+benchmark,IGV,iShares Expanded Tech-Software ETF,2001-07-13,,AI infra (software) benchmark
+benchmark,ITA,iShares U.S. Aerospace & Defense ETF,2006-05-05,,Space / Defense benchmark
+benchmark,IYZ,iShares U.S. Telecommunications ETF,2000-05-22,,Telecom benchmark
+benchmark,SPY,SPDR S&P 500 ETF,1993-01-22,,Broad benchmark
