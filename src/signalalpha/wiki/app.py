@@ -466,26 +466,51 @@ async function toggleDrilldown(runId, ev) {
     }
     const pct = v => v === null ? '—' : `${v>=0?'+':''}${(v*100).toFixed(1)}%`;
     const cls = v => v === null ? 'neu' : v >= 0 ? 'pos' : 'neg';
-    const rows = events.slice(0, 50).map(e =>
-      `<tr>
-        <td style="font-weight:600"><button class="wiki-link" style="font-weight:700;font-size:.78rem" onclick="openWikiPage('wiki/companies/public/${escAttr(e.ticker)}.md')">${escHtml(e.ticker)}</button></td>
-        <td class="td-mono">${e.event_date ?? '—'}</td>
-        <td class="td-mono">${e.entry_date ?? '—'}</td>
-        <td class="td-mono">${e.exit_date ?? '—'}</td>
-        <td><span class="${cls(e.net_return)}">${pct(e.net_return)}</span></td>
-        <td><span class="${cls(e.alpha_sector)}">${pct(e.alpha_sector)}</span></td>
-        <td style="color:#7a8aaa;font-size:.7rem">${escHtml(e.sector_benchmark ?? '—')}</td>
-      </tr>`
-    ).join('');
-    const more = events.length > 50 ? `<tr><td colspan="7" style="color:#7a8aaa;font-size:.7rem;padding:.4rem .5rem">…and ${events.length-50} more</td></tr>` : '';
-    document.getElementById('dd-body-' + runId).innerHTML =
-      `<div style="overflow-x:auto"><table class="ev-tbl">
-        <thead><tr>
-          <th>Ticker</th><th>Event</th><th>Entry</th><th>Exit</th>
-          <th>Return</th><th>Alpha</th><th>Benchmark</th>
-        </tr></thead>
-        <tbody>${rows}${more}</tbody>
-      </table></div>`;
+    const avg = arr => arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : null;
+
+    // Group by sector
+    const bySector = {};
+    events.forEach(e => {
+      const sec = e.sector || 'unknown';
+      if (!bySector[sec]) bySector[sec] = [];
+      bySector[sec].push(e);
+    });
+
+    let html = '';
+    for (const [sector, evs] of Object.entries(bySector)) {
+      const returns = evs.map(e=>e.net_return).filter(v=>v!==null);
+      const alphas  = evs.map(e=>e.alpha_sector).filter(v=>v!==null);
+      const hits    = returns.filter(v=>v>0).length;
+      const secAvgRet = avg(returns), secAvgAlpha = avg(alphas);
+
+      html += `<div style="margin-bottom:.9rem">
+        <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.35rem;padding:.3rem .5rem;background:#1a1d2a;border-radius:5px">
+          <span style="font-size:.72rem;font-weight:700;color:#a5b4fc;text-transform:uppercase;letter-spacing:.05em">${escHtml(sector)}</span>
+          <span style="font-size:.7rem;color:#7a8aaa">${evs.length} events</span>
+          <span style="font-size:.7rem;color:#7a8aaa">hit rate <span class="${cls(secAvgRet)}">${returns.length?Math.round(hits/returns.length*100)+'%':'—'}</span></span>
+          <span style="font-size:.7rem;color:#7a8aaa">avg return <span class="${cls(secAvgRet)}">${pct(secAvgRet)}</span></span>
+          <span style="font-size:.7rem;color:#7a8aaa">avg alpha <span class="${cls(secAvgAlpha)}">${pct(secAvgAlpha)}</span></span>
+        </div>
+        <table class="ev-tbl" style="margin-bottom:.2rem">
+          <thead><tr>
+            <th>Ticker</th><th>Name</th><th>Event date</th><th>Return</th><th>Alpha</th>
+          </tr></thead>
+          <tbody>`;
+
+      evs.slice(0, 30).forEach(e => {
+        html += `<tr>
+          <td><button class="wiki-link" style="font-weight:700;font-size:.78rem" onclick="openWikiPage('wiki/companies/public/${escAttr(e.ticker)}.md')">${escHtml(e.ticker)}</button></td>
+          <td style="color:#7a8aaa;font-size:.72rem">${escHtml(e.name ?? '—')}</td>
+          <td class="td-mono">${e.event_date ?? '—'}</td>
+          <td><span class="${cls(e.net_return)}">${pct(e.net_return)}</span></td>
+          <td><span class="${cls(e.alpha_sector)}">${pct(e.alpha_sector)}</span></td>
+        </tr>`;
+      });
+      if (evs.length > 30) html += `<tr><td colspan="5" style="color:#7a8aaa;font-size:.68rem;padding:.3rem .5rem">…and ${evs.length-30} more</td></tr>`;
+      html += `</tbody></table></div>`;
+    }
+
+    document.getElementById('dd-body-' + runId).innerHTML = `<div style="overflow-x:auto">${html}</div>`;
   } catch(e) {
     document.getElementById('dd-body-' + runId).innerHTML = `<p class="ev-loading" style="color:#f87171">Error: ${escHtml(e.message)}</p>`;
   }
@@ -670,14 +695,17 @@ async def signal_events(run_id: int = Query(...)):
     db = _open_db()
     try:
         rows = db.execute("""
-            SELECT ticker, event_date, entry_date, exit_date,
-                   net_return, alpha_sector, alpha_spy, sector_benchmark
-            FROM signal_events
-            WHERE run_id = ?
-            ORDER BY net_return DESC
+            SELECT se.ticker, se.event_date, se.entry_date, se.exit_date,
+                   se.net_return, se.alpha_sector, se.alpha_spy, se.sector_benchmark,
+                   u.sector, u.name
+            FROM signal_events se
+            LEFT JOIN universe u ON u.ticker = se.ticker
+            WHERE se.run_id = ?
+            ORDER BY u.sector NULLS LAST, se.net_return DESC
         """, [run_id]).fetchall()
         cols = ["ticker", "event_date", "entry_date", "exit_date",
-                "net_return", "alpha_sector", "alpha_spy", "sector_benchmark"]
+                "net_return", "alpha_sector", "alpha_spy", "sector_benchmark",
+                "sector", "name"]
         events = []
         for r in rows:
             d = dict(zip(cols, r))
