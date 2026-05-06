@@ -65,7 +65,7 @@ _HTML = r"""<!DOCTYPE html>
     margin-bottom: 1rem;
   }
   header h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: -.02em; }
-  header .tagline { color: #475569; font-size: .8rem; }
+  header .tagline { color: #7a8aaa; font-size: .8rem; }
 
   /* Tabs */
   .tabs {
@@ -74,7 +74,7 @@ _HTML = r"""<!DOCTYPE html>
     margin-bottom: 1.5rem;
   }
   .tab-btn {
-    background: none; border: none; color: #64748b;
+    background: none; border: none; color: #8899bb;
     padding: .55rem 1.2rem; font-size: .88rem; font-weight: 600;
     cursor: pointer; border-bottom: 2px solid transparent;
     margin-bottom: -1px; transition: color .12s, border-color .12s;
@@ -91,7 +91,7 @@ _HTML = r"""<!DOCTYPE html>
     border-radius: 10px; padding: 1.1rem; margin-bottom: 1rem;
   }
   .card-title {
-    font-size: .72rem; color: #64748b;
+    font-size: .72rem; color: #8899bb;
     text-transform: uppercase; letter-spacing: .07em;
     margin-bottom: .85rem; display: flex; align-items: center; gap: .5rem;
   }
@@ -111,17 +111,17 @@ _HTML = r"""<!DOCTYPE html>
   .signal-card:hover { border-color: #4f46e5; background: #191d2a; }
 
   .sc-name { font-weight: 700; font-size: .9rem; color: #e2e8f0; margin-bottom: .3rem; }
-  .sc-meta { font-size: .73rem; color: #475569; }
+  .sc-meta { font-size: .73rem; color: #7a8aaa; }
 
   .sc-stats {
     display: flex; flex-wrap: wrap; gap: .4rem .9rem; align-items: center;
   }
   .stat-item { font-size: .78rem; }
-  .stat-label { color: #475569; margin-right: .2rem; }
+  .stat-label { color: #8899bb; margin-right: .2rem; }
   .stat-val { font-weight: 600; }
   .pos { color: #4ade80; }
   .neg { color: #f87171; }
-  .neu { color: #94a3b8; }
+  .neu { color: #c0cce0; }
   .amber { color: #fbbf24; }
 
   .sc-right { display: flex; flex-direction: column; align-items: flex-end; gap: .4rem; }
@@ -156,28 +156,28 @@ _HTML = r"""<!DOCTYPE html>
   }
   .drilldown.open { display: block; }
   .drilldown-hdr {
-    font-size: .72rem; color: #64748b; text-transform: uppercase;
+    font-size: .72rem; color: #8899bb; text-transform: uppercase;
     letter-spacing: .06em; margin-bottom: .5rem;
     display: flex; align-items: center; gap: .5rem;
   }
   .ev-tbl { width: 100%; border-collapse: collapse; font-size: .75rem; }
   .ev-tbl th {
-    text-align: left; color: #475569; font-size: .68rem;
+    text-align: left; color: #8899bb; font-size: .68rem;
     text-transform: uppercase; letter-spacing: .05em;
     padding: .3rem .5rem; border-bottom: 1px solid #2d3348;
   }
-  .ev-tbl td { padding: .28rem .5rem; border-bottom: 1px solid #141720; }
+  .ev-tbl td { padding: .28rem .5rem; border-bottom: 1px solid #141720; color: #c0cce0; }
   .ev-tbl tr:hover td { background: #1e2330; }
-  .ev-loading { color: #475569; font-size: .75rem; font-style: italic; padding: .5rem 0; }
+  .ev-loading { color: #7a8aaa; font-size: .75rem; font-style: italic; padding: .5rem 0; }
 
   /* Divider */
   .brief-meta {
-    font-size: .73rem; color: #475569; margin-bottom: .85rem;
+    font-size: .73rem; color: #7a8aaa; margin-bottom: .85rem;
     display: flex; align-items: center; gap: .5rem;
   }
 
   /* Empty / loading */
-  .state-msg { color: #475569; font-size: .82rem; font-style: italic; padding: 1.5rem 0; text-align: center; }
+  .state-msg { color: #7a8aaa; font-size: .82rem; font-style: italic; padding: 1.5rem 0; text-align: center; }
 
   /* ── Wiki Editor ──────────────────────────────────────── */
   .editor-layout {
@@ -187,7 +187,7 @@ _HTML = r"""<!DOCTYPE html>
   @media(max-width:760px){ .editor-layout { grid-template-columns: 1fr; } }
 
   .page-group-label {
-    font-size: .7rem; color: #475569; text-transform: uppercase;
+    font-size: .7rem; color: #7a8aaa; text-transform: uppercase;
     letter-spacing: .06em; margin: .6rem 0 .3rem; padding: 0 .3rem;
   }
   .page-item {
@@ -198,7 +198,7 @@ _HTML = r"""<!DOCTYPE html>
   }
   .page-item:hover { background: #2d3348; color: #e2e8f0; }
   .page-item.active { background: #312e81; color: #a5b4fc; }
-  .no-pages { color: #475569; font-size: .78rem; font-style: italic; }
+  .no-pages { color: #7a8aaa; font-size: .78rem; font-style: italic; }
 
   textarea {
     width: 100%; height: 400px;
@@ -217,7 +217,7 @@ _HTML = r"""<!DOCTYPE html>
   }
   .file-btn:hover { background: #3d4560; }
   input[type=file] { display: none; }
-  #filename { font-size: .75rem; color: #475569; }
+  #filename { font-size: .75rem; color: #7a8aaa; }
 
   button {
     background: #6366f1; color: #fff; border: none;
@@ -225,7 +225,7 @@ _HTML = r"""<!DOCTYPE html>
     font-weight: 600; cursor: pointer; transition: background .12s;
   }
   button:hover { background: #4f46e5; }
-  button:disabled { background: #2d3348; color: #475569; cursor: not-allowed; }
+  button:disabled { background: #2d3348; color: #7a8aaa; cursor: not-allowed; }
   button.secondary {
     background: #1e2330; border: 1px solid #2d3348; color: #94a3b8; font-weight: 500;
   }
@@ -265,8 +265,8 @@ _HTML = r"""<!DOCTYPE html>
   .issue.warn { border-color:#fbbf24; }
   .issue-rule { font-weight:700; font-family:monospace; font-size:.73rem; margin-bottom:.15rem; }
   .issue-msg { color:#cbd5e1; line-height:1.4; }
-  .issue-loc { color:#475569; font-size:.7rem; margin-top:.15rem; }
-  .empty { color:#475569; font-size:.78rem; font-style:italic; }
+  .issue-loc { color:#7a8aaa; font-size:.7rem; margin-top:.15rem; }
+  .empty { color:#7a8aaa; font-size:.78rem; font-style:italic; }
 
   /* Toast */
   #toast {
@@ -323,7 +323,7 @@ _HTML = r"""<!DOCTYPE html>
       </div>
       <div class="card">
         <div class="card-title">Auto-generator</div>
-        <p style="font-size:.75rem;color:#64748b;margin-bottom:.6rem">Scaffold missing pages and refresh AUTOGEN sections from DB.</p>
+        <p style="font-size:.75rem;color:#8899bb;margin-bottom:.6rem">Scaffold missing pages and refresh AUTOGEN sections from DB.</p>
         <button class="success" onclick="runAutogen()" id="autogenBtn">Run Autogen</button>
         <div id="autogen-out" style="margin-top:.6rem;font-size:.75rem;color:#94a3b8;white-space:pre-wrap"></div>
       </div>
@@ -474,10 +474,10 @@ async function toggleDrilldown(runId, ev) {
         <td class="td-mono">${e.exit_date ?? '—'}</td>
         <td><span class="${cls(e.net_return)}">${pct(e.net_return)}</span></td>
         <td><span class="${cls(e.alpha_sector)}">${pct(e.alpha_sector)}</span></td>
-        <td style="color:#475569;font-size:.7rem">${escHtml(e.sector_benchmark ?? '—')}</td>
+        <td style="color:#7a8aaa;font-size:.7rem">${escHtml(e.sector_benchmark ?? '—')}</td>
       </tr>`
     ).join('');
-    const more = events.length > 50 ? `<tr><td colspan="7" style="color:#475569;font-size:.7rem;padding:.4rem .5rem">…and ${events.length-50} more</td></tr>` : '';
+    const more = events.length > 50 ? `<tr><td colspan="7" style="color:#7a8aaa;font-size:.7rem;padding:.4rem .5rem">…and ${events.length-50} more</td></tr>` : '';
     document.getElementById('dd-body-' + runId).innerHTML =
       `<div style="overflow-x:auto"><table class="ev-tbl">
         <thead><tr>
