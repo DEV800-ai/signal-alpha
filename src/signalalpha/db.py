@@ -77,6 +77,17 @@ CREATE TABLE IF NOT EXISTS earnings_events (
     PRIMARY KEY (ticker, event_date)
 );
 
+CREATE TABLE IF NOT EXISTS sources (
+    source_uri    VARCHAR NOT NULL PRIMARY KEY,  -- e.g. web:https://..., news:..., transcript:...
+    scheme        VARCHAR NOT NULL,
+    title         VARCHAR,
+    published_at  TIMESTAMP,
+    fetched_at    TIMESTAMP DEFAULT now(),
+    summary       VARCHAR
+);
+CREATE INDEX IF NOT EXISTS sources_scheme_idx ON sources(scheme);
+CREATE INDEX IF NOT EXISTS sources_published_idx ON sources(published_at);
+
 CREATE SEQUENCE IF NOT EXISTS signal_run_seq START 1;
 
 CREATE TABLE IF NOT EXISTS signal_runs (

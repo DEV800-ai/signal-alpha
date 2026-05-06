@@ -1,4 +1,4 @@
-"""Web UI for the wiki validator.
+"""Web UI — Daily Signal Brief + Wiki Editor.
 
 Run with:
     uv run python -m signalalpha.wiki.app
@@ -14,64 +14,19 @@ from fastapi import FastAPI, Form, Query
 from fastapi.responses import HTMLResponse, JSONResponse
 
 from signalalpha.config import DB_PATH
-from signalalpha.wiki.autogen import WIKI_ROOT, run_autogen, _signal_status
+from signalalpha.wiki.autogen import WIKI_ROOT, run_autogen
+from signalalpha.wiki.brief import build_daily_brief
 from signalalpha.wiki.cli import _to_dict
 from signalalpha.wiki.validate import validate
 
-app = FastAPI(title="SignalAlpha Validator")
+app = FastAPI(title="SignalAlpha")
 
 
-# ── Signals dashboard data ────────────────────────────────────────────────────
+# ── Helpers ───────────────────────────────────────────────────────────────────
 
-def _signals_data() -> dict:
-    try:
-        con = duckdb.connect(str(DB_PATH), read_only=True)
-    except Exception as e:
-        return {"error": str(e)}
+def _open_db(read_only: bool = True) -> duckdb.DuckDBPyConnection:
+    return duckdb.connect(str(DB_PATH), read_only=read_only)
 
-    def q(sql):
-        try:
-            return con.execute(sql).fetchall()
-        except Exception:
-            return []
-
-    try:
-        rows = q("""
-            SELECT
-                run_id, signal_name, hold_days,
-                n_events, event_window_start, event_window_end,
-                hit_rate, mean_return, mean_alpha_sector,
-                p_value_vs_sector, sharpe_ann, max_drawdown,
-                run_at
-            FROM signal_runs
-            ORDER BY p_value_vs_sector ASC NULLS LAST, run_id DESC
-        """)
-        cols = [
-            "run_id", "signal_name", "hold_days",
-            "n_events", "event_window_start", "event_window_end",
-            "hit_rate", "mean_return", "mean_alpha_sector",
-            "p_value_vs_sector", "sharpe_ann", "max_drawdown",
-            "run_at",
-        ]
-        signals = []
-        for r in rows:
-            d = dict(zip(cols, r))
-            d["status"] = _signal_status(d)
-            d["run_at"] = str(d["run_at"])[:10] if d["run_at"] else None
-            d["event_window_start"] = str(d["event_window_start"])[:10] if d["event_window_start"] else None
-            d["event_window_end"] = str(d["event_window_end"])[:10] if d["event_window_end"] else None
-            # Round floats
-            for k in ("hit_rate", "mean_return", "mean_alpha_sector", "p_value_vs_sector", "sharpe_ann", "max_drawdown"):
-                if d[k] is not None:
-                    d[k] = round(float(d[k]), 6)
-            signals.append(d)
-    finally:
-        con.close()
-
-    return {"signals": signals}
-
-
-# ── Wiki page browser ─────────────────────────────────────────────────────────
 
 def _list_wiki_pages() -> list[dict]:
     pages = []
@@ -83,7 +38,6 @@ def _list_wiki_pages() -> list[dict]:
             pages.append({
                 "path": str(p.relative_to(WIKI_ROOT.parent)),
                 "name": p.stem,
-                "type": kind.split("/")[0],
                 "group": kind,
             })
     return pages
@@ -107,15 +61,16 @@ _HTML = r"""<!DOCTYPE html>
   }
   header {
     width: 100%; max-width: 1200px;
-    display: flex; align-items: center; gap: 1.2rem;
-    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1rem;
   }
-  header h1 { font-size: 1.4rem; font-weight: 700; }
+  header h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: -.02em; }
+  header .tagline { color: #475569; font-size: .8rem; }
 
   /* Tabs */
   .tabs {
     width: 100%; max-width: 1200px;
-    display: flex; gap: 0; border-bottom: 1px solid #2d3348;
+    display: flex; border-bottom: 1px solid #2d3348;
     margin-bottom: 1.5rem;
   }
   .tab-btn {
@@ -130,64 +85,86 @@ _HTML = r"""<!DOCTYPE html>
   .tab-panel { display: none; width: 100%; max-width: 1200px; }
   .tab-panel.active { display: block; }
 
-  /* Cards */
+  /* Card */
   .card {
     background: #1e2330; border: 1px solid #2d3348;
     border-radius: 10px; padding: 1.1rem; margin-bottom: 1rem;
   }
   .card-title {
-    font-size: .75rem; color: #64748b;
+    font-size: .72rem; color: #64748b;
     text-transform: uppercase; letter-spacing: .07em;
-    margin-bottom: .75rem; display: flex; align-items: center; gap: .5rem;
+    margin-bottom: .85rem; display: flex; align-items: center; gap: .5rem;
   }
   .card-title .actions { margin-left: auto; display: flex; gap: .4rem; }
 
-  /* Signals table */
-  .tbl-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: .82rem; }
-  thead th {
-    text-align: left; color: #475569; font-size: .72rem;
-    text-transform: uppercase; letter-spacing: .06em;
-    padding: .45rem .7rem; border-bottom: 1px solid #2d3348;
-    white-space: nowrap; cursor: pointer; user-select: none;
+  /* ── Daily Brief ──────────────────────────────────────── */
+  .brief-grid {
+    display: flex; flex-direction: column; gap: .6rem;
   }
-  thead th:hover { color: #94a3b8; }
-  thead th .sort-arrow { margin-left: .25rem; opacity: .4; }
-  thead th.sorted .sort-arrow { opacity: 1; color: #a5b4fc; }
-  tbody tr { border-bottom: 1px solid #1a1c2e; transition: background .1s; }
-  tbody tr:hover { background: #252a3a; cursor: pointer; }
-  tbody td { padding: .45rem .7rem; white-space: nowrap; }
-  .td-name { font-weight: 600; color: #e2e8f0; max-width: 220px; overflow: hidden; text-overflow: ellipsis; }
-  .td-mono { font-family: monospace; font-size: .78rem; }
+  .signal-card {
+    background: #141720; border: 1px solid #2d3348; border-radius: 9px;
+    padding: .85rem 1rem; display: grid;
+    grid-template-columns: 200px 1fr auto;
+    gap: .5rem 1.2rem; align-items: start;
+    cursor: pointer; transition: border-color .15s, background .15s;
+  }
+  .signal-card:hover { border-color: #4f46e5; background: #191d2a; }
+
+  .sc-name { font-weight: 700; font-size: .9rem; color: #e2e8f0; margin-bottom: .3rem; }
+  .sc-meta { font-size: .73rem; color: #475569; }
+
+  .sc-stats {
+    display: flex; flex-wrap: wrap; gap: .4rem .9rem; align-items: center;
+  }
+  .stat-item { font-size: .78rem; }
+  .stat-label { color: #475569; margin-right: .2rem; }
+  .stat-val { font-weight: 600; }
+  .pos { color: #4ade80; }
+  .neg { color: #f87171; }
+  .neu { color: #94a3b8; }
+  .amber { color: #fbbf24; }
+
+  .sc-right { display: flex; flex-direction: column; align-items: flex-end; gap: .4rem; }
 
   .status-pill {
-    display: inline-block; padding: .15rem .55rem;
+    display: inline-block; padding: .18rem .6rem;
     border-radius: 999px; font-size: .68rem; font-weight: 700; letter-spacing: .04em;
+    white-space: nowrap;
   }
-  .status-validated  { background: #14532d; color: #4ade80; }
-  .status-borderline { background: #78350f; color: #fbbf24; }
-  .status-graveyard  { background: #1f2937; color: #6b7280; }
+  .pill-validated  { background: #14532d; color: #4ade80; }
+  .pill-borderline { background: #78350f; color: #fbbf24; }
+  .pill-graveyard  { background: #1f2937; color: #6b7280; }
 
-  .num-pos { color: #4ade80; }
-  .num-neg { color: #f87171; }
-  .num-neu { color: #94a3b8; }
-
-  /* Empty state */
-  .empty-state {
-    text-align: center; padding: 3rem 1rem; color: #475569; font-size: .9rem;
+  .ctx-pill {
+    display: inline-flex; align-items: center; gap: .3rem;
+    padding: .15rem .5rem; border-radius: 5px; font-size: .68rem; font-weight: 600;
   }
-  .empty-state p { margin-top: .4rem; font-size: .78rem; }
+  .ctx-current { background: #0c2120; color: #34d399; border: 1px solid #065f46; }
+  .ctx-stale   { background: #1c1708; color: #fbbf24; border: 1px solid #78350f; }
+  .ctx-missing { background: #1a1a1a; color: #6b7280; border: 1px solid #374151; }
 
-  /* Wiki editor layout */
+  .wiki-link {
+    font-size: .7rem; color: #6366f1; text-decoration: none;
+    background: none; border: none; cursor: pointer; padding: 0;
+  }
+  .wiki-link:hover { color: #a5b4fc; text-decoration: underline; }
+
+  /* Divider */
+  .brief-meta {
+    font-size: .73rem; color: #475569; margin-bottom: .85rem;
+    display: flex; align-items: center; gap: .5rem;
+  }
+
+  /* Empty / loading */
+  .state-msg { color: #475569; font-size: .82rem; font-style: italic; padding: 1.5rem 0; text-align: center; }
+
+  /* ── Wiki Editor ──────────────────────────────────────── */
   .editor-layout {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 1rem;
-    align-items: start;
+    display: grid; grid-template-columns: 220px 1fr;
+    gap: 1rem; align-items: start;
   }
   @media(max-width:760px){ .editor-layout { grid-template-columns: 1fr; } }
 
-  /* Page browser */
   .page-group-label {
     font-size: .7rem; color: #475569; text-transform: uppercase;
     letter-spacing: .06em; margin: .6rem 0 .3rem; padding: 0 .3rem;
@@ -202,9 +179,8 @@ _HTML = r"""<!DOCTYPE html>
   .page-item.active { background: #312e81; color: #a5b4fc; }
   .no-pages { color: #475569; font-size: .78rem; font-style: italic; }
 
-  /* Editor */
   textarea {
-    width: 100%; height: 380px;
+    width: 100%; height: 400px;
     background: #0f1117; color: #e2e8f0;
     border: 1px solid #2d3348; border-radius: 8px;
     padding: .75rem; font-family: 'Fira Code', monospace; font-size: .78rem;
@@ -240,20 +216,17 @@ _HTML = r"""<!DOCTYPE html>
     border-top-color:#6366f1; border-radius:50%; animation:spin .7s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* Result */
+  /* Validation result */
   #result { display: none; }
-  .verdict { display:flex; align-items:center; gap:.5rem; font-size:1.1rem; font-weight:700; margin-bottom:.9rem; }
+  .verdict { display:flex; align-items:center; gap:.5rem; font-size:1.05rem; font-weight:700; margin-bottom:.9rem; }
   .verdict.pass { color: #4ade80; }
   .verdict.fail { color: #f87171; }
   .badge { font-size:.66rem; padding:.16rem .45rem; border-radius:999px; font-weight:700; letter-spacing:.04em; }
   .badge.pass { background:#14532d; color:#4ade80; }
   .badge.fail { background:#7f1d1d; color:#f87171; }
   .badge.warn { background:#78350f; color:#fbbf24; }
-
   .summary-row { display:flex; gap:.6rem; margin-bottom:.9rem; flex-wrap:wrap; }
-  .stat { background:#0f1117; border:1px solid #2d3348; border-radius:7px; padding:.35rem .7rem; font-size:.78rem; }
-  .stat b { margin-right:.25rem; }
-
+  .stat-box { background:#0f1117; border:1px solid #2d3348; border-radius:7px; padding:.35rem .7rem; font-size:.78rem; }
   .passes { display:flex; flex-direction:column; gap:.5rem; }
   .pass-row { border:1px solid #2d3348; border-radius:7px; overflow:hidden; }
   .pass-hdr {
@@ -288,27 +261,31 @@ _HTML = r"""<!DOCTYPE html>
 
 <header>
   <h1>SignalAlpha</h1>
+  <span class="tagline">Signal-driven research system</span>
 </header>
 
 <div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('signals', this)">Signals</button>
+  <button class="tab-btn active" onclick="switchTab('brief', this)">Daily Brief</button>
   <button class="tab-btn" onclick="switchTab('editor', this)">Wiki Editor</button>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ SIGNALS TAB -->
-<div class="tab-panel active" id="tab-signals">
+<!-- ═══════════════════════ DAILY BRIEF TAB -->
+<div class="tab-panel active" id="tab-brief">
   <div class="card">
     <div class="card-title">
-      Signal Runs
+      Signal Research State
       <span class="actions">
-        <button class="secondary" style="font-size:.7rem;padding:.25rem .5rem" onclick="loadSignals()">↻ Refresh</button>
+        <button class="secondary" style="font-size:.7rem;padding:.25rem .5rem" onclick="loadBrief()">↻ Refresh</button>
       </span>
     </div>
-    <div id="signals-content"><p class="no-pages">Loading…</p></div>
+    <div class="brief-meta" id="brief-meta"></div>
+    <div class="brief-grid" id="brief-grid">
+      <p class="state-msg">Loading…</p>
+    </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ EDITOR TAB -->
+<!-- ═══════════════════════ WIKI EDITOR TAB -->
 <div class="tab-panel" id="tab-editor">
   <div class="editor-layout">
 
@@ -325,7 +302,7 @@ _HTML = r"""<!DOCTYPE html>
       </div>
       <div class="card">
         <div class="card-title">Auto-generator</div>
-        <p style="font-size:.75rem;color:#64748b;margin-bottom:.6rem">Scaffold missing pages and refresh AUTOGEN sections from the DB.</p>
+        <p style="font-size:.75rem;color:#64748b;margin-bottom:.6rem">Scaffold missing pages and refresh AUTOGEN sections from DB.</p>
         <button class="success" onclick="runAutogen()" id="autogenBtn">Run Autogen</button>
         <div id="autogen-out" style="margin-top:.6rem;font-size:.75rem;color:#94a3b8;white-space:pre-wrap"></div>
       </div>
@@ -334,7 +311,7 @@ _HTML = r"""<!DOCTYPE html>
     <!-- Right: editor + result -->
     <div>
       <div class="card">
-        <div class="card-title">Editor</div>
+        <div class="card-title">Editor <span id="editing-label" style="color:#6366f1;font-size:.75rem;margin-left:.5rem"></span></div>
         <textarea id="content" placeholder="Click a page on the left, or load a .md file…"></textarea>
         <div class="toolbar">
           <label class="file-btn" for="fileInput">Load file</label>
@@ -380,110 +357,81 @@ function toast(msg, ms=2500) {
   setTimeout(() => el.classList.remove('show'), ms);
 }
 
-// ── Signals table ─────────────────────────────────────────────────────────────
-let _signals = [];
-let _sortCol = 'p_value_vs_sector';
-let _sortAsc = true;
-
-const STATUS_ORDER = { validated: 0, borderline: 1, graveyard: 2 };
-
-async function loadSignals() {
-  document.getElementById('signals-content').innerHTML = '<p class="no-pages">Loading…</p>';
+// ── Daily Brief ───────────────────────────────────────────────────────────────
+async function loadBrief() {
+  document.getElementById('brief-meta').textContent = '';
+  document.getElementById('brief-grid').innerHTML = '<p class="state-msg">Loading…</p>';
   try {
-    const data = await (await fetch('/signals')).json();
-    if (data.error) throw new Error(data.error);
-    _signals = data.signals;
-    renderSignals();
+    const data = await (await fetch('/brief')).json();
+    renderBrief(data);
   } catch(e) {
-    document.getElementById('signals-content').innerHTML =
-      '<p style="color:#f87171;font-size:.8rem">Error: ' + escHtml(e.message) + '</p>';
+    document.getElementById('brief-grid').innerHTML =
+      '<p class="state-msg" style="color:#f87171">Error: ' + escHtml(e.message) + '</p>';
   }
 }
 
-function sortSignals(col) {
-  if (_sortCol === col) { _sortAsc = !_sortAsc; }
-  else { _sortCol = col; _sortAsc = true; }
-  renderSignals();
-}
+function renderBrief(data) {
+  const signals = data.signals || [];
+  document.getElementById('brief-meta').innerHTML =
+    `As of <b>${escHtml(data.generated_at)}</b> &mdash; ${signals.length} signal${signals.length!==1?'s':''} tracked`;
 
-function renderSignals() {
-  const cols = [
-    { key: 'signal_name',        label: 'Signal' },
-    { key: 'status',             label: 'Status' },
-    { key: 'run_id',             label: 'Run' },
-    { key: 'n_events',           label: 'N events' },
-    { key: 'hit_rate',           label: 'Hit rate' },
-    { key: 'mean_return',        label: 'Mean return' },
-    { key: 'mean_alpha_sector',  label: 'Alpha vs sector' },
-    { key: 'p_value_vs_sector',  label: 'p-value' },
-    { key: 'sharpe_ann',         label: 'Sharpe' },
-    { key: 'hold_days',          label: 'Hold days' },
-    { key: 'run_at',             label: 'Run date' },
-  ];
-
-  const sorted = [..._signals].sort((a, b) => {
-    let av = a[_sortCol], bv = b[_sortCol];
-    if (_sortCol === 'status') { av = STATUS_ORDER[av] ?? 99; bv = STATUS_ORDER[bv] ?? 99; }
-    if (av === null || av === undefined) return 1;
-    if (bv === null || bv === undefined) return -1;
-    return _sortAsc ? (av > bv ? 1 : -1) : (av < bv ? 1 : -1);
-  });
-
-  if (!sorted.length) {
-    document.getElementById('signals-content').innerHTML =
-      '<div class="empty-state">No signal runs found in the database.<p>Run a backtest to populate signal_runs.</p></div>';
+  if (!signals.length) {
+    document.getElementById('brief-grid').innerHTML =
+      '<p class="state-msg">No signal runs found. Run a backtest to populate signal_runs.</p>';
     return;
   }
 
-  let thead = '<thead><tr>' + cols.map(c => {
-    const sorted = _sortCol === c.key;
-    const arrow = sorted ? (_sortAsc ? ' ▲' : ' ▼') : ' ↕';
-    return `<th class="${sorted?'sorted':''}" onclick="sortSignals('${c.key}')">${escHtml(c.label)}<span class="sort-arrow">${arrow}</span></th>`;
-  }).join('') + '</tr></thead>';
+  const html = signals.map(s => {
+    const statusCls = 'pill-' + s.status;
+    const ctxCls   = 'ctx-' + s.context_status;
+    const ctxIcon  = s.context_status === 'current' ? '●' : s.context_status === 'stale' ? '◑' : '○';
+    const ctxLabel = s.context_status;
 
-  let tbody = '<tbody>' + sorted.map(r => {
-    const statusPill = `<span class="status-pill status-${r.status}">${r.status}</span>`;
-    const pct = v => v === null || v === undefined ? '<span class="num-neu">—</span>'
-      : `<span class="${v>=0?'num-pos':'num-neg'}">${v>=0?'+':''}${(v*100).toFixed(1)}%</span>`;
-    const num = (v, d=2) => v === null || v === undefined ? '<span class="num-neu">—</span>'
-      : `<span class="num-neu">${v.toFixed(d)}</span>`;
-    const pval = v => v === null || v === undefined ? '<span class="num-neu">—</span>'
-      : `<span class="${v<0.05?'num-pos':v<0.10?'num-neg':'num-neu'}">${v.toFixed(4)}</span>`;
-    return `<tr onclick="openInEditor('${escAttr(r.signal_name)}')">
-      <td class="td-name">${escHtml(r.signal_name)}</td>
-      <td>${statusPill}</td>
-      <td class="td-mono">#${r.run_id}</td>
-      <td class="td-mono">${r.n_events ?? '—'}</td>
-      <td>${pct(r.hit_rate)}</td>
-      <td>${pct(r.mean_return)}</td>
-      <td>${pct(r.mean_alpha_sector)}</td>
-      <td class="td-mono">${pval(r.p_value_vs_sector)}</td>
-      <td>${num(r.sharpe_ann)}</td>
-      <td class="td-mono">${r.hold_days ?? '—'}d</td>
-      <td class="td-mono">${r.run_at ?? '—'}</td>
-    </tr>`;
-  }).join('') + '</tbody>';
+    const pct = v => v === null || v === undefined ? '<span class="neu">—</span>'
+      : `<span class="${v>=0?'pos':'neg'}">${v>=0?'+':''}${(v*100).toFixed(1)}%</span>`;
+    const pval = v => v === null || v === undefined ? '<span class="neu">—</span>'
+      : `<span class="${v<0.05?'pos':v<0.10?'amber':'neu'}">${v.toFixed(4)}</span>`;
+    const num = (v, d=2) => v === null || v === undefined ? '<span class="neu">—</span>'
+      : `<span class="neu">${v.toFixed(d)}</span>`;
 
-  document.getElementById('signals-content').innerHTML =
-    '<div class="tbl-wrap"><table>' + thead + tbody + '</table></div>';
+    const wikiBtn = s.wiki_path
+      ? `<button class="wiki-link" onclick="event.stopPropagation();openWikiPage('${escAttr(s.wiki_path)}')">Open wiki page →</button>`
+      : `<span style="font-size:.68rem;color:#374151">no wiki page</span>`;
+
+    return `<div class="signal-card" onclick="openWikiPage(${s.wiki_path ? "'"+escAttr(s.wiki_path)+"'" : 'null'})">
+      <div>
+        <div class="sc-name">${escHtml(s.signal_id)}</div>
+        <div class="sc-meta">run #${s.run_id} &middot; ${s.n_events ?? '?'} events &middot; ${s.hold_days}d hold</div>
+        ${s.event_window_start ? `<div class="sc-meta">${s.event_window_start} → ${s.event_window_end}</div>` : ''}
+      </div>
+      <div class="sc-stats">
+        <div class="stat-item"><span class="stat-label">Hit rate</span><span class="stat-val">${pct(s.hit_rate)}</span></div>
+        <div class="stat-item"><span class="stat-label">Return</span><span class="stat-val">${pct(s.mean_return)}</span></div>
+        <div class="stat-item"><span class="stat-label">Alpha</span><span class="stat-val">${pct(s.mean_alpha_sector)}</span></div>
+        <div class="stat-item"><span class="stat-label">p-value</span><span class="stat-val">${pval(s.p_value_vs_sector)}</span></div>
+        <div class="stat-item"><span class="stat-label">Sharpe</span><span class="stat-val">${num(s.sharpe_ann)}</span></div>
+      </div>
+      <div class="sc-right">
+        <span class="status-pill ${statusCls}">${s.status}</span>
+        <span class="ctx-pill ${ctxCls}">${ctxIcon} context ${ctxLabel}</span>
+        ${wikiBtn}
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('brief-grid').innerHTML = html;
 }
 
-function openInEditor(signalName) {
-  // Switch to editor tab and try to load the matching wiki page
-  const editorBtn = document.querySelector('[onclick="switchTab(\'editor\', this)"]');
+function openWikiPage(path) {
+  if (!path) { toast('No wiki page yet — run Autogen first.'); return; }
+  const editorBtn = document.querySelectorAll('.tab-btn')[1];
   switchTab('editor', editorBtn);
-  // Find matching page
-  fetch('/wiki-pages').then(r=>r.json()).then(data => {
-    loadPages(data.pages);
-    // Clean signal name to match page stem
-    const slug = signalName.replace(/[^\w.\-]/g, '_').replace(/^_+|_+$/g, '');
-    const match = data.pages.find(p => p.name === slug || p.name.includes(slug));
-    if (match) {
-      setTimeout(() => {
-        const el = document.querySelector(`.page-item[data-path="${match.path}"]`);
-        if (el) loadPage(el, match.path);
-      }, 50);
-    }
+  fetch('/wiki-pages').then(r => r.json()).then(data => {
+    renderPages(data.pages);
+    setTimeout(() => {
+      const el = document.querySelector(`.page-item[data-path="${escAttr(path)}"]`);
+      if (el) loadPage(el, path);
+    }, 50);
   });
 }
 
@@ -494,43 +442,31 @@ async function loadPages(pages) {
   const el = document.getElementById('page-list');
   if (!pages) {
     el.innerHTML = '<p class="no-pages">Loading…</p>';
-    try {
-      pages = (await (await fetch('/wiki-pages')).json()).pages;
-    } catch(e) {
-      el.innerHTML = '<p class="no-pages">Error loading pages.</p>';
-      return;
-    }
+    try { pages = (await (await fetch('/wiki-pages')).json()).pages; }
+    catch(e) { el.innerHTML = '<p class="no-pages">Error.</p>'; return; }
   }
   renderPages(pages);
 }
 
 function renderPages(pages) {
   const el = document.getElementById('page-list');
-  if (!pages.length) {
-    el.innerHTML = '<p class="no-pages">No wiki pages yet — run Autogen.</p>';
-    return;
-  }
+  if (!pages.length) { el.innerHTML = '<p class="no-pages">No wiki pages — run Autogen.</p>'; return; }
   const byGroup = {};
   pages.forEach(p => { (byGroup[p.group] = byGroup[p.group] || []).push(p); });
-  const labels = {
-    'signals': 'Signals',
-    'companies/public': 'Companies (public)',
-    'companies/private': 'Companies (private)',
-    'sectors': 'Sectors',
-  };
+  const labels = { 'signals':'Signals','companies/public':'Companies (public)',
+                   'companies/private':'Companies (private)','sectors':'Sectors' };
   let html = '';
   for (const [group, items] of Object.entries(byGroup)) {
     html += `<div class="page-group-label">${labels[group]||group}</div>`;
     items.forEach(p => {
-      html += `<div class="page-item" data-path="${escAttr(p.path)}" onclick="loadPage(this, '${escAttr(p.path)}')">${escHtml(p.name)}</div>`;
+      html += `<div class="page-item" data-path="${escAttr(p.path)}" onclick="loadPage(this,'${escAttr(p.path)}')">${escHtml(p.name)}</div>`;
     });
   }
   el.innerHTML = html;
-  if (_activePage) {
-    document.querySelectorAll('.page-item').forEach(el => {
-      if (el.dataset.path === _activePage) el.classList.add('active');
+  if (_activePage)
+    document.querySelectorAll('.page-item').forEach(e => {
+      if (e.dataset.path === _activePage) e.classList.add('active');
     });
-  }
 }
 
 async function loadPage(el, path) {
@@ -541,15 +477,16 @@ async function loadPage(el, path) {
     const data = await (await fetch('/wiki-page-content?path=' + encodeURIComponent(path))).json();
     document.getElementById('content').value = data.content;
     document.getElementById('filename').textContent = path.split('/').pop();
+    document.getElementById('editing-label').textContent = path.split('/').pop();
     document.getElementById('result').style.display = 'none';
-  } catch(e) { toast('Failed to load page: ' + e.message); }
+  } catch(e) { toast('Failed to load page.'); }
 }
 
 // ── File picker ───────────────────────────────────────────────────────────────
 document.getElementById('fileInput').addEventListener('change', e => {
-  const file = e.target.files[0];
-  if (!file) return;
+  const file = e.target.files[0]; if (!file) return;
   document.getElementById('filename').textContent = file.name;
+  document.getElementById('editing-label').textContent = file.name;
   const reader = new FileReader();
   reader.onload = ev => document.getElementById('content').value = ev.target.result;
   reader.readAsText(file);
@@ -558,14 +495,13 @@ document.getElementById('fileInput').addEventListener('change', e => {
 // ── Validate ──────────────────────────────────────────────────────────────────
 async function runValidate() {
   const content = document.getElementById('content').value.trim();
-  if (!content) { alert('Paste or load a wiki page first.'); return; }
+  if (!content) { alert('Load a wiki page first.'); return; }
   const btn = document.getElementById('runBtn');
   const spinner = document.getElementById('spinner');
   btn.disabled = true; spinner.style.display = 'block';
   document.getElementById('result').style.display = 'none';
   try {
-    const fd = new FormData();
-    fd.append('content', content);
+    const fd = new FormData(); fd.append('content', content);
     renderResult(await (await fetch('/validate', {method:'POST', body:fd})).json());
   } catch(e) { alert('Error: ' + e.message); }
   finally { btn.disabled = false; spinner.style.display = 'none'; }
@@ -577,9 +513,9 @@ function renderResult(data) {
   vEl.className = 'verdict ' + (isPass ? 'pass' : 'fail');
   vEl.innerHTML = (isPass ? '✅' : '❌') + ' ' + data.verdict;
   document.getElementById('summary').innerHTML =
-    stat(data.failures.length, 'failure') +
-    stat(data.warnings.length, 'warning') +
-    stat(data.pass_results.length, 'pass', 'es run');
+    statBox(data.failures.length, 'failure') +
+    statBox(data.warnings.length, 'warning') +
+    statBox(data.pass_results.length, 'pass', 'es run');
   const passesEl = document.getElementById('passes');
   passesEl.innerHTML = '';
   data.pass_results.forEach(p => {
@@ -605,40 +541,38 @@ function renderResult(data) {
   document.getElementById('result').scrollIntoView({behavior:'smooth'});
 }
 
-// ── Auto-generator ────────────────────────────────────────────────────────────
+// ── Autogen ───────────────────────────────────────────────────────────────────
 async function runAutogen() {
   const btn = document.getElementById('autogenBtn');
   const out = document.getElementById('autogen-out');
-  btn.disabled = true;
-  out.textContent = 'Running…';
+  btn.disabled = true; out.textContent = 'Running…';
   try {
     const data = await (await fetch('/autogen', {method:'POST'})).json();
     out.textContent = data.results.join('\n') || 'Nothing to update.';
     toast('Autogen done — ' + data.results.length + ' page(s) affected.');
-    loadPages();
-  } catch(e) {
-    out.textContent = 'Error: ' + e.message;
-  } finally { btn.disabled = false; }
+    loadPages(); loadBrief();
+  } catch(e) { out.textContent = 'Error: ' + e.message; }
+  finally { btn.disabled = false; }
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
-function stat(n, label, suffix='s') {
-  return '<div class="stat"><b>'+n+'</b> '+label+(n!==1?suffix:'')+'</div>';
+function statBox(n, label, suffix='s') {
+  return `<div class="stat-box"><b>${n}</b> ${label}${n!==1?suffix:''}</div>`;
 }
-function badge(cls, text) { return '<span class="badge '+cls+'">'+escHtml(String(text))+'</span>'; }
+function badge(cls, text) { return `<span class="badge ${cls}">${escHtml(String(text))}</span>`; }
 function issueHTML(issue, kind) {
-  return '<li class="issue '+kind+'">'+
-    '<div class="issue-rule">'+escHtml(issue.rule)+'</div>'+
-    '<div class="issue-msg">'+escHtml(issue.message)+'</div>'+
-    (issue.location?'<div class="issue-loc">'+escHtml(issue.location)+'</div>':'')+
+  return `<li class="issue ${kind}">` +
+    `<div class="issue-rule">${escHtml(issue.rule)}</div>` +
+    `<div class="issue-msg">${escHtml(issue.message)}</div>` +
+    (issue.location ? `<div class="issue-loc">${escHtml(issue.location)}</div>` : '') +
     '</li>';
 }
 function toggle(h) { h.nextElementSibling.classList.toggle('open'); }
 function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function escAttr(s) { return String(s).replace(/'/g,"\\'"); }
+function escAttr(s) { return String(s).replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
 
 // Boot
-loadSignals();
+loadBrief();
 loadPages();
 </script>
 </body>
@@ -653,9 +587,13 @@ async def index():
     return _HTML
 
 
-@app.get("/signals")
-async def signals():
-    return JSONResponse(_signals_data())
+@app.get("/brief")
+async def daily_brief():
+    db = _open_db()
+    try:
+        return JSONResponse(build_daily_brief(db))
+    finally:
+        db.close()
 
 
 @app.get("/wiki-pages")
@@ -677,7 +615,7 @@ async def validate_endpoint(content: str = Form(...)):
         f.write(content)
         tmp_path = Path(f.name)
     try:
-        db = duckdb.connect(str(DB_PATH), read_only=True)
+        db = _open_db()
         try:
             result = validate(tmp_path, db)
         finally:
