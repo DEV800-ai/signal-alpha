@@ -149,6 +149,27 @@ _HTML = r"""<!DOCTYPE html>
   }
   .wiki-link:hover { color: #a5b4fc; text-decoration: underline; }
 
+  /* Drilldown */
+  .drilldown {
+    display: none; margin-top: .6rem;
+    border-top: 1px solid #2d3348; padding-top: .7rem;
+  }
+  .drilldown.open { display: block; }
+  .drilldown-hdr {
+    font-size: .72rem; color: #64748b; text-transform: uppercase;
+    letter-spacing: .06em; margin-bottom: .5rem;
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .ev-tbl { width: 100%; border-collapse: collapse; font-size: .75rem; }
+  .ev-tbl th {
+    text-align: left; color: #475569; font-size: .68rem;
+    text-transform: uppercase; letter-spacing: .05em;
+    padding: .3rem .5rem; border-bottom: 1px solid #2d3348;
+  }
+  .ev-tbl td { padding: .28rem .5rem; border-bottom: 1px solid #141720; }
+  .ev-tbl tr:hover td { background: #1e2330; }
+  .ev-loading { color: #475569; font-size: .75rem; font-style: italic; padding: .5rem 0; }
+
   /* Divider */
   .brief-meta {
     font-size: .73rem; color: #475569; margin-bottom: .85rem;
@@ -381,24 +402,22 @@ function renderBrief(data) {
     return;
   }
 
+  const pct = v => v === null || v === undefined ? '<span class="neu">—</span>'
+    : `<span class="${v>=0?'pos':'neg'}">${v>=0?'+':''}${(v*100).toFixed(1)}%</span>`;
+  const pval = v => v === null || v === undefined ? '<span class="neu">—</span>'
+    : `<span class="${v<0.05?'pos':v<0.10?'amber':'neu'}">${v.toFixed(4)}</span>`;
+  const num = (v, d=2) => v === null || v === undefined ? '<span class="neu">—</span>'
+    : `<span class="neu">${v.toFixed(d)}</span>`;
+
   const html = signals.map(s => {
     const statusCls = 'pill-' + s.status;
     const ctxCls   = 'ctx-' + s.context_status;
     const ctxIcon  = s.context_status === 'current' ? '●' : s.context_status === 'stale' ? '◑' : '○';
-    const ctxLabel = s.context_status;
-
-    const pct = v => v === null || v === undefined ? '<span class="neu">—</span>'
-      : `<span class="${v>=0?'pos':'neg'}">${v>=0?'+':''}${(v*100).toFixed(1)}%</span>`;
-    const pval = v => v === null || v === undefined ? '<span class="neu">—</span>'
-      : `<span class="${v<0.05?'pos':v<0.10?'amber':'neu'}">${v.toFixed(4)}</span>`;
-    const num = (v, d=2) => v === null || v === undefined ? '<span class="neu">—</span>'
-      : `<span class="neu">${v.toFixed(d)}</span>`;
-
     const wikiBtn = s.wiki_path
-      ? `<button class="wiki-link" onclick="event.stopPropagation();openWikiPage('${escAttr(s.wiki_path)}')">Open wiki page →</button>`
-      : `<span style="font-size:.68rem;color:#374151">no wiki page</span>`;
+      ? `<button class="wiki-link" onclick="event.stopPropagation();openWikiPage('${escAttr(s.wiki_path)}')">wiki →</button>`
+      : `<span style="font-size:.68rem;color:#374151">no wiki</span>`;
 
-    return `<div class="signal-card" onclick="openWikiPage(${s.wiki_path ? "'"+escAttr(s.wiki_path)+"'" : 'null'})">
+    return `<div class="signal-card" id="sc-${s.run_id}" onclick="toggleDrilldown(${s.run_id}, event)">
       <div>
         <div class="sc-name">${escHtml(s.signal_id)}</div>
         <div class="sc-meta">run #${s.run_id} &middot; ${s.n_events ?? '?'} events &middot; ${s.hold_days}d hold</div>
@@ -413,13 +432,63 @@ function renderBrief(data) {
       </div>
       <div class="sc-right">
         <span class="status-pill ${statusCls}">${s.status}</span>
-        <span class="ctx-pill ${ctxCls}">${ctxIcon} context ${ctxLabel}</span>
+        <span class="ctx-pill ${ctxCls}">${ctxIcon} ${s.context_status}</span>
         ${wikiBtn}
+      </div>
+      <div class="drilldown" id="dd-${s.run_id}" style="grid-column:1/-1">
+        <div class="drilldown-hdr">Per-event breakdown <span id="dd-count-${s.run_id}" style="color:#94a3b8;font-size:.7rem"></span></div>
+        <div id="dd-body-${s.run_id}"><p class="ev-loading">Loading…</p></div>
       </div>
     </div>`;
   }).join('');
 
   document.getElementById('brief-grid').innerHTML = html;
+}
+
+const _ddLoaded = new Set();
+
+async function toggleDrilldown(runId, ev) {
+  if (ev.target.classList.contains('wiki-link')) return;
+  const dd = document.getElementById('dd-' + runId);
+  if (!dd) return;
+  const isOpen = dd.classList.contains('open');
+  if (isOpen) { dd.classList.remove('open'); return; }
+  dd.classList.add('open');
+  if (_ddLoaded.has(runId)) return;
+  _ddLoaded.add(runId);
+  try {
+    const data = await (await fetch('/events?run_id=' + runId)).json();
+    const events = data.events || [];
+    document.getElementById('dd-count-' + runId).textContent = `(${events.length} events)`;
+    if (!events.length) {
+      document.getElementById('dd-body-' + runId).innerHTML = '<p class="ev-loading">No events found.</p>';
+      return;
+    }
+    const pct = v => v === null ? '—' : `${v>=0?'+':''}${(v*100).toFixed(1)}%`;
+    const cls = v => v === null ? 'neu' : v >= 0 ? 'pos' : 'neg';
+    const rows = events.slice(0, 50).map(e =>
+      `<tr>
+        <td style="font-weight:600">${escHtml(e.ticker)}</td>
+        <td class="td-mono">${e.event_date ?? '—'}</td>
+        <td class="td-mono">${e.entry_date ?? '—'}</td>
+        <td class="td-mono">${e.exit_date ?? '—'}</td>
+        <td><span class="${cls(e.net_return)}">${pct(e.net_return)}</span></td>
+        <td><span class="${cls(e.alpha_sector)}">${pct(e.alpha_sector)}</span></td>
+        <td style="color:#475569;font-size:.7rem">${escHtml(e.sector_benchmark ?? '—')}</td>
+      </tr>`
+    ).join('');
+    const more = events.length > 50 ? `<tr><td colspan="7" style="color:#475569;font-size:.7rem;padding:.4rem .5rem">…and ${events.length-50} more</td></tr>` : '';
+    document.getElementById('dd-body-' + runId).innerHTML =
+      `<div style="overflow-x:auto"><table class="ev-tbl">
+        <thead><tr>
+          <th>Ticker</th><th>Event</th><th>Entry</th><th>Exit</th>
+          <th>Return</th><th>Alpha</th><th>Benchmark</th>
+        </tr></thead>
+        <tbody>${rows}${more}</tbody>
+      </table></div>`;
+  } catch(e) {
+    document.getElementById('dd-body-' + runId).innerHTML = `<p class="ev-loading" style="color:#f87171">Error: ${escHtml(e.message)}</p>`;
+  }
 }
 
 function openWikiPage(path) {
@@ -592,6 +661,32 @@ async def daily_brief():
     db = _open_db()
     try:
         return JSONResponse(build_daily_brief(db))
+    finally:
+        db.close()
+
+
+@app.get("/events")
+async def signal_events(run_id: int = Query(...)):
+    db = _open_db()
+    try:
+        rows = db.execute("""
+            SELECT ticker, event_date, entry_date, exit_date,
+                   net_return, alpha_sector, alpha_spy, sector_benchmark
+            FROM signal_events
+            WHERE run_id = ?
+            ORDER BY net_return DESC
+        """, [run_id]).fetchall()
+        cols = ["ticker", "event_date", "entry_date", "exit_date",
+                "net_return", "alpha_sector", "alpha_spy", "sector_benchmark"]
+        events = []
+        for r in rows:
+            d = dict(zip(cols, r))
+            for k in ("event_date", "entry_date", "exit_date"):
+                d[k] = str(d[k])[:10] if d[k] else None
+            for k in ("net_return", "alpha_sector", "alpha_spy"):
+                d[k] = round(float(d[k]), 6) if d[k] is not None else None
+            events.append(d)
+        return JSONResponse({"run_id": run_id, "events": events})
     finally:
         db.close()
 

@@ -88,6 +88,28 @@ CREATE TABLE IF NOT EXISTS sources (
 CREATE INDEX IF NOT EXISTS sources_scheme_idx ON sources(scheme);
 CREATE INDEX IF NOT EXISTS sources_published_idx ON sources(published_at);
 
+CREATE SEQUENCE IF NOT EXISTS signal_event_seq START 1;
+
+CREATE TABLE IF NOT EXISTS signal_events (
+    id               INTEGER PRIMARY KEY DEFAULT nextval('signal_event_seq'),
+    run_id           INTEGER NOT NULL,
+    ticker           VARCHAR NOT NULL,
+    event_date       DATE    NOT NULL,
+    entry_date       DATE,
+    exit_date        DATE,
+    entry_px         DOUBLE,
+    exit_px          DOUBLE,
+    gross_return     DOUBLE,
+    net_return       DOUBLE,
+    sector_benchmark VARCHAR,
+    sector_return    DOUBLE,
+    spy_return       DOUBLE,
+    alpha_sector     DOUBLE,
+    alpha_spy        DOUBLE
+);
+CREATE INDEX IF NOT EXISTS signal_events_run_idx    ON signal_events(run_id);
+CREATE INDEX IF NOT EXISTS signal_events_ticker_idx ON signal_events(ticker);
+
 CREATE SEQUENCE IF NOT EXISTS signal_run_seq START 1;
 
 CREATE TABLE IF NOT EXISTS signal_runs (

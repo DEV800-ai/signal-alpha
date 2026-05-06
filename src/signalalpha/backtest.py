@@ -250,8 +250,9 @@ def backtest(
 
 
 def record_result(result: BacktestResult, params: dict | None = None, notes: str = "") -> int:
-    """Persist a backtest result to the signal_runs table. Returns the run_id."""
+    """Persist a backtest result to signal_runs + signal_events. Returns the run_id."""
     import json
+    import math
 
     con = connect()
     try:
@@ -279,6 +280,46 @@ def record_result(result: BacktestResult, params: dict | None = None, notes: str
             ],
         )
         run_id = cur.fetchone()[0]
+
+        if not result.events.empty:
+            def _f(v):
+                if v is None:
+                    return None
+                try:
+                    return None if math.isnan(float(v)) else float(v)
+                except (TypeError, ValueError):
+                    return None
+
+            ev = result.events.copy()
+            nr = ev["net_return"].to_numpy(dtype=float)
+            sr = ev["sector_return"].to_numpy(dtype=float) if "sector_return" in ev.columns else [float("nan")] * len(ev)
+            sp = ev["spy_return"].to_numpy(dtype=float) if "spy_return" in ev.columns else [float("nan")] * len(ev)
+
+            rows = [
+                (
+                    run_id,
+                    str(r.ticker),
+                    r.event_date.date() if hasattr(r.event_date, "date") else r.event_date,
+                    r.entry_date.date() if hasattr(r.entry_date, "date") else r.entry_date,
+                    r.exit_date.date() if hasattr(r.exit_date, "date") else r.exit_date,
+                    _f(r.entry_px), _f(r.exit_px),
+                    _f(r.gross_return), _f(nr[i]),
+                    str(r.sector_benchmark) if r.sector_benchmark and str(r.sector_benchmark) != "nan" else None,
+                    _f(sr[i]), _f(sp[i]),
+                    _f(nr[i] - sr[i]), _f(nr[i] - sp[i]),
+                )
+                for i, r in enumerate(ev.itertuples(index=False))
+            ]
+            con.executemany(
+                """INSERT INTO signal_events (
+                    run_id, ticker, event_date, entry_date, exit_date,
+                    entry_px, exit_px, gross_return, net_return,
+                    sector_benchmark, sector_return, spy_return,
+                    alpha_sector, alpha_spy
+                ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                rows,
+            )
+
         return int(run_id)
     finally:
         con.close()
