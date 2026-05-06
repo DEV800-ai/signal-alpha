@@ -58,26 +58,26 @@ Industrial cycle recovery in 2025 and automotive electrification content growth.
 
 | Date | Signal | Return | Alpha vs Sector | Source |
 |------|--------|--------|-----------------|--------|
+| 2026-02-06 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -15.6% | -12.5% | [run #24](signal_run:24) |
+| 2026-02-04 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -15.0% | -19.1% | [run #24](signal_run:24) |
+| 2025-10-16 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -3.9% | -6.0% | [run #24](signal_run:24) |
+| 2025-09-18 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -12.6% | -28.1% | [run #24](signal_run:24) |
+| 2025-07-23 | [volume_anomaly_5_60_t2.0__holdout_15d](../signals/volume_anomaly_5_60_t2.0__holdout_15d.md) | +3.2% | -0.4% | [run #22](signal_run:22) |
+| 2025-07-23 | [volume_anomaly_5_60_t2.0__holdout_10d](../signals/volume_anomaly_5_60_t2.0__holdout_10d.md) | +3.0% | +2.8% | [run #23](signal_run:23) |
+| 2025-05-23 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +22.3% | +3.0% | [run #24](signal_run:24) |
+| 2025-04-18 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +26.9% | -0.6% | [run #24](signal_run:24) |
+| 2025-04-16 | [volume_anomaly_5_60_t2.0__holdout_15d](../signals/volume_anomaly_5_60_t2.0__holdout_15d.md) | +16.3% | +1.0% | [run #22](signal_run:22) |
+| 2025-04-16 | [volume_anomaly_5_60_t2.0__holdout_10d](../signals/volume_anomaly_5_60_t2.0__holdout_10d.md) | +10.6% | -0.9% | [run #23](signal_run:23) |
+| 2025-04-08 | [volume_anomaly_5_60_t2.0__holdout_10d](../signals/volume_anomaly_5_60_t2.0__holdout_10d.md) | +13.3% | -0.6% | [run #23](signal_run:23) |
+| 2025-04-08 | [volume_anomaly_5_60_t2.0__holdout_15d](../signals/volume_anomaly_5_60_t2.0__holdout_15d.md) | +11.6% | -7.5% | [run #22](signal_run:22) |
+| 2025-01-27 | [volume_anomaly_5_60_t2.0__holdout_10d](../signals/volume_anomaly_5_60_t2.0__holdout_10d.md) | -2.7% | -4.7% | [run #23](signal_run:23) |
+| 2025-01-27 | [volume_anomaly_5_60_t2.0__holdout_15d](../signals/volume_anomaly_5_60_t2.0__holdout_15d.md) | +2.9% | -3.4% | [run #22](signal_run:22) |
 | 2024-10-22 | [8k_any](../signals/8k_any.md) | -2.1% | +0.2% | [run #5](signal_run:5) |
+| 2024-09-19 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | -0.1% | +1.8% | [run #21](signal_run:21) |
+| 2024-09-19 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -0.1% | +1.8% | [run #6](signal_run:6) |
 | 2024-09-19 | [8k_any](../signals/8k_any.md) | -0.1% | +1.8% | [run #5](signal_run:5) |
 | 2024-09-19 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | -2.5% | -5.7% | [run #20](signal_run:20) |
-| 2024-09-19 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -0.1% | +1.8% | [run #6](signal_run:6) |
 | 2024-09-19 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | +0.7% | -3.0% | [run #18](signal_run:18) |
-| 2024-09-19 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | +3.1% | -2.7% | [run #17](signal_run:17) |
-| 2024-09-19 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | -0.1% | +1.8% | [run #21](signal_run:21) |
-| 2024-09-19 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | -1.6% | -5.0% | [run #19](signal_run:19) |
-| 2024-07-23 | [8k_any](../signals/8k_any.md) | -1.4% | +10.3% | [run #5](signal_run:5) |
-| 2024-04-26 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | +11.8% | -0.1% | [run #21](signal_run:21) |
-| 2024-04-26 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | +1.3% | +0.6% | [run #17](signal_run:17) |
-| 2024-04-26 | [8k_any](../signals/8k_any.md) | +11.8% | -0.1% | [run #5](signal_run:5) |
-| 2024-04-26 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | +16.8% | +5.3% | [run #20](signal_run:20) |
-| 2024-04-26 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +11.8% | -0.1% | [run #6](signal_run:6) |
-| 2024-04-26 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | +6.0% | +3.9% | [run #18](signal_run:18) |
-| 2024-04-26 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | +10.6% | +4.7% | [run #19](signal_run:19) |
-| 2024-04-23 | [8k_any](../signals/8k_any.md) | +10.7% | -4.3% | [run #5](signal_run:5) |
-| 2024-02-20 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | +2.7% | -4.6% | [run #20](signal_run:20) |
-| 2024-02-20 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | +0.5% | -4.0% | [run #17](signal_run:17) |
-| 2024-02-20 | [8k_any](../signals/8k_any.md) | +5.6% | -7.3% | [run #5](signal_run:5) |
 <!-- AUTOGEN:END signal_history -->
 
 ## Watch list

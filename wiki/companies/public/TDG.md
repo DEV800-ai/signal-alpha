@@ -58,26 +58,26 @@ Aftermarket recovery continuing with commercial aviation and M&A pipeline delive
 
 | Date | Signal | Return | Alpha vs Sector | Source |
 |------|--------|--------|-----------------|--------|
-| 2024-12-20 | [volume_anomaly_5_60_t2.0__hold20d](../signals/volume_anomaly_5_60_t2.0__hold20d.md) | +6.2% | -1.8% | [run #15](signal_run:15) |
-| 2024-12-20 | [volume_anomaly_5_60_t2.0_space_defense](../signals/volume_anomaly_5_60_t2.0_space_defense.md) | +4.1% | -3.6% | [run #9](signal_run:9) |
-| 2024-12-20 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +4.1% | -3.6% | [run #2](signal_run:2) |
-| 2024-12-20 | [volume_anomaly_5_60_t2.0__hold30d](../signals/volume_anomaly_5_60_t2.0__hold30d.md) | +4.1% | -3.6% | [run #16](signal_run:16) |
-| 2024-12-20 | [volume_anomaly_5_60_t2.0__hold15d](../signals/volume_anomaly_5_60_t2.0__hold15d.md) | +2.1% | +0.3% | [run #14](signal_run:14) |
-| 2024-12-20 | [volume_anomaly_5_60_t2.0__hold5d](../signals/volume_anomaly_5_60_t2.0__hold5d.md) | +0.9% | +1.2% | [run #12](signal_run:12) |
-| 2024-12-20 | [volume_anomaly_5_60_t2.0_defense_excl_speculative](../signals/volume_anomaly_5_60_t2.0_defense_excl_speculative.md) | +4.1% | -3.6% | [run #10](signal_run:10) |
-| 2024-12-20 | [volume_anomaly_5_60_t2.0__hold10d](../signals/volume_anomaly_5_60_t2.0__hold10d.md) | -1.2% | +0.2% | [run #13](signal_run:13) |
-| 2024-11-25 | [volume_anomaly_5_60_t2.0_space_defense](../signals/volume_anomaly_5_60_t2.0_space_defense.md) | -0.7% | +5.2% | [run #9](signal_run:9) |
-| 2024-11-25 | [volume_anomaly_5_60_t2.0__hold10d](../signals/volume_anomaly_5_60_t2.0__hold10d.md) | +0.7% | +2.4% | [run #13](signal_run:13) |
-| 2024-11-25 | [volume_anomaly_5_60_t2.0_defense_excl_speculative](../signals/volume_anomaly_5_60_t2.0_defense_excl_speculative.md) | -0.7% | +5.2% | [run #10](signal_run:10) |
-| 2024-11-25 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | -0.7% | +5.2% | [run #2](signal_run:2) |
-| 2024-11-25 | [volume_anomaly_5_60_t2.0__hold15d](../signals/volume_anomaly_5_60_t2.0__hold15d.md) | +0.2% | +3.4% | [run #14](signal_run:14) |
-| 2024-11-25 | [volume_anomaly_5_60_t2.0__hold5d](../signals/volume_anomaly_5_60_t2.0__hold5d.md) | -0.4% | -0.5% | [run #12](signal_run:12) |
-| 2024-11-25 | [volume_anomaly_5_60_t2.0__hold20d](../signals/volume_anomaly_5_60_t2.0__hold20d.md) | +2.9% | +6.4% | [run #15](signal_run:15) |
-| 2024-11-25 | [volume_anomaly_5_60_t2.0__hold30d](../signals/volume_anomaly_5_60_t2.0__hold30d.md) | -0.7% | +5.2% | [run #16](signal_run:16) |
-| 2024-11-15 | [volume_anomaly_5_60_t2.0__hold10d](../signals/volume_anomaly_5_60_t2.0__hold10d.md) | -0.6% | -2.4% | [run #13](signal_run:13) |
-| 2024-11-15 | [volume_anomaly_5_60_t2.0__hold20d](../signals/volume_anomaly_5_60_t2.0__hold20d.md) | +0.7% | +1.9% | [run #15](signal_run:15) |
-| 2024-11-15 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +0.8% | +3.4% | [run #2](signal_run:2) |
-| 2024-11-15 | [volume_anomaly_5_60_t2.0__hold5d](../signals/volume_anomaly_5_60_t2.0__hold5d.md) | +0.5% | -2.5% | [run #12](signal_run:12) |
+| 2026-03-05 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -1.8% | +0.9% | [run #24](signal_run:24) |
+| 2026-02-13 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -12.3% | -3.4% | [run #24](signal_run:24) |
+| 2026-02-11 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -14.1% | -8.1% | [run #24](signal_run:24) |
+| 2026-02-09 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -11.2% | -6.9% | [run #24](signal_run:24) |
+| 2026-02-04 | [volume_anomaly_5_60_t2.0__holdout_15d](../signals/volume_anomaly_5_60_t2.0__holdout_15d.md) | +3.7% | -3.0% | [run #22](signal_run:22) |
+| 2026-02-04 | [volume_anomaly_5_60_t2.0__holdout_10d](../signals/volume_anomaly_5_60_t2.0__holdout_10d.md) | +5.6% | -2.7% | [run #23](signal_run:23) |
+| 2026-01-16 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -8.2% | -10.0% | [run #24](signal_run:24) |
+| 2025-12-31 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -2.4% | -11.3% | [run #24](signal_run:24) |
+| 2025-12-19 | [volume_anomaly_5_60_t2.0__holdout_15d](../signals/volume_anomaly_5_60_t2.0__holdout_15d.md) | +8.1% | -1.9% | [run #22](signal_run:22) |
+| 2025-12-19 | [volume_anomaly_5_60_t2.0__holdout_10d](../signals/volume_anomaly_5_60_t2.0__holdout_10d.md) | +8.3% | +1.0% | [run #23](signal_run:23) |
+| 2025-10-23 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -0.8% | +6.1% | [run #24](signal_run:24) |
+| 2025-10-06 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +4.0% | +8.7% | [run #24](signal_run:24) |
+| 2025-10-03 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +4.3% | +6.7% | [run #24](signal_run:24) |
+| 2025-10-01 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +2.0% | +2.0% | [run #24](signal_run:24) |
+| 2025-09-18 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +0.6% | -5.1% | [run #24](signal_run:24) |
+| 2025-08-20 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -2.4% | -10.8% | [run #24](signal_run:24) |
+| 2025-08-13 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -3.6% | -8.4% | [run #24](signal_run:24) |
+| 2025-08-11 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -1.8% | -7.0% | [run #24](signal_run:24) |
+| 2025-08-05 | [volume_anomaly_5_60_t2.0__holdout_15d](../signals/volume_anomaly_5_60_t2.0__holdout_15d.md) | -1.7% | -2.9% | [run #22](signal_run:22) |
+| 2025-08-05 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -5.0% | -6.9% | [run #24](signal_run:24) |
 <!-- AUTOGEN:END signal_history -->
 
 ## Watch list

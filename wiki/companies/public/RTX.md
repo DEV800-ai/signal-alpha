@@ -58,26 +58,26 @@ GTF inspection program executing within reserved cost and missile backlog conver
 
 | Date | Signal | Return | Alpha vs Sector | Source |
 |------|--------|--------|-----------------|--------|
+| 2026-03-05 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -3.1% | -0.4% | [run #24](signal_run:24) |
+| 2025-11-13 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +6.6% | -0.8% | [run #24](signal_run:24) |
+| 2025-09-24 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +7.2% | +4.2% | [run #24](signal_run:24) |
+| 2025-05-05 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +16.9% | +4.1% | [run #24](signal_run:24) |
+| 2025-02-03 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +3.9% | +5.3% | [run #24](signal_run:24) |
 | 2024-10-22 | [8k_any](../signals/8k_any.md) | -6.0% | -8.4% | [run #5](signal_run:5) |
-| 2024-10-16 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | -4.2% | +1.3% | [run #18](signal_run:18) |
-| 2024-10-16 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | -3.6% | -1.8% | [run #19](signal_run:19) |
-| 2024-10-16 | [8k_any](../signals/8k_any.md) | -4.2% | -3.9% | [run #5](signal_run:5) |
-| 2024-10-16 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | -0.2% | +2.4% | [run #17](signal_run:17) |
-| 2024-10-16 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | -2.7% | -3.8% | [run #20](signal_run:20) |
 | 2024-10-16 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | -4.2% | -3.9% | [run #21](signal_run:21) |
+| 2024-10-16 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | -2.7% | -3.8% | [run #20](signal_run:20) |
+| 2024-10-16 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | -0.2% | +2.4% | [run #17](signal_run:17) |
+| 2024-10-16 | [8k_any](../signals/8k_any.md) | -4.2% | -3.9% | [run #5](signal_run:5) |
+| 2024-10-16 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | -3.6% | -1.8% | [run #19](signal_run:19) |
+| 2024-10-16 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | -4.2% | +1.3% | [run #18](signal_run:18) |
 | 2024-10-16 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -4.2% | -3.9% | [run #6](signal_run:6) |
-| 2024-08-30 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | -1.7% | -3.6% | [run #20](signal_run:20) |
-| 2024-08-30 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | +2.2% | -3.2% | [run #21](signal_run:21) |
-| 2024-08-30 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | -1.4% | +0.9% | [run #17](signal_run:17) |
-| 2024-08-30 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | -2.5% | -4.4% | [run #19](signal_run:19) |
 | 2024-08-30 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | -3.9% | -3.3% | [run #18](signal_run:18) |
 | 2024-08-30 | [8k_any](../signals/8k_any.md) | +2.2% | -3.2% | [run #5](signal_run:5) |
+| 2024-08-30 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | +2.2% | -3.2% | [run #21](signal_run:21) |
+| 2024-08-30 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | -2.5% | -4.4% | [run #19](signal_run:19) |
+| 2024-08-30 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | -1.7% | -3.6% | [run #20](signal_run:20) |
 | 2024-08-30 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +2.2% | -3.2% | [run #6](signal_run:6) |
-| 2024-07-31 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +2.3% | +2.2% | [run #6](signal_run:6) |
-| 2024-07-31 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | +0.1% | -0.1% | [run #19](signal_run:19) |
-| 2024-07-31 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | +3.3% | +1.8% | [run #20](signal_run:20) |
-| 2024-07-31 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | +2.3% | +2.2% | [run #21](signal_run:21) |
-| 2024-07-31 | [8k_any](../signals/8k_any.md) | +2.3% | +2.2% | [run #5](signal_run:5) |
+| 2024-08-30 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | -1.4% | +0.9% | [run #17](signal_run:17) |
 <!-- AUTOGEN:END signal_history -->
 
 ## Watch list

@@ -58,26 +58,26 @@ Sustained GPU supply shortage through 2025–2026, continued hyperscaler capex g
 
 | Date | Signal | Return | Alpha vs Sector | Source |
 |------|--------|--------|-----------------|--------|
+| 2026-03-06 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +14.2% | -17.9% | [run #24](signal_run:24) |
+| 2026-01-23 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -2.6% | -0.6% | [run #24](signal_run:24) |
+| 2025-08-05 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -1.4% | -13.7% | [run #24](signal_run:24) |
+| 2025-07-01 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +17.4% | +11.8% | [run #24](signal_run:24) |
+| 2025-04-15 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +32.6% | +7.6% | [run #24](signal_run:24) |
+| 2025-03-07 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -10.2% | +6.6% | [run #24](signal_run:24) |
+| 2025-01-29 | [volume_anomaly_5_60_t2.0__holdout_10d](../signals/volume_anomaly_5_60_t2.0__holdout_10d.md) | +6.8% | +5.4% | [run #23](signal_run:23) |
+| 2025-01-29 | [volume_anomaly_5_60_t2.0__holdout_15d](../signals/volume_anomaly_5_60_t2.0__holdout_15d.md) | +13.7% | +6.9% | [run #22](signal_run:22) |
+| 2025-01-17 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -15.6% | -3.8% | [run #24](signal_run:24) |
 | 2024-11-20 | [8k_any](../signals/8k_any.md) | +2.4% | -5.5% | [run #5](signal_run:5) |
 | 2024-11-07 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | -2.0% | +5.0% | [run #18](signal_run:18) |
 | 2024-11-07 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | -6.8% | -0.3% | [run #19](signal_run:19) |
+| 2024-11-07 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | -6.7% | -0.9% | [run #20](signal_run:20) |
 | 2024-11-07 | [8k_any](../signals/8k_any.md) | -8.5% | -2.0% | [run #5](signal_run:5) |
 | 2024-11-07 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -8.5% | -2.0% | [run #6](signal_run:6) |
-| 2024-11-07 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | -6.7% | -0.9% | [run #20](signal_run:20) |
 | 2024-11-07 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | -8.5% | -2.0% | [run #21](signal_run:21) |
 | 2024-11-07 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | -2.7% | +4.7% | [run #17](signal_run:17) |
 | 2024-08-28 | [8k_any](../signals/8k_any.md) | +10.3% | +8.0% | [run #5](signal_run:5) |
-| 2024-07-02 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | +11.5% | +4.9% | [run #17](signal_run:17) |
-| 2024-07-02 | [8k_any](../signals/8k_any.md) | -2.5% | +7.3% | [run #5](signal_run:5) |
-| 2024-07-02 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | -2.5% | +7.3% | [run #21](signal_run:21) |
-| 2024-07-02 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | -3.5% | +4.2% | [run #20](signal_run:20) |
 | 2024-07-02 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | +0.1% | +1.4% | [run #18](signal_run:18) |
-| 2024-07-02 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | -7.2% | +2.0% | [run #19](signal_run:19) |
-| 2024-07-02 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -2.5% | +7.3% | [run #6](signal_run:6) |
-| 2024-06-07 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | +0.6% | -2.2% | [run #18](signal_run:18) |
-| 2024-06-07 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -1.1% | -1.7% | [run #6](signal_run:6) |
-| 2024-06-07 | [8k_any](../signals/8k_any.md) | -1.1% | -1.7% | [run #5](signal_run:5) |
-| 2024-06-07 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | +11.3% | +1.2% | [run #20](signal_run:20) |
+| 2024-07-02 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | +11.5% | +4.9% | [run #17](signal_run:17) |
 <!-- AUTOGEN:END signal_history -->
 
 ## Watch list

@@ -58,26 +58,26 @@ Stable government IT services revenue with modest growth. No major program win a
 
 | Date | Signal | Return | Alpha vs Sector | Source |
 |------|--------|--------|-----------------|--------|
-| 2024-12-24 | [volume_anomaly_5_60_t2.0_defense_excl_speculative](../signals/volume_anomaly_5_60_t2.0_defense_excl_speculative.md) | -4.8% | -11.0% | [run #10](signal_run:10) |
-| 2024-12-24 | [volume_anomaly_5_60_t2.0__hold15d](../signals/volume_anomaly_5_60_t2.0__hold15d.md) | +5.1% | +1.0% | [run #14](signal_run:14) |
-| 2024-12-24 | [volume_anomaly_5_60_t2.0_space_defense](../signals/volume_anomaly_5_60_t2.0_space_defense.md) | -4.8% | -11.0% | [run #9](signal_run:9) |
-| 2024-12-24 | [volume_anomaly_5_60_t2.0__hold30d](../signals/volume_anomaly_5_60_t2.0__hold30d.md) | -4.8% | -11.0% | [run #16](signal_run:16) |
-| 2024-12-24 | [volume_anomaly_5_60_t2.0__hold20d](../signals/volume_anomaly_5_60_t2.0__hold20d.md) | -0.5% | -6.7% | [run #15](signal_run:15) |
-| 2024-12-24 | [volume_anomaly_5_60_t2.0__hold5d](../signals/volume_anomaly_5_60_t2.0__hold5d.md) | +0.6% | +2.2% | [run #12](signal_run:12) |
-| 2024-12-24 | [volume_anomaly_5_60_t2.0__hold10d](../signals/volume_anomaly_5_60_t2.0__hold10d.md) | +4.5% | +6.9% | [run #13](signal_run:13) |
-| 2024-12-24 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | -4.8% | -11.0% | [run #2](signal_run:2) |
-| 2024-12-16 | [volume_anomaly_5_60_t2.0_space_defense](../signals/volume_anomaly_5_60_t2.0_space_defense.md) | -5.6% | -9.7% | [run #9](signal_run:9) |
-| 2024-12-16 | [volume_anomaly_5_60_t2.0__hold15d](../signals/volume_anomaly_5_60_t2.0__hold15d.md) | -0.1% | +1.9% | [run #14](signal_run:14) |
-| 2024-12-16 | [volume_anomaly_5_60_t2.0_defense_excl_speculative](../signals/volume_anomaly_5_60_t2.0_defense_excl_speculative.md) | -5.6% | -9.7% | [run #10](signal_run:10) |
-| 2024-12-16 | [volume_anomaly_5_60_t2.0__hold5d](../signals/volume_anomaly_5_60_t2.0__hold5d.md) | -2.1% | -0.8% | [run #12](signal_run:12) |
-| 2024-12-16 | [volume_anomaly_5_60_t2.0__hold30d](../signals/volume_anomaly_5_60_t2.0__hold30d.md) | -5.6% | -9.7% | [run #16](signal_run:16) |
-| 2024-12-16 | [volume_anomaly_5_60_t2.0__hold10d](../signals/volume_anomaly_5_60_t2.0__hold10d.md) | -2.5% | -1.1% | [run #13](signal_run:13) |
-| 2024-12-16 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | -5.6% | -9.7% | [run #2](signal_run:2) |
-| 2024-12-16 | [volume_anomaly_5_60_t2.0__hold20d](../signals/volume_anomaly_5_60_t2.0__hold20d.md) | +2.9% | +1.0% | [run #15](signal_run:15) |
-| 2024-12-11 | [volume_anomaly_5_60_t3.0_space_defense](../signals/volume_anomaly_5_60_t3.0_space_defense.md) | -6.5% | -10.6% | [run #11](signal_run:11) |
-| 2024-12-06 | [volume_anomaly_5_60_t2.0__hold15d](../signals/volume_anomaly_5_60_t2.0__hold15d.md) | -6.6% | -3.0% | [run #14](signal_run:14) |
-| 2024-12-06 | [volume_anomaly_5_60_t2.0__hold20d](../signals/volume_anomaly_5_60_t2.0__hold20d.md) | -5.4% | -0.8% | [run #15](signal_run:15) |
-| 2024-12-06 | [volume_anomaly_5_60_t2.0_defense_excl_speculative](../signals/volume_anomaly_5_60_t2.0_defense_excl_speculative.md) | -7.0% | -11.4% | [run #10](signal_run:10) |
+| 2026-03-13 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +4.4% | +11.0% | [run #24](signal_run:24) |
+| 2026-02-17 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +11.2% | +18.5% | [run #24](signal_run:24) |
+| 2026-02-13 | [volume_anomaly_5_60_t2.0__holdout_10d](../signals/volume_anomaly_5_60_t2.0__holdout_10d.md) | +6.3% | +0.3% | [run #23](signal_run:23) |
+| 2026-02-13 | [volume_anomaly_5_60_t2.0__holdout_15d](../signals/volume_anomaly_5_60_t2.0__holdout_15d.md) | +9.7% | +7.1% | [run #22](signal_run:22) |
+| 2026-02-11 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +20.8% | +26.8% | [run #24](signal_run:24) |
+| 2025-12-04 | [volume_anomaly_5_60_t2.0__holdout_10d](../signals/volume_anomaly_5_60_t2.0__holdout_10d.md) | +0.3% | -1.8% | [run #23](signal_run:23) |
+| 2025-12-04 | [volume_anomaly_5_60_t2.0__holdout_15d](../signals/volume_anomaly_5_60_t2.0__holdout_15d.md) | +2.0% | -4.2% | [run #22](signal_run:22) |
+| 2025-11-13 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +15.8% | +8.4% | [run #24](signal_run:24) |
+| 2025-10-23 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +2.9% | +9.8% | [run #24](signal_run:24) |
+| 2025-10-06 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -14.9% | -10.2% | [run #24](signal_run:24) |
+| 2025-10-01 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -9.5% | -9.5% | [run #24](signal_run:24) |
+| 2025-09-25 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -6.9% | -7.2% | [run #24](signal_run:24) |
+| 2025-09-22 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -10.0% | -13.6% | [run #24](signal_run:24) |
+| 2025-09-08 | [volume_anomaly_5_60_t2.0__holdout_10d](../signals/volume_anomaly_5_60_t2.0__holdout_10d.md) | -1.1% | -5.4% | [run #23](signal_run:23) |
+| 2025-09-08 | [volume_anomaly_5_60_t2.0__holdout_15d](../signals/volume_anomaly_5_60_t2.0__holdout_15d.md) | -5.4% | -9.9% | [run #22](signal_run:22) |
+| 2025-08-29 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -17.7% | -23.5% | [run #24](signal_run:24) |
+| 2025-07-24 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | -10.0% | -10.5% | [run #24](signal_run:24) |
+| 2025-06-09 | [8k_excl_earnings__holdout_30d](../signals/8k_excl_earnings__holdout_30d.md) | +11.7% | +3.6% | [run #24](signal_run:24) |
+| 2025-06-03 | [volume_anomaly_5_60_t2.0__holdout_15d](../signals/volume_anomaly_5_60_t2.0__holdout_15d.md) | +3.9% | +2.4% | [run #22](signal_run:22) |
+| 2025-06-03 | [volume_anomaly_5_60_t2.0__holdout_10d](../signals/volume_anomaly_5_60_t2.0__holdout_10d.md) | +1.5% | +1.6% | [run #23](signal_run:23) |
 <!-- AUTOGEN:END signal_history -->
 
 ## Watch list
