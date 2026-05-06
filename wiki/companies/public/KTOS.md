@@ -58,26 +58,26 @@ Attritable drone concept winning DoD production contracts and target drone busin
 
 | Date | Signal | Return | Alpha vs Sector | Source |
 |------|--------|--------|-----------------|--------|
+| 2024-12-20 | [volume_anomaly_5_60_t2.0__hold10d](../signals/volume_anomaly_5_60_t2.0__hold10d.md) | +7.2% | +8.7% | [run #13](signal_run:13) |
+| 2024-12-20 | [volume_anomaly_5_60_t2.0__hold15d](../signals/volume_anomaly_5_60_t2.0__hold15d.md) | +29.3% | +27.5% | [run #14](signal_run:14) |
 | 2024-12-20 | [volume_anomaly_5_60_t2.0_space_defense](../signals/volume_anomaly_5_60_t2.0_space_defense.md) | +23.5% | +15.8% | [run #9](signal_run:9) |
-| 2024-12-20 | [volume_anomaly_5_60_t2.0_defense_excl_speculative](../signals/volume_anomaly_5_60_t2.0_defense_excl_speculative.md) | +23.5% | +15.8% | [run #10](signal_run:10) |
+| 2024-12-20 | [volume_anomaly_5_60_t2.0__hold30d](../signals/volume_anomaly_5_60_t2.0__hold30d.md) | +23.5% | +15.8% | [run #16](signal_run:16) |
 | 2024-12-20 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +23.5% | +15.8% | [run #2](signal_run:2) |
-| 2024-11-11 | [volume_anomaly_5_60_t2.0_defense_excl_speculative](../signals/volume_anomaly_5_60_t2.0_defense_excl_speculative.md) | -1.6% | +4.5% | [run #10](signal_run:10) |
+| 2024-12-20 | [volume_anomaly_5_60_t2.0__hold20d](../signals/volume_anomaly_5_60_t2.0__hold20d.md) | +30.4% | +22.5% | [run #15](signal_run:15) |
+| 2024-12-20 | [volume_anomaly_5_60_t2.0__hold5d](../signals/volume_anomaly_5_60_t2.0__hold5d.md) | +1.0% | +1.3% | [run #12](signal_run:12) |
+| 2024-12-20 | [volume_anomaly_5_60_t2.0_defense_excl_speculative](../signals/volume_anomaly_5_60_t2.0_defense_excl_speculative.md) | +23.5% | +15.8% | [run #10](signal_run:10) |
 | 2024-11-11 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | -1.6% | +4.5% | [run #2](signal_run:2) |
+| 2024-11-11 | [volume_anomaly_5_60_t2.0__hold5d](../signals/volume_anomaly_5_60_t2.0__hold5d.md) | -8.7% | -4.4% | [run #12](signal_run:12) |
+| 2024-11-11 | [volume_anomaly_5_60_t2.0__hold30d](../signals/volume_anomaly_5_60_t2.0__hold30d.md) | -1.6% | +4.5% | [run #16](signal_run:16) |
+| 2024-11-11 | [volume_anomaly_5_60_t2.0_defense_excl_speculative](../signals/volume_anomaly_5_60_t2.0_defense_excl_speculative.md) | -1.6% | +4.5% | [run #10](signal_run:10) |
 | 2024-11-11 | [volume_anomaly_5_60_t2.0_space_defense](../signals/volume_anomaly_5_60_t2.0_space_defense.md) | -1.6% | +4.5% | [run #9](signal_run:9) |
+| 2024-11-11 | [volume_anomaly_5_60_t2.0__hold15d](../signals/volume_anomaly_5_60_t2.0__hold15d.md) | -2.1% | +0.4% | [run #14](signal_run:14) |
+| 2024-11-11 | [volume_anomaly_5_60_t2.0__hold10d](../signals/volume_anomaly_5_60_t2.0__hold10d.md) | -2.7% | +0.1% | [run #13](signal_run:13) |
+| 2024-11-11 | [volume_anomaly_5_60_t2.0__hold20d](../signals/volume_anomaly_5_60_t2.0__hold20d.md) | +2.3% | +6.6% | [run #15](signal_run:15) |
 | 2024-11-07 | [earnings_surprise_q75](../signals/earnings_surprise_q75.md) | +35.3% | +31.2% | [run #4](signal_run:4) |
 | 2024-11-07 | [earnings_surprise_q75](../signals/earnings_surprise_q75.md) | +9.4% | +12.8% | [run #3](signal_run:3) |
 | 2024-11-07 | [8k_any](../signals/8k_any.md) | +9.4% | +12.8% | [run #5](signal_run:5) |
-| 2024-10-07 | [8k_any](../signals/8k_any.md) | -0.7% | +0.1% | [run #5](signal_run:5) |
 | 2024-10-07 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -0.7% | +0.1% | [run #6](signal_run:6) |
-| 2024-09-20 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | -2.5% | -0.4% | [run #2](signal_run:2) |
-| 2024-09-20 | [volume_anomaly_5_60_t2.0_space_defense](../signals/volume_anomaly_5_60_t2.0_space_defense.md) | -2.5% | -0.4% | [run #9](signal_run:9) |
-| 2024-09-20 | [volume_anomaly_5_60_t2.0_defense_excl_speculative](../signals/volume_anomaly_5_60_t2.0_defense_excl_speculative.md) | -2.5% | -0.4% | [run #10](signal_run:10) |
-| 2024-08-07 | [8k_any](../signals/8k_any.md) | +19.3% | +12.2% | [run #5](signal_run:5) |
-| 2024-08-07 | [earnings_surprise_q75](../signals/earnings_surprise_q75.md) | +19.3% | +12.2% | [run #3](signal_run:3) |
-| 2024-08-07 | [earnings_surprise_q75](../signals/earnings_surprise_q75.md) | +19.6% | +13.2% | [run #4](signal_run:4) |
-| 2024-05-24 | [8k_any](../signals/8k_any.md) | -3.2% | -2.2% | [run #5](signal_run:5) |
-| 2024-05-24 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -3.2% | -2.2% | [run #6](signal_run:6) |
-| 2024-05-07 | [8k_any](../signals/8k_any.md) | +5.2% | +4.3% | [run #5](signal_run:5) |
 <!-- AUTOGEN:END signal_history -->
 
 ## Watch list

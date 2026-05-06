@@ -59,25 +59,25 @@ Sustained GPU supply shortage through 2025–2026, continued hyperscaler capex g
 | Date | Signal | Return | Alpha vs Sector | Source |
 |------|--------|--------|-----------------|--------|
 | 2024-11-20 | [8k_any](../signals/8k_any.md) | +2.4% | -5.5% | [run #5](signal_run:5) |
-| 2024-11-07 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -8.5% | -2.0% | [run #6](signal_run:6) |
+| 2024-11-07 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | -2.0% | +5.0% | [run #18](signal_run:18) |
+| 2024-11-07 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | -6.8% | -0.3% | [run #19](signal_run:19) |
 | 2024-11-07 | [8k_any](../signals/8k_any.md) | -8.5% | -2.0% | [run #5](signal_run:5) |
+| 2024-11-07 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -8.5% | -2.0% | [run #6](signal_run:6) |
+| 2024-11-07 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | -6.7% | -0.9% | [run #20](signal_run:20) |
+| 2024-11-07 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | -8.5% | -2.0% | [run #21](signal_run:21) |
+| 2024-11-07 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | -2.7% | +4.7% | [run #17](signal_run:17) |
 | 2024-08-28 | [8k_any](../signals/8k_any.md) | +10.3% | +8.0% | [run #5](signal_run:5) |
+| 2024-07-02 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | +11.5% | +4.9% | [run #17](signal_run:17) |
 | 2024-07-02 | [8k_any](../signals/8k_any.md) | -2.5% | +7.3% | [run #5](signal_run:5) |
+| 2024-07-02 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | -2.5% | +7.3% | [run #21](signal_run:21) |
+| 2024-07-02 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | -3.5% | +4.2% | [run #20](signal_run:20) |
+| 2024-07-02 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | +0.1% | +1.4% | [run #18](signal_run:18) |
+| 2024-07-02 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | -7.2% | +2.0% | [run #19](signal_run:19) |
 | 2024-07-02 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -2.5% | +7.3% | [run #6](signal_run:6) |
+| 2024-06-07 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | +0.6% | -2.2% | [run #18](signal_run:18) |
 | 2024-06-07 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -1.1% | -1.7% | [run #6](signal_run:6) |
 | 2024-06-07 | [8k_any](../signals/8k_any.md) | -1.1% | -1.7% | [run #5](signal_run:5) |
-| 2024-05-22 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +27.7% | +19.3% | [run #6](signal_run:6) |
-| 2024-05-22 | [8k_any](../signals/8k_any.md) | +27.7% | +19.3% | [run #5](signal_run:5) |
-| 2024-03-14 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +0.7% | +1.0% | [run #6](signal_run:6) |
-| 2024-03-14 | [8k_any](../signals/8k_any.md) | +0.7% | +1.0% | [run #5](signal_run:5) |
-| 2024-02-21 | [8k_any](../signals/8k_any.md) | +15.7% | +12.0% | [run #5](signal_run:5) |
-| 2023-11-21 | [earnings_surprise_q75](../signals/earnings_surprise_q75.md) | -0.8% | -6.5% | [run #3](signal_run:3) |
-| 2023-11-21 | [8k_any](../signals/8k_any.md) | -0.8% | -6.5% | [run #5](signal_run:5) |
-| 2023-11-21 | [earnings_surprise_q75](../signals/earnings_surprise_q75.md) | +36.3% | +18.5% | [run #4](signal_run:4) |
-| 2023-10-24 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +5.2% | -6.7% | [run #6](signal_run:6) |
-| 2023-10-24 | [8k_any](../signals/8k_any.md) | +5.2% | -6.7% | [run #5](signal_run:5) |
-| 2023-10-17 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +12.7% | +2.8% | [run #6](signal_run:6) |
-| 2023-10-17 | [8k_any](../signals/8k_any.md) | +12.7% | +2.8% | [run #5](signal_run:5) |
+| 2024-06-07 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | +11.3% | +1.2% | [run #20](signal_run:20) |
 <!-- AUTOGEN:END signal_history -->
 
 ## Watch list

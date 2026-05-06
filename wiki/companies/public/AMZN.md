@@ -61,23 +61,23 @@ AWS reaccelerating to 20%+ growth and advertising continuing at current trajecto
 | 2024-10-31 | [earnings_surprise_q75](../signals/earnings_surprise_q75.md) | +18.7% | +18.6% | [run #4](signal_run:4) |
 | 2024-10-31 | [earnings_surprise_q75](../signals/earnings_surprise_q75.md) | +15.6% | +13.8% | [run #3](signal_run:3) |
 | 2024-10-31 | [8k_any](../signals/8k_any.md) | +15.6% | +13.8% | [run #5](signal_run:5) |
-| 2024-08-06 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +14.0% | +7.2% | [run #2](signal_run:2) |
+| 2024-08-06 | [volume_anomaly_5_60_t2.0__hold20d](../signals/volume_anomaly_5_60_t2.0__hold20d.md) | +5.0% | +5.1% | [run #15](signal_run:15) |
 | 2024-08-06 | [volume_anomaly_5_60_t2.0_ai_infra](../signals/volume_anomaly_5_60_t2.0_ai_infra.md) | +14.0% | +7.2% | [run #8](signal_run:8) |
+| 2024-08-06 | [volume_anomaly_5_60_t2.0__hold15d](../signals/volume_anomaly_5_60_t2.0__hold15d.md) | +4.2% | -4.1% | [run #14](signal_run:14) |
+| 2024-08-06 | [volume_anomaly_5_60_t2.0__hold5d](../signals/volume_anomaly_5_60_t2.0__hold5d.md) | +3.2% | -2.5% | [run #12](signal_run:12) |
+| 2024-08-06 | [volume_anomaly_5_60_t2.0__hold10d](../signals/volume_anomaly_5_60_t2.0__hold10d.md) | +7.9% | -2.3% | [run #13](signal_run:13) |
+| 2024-08-06 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +14.0% | +7.2% | [run #2](signal_run:2) |
+| 2024-08-06 | [volume_anomaly_5_60_t2.0__hold30d](../signals/volume_anomaly_5_60_t2.0__hold30d.md) | +14.0% | +7.2% | [run #16](signal_run:16) |
+| 2024-08-01 | [8k_any](../signals/8k_any.md) | +11.0% | +5.9% | [run #5](signal_run:5) |
 | 2024-08-01 | [earnings_surprise_q75](../signals/earnings_surprise_q75.md) | +11.0% | +5.9% | [run #3](signal_run:3) |
 | 2024-08-01 | [earnings_surprise_q75](../signals/earnings_surprise_q75.md) | +13.6% | +3.5% | [run #4](signal_run:4) |
-| 2024-08-01 | [8k_any](../signals/8k_any.md) | +11.0% | +5.9% | [run #5](signal_run:5) |
-| 2024-05-24 | [8k_any](../signals/8k_any.md) | +11.1% | +0.3% | [run #5](signal_run:5) |
+| 2024-05-24 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | +3.9% | +3.5% | [run #18](signal_run:18) |
+| 2024-05-24 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | +11.1% | +0.3% | [run #21](signal_run:21) |
 | 2024-05-24 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +11.1% | +0.3% | [run #6](signal_run:6) |
-| 2024-05-14 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +6.2% | -2.3% | [run #6](signal_run:6) |
-| 2024-05-14 | [8k_any](../signals/8k_any.md) | +6.2% | -2.3% | [run #5](signal_run:5) |
-| 2024-05-03 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -1.5% | -19.5% | [run #6](signal_run:6) |
-| 2024-05-03 | [8k_any](../signals/8k_any.md) | -1.5% | -19.5% | [run #5](signal_run:5) |
-| 2024-04-30 | [earnings_surprise_q75](../signals/earnings_surprise_q75.md) | +2.3% | -17.8% | [run #3](signal_run:3) |
-| 2024-04-30 | [earnings_surprise_q75](../signals/earnings_surprise_q75.md) | +1.1% | -9.3% | [run #4](signal_run:4) |
-| 2024-04-30 | [8k_any](../signals/8k_any.md) | +2.3% | -17.8% | [run #5](signal_run:5) |
-| 2024-04-11 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -3.3% | -9.9% | [run #6](signal_run:6) |
-| 2024-04-11 | [8k_any](../signals/8k_any.md) | -3.3% | -9.9% | [run #5](signal_run:5) |
-| 2024-02-01 | [earnings_surprise_q75](../signals/earnings_surprise_q75.md) | +3.8% | -9.5% | [run #3](signal_run:3) |
+| 2024-05-24 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | -1.4% | +1.7% | [run #17](signal_run:17) |
+| 2024-05-24 | [8k_any](../signals/8k_any.md) | +11.1% | +0.3% | [run #5](signal_run:5) |
+| 2024-05-24 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | +3.8% | +1.6% | [run #20](signal_run:20) |
+| 2024-05-24 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | +2.0% | -4.6% | [run #19](signal_run:19) |
 <!-- AUTOGEN:END signal_history -->
 
 ## Watch list

@@ -58,26 +58,26 @@ Intel designs and manufactures CPUs, GPUs, and networking silicon. Its foundry b
 
 | Date | Signal | Return | Alpha vs Sector | Source |
 |------|--------|--------|-----------------|--------|
+| 2024-12-06 | [volume_anomaly_5_60_t2.0__hold10d](../signals/volume_anomaly_5_60_t2.0__hold10d.md) | -6.5% | -5.7% | [run #13](signal_run:13) |
+| 2024-12-06 | [volume_anomaly_5_60_t2.0__hold15d](../signals/volume_anomaly_5_60_t2.0__hold15d.md) | -4.5% | -4.4% | [run #14](signal_run:14) |
+| 2024-12-06 | [volume_anomaly_5_60_t2.0__hold5d](../signals/volume_anomaly_5_60_t2.0__hold5d.md) | -3.7% | -6.2% | [run #12](signal_run:12) |
 | 2024-12-06 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +2.0% | -5.9% | [run #2](signal_run:2) |
+| 2024-12-06 | [volume_anomaly_5_60_t2.0__hold20d](../signals/volume_anomaly_5_60_t2.0__hold20d.md) | -5.3% | -8.5% | [run #15](signal_run:15) |
+| 2024-12-06 | [volume_anomaly_5_60_t2.0__hold30d](../signals/volume_anomaly_5_60_t2.0__hold30d.md) | +2.0% | -5.9% | [run #16](signal_run:16) |
 | 2024-12-06 | [volume_anomaly_5_60_t2.0_ai_infra](../signals/volume_anomaly_5_60_t2.0_ai_infra.md) | +2.0% | -5.9% | [run #8](signal_run:8) |
-| 2024-12-05 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +3.4% | -2.9% | [run #6](signal_run:6) |
+| 2024-12-05 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | -4.5% | -10.7% | [run #20](signal_run:20) |
 | 2024-12-05 | [8k_any](../signals/8k_any.md) | +3.4% | -2.9% | [run #5](signal_run:5) |
+| 2024-12-05 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | -9.6% | -6.1% | [run #18](signal_run:18) |
+| 2024-12-05 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | -4.6% | -4.4% | [run #19](signal_run:19) |
+| 2024-12-05 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | -1.8% | -3.5% | [run #17](signal_run:17) |
+| 2024-12-05 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +3.4% | -2.9% | [run #6](signal_run:6) |
+| 2024-12-05 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | +3.4% | -2.9% | [run #21](signal_run:21) |
+| 2024-12-03 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | -2.3% | -5.9% | [run #21](signal_run:21) |
+| 2024-12-03 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | -9.2% | -9.9% | [run #18](signal_run:18) |
+| 2024-12-03 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | -10.7% | -7.4% | [run #17](signal_run:17) |
+| 2024-12-03 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | -9.6% | -7.1% | [run #20](signal_run:20) |
+| 2024-12-03 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | -10.3% | -9.5% | [run #19](signal_run:19) |
 | 2024-12-03 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -2.3% | -5.9% | [run #6](signal_run:6) |
-| 2024-12-03 | [8k_any](../signals/8k_any.md) | -2.3% | -5.9% | [run #5](signal_run:5) |
-| 2024-11-27 | [8k_any](../signals/8k_any.md) | -18.3% | -22.4% | [run #5](signal_run:5) |
-| 2024-11-27 | [8k_item_1_01](../signals/8k_item_1_01.md) | -18.3% | -22.4% | [run #7](signal_run:7) |
-| 2024-11-27 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -18.3% | -22.4% | [run #6](signal_run:6) |
-| 2024-10-31 | [8k_any](../signals/8k_any.md) | -12.4% | -14.2% | [run #5](signal_run:5) |
-| 2024-10-31 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -12.4% | -14.2% | [run #6](signal_run:6) |
-| 2024-09-20 | [volume_anomaly_5_60_t2.0_ai_infra](../signals/volume_anomaly_5_60_t2.0_ai_infra.md) | +2.3% | +4.2% | [run #8](signal_run:8) |
-| 2024-09-20 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +2.3% | +4.2% | [run #2](signal_run:2) |
-| 2024-08-22 | [8k_any](../signals/8k_any.md) | +10.1% | +10.5% | [run #5](signal_run:5) |
-| 2024-08-22 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +10.1% | +10.5% | [run #6](signal_run:6) |
-| 2024-08-02 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +8.1% | -7.3% | [run #2](signal_run:2) |
-| 2024-08-02 | [volume_anomaly_5_60_t2.0_ai_infra](../signals/volume_anomaly_5_60_t2.0_ai_infra.md) | +8.1% | -7.3% | [run #8](signal_run:8) |
-| 2024-08-01 | [8k_any](../signals/8k_any.md) | -8.2% | -13.3% | [run #5](signal_run:5) |
-| 2024-06-14 | [8k_item_1_01](../signals/8k_item_1_01.md) | +0.6% | +9.6% | [run #7](signal_run:7) |
-| 2024-06-14 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +0.6% | +9.6% | [run #6](signal_run:6) |
 <!-- AUTOGEN:END signal_history -->
 
 ## Watch list

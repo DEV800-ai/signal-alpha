@@ -58,26 +58,26 @@ Frontier integration proceeding and FWA subscriber additions continuing. T-Mobil
 
 | Date | Signal | Return | Alpha vs Sector | Source |
 |------|--------|--------|-----------------|--------|
-| 2024-12-06 | [8k_any](../signals/8k_any.md) | -4.0% | -4.7% | [run #5](signal_run:5) |
+| 2024-12-06 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | -0.8% | +0.1% | [run #17](signal_run:17) |
+| 2024-12-06 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | -4.0% | -4.7% | [run #21](signal_run:21) |
 | 2024-12-06 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -4.0% | -4.7% | [run #6](signal_run:6) |
-| 2024-10-22 | [8k_any](../signals/8k_any.md) | +1.6% | -7.5% | [run #5](signal_run:5) |
+| 2024-12-06 | [8k_any](../signals/8k_any.md) | -4.0% | -4.7% | [run #5](signal_run:5) |
+| 2024-12-06 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | -6.8% | -2.1% | [run #19](signal_run:19) |
+| 2024-12-06 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | -6.1% | -1.8% | [run #18](signal_run:18) |
+| 2024-12-06 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | -8.5% | -3.4% | [run #20](signal_run:20) |
+| 2024-10-22 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | -1.1% | -4.3% | [run #18](signal_run:18) |
 | 2024-10-22 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +1.6% | -7.5% | [run #6](signal_run:6) |
-| 2024-09-30 | [8k_any](../signals/8k_any.md) | -8.6% | -17.1% | [run #5](signal_run:5) |
+| 2024-10-22 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | -3.6% | -10.2% | [run #19](signal_run:19) |
+| 2024-10-22 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | +0.2% | -3.7% | [run #20](signal_run:20) |
+| 2024-10-22 | [8k_any](../signals/8k_any.md) | +1.6% | -7.5% | [run #5](signal_run:5) |
+| 2024-10-22 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | +1.6% | -7.5% | [run #21](signal_run:21) |
+| 2024-10-22 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | -1.4% | -1.5% | [run #17](signal_run:17) |
+| 2024-09-30 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | -8.6% | -17.1% | [run #21](signal_run:21) |
 | 2024-09-30 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -8.6% | -17.1% | [run #6](signal_run:6) |
-| 2024-09-12 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -3.2% | -12.1% | [run #6](signal_run:6) |
-| 2024-09-12 | [8k_any](../signals/8k_any.md) | -3.2% | -12.1% | [run #5](signal_run:5) |
-| 2024-09-09 | [8k_any](../signals/8k_any.md) | -0.7% | -10.6% | [run #5](signal_run:5) |
-| 2024-09-09 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -0.7% | -10.6% | [run #6](signal_run:6) |
-| 2024-09-05 | [8k_any](../signals/8k_any.md) | +7.5% | -5.1% | [run #5](signal_run:5) |
-| 2024-09-05 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +7.5% | -5.1% | [run #6](signal_run:6) |
-| 2024-08-20 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +9.7% | -0.4% | [run #6](signal_run:6) |
-| 2024-08-20 | [8k_any](../signals/8k_any.md) | +9.7% | -0.4% | [run #5](signal_run:5) |
-| 2024-08-05 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +10.2% | -1.5% | [run #6](signal_run:6) |
-| 2024-08-05 | [8k_any](../signals/8k_any.md) | +10.2% | -1.5% | [run #5](signal_run:5) |
-| 2024-07-31 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +7.9% | +4.0% | [run #6](signal_run:6) |
-| 2024-07-31 | [8k_any](../signals/8k_any.md) | +7.9% | +4.0% | [run #5](signal_run:5) |
-| 2024-07-22 | [8k_any](../signals/8k_any.md) | +10.9% | +4.4% | [run #5](signal_run:5) |
-| 2024-07-22 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +10.9% | +4.4% | [run #6](signal_run:6) |
+| 2024-09-30 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | -1.9% | -3.8% | [run #18](signal_run:18) |
+| 2024-09-30 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | -5.5% | -6.8% | [run #19](signal_run:19) |
+| 2024-09-30 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | -6.8% | -8.2% | [run #20](signal_run:20) |
+| 2024-09-30 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | -2.2% | -2.1% | [run #17](signal_run:17) |
 <!-- AUTOGEN:END signal_history -->
 
 ## Watch list

@@ -58,26 +58,26 @@ Red Hat sustaining 10%+ growth and Watsonx gaining enterprise AI platform tracti
 
 | Date | Signal | Return | Alpha vs Sector | Source |
 |------|--------|--------|-----------------|--------|
+| 2024-12-09 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | -3.0% | -2.3% | [run #19](signal_run:19) |
+| 2024-12-09 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | -2.8% | -4.5% | [run #18](signal_run:18) |
+| 2024-12-09 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | -2.8% | -2.8% | [run #21](signal_run:21) |
+| 2024-12-09 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | +0.3% | -2.4% | [run #17](signal_run:17) |
 | 2024-12-09 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | -2.8% | -2.8% | [run #6](signal_run:6) |
 | 2024-12-09 | [8k_any](../signals/8k_any.md) | -2.8% | -2.8% | [run #5](signal_run:5) |
-| 2024-10-29 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +10.9% | +16.1% | [run #2](signal_run:2) |
+| 2024-12-09 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | -2.9% | -3.7% | [run #20](signal_run:20) |
+| 2024-10-29 | [volume_anomaly_5_60_t2.0__hold10d](../signals/volume_anomaly_5_60_t2.0__hold10d.md) | +0.7% | +4.1% | [run #13](signal_run:13) |
+| 2024-10-29 | [volume_anomaly_5_60_t2.0__hold20d](../signals/volume_anomaly_5_60_t2.0__hold20d.md) | +10.0% | +16.6% | [run #15](signal_run:15) |
+| 2024-10-29 | [volume_anomaly_5_60_t2.0__hold30d](../signals/volume_anomaly_5_60_t2.0__hold30d.md) | +10.9% | +16.1% | [run #16](signal_run:16) |
 | 2024-10-29 | [volume_anomaly_5_60_t2.0_ai_infra](../signals/volume_anomaly_5_60_t2.0_ai_infra.md) | +10.9% | +16.1% | [run #8](signal_run:8) |
-| 2024-10-24 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +10.5% | +15.3% | [run #6](signal_run:6) |
+| 2024-10-29 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +10.9% | +16.1% | [run #2](signal_run:2) |
+| 2024-10-29 | [volume_anomaly_5_60_t2.0__hold5d](../signals/volume_anomaly_5_60_t2.0__hold5d.md) | +1.8% | +3.1% | [run #12](signal_run:12) |
+| 2024-10-29 | [volume_anomaly_5_60_t2.0__hold15d](../signals/volume_anomaly_5_60_t2.0__hold15d.md) | +1.4% | +8.5% | [run #14](signal_run:14) |
 | 2024-10-24 | [8k_any](../signals/8k_any.md) | +10.5% | +15.3% | [run #5](signal_run:5) |
-| 2024-10-23 | [8k_any](../signals/8k_any.md) | +6.9% | +11.1% | [run #5](signal_run:5) |
-| 2024-09-11 | [8k_any](../signals/8k_any.md) | +5.0% | +0.5% | [run #5](signal_run:5) |
-| 2024-09-11 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +5.0% | +0.5% | [run #6](signal_run:6) |
-| 2024-07-25 | [8k_any](../signals/8k_any.md) | +6.8% | +16.6% | [run #5](signal_run:5) |
-| 2024-07-25 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +6.8% | +16.6% | [run #6](signal_run:6) |
-| 2024-07-24 | [8k_any](../signals/8k_any.md) | +9.2% | +16.3% | [run #5](signal_run:5) |
-| 2024-06-21 | [8k_any](../signals/8k_any.md) | +5.4% | +22.6% | [run #5](signal_run:5) |
-| 2024-06-21 | [8k_item_1_01](../signals/8k_item_1_01.md) | +5.4% | +22.6% | [run #7](signal_run:7) |
-| 2024-06-21 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +5.4% | +22.6% | [run #6](signal_run:6) |
-| 2024-05-03 | [8k_any](../signals/8k_any.md) | +3.0% | -15.0% | [run #5](signal_run:5) |
-| 2024-05-03 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +3.0% | -15.0% | [run #6](signal_run:6) |
-| 2024-04-26 | [volume_anomaly_5_60_t2.0_ai_infra](../signals/volume_anomaly_5_60_t2.0_ai_infra.md) | +2.4% | -9.4% | [run #8](signal_run:8) |
-| 2024-04-26 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +2.4% | -9.4% | [run #2](signal_run:2) |
-| 2024-04-25 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +2.1% | -10.1% | [run #6](signal_run:6) |
+| 2024-10-24 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | -3.7% | +2.8% | [run #19](signal_run:19) |
+| 2024-10-24 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | -1.3% | -2.4% | [run #18](signal_run:18) |
+| 2024-10-24 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | +10.5% | +15.3% | [run #21](signal_run:21) |
+| 2024-10-24 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | -4.3% | -0.2% | [run #17](signal_run:17) |
+| 2024-10-24 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | +3.7% | +9.8% | [run #20](signal_run:20) |
 <!-- AUTOGEN:END signal_history -->
 
 ## Watch list

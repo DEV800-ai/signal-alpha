@@ -58,26 +58,26 @@ USM sale process resulting in a transaction. Significant re-rating risk if USM i
 
 | Date | Signal | Return | Alpha vs Sector | Source |
 |------|--------|--------|-----------------|--------|
-| 2024-12-13 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +2.7% | +3.9% | [run #6](signal_run:6) |
+| 2024-12-13 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | -2.7% | +1.1% | [run #18](signal_run:18) |
+| 2024-12-13 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | +2.7% | +3.9% | [run #21](signal_run:21) |
+| 2024-12-13 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | -1.1% | +2.1% | [run #20](signal_run:20) |
 | 2024-12-13 | [8k_any](../signals/8k_any.md) | +2.7% | +3.9% | [run #5](signal_run:5) |
+| 2024-12-13 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +2.7% | +3.9% | [run #6](signal_run:6) |
+| 2024-12-13 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | -3.2% | +0.1% | [run #17](signal_run:17) |
+| 2024-12-13 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | -7.1% | -2.9% | [run #19](signal_run:19) |
+| 2024-11-12 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | +8.8% | +7.7% | [run #18](signal_run:18) |
 | 2024-11-12 | [8k_any](../signals/8k_any.md) | +8.5% | +9.2% | [run #5](signal_run:5) |
+| 2024-11-12 | [8k_excl_earnings__hold15d](../signals/8k_excl_earnings__hold15d.md) | +6.4% | +4.0% | [run #19](signal_run:19) |
+| 2024-11-12 | [8k_excl_earnings__hold20d](../signals/8k_excl_earnings__hold20d.md) | +7.6% | +6.9% | [run #20](signal_run:20) |
+| 2024-11-12 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | -0.3% | +2.2% | [run #17](signal_run:17) |
 | 2024-11-12 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +8.5% | +9.2% | [run #6](signal_run:6) |
-| 2024-11-07 | [8k_item_1_01](../signals/8k_item_1_01.md) | +5.3% | +4.6% | [run #7](signal_run:7) |
+| 2024-11-12 | [8k_excl_earnings__hold30d](../signals/8k_excl_earnings__hold30d.md) | +8.5% | +9.2% | [run #21](signal_run:21) |
+| 2024-11-07 | [8k_excl_earnings__hold5d](../signals/8k_excl_earnings__hold5d.md) | -4.6% | -5.5% | [run #17](signal_run:17) |
 | 2024-11-07 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +5.3% | +4.6% | [run #2](signal_run:2) |
+| 2024-11-07 | [volume_anomaly_5_60_t2.0__hold20d](../signals/volume_anomaly_5_60_t2.0__hold20d.md) | +7.2% | +1.9% | [run #15](signal_run:15) |
+| 2024-11-07 | [8k_excl_earnings__hold10d](../signals/8k_excl_earnings__hold10d.md) | +3.3% | +2.0% | [run #18](signal_run:18) |
 | 2024-11-07 | [8k_any](../signals/8k_any.md) | +5.3% | +4.6% | [run #5](signal_run:5) |
 | 2024-11-07 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +5.3% | +4.6% | [run #6](signal_run:6) |
-| 2024-11-01 | [8k_any](../signals/8k_any.md) | +26.6% | +19.9% | [run #5](signal_run:5) |
-| 2024-10-21 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +22.9% | +13.1% | [run #2](signal_run:2) |
-| 2024-10-18 | [8k_item_1_01](../signals/8k_item_1_01.md) | +15.9% | +9.5% | [run #7](signal_run:7) |
-| 2024-10-18 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +15.9% | +9.5% | [run #6](signal_run:6) |
-| 2024-10-18 | [8k_any](../signals/8k_any.md) | +15.9% | +9.5% | [run #5](signal_run:5) |
-| 2024-08-02 | [8k_any](../signals/8k_any.md) | +29.7% | +17.5% | [run #5](signal_run:5) |
-| 2024-07-16 | [8k_any](../signals/8k_any.md) | +4.7% | +0.3% | [run #5](signal_run:5) |
-| 2024-07-16 | [8k_excl_earnings](../signals/8k_excl_earnings.md) | +4.7% | +0.3% | [run #6](signal_run:6) |
-| 2024-06-21 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +0.2% | -2.3% | [run #2](signal_run:2) |
-| 2024-06-06 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | -3.1% | -6.3% | [run #2](signal_run:2) |
-| 2024-05-29 | [volume_anomaly_5_60_t2.0](../signals/volume_anomaly_5_60_t2.0.md) | +22.0% | +15.7% | [run #2](signal_run:2) |
-| 2024-05-28 | [8k_item_1_01](../signals/8k_item_1_01.md) | +16.0% | +10.5% | [run #7](signal_run:7) |
 <!-- AUTOGEN:END signal_history -->
 
 ## Watch list
