@@ -268,6 +268,73 @@ _HTML = r"""<!DOCTYPE html>
   .issue-loc { color:#7a8aaa; font-size:.7rem; margin-top:.15rem; }
   .empty { color:#7a8aaa; font-size:.78rem; font-style:italic; }
 
+  /* ── Top 10 ───────────────────────────────────────── */
+  .filter-bar { display:flex; gap:1rem; align-items:center; flex-wrap:wrap; padding:.2rem 0; }
+  .filter-group { display:flex; flex-direction:column; gap:.25rem; }
+  .filter-label { font-size:.68rem; color:#8899bb; text-transform:uppercase; letter-spacing:.06em; }
+  .filter-sel {
+    background:#0f1117; color:#e2e8f0; border:1px solid #2d3348;
+    border-radius:6px; padding:.32rem .65rem; font-size:.8rem; outline:none; cursor:pointer;
+  }
+  .filter-sel:focus { border-color:#6366f1; }
+
+  .podium-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; margin-bottom:1rem; }
+  @media(max-width:760px) { .podium-grid { grid-template-columns:1fr; } }
+
+  .podium-card {
+    background:#1e2330; border:2px solid #2d3348; border-radius:12px;
+    padding:1.2rem 1.1rem; position:relative; display:flex; flex-direction:column; gap:.45rem;
+    transition:transform .15s;
+  }
+  .podium-card:hover { transform:translateY(-2px); }
+  .podium-card.rank-1 { border-color:#f59e0b; box-shadow:0 0 22px rgba(245,158,11,.13); }
+  .podium-card.rank-2 { border-color:#94a3b8; }
+  .podium-card.rank-3 { border-color:#b87333; }
+
+  .podium-medal {
+    position:absolute; top:.85rem; right:1rem;
+    font-size:1.5rem; line-height:1; opacity:.6;
+  }
+
+  .podium-ticker { font-size:1.7rem; font-weight:900; letter-spacing:-.03em; }
+  .rank-1 .podium-ticker { color:#f59e0b; }
+  .rank-2 .podium-ticker { color:#c0cce0; }
+  .rank-3 .podium-ticker { color:#cd9a60; }
+
+  .podium-company { font-size:.77rem; color:#8899bb; margin-top:-.2rem; }
+
+  .sector-badge {
+    display:inline-block; padding:.12rem .45rem; border-radius:4px;
+    font-size:.65rem; font-weight:700; letter-spacing:.04em; white-space:nowrap;
+  }
+  .sec-ai_infra      { background:#1e1b4b; color:#a5b4fc; border:1px solid #3730a3; }
+  .sec-space_defense { background:#064e3b; color:#34d399; border:1px solid #065f46; }
+  .sec-telecom       { background:#1c1708; color:#fbbf24; border:1px solid #78350f; }
+  .sec-unknown       { background:#1a1a1a; color:#7a8aaa; border:1px solid #374151; }
+
+  .podium-stats { display:flex; flex-wrap:wrap; gap:.35rem .75rem; margin-top:.15rem; }
+
+  .score-bar-wrap { height:4px; background:#2d3348; border-radius:999px; margin-top:.5rem; overflow:hidden; }
+  .score-bar-fill { height:100%; border-radius:999px; transition:width .5s; }
+  .rank-1 .score-bar-fill { background:#f59e0b; }
+  .rank-2 .score-bar-fill { background:#94a3b8; }
+  .rank-3 .score-bar-fill { background:#b87333; }
+  .rank-other .score-bar-fill { background:#6366f1; }
+
+  .lb-tbl { width:100%; border-collapse:collapse; font-size:.8rem; }
+  .lb-tbl th {
+    text-align:left; color:#8899bb; font-size:.68rem; text-transform:uppercase;
+    letter-spacing:.05em; padding:.4rem .7rem; border-bottom:1px solid #2d3348;
+  }
+  .lb-tbl td { padding:.42rem .7rem; border-bottom:1px solid #141720; color:#c0cce0; }
+  .lb-tbl tbody tr { cursor:pointer; transition:background .1s; }
+  .lb-tbl tbody tr:hover td { background:#1e2330; }
+  .lb-rank { font-weight:700; color:#7a8aaa; }
+  .lb-ticker-cell { font-weight:700; color:#e2e8f0; font-size:.88rem; }
+  .lb-bar-cell { width:110px; }
+  .lb-bar { height:5px; background:#2d3348; border-radius:999px; margin-top:.3rem; overflow:hidden; }
+  .lb-bar-fill { height:100%; background:#6366f1; border-radius:999px; }
+
   /* Toast */
   #toast {
     position:fixed; bottom:1.5rem; right:1.5rem;
@@ -287,6 +354,7 @@ _HTML = r"""<!DOCTYPE html>
 
 <div class="tabs">
   <button class="tab-btn active" onclick="switchTab('brief', this)">Daily Brief</button>
+  <button class="tab-btn" onclick="switchTab('top10', this)">Top 10</button>
   <button class="tab-btn" onclick="switchTab('editor', this)">Wiki Editor</button>
 </div>
 
@@ -303,6 +371,47 @@ _HTML = r"""<!DOCTYPE html>
     <div class="brief-grid" id="brief-grid">
       <p class="state-msg">Loading…</p>
     </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ TOP 10 TAB -->
+<div class="tab-panel" id="tab-top10">
+  <div class="card" style="padding:.7rem 1.1rem;margin-bottom:.75rem">
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label class="filter-label">Signals</label>
+        <select id="t10-signal" class="filter-sel" onchange="loadTop10()">
+          <option value="validated">Validated only (p &lt; 0.05)</option>
+          <option value="borderline">Validated + borderline (p &lt; 0.10)</option>
+          <option value="all">All signals</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Sector</label>
+        <select id="t10-sector" class="filter-sel" onchange="loadTop10()">
+          <option value="all">All sectors</option>
+          <option value="ai_infra">AI Infrastructure</option>
+          <option value="space_defense">Space &amp; Defense</option>
+          <option value="telecom">Telecom</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Rank by</label>
+        <select id="t10-score" class="filter-sel" onchange="loadTop10()">
+          <option value="composite">Composite (alpha &times; hit rate &times; volume)</option>
+          <option value="alpha">Avg alpha vs sector</option>
+          <option value="hitrate">Hit rate</option>
+        </select>
+      </div>
+      <button class="secondary" style="font-size:.7rem;padding:.3rem .6rem;align-self:flex-end;margin-top:.2rem" onclick="loadTop10()">↻ Refresh</button>
+    </div>
+  </div>
+  <div class="podium-grid" id="t10-podium">
+    <p class="state-msg" style="grid-column:1/-1">Loading…</p>
+  </div>
+  <div class="card" id="t10-board">
+    <div class="card-title">Leaderboard</div>
+    <p class="state-msg">Loading…</p>
   </div>
 </div>
 
@@ -363,11 +472,13 @@ const PASS_NAMES = {
 };
 
 // ── Tabs ──────────────────────────────────────────────────────────────────────
+const _tabLoaded = {};
 function switchTab(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('tab-' + name).classList.add('active');
+  if (name === 'top10' && !_tabLoaded.top10) { _tabLoaded.top10 = true; loadTop10(); }
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
@@ -635,6 +746,121 @@ function renderResult(data) {
   document.getElementById('result').scrollIntoView({behavior:'smooth'});
 }
 
+// ── Top 10 ────────────────────────────────────────────────────────────────────
+async function loadTop10() {
+  const sig   = document.getElementById('t10-signal').value;
+  const sec   = document.getElementById('t10-sector').value;
+  const score = document.getElementById('t10-score').value;
+  document.getElementById('t10-podium').innerHTML =
+    '<p class="state-msg" style="grid-column:1/-1">Loading…</p>';
+  document.getElementById('t10-board').innerHTML =
+    '<div class="card-title">Leaderboard</div><p class="state-msg">Loading…</p>';
+  try {
+    const p = new URLSearchParams({ signal_filter: sig, sector: sec, score_by: score, limit: 10 });
+    const data = await (await fetch('/top10?' + p)).json();
+    renderTop10(data);
+  } catch(e) {
+    document.getElementById('t10-podium').innerHTML = '';
+    document.getElementById('t10-board').innerHTML =
+      '<div class="card-title">Leaderboard</div><p class="state-msg" style="color:#f87171">Error: ' +
+      escHtml(e.message) + '</p>';
+  }
+}
+
+function renderTop10(data) {
+  const stocks   = data.stocks || [];
+  const scoreKey = data.score_by || 'composite_score';
+  const maxScore = stocks.length && stocks[0][scoreKey] ? stocks[0][scoreKey] : 1;
+
+  const pct = v => v === null || v === undefined ? '—'
+    : `${v >= 0 ? '+' : ''}${(v * 100).toFixed(1)}%`;
+  const cls = v => v === null || v === undefined ? 'neu' : v >= 0 ? 'pos' : 'neg';
+
+  const SECTOR_LABELS = { ai_infra:'AI Infra', space_defense:'Space & Defense', telecom:'Telecom' };
+  function sectorBadge(s) {
+    return `<span class="sector-badge sec-${escAttr(s||'unknown')}">${escHtml(SECTOR_LABELS[s]||s||'—')}</span>`;
+  }
+
+  const MEDALS = ['🥇','🥈','🥉'];
+  const RANK_CLS = ['rank-1','rank-2','rank-3'];
+
+  // ── Podium (top 3) ──────────────────────────────────────────────────────────
+  const podiumEl = document.getElementById('t10-podium');
+  if (!stocks.length) {
+    podiumEl.innerHTML =
+      '<p class="state-msg" style="grid-column:1/-1">No stocks matched — try relaxing the signal filter.</p>';
+    document.getElementById('t10-board').innerHTML = '<div class="card-title">Leaderboard</div>';
+    return;
+  }
+
+  podiumEl.innerHTML = stocks.slice(0, 3).map((s, i) => {
+    const score   = s[scoreKey] ?? 0;
+    const barPct  = maxScore > 0 ? (score / maxScore * 100).toFixed(1) : 0;
+    const hrDisp  = s.hit_rate !== null ? Math.round(s.hit_rate * 100) + '%' : '—';
+    const hrCls   = s.hit_rate !== null ? (s.hit_rate >= 0.5 ? 'pos' : 'neg') : 'neu';
+    const wiki    = `wiki/companies/public/${s.ticker}.md`;
+    return `
+    <div class="podium-card ${RANK_CLS[i]}">
+      <div class="podium-medal">${MEDALS[i]}</div>
+      <div class="podium-ticker">${escHtml(s.ticker)}</div>
+      <div class="podium-company">${escHtml(s.name || '')}</div>
+      <div>${sectorBadge(s.sector)}</div>
+      <div class="podium-stats">
+        <div class="stat-item"><span class="stat-label">Signals</span><span class="stat-val neu">${s.n_signals}</span></div>
+        <div class="stat-item"><span class="stat-label">Alpha</span><span class="stat-val ${cls(s.avg_alpha)}">${pct(s.avg_alpha)}</span></div>
+        <div class="stat-item"><span class="stat-label">Hit rate</span><span class="stat-val ${hrCls}">${hrDisp}</span></div>
+        <div class="stat-item"><span class="stat-label">Avg return</span><span class="stat-val ${cls(s.avg_return)}">${pct(s.avg_return)}</span></div>
+        <div class="stat-item"><span class="stat-label">Last signal</span><span class="stat-val neu" style="font-size:.72rem">${s.last_signal || '—'}</span></div>
+      </div>
+      <div class="score-bar-wrap">
+        <div class="score-bar-fill" style="width:${barPct}%"></div>
+      </div>
+      <button class="wiki-link" style="margin-top:.45rem;font-size:.76rem"
+        onclick="openWikiPage('${escAttr(wiki)}')">View company wiki →</button>
+    </div>`;
+  }).join('');
+
+  // ── Leaderboard (#4–10) ─────────────────────────────────────────────────────
+  const rest    = stocks.slice(3);
+  const boardEl = document.getElementById('t10-board');
+  if (!rest.length) {
+    boardEl.innerHTML = '<div class="card-title">Leaderboard</div>' +
+      '<p class="state-msg">Only ' + stocks.length + ' stock(s) matched the current filters.</p>';
+    return;
+  }
+  let html = `<div class="card-title">Leaderboard — #4 to #${stocks.length}</div>
+    <div style="overflow-x:auto"><table class="lb-tbl"><thead><tr>
+      <th class="lb-rank">#</th>
+      <th>Ticker</th><th>Company</th><th>Sector</th>
+      <th>Signals</th><th>Avg Alpha</th><th>Hit Rate</th><th>Avg Return</th>
+      <th>Last Signal</th><th class="lb-bar-cell">Score</th>
+    </tr></thead><tbody>`;
+
+  rest.forEach((s, i) => {
+    const score  = s[scoreKey] ?? 0;
+    const barPct = maxScore > 0 ? (score / maxScore * 100).toFixed(1) : 0;
+    const hrDisp = s.hit_rate !== null ? Math.round(s.hit_rate * 100) + '%' : '—';
+    const hrCls  = s.hit_rate !== null ? (s.hit_rate >= 0.5 ? 'pos' : 'neg') : 'neu';
+    const wiki   = `wiki/companies/public/${s.ticker}.md`;
+    html += `<tr onclick="openWikiPage('${escAttr(wiki)}')">
+      <td class="lb-rank">${i + 4}</td>
+      <td class="lb-ticker-cell">${escHtml(s.ticker)}</td>
+      <td style="color:#8899bb;font-size:.75rem">${escHtml(s.name || '—')}</td>
+      <td>${sectorBadge(s.sector)}</td>
+      <td class="neu">${s.n_signals}</td>
+      <td><span class="${cls(s.avg_alpha)}">${pct(s.avg_alpha)}</span></td>
+      <td><span class="${hrCls}">${hrDisp}</span></td>
+      <td><span class="${cls(s.avg_return)}">${pct(s.avg_return)}</span></td>
+      <td class="neu" style="font-size:.73rem">${s.last_signal || '—'}</td>
+      <td class="lb-bar-cell">
+        <div class="lb-bar"><div class="lb-bar-fill" style="width:${barPct}%"></div></div>
+      </td>
+    </tr>`;
+  });
+  html += '</tbody></table></div>';
+  boardEl.innerHTML = html;
+}
+
 // ── Autogen ───────────────────────────────────────────────────────────────────
 async function runAutogen() {
   const btn = document.getElementById('autogenBtn');
@@ -746,6 +972,72 @@ async def validate_endpoint(content: str = Form(...)):
     finally:
         tmp_path.unlink(missing_ok=True)
     return JSONResponse(_to_dict(result))
+
+
+@app.get("/top10")
+async def top10_endpoint(
+    signal_filter: str = Query("validated"),
+    sector: str = Query("all"),
+    score_by: str = Query("composite"),
+    limit: int = Query(10),
+):
+    VALID_FILTERS = {"all", "validated", "borderline"}
+    VALID_SECTORS = {"all", "ai_infra", "space_defense", "telecom"}
+    VALID_SCORE   = {"composite", "alpha", "hitrate"}
+    if signal_filter not in VALID_FILTERS: signal_filter = "validated"
+    if sector        not in VALID_SECTORS: sector        = "all"
+    if score_by      not in VALID_SCORE:   score_by      = "composite"
+
+    sig_cond = (
+        "AND sr.p_value_vs_sector < 0.05"  if signal_filter == "validated"
+        else "AND sr.p_value_vs_sector < 0.10" if signal_filter == "borderline"
+        else ""
+    )
+    sec_cond = f"AND u.sector = '{sector}'" if sector != "all" else ""
+    order_col = {"composite": "composite_score", "alpha": "avg_alpha", "hitrate": "hit_rate"}[score_by]
+
+    db = _open_db()
+    try:
+        rows = db.execute(f"""
+            SELECT se.ticker, u.name, u.sector,
+                   COUNT(*)                                                              AS n_signals,
+                   AVG(se.alpha_sector)                                                  AS avg_alpha,
+                   AVG(se.net_return)                                                    AS avg_return,
+                   SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END)
+                     / NULLIF(COUNT(*), 0)                                               AS hit_rate,
+                   MAX(se.event_date)                                                    AS last_signal,
+                   AVG(se.alpha_sector)
+                     * (SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END)
+                        / NULLIF(COUNT(*), 0))
+                     * LN(COUNT(*) + 1)                                                  AS composite_score
+            FROM signal_events se
+            JOIN signal_runs sr ON sr.run_id = se.run_id
+            JOIN universe    u  ON u.ticker  = se.ticker
+            WHERE 1=1 {sig_cond} {sec_cond}
+            GROUP BY se.ticker, u.name, u.sector
+            HAVING COUNT(*) >= 3
+            ORDER BY {order_col} DESC NULLS LAST
+            LIMIT ?
+        """, [limit]).fetchall()
+
+        cols = ["ticker", "name", "sector", "n_signals",
+                "avg_alpha", "avg_return", "hit_rate", "last_signal", "composite_score"]
+        stocks = []
+        for r in rows:
+            d = dict(zip(cols, r))
+            d["last_signal"] = str(d["last_signal"])[:10] if d["last_signal"] else None
+            for k in ("avg_alpha", "avg_return", "hit_rate", "composite_score"):
+                d[k] = round(float(d[k]), 6) if d[k] is not None else None
+            stocks.append(d)
+
+        return JSONResponse({
+            "score_by": order_col,
+            "signal_filter": signal_filter,
+            "sector": sector,
+            "stocks": stocks,
+        })
+    finally:
+        db.close()
 
 
 @app.post("/autogen")
