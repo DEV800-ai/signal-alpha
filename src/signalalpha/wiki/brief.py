@@ -12,12 +12,33 @@ from signalalpha.wiki.autogen import WIKI_ROOT, _clean_signal_id, _signal_status
 _STALE_DAYS = 30
 
 DISPLAY_NAMES: dict[str, str] = {
-    "volume_anomaly_5_60_t2.0": "Volume Anomaly — 5/60-day, ×2.0σ",
-    "earnings_surprise_q75":    "Earnings Surprise — Top Quartile (Q75)",
-    "8k_any":                   "8-K Filing — Any",
-    "8k_excl_earnings":         "8-K Filing — Excluding Earnings",
-    "8k_item_1_01":             "8-K Item 1.01 — Material Agreement",
-    "cutoff_test":              "Cutoff Test (sanity check)",
+    # ── Core signals ──────────────────────────────────────────────────────────
+    "volume_anomaly_5_60_t2.0":             "Volume Anomaly — 5/60-day, ×2.0 (30d hold)",
+    "earnings_surprise_q75":                "Earnings Surprise — Top Quartile (Q75)",
+    "8k_any":                               "8-K Filing — Any",
+    "8k_excl_earnings":                     "8-K Filing — Excluding Earnings (30d hold)",
+    "8k_item_1_01":                         "8-K Item 1.01 — Material Agreement",
+    "cutoff_test":                          "Cutoff Test (sanity check)",
+
+    # ── Hold period sweep — volume anomaly ───────────────────────────────────
+    "volume_anomaly_5_60_t2.0__hold5d":     "Volume Anomaly ×2.0 — 5d hold",
+    "volume_anomaly_5_60_t2.0__hold10d":    "Volume Anomaly ×2.0 — 10d hold",
+    "volume_anomaly_5_60_t2.0__hold15d":    "Volume Anomaly ×2.0 — 15d hold ★ recommended",
+    "volume_anomaly_5_60_t2.0__hold20d":    "Volume Anomaly ×2.0 — 20d hold",
+    "volume_anomaly_5_60_t2.0__hold30d":    "Volume Anomaly ×2.0 — 30d hold",
+
+    # ── Hold period sweep — 8-K excl earnings ────────────────────────────────
+    "8k_excl_earnings__hold5d":             "8-K Excl Earnings — 5d hold",
+    "8k_excl_earnings__hold10d":            "8-K Excl Earnings — 10d hold",
+    "8k_excl_earnings__hold15d":            "8-K Excl Earnings — 15d hold",
+    "8k_excl_earnings__hold20d":            "8-K Excl Earnings — 20d hold",
+    "8k_excl_earnings__hold30d":            "8-K Excl Earnings — 30d hold",
+
+    # ── Sector-scoped volume anomaly (graveyard) ──────────────────────────────
+    "volume_anomaly_5_60_t2.0_ai_infra":                  "Volume Anomaly ×2.0 — ai_infra only",
+    "volume_anomaly_5_60_t2.0_space_defense":              "Volume Anomaly ×2.0 — space_defense only",
+    "volume_anomaly_5_60_t2.0_defense_excl_speculative":  "Volume Anomaly ×2.0 — defense excl speculative",
+    "volume_anomaly_5_60_t3.0_space_defense":              "Volume Anomaly ×3.0 — space_defense only",
 }
 
 
