@@ -11,6 +11,15 @@ from signalalpha.wiki.autogen import WIKI_ROOT, _clean_signal_id, _signal_status
 
 _STALE_DAYS = 30
 
+DISPLAY_NAMES: dict[str, str] = {
+    "volume_anomaly_5_60_t2.0": "Volume Anomaly — 5/60-day, ×2.0σ",
+    "earnings_surprise_q75":    "Earnings Surprise — Top Quartile (Q75)",
+    "8k_any":                   "8-K Filing — Any",
+    "8k_excl_earnings":         "8-K Filing — Excluding Earnings",
+    "8k_item_1_01":             "8-K Item 1.01 — Material Agreement",
+    "cutoff_test":              "Cutoff Test (sanity check)",
+}
+
 
 def _read_frontmatter(page_path: Path) -> dict:
     try:
@@ -90,6 +99,7 @@ def build_daily_brief(db: duckdb.DuckDBPyConnection) -> dict:
 
         entries.append({
             "signal_id": signal_id,
+            "display_name": DISPLAY_NAMES.get(signal_id, signal_id),
             "signal_name": d["signal_name"],
             "run_id": d["run_id"],
             "status": status,

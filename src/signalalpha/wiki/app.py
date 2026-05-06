@@ -419,8 +419,8 @@ function renderBrief(data) {
 
     return `<div class="signal-card" id="sc-${s.run_id}" onclick="toggleDrilldown(${s.run_id}, event)">
       <div>
-        <div class="sc-name">${escHtml(s.signal_id)}</div>
-        <div class="sc-meta">run #${s.run_id} &middot; ${s.n_events ?? '?'} events &middot; ${s.hold_days}d hold</div>
+        <div class="sc-name">${escHtml(s.display_name || s.signal_id)}</div>
+        <div class="sc-meta">${escHtml(s.signal_id)} &middot; run #${s.run_id} &middot; ${s.n_events ?? '?'} events &middot; ${s.hold_days}d hold</div>
         ${s.event_window_start ? `<div class="sc-meta">${s.event_window_start} → ${s.event_window_end}</div>` : ''}
       </div>
       <div class="sc-stats">
