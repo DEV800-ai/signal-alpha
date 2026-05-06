@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Network infrastructure_
+CommScope provides network infrastructure equipment — fiber cables, connectors, antennas, and distributed antenna systems (DAS) for in-building cellular coverage. It serves carriers, enterprises, and data centers. The company has significant debt from the ARRIS acquisition and has been exploring asset sales. Financial restructuring is an ongoing concern.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- DAS market grows with indoor 5G coverage requirements — new buildings require CommScope in-building cellular infrastructure.
+- Data center fiber and connectivity equipment benefits from AI-driven capacity expansion.
+- Asset sales (Outdoor Wireless Networks, Home Networks) could reduce debt and simplify the business.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Debt level is very high ($10B+) relative to EBITDA — refinancing risk is significant as maturities approach.
+- Carrier capex slowdown directly impairs CommScope's outdoor antenna and base station cable revenue.
+- Business complexity across multiple end markets has made strategic focus difficult.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Asset sales and debt restructuring providing a path to deleveraging. High-risk, distressed profile.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -63,4 +63,6 @@ _No signal firings recorded for this ticker._
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Asset sale announcements and proceeds — debt reduction trajectory.
+- Debt maturity schedule and refinancing terms.
+- Carrier capex guidance — outdoor infrastructure demand indicator.

@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Data-center power & cooling_
+Vertiv Holdings manufactures power and thermal management infrastructure for data centers — UPS systems, power distribution units, cooling (liquid and air), and monitoring software. Its products are required in every data center. AI data centers with dense GPU clusters consume dramatically more power per rack, driving demand for liquid cooling and higher-capacity power systems.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- AI GPU rack density (40-100kW per rack vs. 8-12kW traditional) requires liquid cooling infrastructure where Vertiv holds leading market share.
+- Data center power infrastructure has 18-24 month lead times — orders placed now represent future revenue with high visibility.
+- Hyperscalers, colocation providers, and enterprises are all building data center capacity simultaneously — creating broad demand across all customer segments.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Execution risk at scale — Vertiv is growing rapidly and supply chain complexity is high for custom thermal and power systems.
+- Margin pressure: raw material costs (copper, steel) are volatile and Vertiv's ability to pass costs through depends on contract structure.
+- Any deceleration in data center construction would flow directly to Vertiv orders with a short lag.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+AI data center buildout sustaining through 2026-2027 and liquid cooling becoming the dominant thermal solution. Order backlog provides near-term revenue visibility.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Order backlog and book-to-bill — leading indicator of future revenue.
+- Liquid cooling as percentage of thermal revenue — directional shift from air to liquid.
+- Data center construction starts — building permit data and hyperscaler capex guidance.

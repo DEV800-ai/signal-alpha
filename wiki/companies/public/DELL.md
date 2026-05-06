@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_AI server systems (Class C re-listing)_
+Dell Technologies sells AI-optimized servers (PowerEdge), storage, PCs, and enterprise services. Its AI server backlog reached $4B+ as hyperscalers and enterprises ordered NVIDIA GPU-based systems. Dell acts as an integrator — assembling NVIDIA GPUs, TSMC-manufactured components, and Micron memory into server systems. It does not design chips.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Enterprise AI server demand is in early innings — most enterprises have not yet deployed GPU infrastructure, representing a multi-year upgrade cycle.
+- Dell's direct sales force and global services organization give it distribution advantages for enterprise customers over hyperscaler-only alternatives.
+- Storage business (PowerStore, APEX) benefits from AI-generated data volumes requiring new storage infrastructure.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- As an integrator, Dell's margins on AI servers are thin — NVIDIA captures most of the value, leaving Dell with assembly and logistics margin.
+- PC segment is in a prolonged downturn; any delay in the AI PC upgrade cycle extends the drag on consumer and commercial PC revenue.
+- AI server backlog can evaporate quickly if customer priorities shift — backlogs reflect orders, not commitments.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+AI server backlog converting to revenue and enterprise AI deployment accelerating. PC recovery cycle not yet in consensus.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- AI server backlog and order rate each quarter — the leading indicator of future revenue.
+- ISG (Infrastructure Solutions Group) gross margin — monitors whether NVIDIA pricing is compressing Dell's economics.
+- PC shipment volumes and ASP — Windows 11 AI PC cycle timing.

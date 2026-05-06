@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_GPU / data-center compute_
+NVIDIA designs GPUs that have become the dominant compute substrate for AI training and inference. Its CUDA software ecosystem creates switching costs that have kept hyperscalers, labs, and enterprises on its hardware despite growing competition. Data center revenue now exceeds gaming. The H100/H200/Blackwell product line is the primary bottleneck in global AI buildout.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Demand for GPU compute continues to outpace supply, giving NVIDIA pricing power across its entire data center stack.
+- The CUDA ecosystem — 4M+ developers — creates compounding lock-in that AMD and Intel have not been able to meaningfully erode despite years of investment.
+- Sovereign AI programs (governments building national AI infrastructure) represent a new, durable demand vector outside the hyperscaler cycle.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Hyperscalers (Google TPU, Amazon Trainium, Microsoft Maia) are developing custom silicon specifically to reduce NVDA dependency for inference workloads.
+- Export controls on A100/H100 class chips to China removed a meaningful revenue segment and create a ceiling on addressable market.
+- At current revenue multiples, any slowdown in AI capex — driven by rising energy costs, regulatory friction, or model efficiency improvements — would compress the multiple significantly.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Sustained GPU supply shortage through 2025–2026, continued hyperscaler capex growth, and CUDA ecosystem moat. Market is not pricing in meaningful share loss to custom silicon or a capex pause.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Hyperscaler custom silicon adoption rate — any public disclosure of TPU/Trainium/Maia replacing H100 at scale.
+- Blackwell yield and supply ramp — any delay signals production risk.
+- US export control expansion — further restrictions on lower-end chips (H20) would reduce China revenue.

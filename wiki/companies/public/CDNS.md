@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_EDA for AI chips_
+Cadence Design Systems provides electronic design automation (EDA) software and hardware used to design chips. Its tools are used to design virtually every advanced semiconductor — AI chips, mobile SoCs, networking ASICs. EDA is a duopoly with Synopsys. AI chip design complexity is increasing EDA tool intensity per design. Revenue is predominantly subscription-based.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- AI chip design complexity (chiplets, advanced packaging, high layer count) increases simulation and verification time — more Cadence tool hours per tapeout.
+- AI-in-EDA: Cadence's Cerebrus and Veridify use ML to optimize chip layouts, creating a new premium product tier.
+- Subscription revenue model provides high visibility and low churn — over 90% of revenue is recurring.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- EDA is a duopoly but Synopsys is acquiring Ansys — the combined entity would have simulation capabilities that challenge Cadence in multi-physics analysis.
+- China export controls restrict Cadence from selling its most advanced EDA tools to Chinese chip designers.
+- Customer concentration: a slowdown in chip design activity (if AI chip spending decelerates) directly impacts tool utilization and renewal rates.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+AI chip design activity sustaining high EDA utilization and Cadence's AI-in-EDA products gaining adoption. Synopsys-Ansys competitive threat partially priced.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Synopsys-Ansys merger completion and integration — combined simulation and EDA capability.
+- China revenue — any additional tool restriction.
+- AI chip design starts — any data on NVIDIA, AMD, custom ASIC tapeout volumes.

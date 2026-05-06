@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_AI server systems_
+Super Micro Computer designs and assembles high-performance servers, focusing on AI GPU-dense systems for data centers. Its Direct Liquid Cooling (DLC) technology for GPU servers has been adopted by several hyperscalers. SMCI has faced accounting and governance concerns — it delayed its annual report and faces SEC investigation. It is a Taiwanese-American company manufacturing in San Jose.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- AI server demand is strong — SMCI's GPU-dense systems and early liquid cooling adoption positioned it ahead of peers.
+- DLC technology is becoming standard in GPU server deployments — SMCI holds a technology and cost advantage in thermal management.
+- Rapid product development cycle (faster than Dell/HPE) allows SMCI to support new NVIDIA GPU generations quickly.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Accounting irregularities and delayed financial filings are serious governance red flags — SEC investigation creates uncertainty.
+- Auditor changes have delayed 10-K and 10-Q filings — potential NASDAQ delisting risk if filings remain late.
+- As an integrator, margins are thin and revenue is volatile — SMCI is exposed to NVIDIA allocation decisions.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Accounting issues resolved without material restatement and AI server demand sustaining. Governance risk is significant and not fully priced.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Annual report filing — completion and any restatement amount.
+- SEC investigation resolution — any formal action or settlement.
+- AI server order rate and backlog — operational performance behind the governance noise.

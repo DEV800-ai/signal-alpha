@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Hyperscaler / Copilot_
+Microsoft operates Azure (cloud infrastructure), productivity software (Office 365, Teams), and enterprise applications (Dynamics, LinkedIn). Its OpenAI partnership gives it preferential access to GPT-4 class models, deployed via Azure OpenAI Service and embedded in Copilot across its product suite. Azure is the second-largest cloud by revenue behind AWS.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Copilot monetization across 400M+ Office users represents the largest potential AI revenue upsell of any software company.
+- Azure AI services are growing faster than the broader Azure business, suggesting AI is expanding the cloud TAM rather than cannibalizing existing workloads.
+- Enterprise software lock-in (Office, Teams, Dynamics) creates a stable monetization floor that buffers execution risk in AI.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- OpenAI exclusivity is not guaranteed — the partnership structure allows OpenAI to pursue other cloud providers after certain conditions, and OpenAI's own compute buildout could reduce Azure dependency.
+- Copilot pricing ($30/seat/month) is high enough that enterprise adoption is slower than initial forecasts suggested.
+- Azure market share gains vs. AWS have stalled; Google Cloud is the faster-growing competitor in AI workloads.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Copilot achieving broad enterprise adoption and Azure AI revenue sustaining 30%+ growth. Significant multiple compression if Copilot penetration disappoints.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Copilot seat count disclosures in earnings — any quantification of paying Copilot users vs. free trials.
+- Azure AI revenue as percentage of total Azure — directional trend vs. Google Cloud.
+- OpenAI governance and exclusivity terms — any renegotiation or competitive opening.

@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Custom silicon for AI_
+Marvell Technology designs custom silicon (XPUs) for hyperscalers, networking semiconductors, and optical interconnect components. It has custom AI accelerator design wins at Amazon (Trainium) and Google (TPU). Its electro-optics portfolio serves the optical interconnect market that is growing with AI cluster density. Revenue is split across cloud, enterprise, telecom, and auto.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Custom XPU design wins (Amazon, Google) are multi-year, sticky revenue streams with high switching costs — each win takes 3-4 years to ramp.
+- Optical interconnect (PAM4, coherent DSP) is a structural growth market as AI data centers require more bandwidth per rack.
+- Cloud end-market concentration (60%+ of revenue) aligns Marvell directly with the fastest-growing capex category.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Telecom segment has been in a prolonged downturn — excess inventory at carriers continues to weigh on results.
+- Custom silicon pipeline is opaque — losing one anchor customer (Amazon, Google) would materially impair revenue.
+- Marvell competes with Broadcom in several product lines; Broadcom's scale and customer relationships are formidable.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+XPU pipeline expanding beyond two anchor customers and electro-optics growing with AI buildout. Telecom recovery is not in consensus.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Third XPU customer announcement — Microsoft or Meta would validate pipeline growth.
+- Telecom segment inventory correction — when carriers resume normal ordering.
+- Optical interconnect ASP and volume vs. Coherent and II-VI competitors.

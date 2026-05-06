@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Data-center switching_
+Arista Networks makes Ethernet switches for data centers and cloud environments. Its EOS operating system is deployed across hyperscaler AI clusters and enterprise networks. AI GPU clusters require ultra-low-latency, high-bandwidth switching fabrics (400G/800G) where Arista competes with NVIDIA (InfiniBand) and Cisco. Hyperscalers represent 40%+ of revenue.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- AI cluster networking is shifting from InfiniBand to Ethernet at scale — Arista's Ultra Ethernet Consortium membership and 800G product line positions it to capture this transition.
+- Enterprise campus and WAN modernization is a second growth vector largely independent of AI spending.
+- EOS software differentiation (single operating system across all hardware) reduces customer operational complexity vs. Cisco.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Hyperscaler concentration (Microsoft, Meta, Google represent large % of revenue) means spending decisions by two or three customers drive results.
+- NVIDIA InfiniBand retains technical advantages for tightly coupled AI training workloads — Ethernet's total cost of ownership advantage doesn't apply to all use cases.
+- Cisco is investing aggressively in AI networking; its scale and enterprise relationships could erode Arista's campus share.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Hyperscaler AI networking capex continuing at current pace and Ethernet displacing InfiniBand. Significant multiple compression if AI capex pauses.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- 400G/800G port shipment volumes and pricing — ASP trend vs. volume growth.
+- Ethernet vs. InfiniBand adoption data from hyperscaler earnings calls.
+- Microsoft capex guidance — Arista's largest individual customer.

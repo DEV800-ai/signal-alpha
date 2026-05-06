@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Satellite comms / Apple deal_
+Globalstar operates a low earth orbit satellite constellation for voice and data communications. Its Apple partnership (providing emergency SOS and satellite messaging on iPhone) generates royalty revenue. It is pursuing a terrestrial spectrum (TLPS) overlay service using its Band 53/n53 spectrum. Revenue is divided between legacy satellite services and Apple royalties.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Apple contract provides recurring revenue that is not dependent on Globalstar's operational performance — a stable royalty base.
+- TLPS spectrum represents a potential large-scale Wi-Fi offload service if carriers deploy it — optionality that is not in current consensus.
+- Emergency satellite messaging use cases are expanding (Apple, other OEMs) as consumer adoption normalizes.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Legacy satellite services (consumer voice, asset tracking) are declining as terrestrial and other LEO services displace them.
+- Apple contract terms are favorable to Apple — Globalstar's economics depend on Apple continuing to invest in and promote the service.
+- TLPS spectrum deployment has been delayed repeatedly — regulatory and carrier adoption timeline is uncertain.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Apple royalty stream continuing and TLPS spectrum eventually monetizing. Legacy business decline is known and priced.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Apple contract renewal terms — any renegotiation signal.
+- TLPS deployment — any carrier commitment to deploy Band 53/n53 equipment.
+- Non-Apple OEM satellite messaging deals — any Android OEM partnership.

@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Aerospace components_
+Howmet Aerospace manufacturers precision castings, fasteners, and engineered structures for aerospace and defense. Its turbine blades and structural castings are used in jet engines (GE, Pratt, Rolls-Royce) and airframes (Boeing, Airbus). Engine component content per aircraft is growing as new engine architectures (LEAP, GTF) require more complex castings.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- New engine programs (LEAP, GTF) have higher per-engine casting content than legacy engines — fleet transition creates a structural revenue uplift.
+- Commercial aerospace production ramp (Boeing 737 MAX, Airbus A320neo) drives engine component demand with a predictable multi-year ramp.
+- Defense jet engine demand (F-35, F414) provides a non-cyclical base.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Engine casting supply chain is a bottleneck in commercial aerospace production — any further disruption would impair Howmet's revenue conversion.
+- GTF powder metal inspection (RTX issue) delays aircraft return to service — reducing near-term engine spare parts demand.
+- Titanium supply chain was disrupted by Russia sanctions — raw material availability and pricing remain a risk.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Commercial aerospace production ramp proceeding and engine casting capacity expanding. GTF inspection impact is partially known.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Boeing 737 MAX and Airbus A320neo delivery rates — primary demand driver.
+- GTF spare engine demand — affected by inspection-driven removals.
+- Titanium procurement — any supply chain normalization or new disruption.

@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_US wireless carrier_
+T-Mobile US is the fastest-growing US wireless carrier, having completed the Sprint merger in 2020. Its mid-band 5G (2.5GHz from Sprint) gives it a nationwide network speed advantage over AT&T and Verizon. It is gaining postpaid phone share consistently and expanding into fixed wireless access and enterprise markets.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Mid-band 5G spectrum depth (100MHz+ in many markets) enables fixed wireless access as a viable home broadband alternative — a large TAM beyond its wireless base.
+- Post-merger synergies from Sprint are being realized ahead of schedule — margin improvement is flowing through.
+- Enterprise market penetration is early-stage — government and large enterprise wireless represent significant upside vs. T-Mobile's consumer-heavy mix.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Postpaid phone market growth is slowing — the easy share gains from Sprint integration and competitive promotions are diminishing.
+- Fixed wireless capacity limitations become binding as subscriber count grows — spectrum reuse constraints will eventually limit FWA expansion.
+- Both AT&T and Verizon are investing to close the mid-band gap — competitive intensity will increase.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Postpaid share gains continuing and FWA reaching guided subscriber targets. Enterprise growth is incremental optionality.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Postpaid phone net adds vs. AT&T and Verizon — share trend.
+- FWA subscriber additions vs. capacity limits in dense markets.
+- Enterprise revenue growth — any acceleration signals market penetration.

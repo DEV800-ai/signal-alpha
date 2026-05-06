@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Defense IT / intel_
+CACI International provides IT and professional services to the US intelligence community and DoD, with significant classified program exposure. It is known for intelligence analysis, cyber operations support, and enterprise IT. Classified revenue represents a significant and growing portion — providing defensibility against competitive pressure.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Intelligence community IT and analytics spending is growing — CACI's classified customer base insulates it from public sector budget debates.
+- Cyber operations support is a high-priority growth area — CACI has won several classified cyber programs.
+- International expansion (UK and Germany) adds revenue diversification from US budget cycles.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Classified revenue concentration means quarterly results can be opaque — program delays or contract transitions are not visible in advance.
+- Competition for cleared talent (analysts, cyber professionals) drives wage inflation that pressures margins.
+- Government contract audits (DCAA) can create working capital pressure on cost-plus programs.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Classified program growth continuing and intelligence community budget remaining a protected priority.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Organic revenue growth rate vs. peer group — directional signal on program win rate.
+- Employee headcount — proxy for classified program staffing.
+- Intelligence community budget in classified annexes — not public but referenced in earnings calls.

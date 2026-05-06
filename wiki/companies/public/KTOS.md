@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Drones / hypersonics_
+Kratos Defense produces tactical unmanned aerial systems (drones), target drones, satellite communications ground equipment, and propulsion systems. Its UTAP-22 Mako and XQ-58 Valkyrie are low-cost attritable drones under development for collaborative combat aircraft concepts. Revenue is primarily US government with growing international interest.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Attritable drone concept (low-cost, expendable) is a strategic DoD priority — Kratos is better positioned than traditional primes for high-volume, low-margin drone production.
+- Target drone business (providing realistic threat simulations for training) is growing with allied nation investments in air defense.
+- Propulsion systems (jet engines for drones and missiles) is a growing segment as drone demand expands.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Attritable drone programs are in development — production contracts are not yet awarded at scale, creating revenue uncertainty.
+- Kratos competes with much larger primes (Boeing MQ-28, General Atomics) for collaborative combat aircraft roles.
+- Small revenue base makes any program delay or cancellation material to results.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Attritable drone concept winning DoD production contracts and target drone business growing. High-risk, high-reward profile.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Collaborative combat aircraft program down-select — any production contract award.
+- Target drone order volume — directional signal on DoD and allied training budgets.
+- Propulsion backlog — jet engine orders for drone and missile programs.

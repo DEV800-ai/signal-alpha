@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Satellite comms (LEO)_
+Iridium Communications operates a global LEO satellite constellation providing voice and data services to maritime, aviation, government, and IoT customers. Its network covers 100% of Earth's surface including poles — unique among satellite operators. Its Iridium Certus broadband service is displacing older satellite terminals. Revenue is predominantly service revenue with high visibility.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Pole-to-pole coverage is unique — no other commercial satellite network provides reliable polar coverage, making Iridium indispensable for maritime and aviation operations in those regions.
+- Iridium Certus L-band broadband is gaining adoption in maritime (ship tracking, crew welfare) and aviation (safety communications).
+- IoT device tracking business (Iridium Short Burst Data) is growing with asset tracking and remote monitoring use cases.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Starlink maritime is competing aggressively on bandwidth and price — Iridium's L-band throughput is fundamentally limited relative to Ka-band.
+- Government/DoD revenue is a significant portion — budget cycles and contract recompetes create periodic uncertainty.
+- Next-generation constellation investment will be required in the 2030s — capital intensity will rise.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Certus broadband adoption sustaining growth and IoT expanding. Starlink maritime competition risk is partially priced at current multiple.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Certus subscriber additions and ARPU trend.
+- Maritime IoT device activations — proxy for supply chain and asset tracking demand.
+- Government services contract renewals — DoD satellite communications recompetes.

@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Semi capital equipment_
+Lam Research specializes in etch and deposition equipment critical for 3D NAND flash memory and advanced logic chips. It holds strong market share in atomic layer etch and deposition, processes that become more important as chip geometries shrink. Memory (NAND, DRAM) represents roughly 45% of revenue, making it highly sensitive to memory investment cycles.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- 3D NAND layer count increases (200+ layers) require proportionally more Lam etch steps per wafer — volume recovery drives outsized revenue leverage.
+- Advanced logic (gate-all-around at 2nm) increases etch process complexity where Lam holds strong IP positions.
+- Memory capex is recovering from a cyclical trough — Micron, Samsung, and SK Hynix are all guiding higher investment.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Memory is the most cyclical semiconductor segment; oversupply can emerge quickly, causing sharp equipment spending cuts.
+- China customer concentration — restrictions on advanced equipment exports have already impacted Lam's China revenue.
+- NAND pricing is volatile; low NAND prices reduce customer incentive to expand capacity.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Memory capex recovery continuing through 2025-2026 and logic etch share gains. Cyclical trough is fully priced.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- NAND contract pricing — sustained price recovery is necessary for capacity investment to continue.
+- Customer capex guidance from Micron, Samsung, SK Hynix — leading indicator for Lam orders.
+- Export control expansion to additional Lam tools or additional Chinese customers.

@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_AIP / commercial AI_
+Palantir builds AI and data integration platforms for government intelligence agencies (Gotham) and commercial enterprises (Foundry, AIP). Its AIP platform layers LLMs onto enterprise data with strict access controls — targeting regulated industries. US government contracts (DoD, intelligence community) represent roughly 55% of revenue, with commercial growing faster.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- AIP bootcamp model is converting commercial enterprise prospects at an accelerating rate — a differentiated go-to-market that bypasses traditional enterprise sales cycles.
+- US government AI spending is growing — DoD AI contracts and classified work are durable revenue with high barriers to competitive displacement.
+- Data moat: Gotham models trained on classified government data are irreplaceable — no competitor can replicate this without the same access.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Commercial revenue outside the US remains small — international commercial expansion has been slower than management guided.
+- Valuation implies very high growth expectations; any deceleration in AIP commercial bookings would compress the multiple significantly.
+- Government contracts are subject to budget cycles and political risk — a continuing resolution or defense budget cut could slow new awards.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+AIP commercial adoption inflecting and US government AI spending growing. International commercial growth not yet in consensus — represents optionality.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- US commercial revenue growth rate — AIP bootcamp conversion to signed contracts.
+- Government TCV (total contract value) of new awards — directional trend in DoD/IC spending.
+- International commercial revenue — any inflection beyond current low single-digit percentage of total.

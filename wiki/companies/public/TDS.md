@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Regional wireless / fiber_
+Telephone and Data Systems is a regional wireless and fiber broadband company. It controls United States Cellular (USM) — a regional wireless carrier primarily in rural markets — and TDS Telecom, a fiber broadband provider in smaller markets. The company has explored strategic alternatives including a sale of USM. Revenue is split between wireless (USM) and wireline fiber.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- T-Mobile has expressed interest in acquiring USM — a transaction would crystallize significant value for TDS shareholders.
+- TDS Telecom fiber buildout in rural markets benefits from BEAD subsidies with limited competition.
+- Rural wireless markets where USM operates have less competition than metro markets — ARPU is stable.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- USM has been losing subscribers as T-Mobile's national network expands into rural markets where USM previously had coverage advantages.
+- Fiber buildout capex is significant for a company of TDS's size — balance sheet is stretched.
+- Strategic alternative process for USM has been ongoing without resolution — uncertainty impairs operational focus.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+USM sale process resulting in a transaction. Significant re-rating risk if USM is not sold.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- USM sale process updates — any new buyer announcement or process closure.
+- TDS Telecom fiber subscriber additions — broadband growth in rural markets.
+- USM subscriber trend — postpaid phone net adds vs. churn.

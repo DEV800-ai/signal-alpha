@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Satellite + wireless spectrum_
+EchoStar provides satellite broadband (HughesNet) and owns significant wireless spectrum (700MHz, AWS-4, H Block). It is exploring options to monetize its spectrum — including leasing or partnering with terrestrial wireless carriers. A potential merger with DISH Network (both controlled by Charlie Ergen) has been discussed. The balance sheet is under pressure.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Spectrum assets (700MHz, AWS-4) are strategically valuable to carriers seeking capacity — a spectrum monetization deal could unlock significant value.
+- Satellite broadband (HughesNet) serves rural markets with limited alternatives — stable demand.
+- DISH merger could rationalize the Ergen satellite/wireless portfolio.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- HughesNet satellite broadband is losing subscribers to SpaceX Starlink — the low Earth orbit speed advantage is significant.
+- Spectrum monetization requires a willing buyer — timeline and pricing are uncertain.
+- Balance sheet is strained — debt maturity risk if spectrum monetization doesn't materialize.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Spectrum monetization deal materializing. High-risk, distressed profile.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Spectrum lease or sale announcements — any carrier deal.
+- HughesNet subscriber count — rate of Starlink displacement.
+- Debt maturity schedule and refinancing options.

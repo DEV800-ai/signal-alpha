@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Small launch / Neutron_
+Rocket Lab USA operates the Electron small launch vehicle (the second most frequently launched US rocket) and is developing Neutron, a medium-lift reusable rocket. It also sells spacecraft components and operates complete spacecraft buses for government and commercial customers. Revenue is split between launch services and space systems.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Electron is the leading small dedicated launch vehicle — reliability record and responsive launch cadence attract government and commercial small satellite customers.
+- Space systems (spacecraft manufacturing) is growing faster than launch — national security satellite programs provide durable government revenue.
+- Neutron development, if successful, addresses the medium-lift market currently dominated by SpaceX Falcon 9.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- SpaceX Falcon 9 can rideshare small satellites at costs that pressure Electron's economics for commercial customers.
+- Neutron development is expensive and high-risk — Rocket Lab must fund it while sustaining Electron operations.
+- Government launch demand is lumpy — delays in national security satellite programs directly impact Rocket Lab launch revenue.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Electron sustaining high cadence and space systems growing with national security satellite demand. Neutron success is optionality, not base case.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Electron launch cadence — target of 20+ launches per year.
+- Space systems backlog — government satellite manufacturing contracts.
+- Neutron development timeline and cost — any delay or cost increase.

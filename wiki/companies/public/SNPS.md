@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_EDA for AI chips_
+Synopsys provides EDA software for chip design, silicon IP (standard cells, interface IP), and software security testing tools. Its acquisition of Ansys (simulation software) is pending regulatory approval — the combined entity would be the largest EDA and simulation company. Like Cadence, it benefits from AI chip design complexity. Revenue is largely subscription-based.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- If the Ansys acquisition closes, Synopsys becomes the only vendor offering end-to-end chip design (EDA) and system-level simulation — a significant competitive moat.
+- Silicon IP (DesignWare) is used in nearly every advanced chip for interfaces (PCIe, USB, DDR) — a recurring royalty-like revenue stream.
+- Software security testing (Black Duck, Coverity) is a distinct, growing business benefiting from supply chain security requirements.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Ansys acquisition faces regulatory scrutiny in multiple jurisdictions — the UK CMA has raised concerns, creating deal uncertainty.
+- If Ansys is blocked, Synopsys loses the primary strategic rationale for its current valuation premium.
+- China revenue restriction risk is similar to Cadence — advanced EDA tools are increasingly restricted.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Ansys acquisition closing and synergies materializing. Significant re-rating risk if the deal is blocked.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Ansys regulatory approval timeline — UK CMA, EU, and any other jurisdiction review.
+- China EDA tool restriction expansion.
+- Software security (Black Duck) ARR growth — diversification from core EDA.

@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Defense + space_
+Boeing is the second-largest commercial aircraft manufacturer (duopoly with Airbus) and a major defense contractor. Its 737 MAX program has faced multiple crises — two fatal crashes, a 2024 mid-flight door plug blowout, and ongoing FAA production rate caps. Its defense segment (KC-46, T-7A, Starliner) has suffered significant fixed-price contract losses.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Commercial aircraft demand is structurally strong — airlines need to replace aging fleets and expand capacity. A 20,000+ aircraft backlog exists between Boeing and Airbus.
+- If Boeing stabilizes 737 MAX production quality and the FAA lifts the rate cap, cash flow generation would be substantial.
+- 737 MAX and 787 are both in high demand — any production normalization converts directly to revenue.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Quality control problems appear systemic — multiple FAA investigations, whistleblower accounts, and independent audits suggest the issues are not isolated.
+- Defense segment fixed-price losses (KC-46, T-7A, MQ-25, Starliner) total $20B+ — these programs continue to burn cash.
+- Debt load ($50B+) constrains Boeing's ability to invest in the next aircraft program while managing current crises.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Production quality issues being resolved and FAA rate cap being lifted. The market requires Boeing to execute, not just promise. Defense losses are partially priced.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- FAA 737 MAX production rate authorization — current cap is 38/month, certification required for higher rates.
+- 787 delivery rate — Dreamliner is the cash flow engine.
+- Defense contract losses — any additional charges on fixed-price programs.

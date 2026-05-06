@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Aerospace components_
+TransDigm Group is a highly acquisitive aerospace components manufacturer with dominant market positions in niche proprietary parts. Its strategy is to acquire sole-source aerospace components businesses and extract pricing power. Components include actuators, pumps, ignition systems, and other specialized aerospace hardware. Aftermarket revenue (60%+ of total) is high-margin and recurring.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Sole-source positioning (no approved alternative supplier) in most product lines gives TransDigm extraordinary pricing power — commercial aerospace customers must buy from TransDigm.
+- Aftermarket revenue scales with flight hours — commercial aviation recovery drives high-margin aftermarket growth.
+- M&A strategy has a 30-year track record of value creation — the playbook is proven even if individual acquisitions carry integration risk.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Congressional scrutiny of defense parts pricing has intensified — DoD has flagged TransDigm for excessive profits on sole-source defense contracts.
+- Debt load from acquisitive strategy is high — rising interest rates increase servicing costs.
+- A commercial aviation downturn would hit the high-margin aftermarket segment hardest.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Aftermarket recovery continuing with commercial aviation and M&A pipeline delivering accretive deals. Defense pricing scrutiny risk is partially priced.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Defense pricing audits — any DCAA finding or Congressional action on TransDigm parts pricing.
+- Aftermarket revenue growth vs. OEM production rate — mix shift indicator.
+- Debt refinancing activity and interest coverage ratio.

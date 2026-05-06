@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Prime defense contractor_
+Northrop Grumman is a prime defense contractor focused on aerospace systems, defense electronics, mission systems, and space. Its flagship program is the B-21 Raider stealth bomber — the first new US bomber in 30 years. It also produces the Ground Based Strategic Deterrent (GBSD), which will replace Minuteman III ICBMs. Revenue is predominantly US government.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- B-21 is a sole-source program with no domestic competitor — Northrop is the only company that can produce it, providing a durable, high-margin revenue stream for decades.
+- GBSD (now Sentinel) ICBM replacement is a $100B+ program — Northrop holds the prime contract.
+- Space segment (satellites, missile warning) is growing with DoD and intelligence community investment in space domain awareness.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- B-21 is in development and early production — costs are fixed-price, and overruns are absorbed by Northrop rather than the government.
+- GBSD/Sentinel has faced cost growth concerns from DoD — any restructuring or quantity reduction would impair the program.
+- Classified space program delays or technical challenges are not visible externally but can surface suddenly in earnings.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+B-21 production ramping on schedule and GBSD/Sentinel proceeding without quantity reduction. Fixed-price B-21 overrun risk is partially priced.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- B-21 per-unit cost and delivery schedule — any Congressional concern about cost growth.
+- GBSD/Sentinel program review outcomes — DoD cost-plus conversion discussions.
+- Space segment classified program status — any delay signals in earnings commentary.

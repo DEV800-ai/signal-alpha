@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_HBM memory_
+Micron Technology designs and manufactures DRAM and NAND flash memory. It is the only US-based advanced memory manufacturer. Its HBM3E product is shipping to NVIDIA for use in H100/H200 AI accelerators. Memory is one of the most cyclical semiconductor segments, with pricing driven by supply/demand balance across a small number of global producers.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- HBM content per AI server is growing — each GB200 NVL72 system requires orders of magnitude more HBM than a traditional server, creating a structural demand uplift.
+- As the only US HBM supplier, Micron benefits from supply chain security mandates from US government and allied nations.
+- DRAM pricing is recovering — supply discipline from Samsung and SK Hynix is supporting ASP recovery.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Memory pricing is famously volatile — oversupply can emerge within 12-18 months if Samsung breaks ranks and floods the market.
+- HBM capacity is constrained by CoWoS packaging at TSMC — Micron cannot ship more HBM than TSMC can package.
+- China is Micron's largest market and has been subject to regulatory retaliation — any expansion of Chinese government restrictions would be material.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+HBM demand sustaining through 2025-2026 and DRAM pricing recovery continuing. Market is not pricing in a Samsung-led oversupply event.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Samsung DRAM/HBM capex — any increase signals supply addition that would compress pricing.
+- HBM CoWoS packaging allocation at TSMC — determines Micron's near-term HBM shipment ceiling.
+- China market access — any regulatory action beyond the 2023 Fujian cybersecurity review.

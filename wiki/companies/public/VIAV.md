@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Network test & measurement_
+Viavi Solutions provides network test and measurement equipment for fiber networks, as well as anti-counterfeiting optical solutions (currency, government IDs). Its network and service enablement division tests fiber and 5G networks during construction and operation. The optical security products business (OVD: optically variable devices) provides stable, recurring revenue from government contract printing.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Fiber network buildout (BEAD, RDOF, carrier fiber expansion) requires test equipment at each installation — Viavi's fiber testing tools benefit from subsidy-funded buildout.
+- 5G network testing grows with carrier densification and private network deployments.
+- Optical security (anti-counterfeiting) business provides a stable, non-cyclical revenue base.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Network test is a cyclical business tied to carrier and enterprise capex — slowdowns compress order volume.
+- Optical security revenue growth is modest — currency printing contracts are stable but not high-growth.
+- Competition from Spirent and EXFO in network testing puts pressure on pricing.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Fiber test benefiting from BEAD and carrier buildout. Optical security provides stability.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- BEAD deployment timeline — government subsidized fiber builds drive test equipment demand.
+- Network test order backlog — directional signal for carrier capex.
+- Currency contract renewals — optical security revenue stability.

@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_5G modems / handset SoC_
+Qualcomm designs 5G modem chips and mobile application processors (Snapdragon) for smartphones, as well as automotive and IoT chips. Its licensing business (QTL) collects royalties on virtually all 5G handsets globally. Apple is its largest modem customer — a relationship that creates significant concentration risk as Apple develops in-house modems.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Snapdragon X Elite PC chips are gaining design wins — diversification into the PC market reduces smartphone concentration.
+- Automotive Snapdragon digital cockpit and ADAS chips are a rapidly growing segment with multi-year design win to revenue cycles.
+- QTL royalty stream is long-duration and durable — 5G licensing income is high-margin regardless of handset volume cycles.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Apple is developing its own modem (likely to appear in iPhones from 2026-2027) — Apple represents 20%+ of Qualcomm's chip revenue.
+- Chinese smartphone market share has shifted to domestic chipmakers (Huawei Kirin, MediaTek) — Qualcomm's China handset exposure is declining.
+- 5G smartphone upgrade cycle is elongating — premium Snapdragon demand grows more slowly than initially forecast.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Apple modem transition partially priced — full displacement timeline is 2026-2028. Automotive ramp is incremental upside not in consensus.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Apple modem development timeline — any iPhone launch without Qualcomm modem.
+- Automotive design win announcements — vehicle launches using Snapdragon cockpit.
+- China handset market share — MediaTek vs. Qualcomm premium segment.

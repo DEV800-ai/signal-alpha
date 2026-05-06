@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_EUV lithography_
+ASML holds a monopoly on extreme ultraviolet (EUV) lithography machines, required to manufacture chips at 7nm and below. Every advanced chip — NVIDIA, AMD, Apple, Intel — is produced on equipment ASML makes. Its next-generation High-NA EUV system is required for 2nm-class nodes. Dutch export controls restrict EUV sales to China.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- No credible alternative to EUV exists — ASML's monopoly is protected by 30 years of accumulated R&D, supply chain complexity, and customer co-development relationships.
+- High-NA EUV demand from TSMC, Samsung, and Intel Foundry for 2nm nodes creates a multi-year equipment upgrade cycle.
+- Installed base of 300+ EUV systems generates a growing, high-margin service and upgrade revenue stream.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- China export controls cut off ASML's fastest-growing market — DUV (older generation) machines are also increasingly restricted.
+- Semiconductor capex is cyclical; equipment orders correlate with fab utilization, which can swing significantly in a downturn.
+- High-NA EUV has a very small initial customer base — adoption delays at any one customer materially impacts near-term revenue.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+High-NA EUV ramp on TSMC's 2nm schedule and continued AI-driven fab investment. China revenue loss is priced in at current levels.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- High-NA EUV first commercial shipment and yield at TSMC/Intel.
+- Dutch export control expansion to DUV systems — any tightening reduces China system revenue.
+- TSMC N2 production ramp timeline — delays push out ASML equipment demand.

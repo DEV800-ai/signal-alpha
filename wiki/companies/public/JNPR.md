@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Routing (HPE acquisition pending)_
+Juniper Networks makes enterprise and carrier-grade routers, switches, and security appliances. Hewlett Packard Enterprise announced an acquisition of Juniper in January 2024, pending regulatory approval. If the deal closes, Juniper becomes part of HPE's networking portfolio alongside Aruba. The strategic logic is to create a challenger to Cisco in enterprise networking.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- HPE acquisition at $40/share provides a near-term floor — the deal is expected to close pending regulatory clearance.
+- AI-Native Networking (Mist AI, Marvis virtual assistant) positions Juniper as a software-differentiated competitor vs. Cisco.
+- Carrier routing market is concentrated — Juniper holds second position behind Cisco and benefits from carrier capacity upgrades.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- HPE acquisition regulatory risk — the UK CMA has reviewed the deal; any block would result in significant share price decline from current levels.
+- If the deal closes, Juniper stockholders receive cash — no ongoing equity participation in the combined entity.
+- Enterprise market share pressure from Cisco and Arista is intensifying even before the acquisition.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+HPE acquisition closing at announced terms. Spread is the primary investment consideration at current prices.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -63,4 +63,6 @@ _No signal firings recorded for this ticker._
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Regulatory approval timeline — UK CMA, EU, and US DOJ review status.
+- Any deal amendment or revised terms.
+- Enterprise switching market share while deal is pending — operational results still matter if deal is blocked.

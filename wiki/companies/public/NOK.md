@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_5G RAN equipment_
+Nokia is a Finnish telecommunications equipment manufacturer selling 5G radio access network (RAN) hardware, core network software, and enterprise networking equipment. It is one of three global 5G RAN vendors (with Ericsson and Huawei). The ban on Huawei in Western markets has expanded Nokia's addressable market, but margins remain under pressure from competition.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Huawei exclusion from Western 5G markets is structural — Nokia and Ericsson are the only credible alternatives for most Western carriers.
+- Enterprise private 5G networks are a growing opportunity — Nokia has a dedicated business unit targeting this market.
+- India 5G rollout created a large new market where Nokia is a significant vendor.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Competitive intensity with Ericsson and Samsung is intense — pricing pressure is structural in RAN equipment markets.
+- 5G RAN spending cycle is maturing in Europe and the US — growth depends on new geographies or technology transitions (5G-A, Open RAN).
+- Nokia's margin recovery has been slower than planned — cost structure improvements are ongoing.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Huawei exclusion sustaining Nokia's market position and India/emerging market 5G rollout growing. Margin recovery is expected but partially in consensus.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- 5G RAN market share vs. Ericsson — any directional shift.
+- India RAN order activity — Jio and Airtel network densification.
+- Open RAN adoption rate — disruptive risk to traditional RAN vendors.

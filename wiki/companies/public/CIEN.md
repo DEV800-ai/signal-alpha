@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Optical networking_
+Ciena Corporation provides optical and packet networking equipment for telecommunications carriers and cloud providers. Its WaveLogic coherent optical chips are the technology core — they are considered best-in-class for long-haul optical transport. AI-driven bandwidth demand is increasing the need for optical capacity upgrades. Revenue is lumpy due to large project-based orders.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- AI data center interconnect and cloud provider backbone expansion is driving coherent optical demand — Ciena's WaveLogic advantage positions it to capture this growth.
+- Market share is concentrated — Ciena competes with Nokia, Infinera (acquired by Nokia), and ADVA, but WaveLogic coherent performance is a recognized differentiator.
+- AT&T and Verizon fiber buildouts require Ciena ROADM and coherent transport equipment at scale.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Revenue is lumpy — large projects at carriers mean quarterly results are variable and hard to predict.
+- Indian carriers (Jio, Airtel) were a significant growth driver; any moderation in India optical buildout would impact results.
+- Nokia's acquisition of Infinera creates a larger, more capable optical competitor.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Coherent optical demand sustaining with AI-driven bandwidth growth and carrier fiber buildout. Nokia-Infinera competitive threat partially priced.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Order backlog and revenue guidance — forward visibility.
+- India optical deployment activity — Jio and Airtel fiber buildout pace.
+- AI data center interconnect RFPs — any large hyperscaler optical network award.

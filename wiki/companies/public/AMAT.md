@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Semi capital equipment_
+Applied Materials supplies equipment for depositing, etching, and inspecting semiconductor films. It is the largest semiconductor equipment company by revenue. Its tools are used at every node from mature processes to leading-edge 2nm. AI-driven demand for advanced memory (HBM) and logic chips is a primary growth driver. Revenue is split roughly 75% semiconductor, 15% display, 10% services.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- HBM memory production requires more deposition steps per layer than standard DRAM, creating a structural uplift in Applied Materials equipment intensity per wafer.
+- Gate-all-around (GAA) transistor architecture at 2nm requires new deposition processes where Applied has strong IP.
+- Services and spare parts (25%+ of revenue) provide a recurring base that smooths capex cycle volatility.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Semiconductor equipment is among the most cyclical capital goods — a utilization downturn causes rapid order cancellations.
+- China revenue (25%+ of total) is at risk from expanding US export controls on advanced equipment.
+- ASML EUV dominates the narrative but Applied's tools are commoditized in older process steps where competition is intense.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+HBM capacity build and leading-edge logic capex sustaining above-trend spending. China restriction risk partially priced.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- China revenue trend — any acceleration in export control enforcement.
+- HBM layer count per die — each additional layer increases Applied equipment intensity.
+- Semiconductor fab utilization rates — leading indicator for new equipment orders.

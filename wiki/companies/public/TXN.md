@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Analog / embedded_
+Texas Instruments designs and manufactures analog and embedded processors, serving industrial, automotive, personal electronics, and communications markets. It owns its manufacturing (not fabless), giving it control over cost and capacity. TI is the largest analog semiconductor company. AI is not a primary near-term driver — industrial and automotive end markets are the focus.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Industrial and automotive analog content per system is growing — EV powertrains, ADAS sensors, and factory automation all require more TI chips.
+- Owned manufacturing gives TI cost advantages in analog production that fabless competitors cannot easily replicate.
+- Cycle recovery: industrial inventory correction that began in 2023 is working through the channel — order recovery should follow.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Industrial end market recovery is slower than expected — customers continue to draw down elevated inventory rather than placing new orders.
+- Capex-heavy owned manufacturing model is a disadvantage in downturns — fixed costs are high relative to peers.
+- China automotive and industrial exposure is significant — geopolitical or tariff escalation would impact demand.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Industrial cycle recovery in 2025 and automotive electrification content growth. Extended inventory correction is the bear case that would disappoint consensus.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Industrial lead times and order patterns — any recovery from low single-digit book-to-bill.
+- Automotive production volumes — ADAS content growth is volume-dependent.
+- China industrial and automotive orders — geopolitical risk proxy.

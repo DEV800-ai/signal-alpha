@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Hybrid cloud / Watsonx_
+IBM provides hybrid cloud infrastructure (Red Hat OpenShift), enterprise software, consulting, and the Watsonx AI platform. Red Hat is the primary growth driver. IBM's consulting arm deploys AI solutions for large enterprises. Its mainframe business (Z-series) generates stable, high-margin revenue from financial services customers.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Red Hat OpenShift is the enterprise Kubernetes standard — AI workload orchestration at scale runs on OpenShift in most large enterprises.
+- Watsonx is positioned for regulated industries where proprietary model deployment and data sovereignty matter.
+- Mainframe Z-series upgrade cycle drives predictable high-margin hardware revenue.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Consulting revenue growth is slowing as enterprise IT budgets tighten.
+- Watsonx market penetration is modest vs. Microsoft Azure OpenAI and Google Vertex AI.
+- Divestiture of legacy infrastructure services removed scale but low-growth segments remain.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Red Hat sustaining 10%+ growth and Watsonx gaining enterprise AI platform traction.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Red Hat revenue growth rate.
+- Watsonx deal size and enterprise customer count.
+- Consulting revenue backlog.

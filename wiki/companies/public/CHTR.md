@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Cable / broadband_
+Charter Communications is the second-largest US cable operator, providing broadband, video, and mobile services through Spectrum. It is executing a multi-billion-dollar network evolution to upgrade its infrastructure to 1.2GHz and then 2.5GHz multi-gigabit capable. Its Spectrum Mobile MVNO (using Verizon's network) is adding subscribers rapidly.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Network evolution to 1.2GHz/DOCSIS 4.0 will enable multi-gigabit symmetrical speeds — closing the speed gap with fiber and differentiated from T-Mobile FWA.
+- Spectrum Mobile is growing rapidly with low incremental cost — mobile ARPU adds to broadband relationships.
+- Rural broadband buildout (RDOF, BEAD subsidies) provides government-funded expansion into new markets.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Network evolution capex is $12B+ over multiple years — free cash flow is constrained during the build period.
+- Fixed wireless competition is intensifying — T-Mobile and Verizon are taking share in Charter's markets.
+- Video subscriber losses are accelerating — the linear TV bundle is unwinding faster than expected.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Network evolution completing without material cost overrun and Spectrum Mobile growth continuing. FWA competitive impact is partially priced.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Broadband net adds — share loss to FWA competitors.
+- Network evolution capex and completion timeline.
+- Spectrum Mobile net adds — directional trend.

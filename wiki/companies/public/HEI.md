@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Aerospace aftermarket_
+HEICO Corporation is a leading supplier of FAA-approved aircraft replacement parts at prices 30-50% below OEM pricing. Its Parts Group sources or reverse-engineers aerospace components; its Electronic Technologies Group supplies defense and space electronics. HEICO is a rare combination of aerospace aftermarket and defense electronics — both driven by fleet age and defense modernization.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Aging global commercial aircraft fleet (average 14+ years) requires increasing parts replacement — HEICO's addressable market grows with fleet age.
+- Pricing at 30-50% below OEM creates a structural cost advantage that airlines cannot easily replicate through OEM sourcing.
+- Defense electronics growth provides a counter-cyclical balance to commercial aerospace cycles.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- OEMs (GE, Pratt, CFM) are increasingly aggressive in protecting parts exclusivity through repair station restrictions and data withholding.
+- Serial acquisitions drive HEICO's growth — integration risk and multiple compression if acquisition pace slows.
+- Defense electronics segment faces the same budget cycle risk as other defense suppliers.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Aftermarket parts demand growing with fleet age and acquisition pipeline sustaining revenue growth. Premium multiple reflects consistent execution.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- FAA regulatory changes to PMA (Parts Manufacturer Approval) — any restriction would impact HEICO's model.
+- Acquisition pace and multiples paid — any deterioration in deal economics.
+- Commercial aircraft production rate — new aircraft delivery reduces average fleet age, a long-term headwind.

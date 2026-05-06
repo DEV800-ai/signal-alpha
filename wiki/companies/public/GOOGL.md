@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Hyperscaler / TPU_
+Alphabet operates Google Search, YouTube, Google Cloud (GCP), and develops AI through DeepMind and Google Brain (now Google DeepMind). It is the largest digital advertising platform globally. GCP is the third-largest cloud. Its TPU infrastructure gives it a proprietary AI compute advantage for internal workloads. Gemini is its flagship LLM family.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Search remains the highest-intent advertising channel with no credible displacement yet — AI Overviews appear to be expanding session depth rather than cannibalizing click revenue.
+- GCP is gaining enterprise AI workload share; TPU availability and Vertex AI tooling are competitive differentiators for customers who want non-NVIDIA infrastructure.
+- DeepMind's research output (AlphaFold, Gemini) gives Google a talent and IP advantage that compounds over time.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- AI-native search competitors (Perplexity, ChatGPT search) could erode query volume at the margin, particularly for informational queries where ads monetize best.
+- EU regulatory pressure on Search, Android, and ad tech could impose structural remedies that impair margin in the highest-profit segments.
+- GCP trails AWS and Azure in enterprise contract size and global infrastructure footprint.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Search revenue resilience through AI transition and GCP sustaining 25%+ growth. Risk scenario is Search query volume declining faster than new AI monetization scales.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Search query volume trends — any disclosure of AI Overview impact on paid click-through rates.
+- GCP revenue growth rate vs. Azure and AWS in quarterly earnings.
+- EU DMA enforcement actions — any forced changes to Search or Android distribution.

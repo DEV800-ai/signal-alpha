@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Prime defense contractor_
+Lockheed Martin is the largest US defense contractor by revenue. Its primary programs are the F-35 fighter (the largest defense program in history), missile defense systems (PAC-3, THAAD), and space systems (GPS III, Orion). Revenue is 97% US government. Production ramp challenges on the F-35 and missile programs are an ongoing operational focus.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- European NATO members increasing defense budgets to 2%+ GDP creates a sustained F-35 and missile system export pipeline.
+- Hypersonic weapon programs (HALO, LRHW) position Lockheed for the next generation of precision strike, a growing budget priority.
+- F-35 sustainment revenue (spare parts, training, software upgrades) grows as the fleet size increases — long-duration recurring revenue.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- F-35 production rate has repeatedly underperformed targets — unit cost remains elevated relative to initial program estimates.
+- Concentration in the F-35 program means any cancellation, reduction, or international partner withdrawal would be material.
+- Defense budget pressure from US fiscal concerns could slow sole-source contract award rates.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+F-35 production ramping and international sales pipeline converting. NATO budget increases sustaining export demand.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- F-35 delivery count each quarter vs. target (156/year).
+- International F-35 orders — any new country LOA (Letter of Offer and Acceptance).
+- Hypersonic program contract awards — HALO, LRHW production decisions.

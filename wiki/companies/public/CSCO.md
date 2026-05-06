@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Data-center networking_
+Cisco Systems is the dominant enterprise networking vendor, selling switches, routers, firewalls, and collaboration software (Webex). Its data center switching business competes with Arista. The Splunk acquisition added a large observability and security data platform. Revenue mix is shifting toward software and subscription, with hardware declining as a percentage.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Splunk integration adds a high-margin, recurring revenue software business that improves Cisco's revenue quality and reduces hardware cyclicality.
+- AI networking demand (400G switches for GPU clusters) is incremental to Cisco's existing enterprise switching business.
+- Large installed base in enterprise and government creates renewal and upgrade revenue that competitors cannot easily displace.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Arista is winning data center switching share — Cisco's NX-OS vs. EOS comparison is consistently unfavorable in competitive evaluations.
+- Splunk integration execution risk is high; large software acquisitions frequently underperform synergy targets.
+- Core enterprise networking growth is slow; the hardware business is in secular decline as software-defined networking matures.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Splunk integration delivering promised synergies and AI networking offsetting hardware declines. Market expects margin improvement from software mix shift.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Splunk ARR growth and customer retention post-acquisition.
+- Data center switching market share — Arista vs. Cisco quarterly shipment data.
+- Product revenue vs. software/services revenue split — pace of mix shift.

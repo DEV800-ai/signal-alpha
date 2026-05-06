@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Leading-edge foundry_
+Taiwan Semiconductor Manufacturing Company is the world's leading contract chip manufacturer, producing chips for NVIDIA, AMD, Apple, and most advanced semiconductor designs. Its N3 and N2 process nodes are 1-2 generations ahead of Samsung and Intel Foundry. Its geographic concentration in Taiwan is a significant geopolitical risk factor.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- AI chip demand (NVIDIA, AMD, custom XPUs) requires advanced nodes that only TSMC can produce at scale — driving premium pricing and capacity pre-commitments from major customers.
+- Arizona and Japan fab expansions reduce geopolitical risk premium and qualify TSMC for US CHIPS Act subsidies.
+- N2 process node is on track with strong early yield reports — sustaining the technology leadership gap vs. competitors.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Taiwan invasion scenario, however low probability, represents an existential risk that no hedging strategy fully addresses.
+- Arizona fab costs are materially higher than Taiwan — US-produced chips carry a cost premium that customers will resist.
+- A global capex pause (if AI spending decelerates) would hit TSMC with high operating leverage given its fixed cost base.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Continued AI chip demand growth and N2 ramp on schedule. Geopolitical risk is partially but not fully priced — market assigns a discount vs. pure-play logic.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -79,4 +79,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- CoWoS advanced packaging capacity — bottleneck for HBM-enabled AI chips (H100/H200/GB200).
+- Arizona fab yield and cost structure — any disclosure of US vs. Taiwan cost differential.
+- China revenue percentage — exposure to export control escalation.

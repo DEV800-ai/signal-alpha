@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Direct-to-cell satellite_
+AST SpaceMobile is developing a constellation of large satellites designed to provide direct-to-standard-cell-phone connectivity — without special hardware. Its BlueBird satellites passed initial technical tests with major carriers. Commercial service has not yet launched at scale. The company is pre-revenue on its core business and has significant capital requirements.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- If technical performance is validated at scale, the addressable market is every unserved mobile user on Earth — a massive TAM that no terrestrial carrier can address.
+- Major carrier partnerships (AT&T, Verizon, Rakuten, Vodafone) provide commercial distribution without requiring ASTS to build a retail business.
+- Regulatory approvals in multiple countries create a barrier to entry for potential competitors.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Constellation deployment requires significant additional capital — dilution risk is high for existing shareholders.
+- Latency and capacity constraints of space-based connectivity limit use cases — voice and basic data may be achievable but high-bandwidth applications are not.
+- SpaceX Starlink direct-to-cell is a well-funded competitor from a company with dramatically more launch capacity.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Commercial launch and carrier revenue commencing and BlueBird capacity meeting coverage commitments. High-risk, speculative position.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- BlueBird constellation deployment progress — satellite count and coverage milestones.
+- Commercial service launch with AT&T/Verizon — any formal service announcement.
+- Capital raise terms — dilution level and balance sheet runway.

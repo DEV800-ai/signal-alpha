@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Fiber / enterprise_
+Lumen Technologies is a fiber and legacy copper infrastructure company serving enterprise and government customers. It faces significant operational and financial challenges — declining legacy revenue, high debt, and a recent debt restructuring. The company has a large fiber network asset that is underutilized. AI-driven bandwidth demand has created new interest in Lumen's dark fiber and long-haul network.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Lumen's dark fiber network spans 400,000+ route miles — AI companies and hyperscalers leasing dark fiber represent a new revenue opportunity without significant incremental capex.
+- Microsoft announced a large fiber deal with Lumen — validation of the dark fiber thesis.
+- Successful debt restructuring reduced near-term default risk and extended the financial runway.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Legacy copper and low-bandwidth services are declining faster than fiber revenue is growing — net revenue is still falling.
+- Debt restructuring was complex and leaves the company with elevated leverage — financial flexibility remains constrained.
+- Dark fiber deal pipeline is uncertain — Microsoft is announced, but the scope of future deals is unclear.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Dark fiber deals continuing with additional hyperscaler customers and legacy revenue decline stabilizing. High-risk restructuring story.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Dark fiber contract announcements — any new hyperscaler or AI company deal.
+- Revenue trend — when dark fiber revenue offsets legacy decline.
+- Debt metrics — leverage ratio and covenant compliance.

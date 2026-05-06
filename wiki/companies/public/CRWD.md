@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_AI security_
+CrowdStrike operates the Falcon cybersecurity platform — a cloud-native endpoint detection and response (EDR) and extended detection and response (XDR) solution. Its agent-based architecture collects telemetry from endpoints and uses AI to detect threats. It is the market share leader in EDR. The July 2024 global IT outage from a faulty content update was a reputational and legal risk.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Platform consolidation: CrowdStrike's strategy of adding modules (identity protection, cloud security, SIEM) to Falcon is winning against point-solution vendors in enterprise deals.
+- Federal government is a large and growing customer — FedRAMP authorization and CISA endorsements create durable government revenue.
+- AI-native threat detection (Charlotte AI) is a genuine capability advantage — the volume of telemetry CrowdStrike collects trains models that competitors cannot replicate.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- The July 2024 outage impacted 8.5M Windows devices globally — legal liability, customer churn risk, and reputational damage are still being quantified.
+- Competition from Microsoft Defender (bundled with M365) is intensifying — Microsoft is good enough for many enterprises at zero marginal cost.
+- Growth expectations are high — any deceleration in ARR growth would compress a premium multiple.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+July 2024 outage having minimal long-term customer impact and ARR growth sustaining above 25%. Microsoft Defender competitive risk is partially priced.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Net new ARR each quarter — the primary growth metric, and whether the outage caused structural churn.
+- Legal liability from the July 2024 outage — any class action settlement or regulatory fine.
+- Module attach rate — how many Falcon modules per customer, directional trend.

@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Charter holding_
+Liberty Broadband is a holding company whose primary asset is a ~26% equity stake in Charter Communications. It also holds a small stake in GCI (Alaska communications). Liberty Broadband trades at a discount to the underlying Charter value — the discount has historically been 15-25%. The rationale for holding is exposure to Charter with an additional discount.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Trades at a discount to net asset value — if Charter performs, Liberty Broadband should converge toward NAV.
+- Merger into Charter has been discussed and would close the discount.
+- Charter's fixed wireless and Spectrum Mobile growth flow through to Liberty Broadband's value.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- The NAV discount may not close — holding company discounts are persistent and structural.
+- All Charter risks (FWA competition, video decline, capex pressure) flow through to Liberty Broadband.
+- Liquidity is lower than Charter directly — complex structure for a simple Charter exposure.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+NAV discount persisting at historical levels. Merger into Charter is optionality.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Liberty Broadband / Charter merger discussions — any announcement would close the discount.
+- NAV discount vs. historical range — convergence or widening.
+- Charter operational metrics — all Charter KPIs flow to Liberty Broadband value.

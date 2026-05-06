@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Cloud / OCI / OpenAI deal_
+Oracle sells enterprise databases (Oracle DB), cloud infrastructure (OCI), and business applications (ERP, HCM, SCM). Its OpenAI partnership to provide GPU compute on OCI is a significant catalyst. OCI is growing faster than Azure/AWS/GCP from a smaller base. Its Autonomous Database and cloud ERP suite are the primary competitive moats.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- OCI GPU cluster wins (OpenAI, Elon Musk's xAI) validate OCI's networking and compute performance at scale — differentiating it from AWS/Azure on GPU cluster latency.
+- Oracle Database installed base (virtually every large enterprise) creates a migration pathway to Oracle Cloud that competitors cannot easily replicate.
+- Healthcare vertical (Cerner acquisition) adds a large EHR installed base with multi-year migration upside.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- OCI is still subscale vs. AWS and Azure — global region count and enterprise sales coverage lag significantly.
+- Cerner integration has been slower and more expensive than anticipated — EHR modernization is complex.
+- Database on-premise revenue is in long-term decline as customers migrate to cloud-native alternatives.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+OCI sustaining 40%+ growth and OpenAI/xAI GPU wins converting to durable cloud revenue. Cerner synergies not yet in consensus.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- OCI revenue growth rate — whether 40%+ growth is sustainable as the base grows.
+- GPU cluster bookings — any additional hyperscale AI lab wins beyond OpenAI and xAI.
+- Remaining performance obligations (RPO) — backlog metric that signals future OCI revenue.

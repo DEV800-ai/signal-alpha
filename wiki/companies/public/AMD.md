@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_CPU / GPU / data-center_
+AMD designs CPUs and GPUs competing directly with Intel and NVIDIA. Its EPYC server CPU line has taken meaningful market share from Intel in data center. Its Instinct MI-series GPUs are the primary alternative to NVIDIA for AI training, though the ROCm software stack remains a competitive disadvantage. Fabless — manufactured at TSMC.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- EPYC CPU market share gains in server continue; Intel's process execution issues create a sustained window for AMD to grow data center CPU revenue.
+- MI300X GPU adoption is accelerating among cloud providers seeking to diversify away from NVIDIA supply constraints.
+- AMD's acquisition of Xilinx added an FPGA/adaptive compute portfolio relevant to AI inference at the edge.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- ROCm software ecosystem is years behind CUDA — most AI researchers default to NVIDIA, making AMD's GPU wins concentrated in a small set of cost-sensitive workloads.
+- Custom silicon from hyperscalers (Trainium, TPU) targets the same cost-optimization market that AMD's MI-series competes in.
+- CPU market share gains may plateau as Intel stabilizes its process roadmap with TSMC partnerships.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Continued EPYC server CPU share gains and MI300X ramp as a credible NVIDIA alternative. Significant upside requires ROCm adoption inflecting.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- MI300X/MI350 design wins at hyperscalers — any announced commitment beyond Microsoft Azure.
+- ROCm developer adoption metrics — GitHub activity, PyTorch/JAX compatibility updates.
+- Intel Granite Rapids execution — a recovery narrows AMD's CPU window.

@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Wireless IP licensing_
+InterDigital is a wireless technology licensing company. It owns a large portfolio of patents essential to 3G, 4G, and 5G wireless standards and licenses them to handset manufacturers, chipmakers, and network equipment vendors. Revenue is predominantly royalty-based with minimal marginal cost. It also has a research function developing technologies for future standards.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- 5G royalty rates are higher than 4G — as 5G handset penetration grows, InterDigital's royalty base expands.
+- Successful patent litigation and licensing renewals provide revenue step-ups that are difficult for licensees to avoid.
+- Future standard participation (6G, Wi-Fi) creates a long-duration IP pipeline.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Licensees regularly challenge InterDigital's patents in inter partes review (IPR) proceedings — adverse rulings could impair royalty rates.
+- Apple and Samsung negotiate hard on royalty rates — FRAND (fair, reasonable, and non-discriminatory) rate determinations by courts can go below expectations.
+- 5G handset volume growth is slowing in developed markets — royalty base growth rate moderates.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+5G royalty growth sustaining through handset penetration and licensing renewals at maintained rates. Litigation risk is ongoing.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Major licensing deal renewals (Apple, Samsung, Huawei) — terms and royalty rate direction.
+- IPR and FRAND litigation outcomes — patent validity and rate determinations.
+- 5G handset global penetration — royalty base growth proxy.

@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Defense_
+General Dynamics operates combat systems (Abrams tank, Stryker), marine systems (nuclear submarine shipbuilding at Electric Boat), Gulfstream business jets, and IT services (GDIT). Electric Boat is the sole US producer of nuclear attack submarines — a program with no foreign competition. Gulfstream is recovering from supply chain challenges.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Virginia-class and Columbia-class submarine production is multi-decade and sole-source — Electric Boat revenue is one of the most durable in defense.
+- Gulfstream G700/G800 backlog is at record levels — business jet demand from ultra-high-net-worth individuals and corporations is resilient.
+- GDIT (IT services) benefits from DoD digital transformation and cloud migration programs.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Submarine production rate is constrained by workforce — the Navy wants to buy more than Electric Boat can produce.
+- Abrams tank production ramp for international customers (Poland, Ukraine support) faces supply chain delays.
+- Gulfstream delivery rate has been below backlog conversion targets — supply chain normalization is ongoing.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Submarine production catching up to demand and Gulfstream deliveries ramping. Long-cycle defense programs provide earnings visibility.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Submarine delivery count (Virginia-class) vs. Navy target of 2.33 per year.
+- Gulfstream delivery count and backlog coverage ratio.
+- GDIT contract win rate — proxy for government IT services demand.

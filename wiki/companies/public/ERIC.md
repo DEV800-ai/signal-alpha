@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_5G RAN equipment_
+Ericsson is a Swedish telecom equipment manufacturer competing directly with Nokia. It sells 5G RAN, core network, and enterprise solutions. It acquired Vonage in 2022 to add cloud communication APIs. The Vonage integration has been challenging and the rationale questioned. Like Nokia, it benefits from Huawei exclusion in Western markets.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Huawei exclusion provides a structurally larger Western RAN market — Ericsson is often the preferred vendor among tier-1 US and European carriers.
+- AT&T and Verizon multi-year RAN contracts provide revenue visibility.
+- If Vonage API business scales, it represents a software revenue layer with higher margins than hardware.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Vonage acquisition has not delivered expected synergies — it was expensive ($6.2B) and its strategic fit with core RAN business remains unclear.
+- 5G RAN spending in the US and Europe is declining from peak — replacement cycle depends on 5G-Advanced or 6G timelines.
+- Swedish government relations with China created complications around Huawei reciprocal restrictions.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+RAN market stabilizing and Vonage finding its place in the portfolio. Carrier capex cycle trough is largely priced.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- US carrier capex guidance — AT&T and Verizon RAN spending plans.
+- Vonage API revenue growth — software revenue trend.
+- Open RAN adoption — both opportunity and threat for Ericsson.

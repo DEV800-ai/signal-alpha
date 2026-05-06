@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_United Tech + Raytheon merger_
+RTX (formerly Raytheon Technologies) was formed by the merger of United Technologies and Raytheon. It operates four segments: Pratt & Whitney (jet engines), Collins Aerospace (avionics, interiors), Raytheon Missiles & Defense, and Raytheon Intelligence & Space. The Pratt & Whitney geared turbofan (GTF) engine has a contaminated powder metal issue requiring large-scale fleet inspections.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Commercial aerospace recovery (Pratt & Whitney GTF engine aftermarket) is a multi-year tailwind as global air travel continues to recover.
+- Missile demand (Patriot, Stinger, AMRAAM) has dramatically outpaced production capacity — backlog is at record levels driven by Ukraine resupply and NATO restocking.
+- Collins Aerospace avionics content per aircraft is growing — each new aircraft generation requires more connected and autonomous systems.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- GTF powder metal inspection costs ($3B+ reserved) create a cash flow headwind that persists through 2026 as airlines ground aircraft for inspection.
+- Missile production ramp is constrained by workforce and supply chain — backlog does not convert to revenue quickly.
+- Defense budget risk: Raytheon's missile programs are large line items that attract scrutiny in a budget-constrained environment.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+GTF inspection program executing within reserved cost and missile backlog converting at guided rates. Commercial aerospace recovery is consensus.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- GTF inspection completion rate and cost vs. $3B reserve.
+- Patriot/AMRAAM delivery rate — supply chain bottleneck resolution.
+- Commercial aftermarket MRO revenue growth at Pratt & Whitney.

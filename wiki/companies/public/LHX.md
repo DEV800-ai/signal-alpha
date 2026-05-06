@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Comms / electronic warfare_
+L3Harris Technologies was formed by the merger of L3 Technologies and Harris Corporation. It provides tactical radios, electronic warfare systems, night vision, space sensors, and maritime surveillance. Its products are used by US and allied military forces globally. Revenue is predominantly US government with growing international sales.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Tactical radio modernization (MUOS-capable, software-defined) is a multi-billion-dollar program across DoD services — L3Harris is a primary supplier.
+- Electronic warfare demand is growing as near-peer competition escalates — jamming, spoofing protection, and spectrum awareness are budget priorities.
+- International allies modernizing communications (Australia, UK, Canada) are expanding the export pipeline.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Integration of L3 and Harris businesses has taken longer than anticipated — some operational overlap has not been fully rationalized.
+- Competition from Thales (France), Leonardo (Italy) in international radio markets limits pricing power.
+- Defense spending prioritization could shift away from communications toward platforms (aircraft, ships) in a budget-constrained environment.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Tactical radio modernization programs converting at guided rates and international sales growing. Integration synergies are largely priced.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Tactical radio order rate — MUOS and two-channel radio program awards.
+- International revenue as % of total — growth directional signal.
+- Electronic warfare contract awards — any large single award signals DoD priority.

@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_US wireless carrier_
+Verizon Communications is the largest US wireless carrier by revenue and the leader in enterprise wireless services. It has been investing in fixed wireless access (FWA) as a cable alternative and is pursuing fiber through the Frontier Communications acquisition. Network quality leadership is its primary competitive positioning.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Fixed wireless access (FWA) is adding broadband subscribers at low incremental cost — 5G spectrum enables a cable-competitive product without new fiber construction.
+- Frontier acquisition adds a large fiber footprint in markets where Verizon previously lacked wireline assets.
+- Enterprise wireless (private 5G networks, IoT) is a growing segment with higher margins than consumer wireless.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- T-Mobile has been gaining wireless postpaid share consistently — Verizon's network premium is compressing as T-Mobile's mid-band 5G deployment matures.
+- Frontier integration is complex and expensive — synergy realization will take years.
+- FWA capacity is finite — adding too many FWA subscribers on the same spectrum used for wireless will create congestion.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Frontier integration proceeding and FWA subscriber additions continuing. T-Mobile share pressure is consensus.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Wireless postpaid phone net adds — share trend vs. T-Mobile.
+- FWA subscriber additions and churn — sustainable vs. introductory promotions.
+- Frontier integration cost and synergy timeline.

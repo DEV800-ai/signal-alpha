@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Defense IT_
+Science Applications International Corporation (SAIC) provides IT, systems integration, and engineering services to US government agencies — primarily DoD and intelligence community. It spun off Leidos in 2013 and has a smaller revenue base. It focuses on software-intensive programs, cybersecurity, and digital engineering. Nearly all revenue is US government.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Digital engineering and model-based systems engineering (MBSE) are growing DoD priorities — SAIC has invested in these capabilities.
+- Cybersecurity services demand from government is structural — every major breach produces additional program funding.
+- Smaller size than Leidos/SAIC competitors makes it more nimble for mid-size contract pursuits.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Revenue growth has been below peers — SAIC has lost several large recompetes in recent years.
+- Thin margins in government IT services limit earnings leverage.
+- Continuous resolution risk and budget uncertainty impair new award timing.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Stable government IT services revenue with modest growth. No major program win assumed.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Book-to-bill ratio each quarter — new awards vs. revenue, target >1.0.
+- Large single-award IDIQ wins — transformational contract opportunities.
+- Defense digital engineering budget line items in NDAA.

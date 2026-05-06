@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_AI server systems_
+Hewlett Packard Enterprise sells servers, storage, networking (Aruba), and the GreenLake hybrid cloud platform. Its AI server portfolio (ProLiant with NVIDIA H100/H200) competes with Dell. Cray supercomputer heritage gives it positioning in national lab and government AI deployments. Revenue is split across servers, storage, networking, and services.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- GreenLake as-a-service model converts upfront hardware revenue into recurring subscription — improving revenue quality if adoption scales.
+- Aruba networking is a credible alternative to Cisco in enterprise campus — a growing installed base with software attach.
+- Government and national lab AI clusters (Frontier, Aurora) give HPE high-profile reference architectures.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- AI server margins are thin for the same reasons as Dell — HPE is an integrator competing on price and services rather than silicon differentiation.
+- GreenLake adoption is slower than guided — customers are not converting traditional CapEx purchases to subscription at the expected rate.
+- HPE's scale is significantly smaller than Dell, limiting its ability to negotiate with NVIDIA on GPU allocation.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+GreenLake subscription conversion accelerating and AI server backlog converting to revenue. Government supercomputer wins are already known.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- GreenLake ARR and contract value — quarterly disclosure of subscription bookings.
+- AI server gross margin — any improvement signals better NVIDIA terms or richer services attach.
+- Aruba market share vs. Cisco in enterprise campus switching.

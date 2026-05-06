@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Optical components_
+Lumentum Holdings makes optical components — lasers, modulators, and transceivers — used in telecommunications networks and consumer electronics (3D sensing for smartphones). Its coherent optical components compete with II-VI (now Coherent Corp) and Finisar. Apple's face ID uses Lumentum vertical-cavity surface-emitting lasers (VCSELs). Revenue is split between telecom and industrial/consumer.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- AI data center optical interconnect demand (800G and beyond transceivers) is driving coherent component volume.
+- VCSEL demand for 3D sensing (AR/VR headsets, automotive LiDAR) represents a growing non-telecom market.
+- Telecom networking upgrade cycles (coherent optical for 400G/800G backbone) support component demand.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Telecom component market is highly competitive and cyclical — carrier capex slowdowns hit Lumentum's revenue directly.
+- Apple VCSEL concentration risk — iPhone volume and face ID design decisions directly impact a significant revenue segment.
+- Coherent Corp (II-VI merger) is a larger, better-resourced competitor in coherent optical.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Telecom component recovery and AI data center optical demand growing. Apple concentration risk is known.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Telecom component order trend — recovery from inventory correction.
+- Apple iPhone 3D sensing design continuity — any change in face ID architecture.
+- 800G coherent transceiver market share vs. Coherent Corp.

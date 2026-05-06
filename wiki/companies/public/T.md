@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_US wireless carrier_
+AT&T is a US wireless carrier and fiber broadband provider. It has refocused on its core connectivity businesses after divesting WarnerMedia. Its fiber buildout (AT&T Fiber) is competing with cable operators in broadband. Wireless service revenue is relatively stable. The company carries significant debt from past acquisitions.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- AT&T Fiber is gaining broadband market share from cable operators — fiber is the superior product and AT&T is building past new locations at pace.
+- Wireless postpaid phone subscribers are stable with improving ARPU as older plans are repriced.
+- Free cash flow generation is improving as the WarnerMedia integration costs clear — supports debt reduction and dividend sustainability.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Debt load ($130B+) constrains capital allocation — AT&T cannot simultaneously invest in fiber, maintain the dividend, and reduce debt aggressively.
+- Wireless market is saturated — growth requires taking share from Verizon and T-Mobile, which have strong competitive positions.
+- Lead sheathed cable liability (legacy network infrastructure) is an emerging remediation cost uncertainty.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Fiber subscriber growth continuing and wireless ARPU stable. Dividend sustainability at current debt levels is consensus.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- AT&T Fiber net adds each quarter — competitive intensity vs. cable.
+- Lead cable remediation cost disclosures — any formal liability estimate.
+- Free cash flow vs. dividend coverage — safety margin.

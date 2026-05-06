@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Hyperscaler / AI capex_
+Meta Platforms operates Facebook, Instagram, WhatsApp, and Threads. It is the second-largest digital advertising platform. It spends more on AI capex per revenue dollar than any other hyperscaler — primarily to improve ad targeting and recommendation systems. Its open-source Llama models are widely adopted. Reality Labs (VR/AR) remains a significant operating loss.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- AI-driven ad targeting improvements are measurably increasing advertiser ROI, supporting pricing power in a competitive market.
+- Llama open-source strategy builds ecosystem goodwill and attracts developer talent without cannibalizing core revenue.
+- WhatsApp monetization in emerging markets (business messaging, payments) is early-stage with large optionality.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Reality Labs has consumed $50B+ in cumulative losses with no clear path to profitability — investor tolerance for this drag is a risk.
+- European regulatory risk is highest among US tech; GDPR enforcement and DSA compliance costs could structurally impair EU ad revenue.
+- Teen and young adult engagement trends on Facebook are negative; Instagram and Threads must compensate.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+AI ad efficiency gains sustaining 15-20% revenue growth and Reality Labs losses stabilizing. Market is not pricing in a regulatory structural remedy in Europe.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Reality Labs quarterly loss — any inflection (positive or negative) vs. $4B/quarter run rate.
+- EU DMA enforcement — any fine or behavioral remedy related to ad targeting.
+- Instagram Reels vs. TikTok engagement metrics — third-party data from Sensor Tower, Data.ai.

@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Networking + AI ASICs_
+Broadcom is a diversified semiconductor and infrastructure software company. Its networking ASICs (Tomahawk, Jericho) are central to AI data center fabric. It also develops custom AI accelerators (XPUs) for Google (TPU) and Meta. The VMware acquisition adds a large enterprise software revenue stream. Revenue is split roughly 60% semiconductor, 40% software post-VMware.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Custom XPU deals with Google and Meta create a durable, high-margin revenue stream tied directly to hyperscaler AI capex — without competing with NVIDIA.
+- VMware integration is progressing; subscription conversion of perpetual licenses should expand recurring revenue and margin.
+- AI networking (400G/800G switches, optical interconnects) is growing faster than overall semiconductor markets as GPU clusters scale.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- VMware integration risk — enterprise customer pushback on subscription pricing changes could slow conversion and elevate churn.
+- Custom XPU revenue is highly concentrated in two customers (Google, Meta); loss of either would materially impair the AI silicon segment.
+- Networking ASIC competition is intensifying from Marvell and in-house designs by hyperscalers.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+VMware integration executing smoothly and XPU pipeline expanding beyond two anchor customers. Custom silicon TAM growth priced in at current levels.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Third XPU customer announcement — any hyperscaler beyond Google and Meta.
+- VMware subscription conversion rate in quarterly earnings commentary.
+- 400G/800G switch ASP and volume trends vs. Marvell.

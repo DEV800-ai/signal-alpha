@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Semi process control_
+KLA Corporation makes process control and inspection equipment — tools that detect defects during chip manufacturing. Process control spending is less cyclical than deposition/etch because fabs must inspect wafers regardless of utilization. KLA holds 50%+ market share in wafer inspection and metrology. Revenues correlate with wafer starts, not just new fab construction.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Process control intensity (spend as % of total equipment) increases at each new process node — advanced logic and HBM require more inspection steps per wafer.
+- Recurring revenue from installed base services provides a stable revenue floor through equipment cycles.
+- AI-driven demand for defect-free chips increases quality requirements, supporting higher inspection spending per wafer.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- China revenue restriction risk is lower for KLA than peers (less advanced tools) but not zero — export controls are expanding.
+- At 50%+ market share, organic growth is bounded by overall wafer start growth rather than share gains.
+- Valuation premium vs. peers requires sustained above-market growth that may compress in a capex slowdown.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Process control intensity continuing to increase and KLA maintaining dominant market share. Counter-cyclical positioning partially priced in premium multiple.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Process control as % of total equipment spend in customer capex budgets.
+- New product cycle — EUV-specific metrology tools for High-NA process qualification.
+- China wafer start volumes — proxy for KLA's China service revenue.

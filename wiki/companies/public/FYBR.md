@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Fiber (Verizon acquisition pending)_
+Frontier Communications is a fiber broadband provider that has been converting its legacy copper network to fiber (Project Gigabit). Verizon announced an acquisition of Frontier in September 2024 at $20/share. If the deal closes, Frontier's fiber assets become part of Verizon's network strategy. Frontier emerged from bankruptcy in 2021 and has been executing a fiber buildout.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Verizon acquisition at $20/share provides a near-term floor — deal expected to close 2025.
+- Fiber buildout has been executing on plan — over 5M locations passed with fiber, converting from copper.
+- Fiber internet is a superior product to copper DSL — churn is lower and ARPU is higher.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Acquisition regulatory risk — any DOJ or FCC challenge could delay or block the deal.
+- Standalone risk if deal falls through — Frontier's fiber buildout requires continued capital investment.
+- Fiber market is becoming competitive — Comcast, Charter, and AT&T are all expanding fiber into Frontier markets.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Verizon acquisition closing at announced terms. Spread reflects regulatory and execution risk.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -63,4 +63,6 @@ _No signal firings recorded for this ticker._
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- DOJ and FCC regulatory review timeline and outcome.
+- Fiber subscriber net adds while deal is pending.
+- Any deal price amendment or competing bid.

@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Earth-observation imagery_
+Planet Labs operates the world's largest commercial Earth observation satellite constellation, providing daily imagery of the entire Earth's landmass. Its customers are government agencies, agriculture companies, financial institutions, and energy companies using satellite imagery for monitoring and analysis. Revenue is subscription-based. The company is not yet profitable.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Daily revisit rate at global scale is unique — no other commercial operator can image the entire Earth every day, creating a data moat.
+- Government demand for satellite imagery is growing — NRO, NGA, and allied intelligence agencies are significant customers.
+- AI analytics on top of imagery (change detection, crop yield, deforestation monitoring) is a higher-margin revenue layer being developed.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Competition from Maxar, Airbus Defence, and new entrants (Satellogic, iQPS) is intensifying — imagery is becoming commoditized.
+- Path to profitability requires significant revenue growth — current burn rate requires additional capital or large government contract wins.
+- Government contract dependence means any reduction in intelligence community imagery spending would be material.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Government imagery contract growth and AI analytics adding margin. Profitability timeline is speculative — priced as an option on scale.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Government contract TCV — any large multi-year award from NRO, NGA, or allied agencies.
+- Customer count and revenue per customer — trend toward larger deals.
+- Cash burn rate and balance sheet runway — capital requirements.

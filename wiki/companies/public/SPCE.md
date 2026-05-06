@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Suborbital / specul. position_
+Virgin Galactic operated a suborbital space tourism business (VSS Unity) and was developing Delta class spaceships for higher-frequency commercial operations. It suspended commercial spaceflight operations in 2023 to focus on Delta development. The company has minimal revenue and very high cash burn. It represents a highly speculative, pre-commercial position.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- If Delta class vehicles achieve the targeted 125 flights per year at $450K+ per ticket, the economics are transformative vs. Unity's single-digit annual cadence.
+- The Virgin brand and Branson legacy provide marketing value that other space startups cannot replicate.
+- Space tourism is a nascent market with no ceiling established on demand — early adopters are paying and waitlists exist.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Delta development timeline and cost have not been disclosed with confidence — execution risk is very high for a company with limited capital.
+- Blue Origin New Shepard is a direct competitor with Amazon's backing and is already flying passengers.
+- Cash runway is limited — the company requires additional capital raises that will significantly dilute existing shareholders.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Highly speculative. Current valuation reflects option value on Delta development succeeding. Do not treat as a research-grade position.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Delta class development milestone — first flight date and per-vehicle cost.
+- Cash balance and burn rate — capital raise necessity timeline.
+- Competitor Blue Origin cadence — any acceleration in New Shepard flights.

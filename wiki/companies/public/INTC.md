@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_CPU / foundry pivot_
+Intel designs and manufactures CPUs, GPUs, and networking silicon. Its foundry business (Intel Foundry Services) is a strategic pivot to compete with TSMC and Samsung. It has lost significant data center CPU share to AMD and GPU share to NVIDIA. The 18A process node is the key technology milestone to restore manufacturing leadership.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- If 18A process achieves yields competitive with TSMC N2, Intel becomes the only western advanced foundry — a strategic asset for governments seeking supply chain independence.
+- Xeon data center CPU base remains large; even modest share stabilization generates significant free cash flow.
+- US CHIPS Act subsidies reduce the capital intensity of the foundry buildout.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- 18A process has faced repeated delays; every delay cedes another generation of manufacturing leadership to TSMC.
+- Gaudi AI GPU has not gained meaningful traction against NVIDIA H100/H200 — software and ecosystem gaps are significant.
+- Foundry customer pipeline remains thin; without external customers, IFS cannot achieve the scale economics needed to be cost-competitive.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+18A process achieving risk production on schedule. Market has already discounted significant foundry execution risk — upside requires external customer wins.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- 18A risk production yield — any public disclosure or customer tape-out announcement.
+- IFS external customer wins beyond Amazon (who have one design in process).
+- Xeon market share in quarterly server CPU shipment data (IDC/Mercury Research).

@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Defense IT_
+Leidos Holdings is the largest US defense IT services company. It provides software, systems integration, and managed services to the DoD, intelligence community, and civilian agencies. Its programs include DHMSM (military health IT), IT infrastructure for the Navy (NGEN), and classified intelligence work. Revenue is predominantly cost-plus government contracts.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- DoD digital transformation and cloud migration programs are large, multi-year — Leidos has strong positioning in DISA and Navy IT infrastructure.
+- Health IT segment (military electronic health records) is a long-term program with limited competition.
+- Classified work provides revenue that is not visible to competitors — a buffer during public contract budget uncertainty.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Government IT services is a competitive, margin-compressed market — growth depends on winning new programs, which is inherently lumpy.
+- Continuing resolution risk: prolonged CRs restrict new program starts and can pause existing contract spending.
+- Defense IT consolidation means fewer but larger contracts — a loss on a large recompete could materially impair revenue.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+NGEN and DHMSM programs renewing on favorable terms and AI-driven IT services growing government book.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- NGEN recompete outcome — large Navy IT infrastructure contract.
+- Defense budget appropriations — any CR extension delays new contract awards.
+- AI/ML contract wins in intelligence community — classified signals.

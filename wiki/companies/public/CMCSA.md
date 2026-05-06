@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Cable / broadband_
+Comcast is the largest US cable operator providing broadband, video, and voice through Xfinity, plus the NBCUniversal media and entertainment portfolio. Broadband is the primary growth and profit driver. Video subscribers are in structural decline. Peacock streaming is scaling but loss-making. Theme parks (Universal) generate significant EBITDA.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Broadband ARPU is growing as video cord-cutting customers are repriced to broadband-only plans — revenue per home is resilient despite video loss.
+- NBCU content (sports rights, Peacock) creates bundling opportunities that pure broadband operators cannot offer.
+- Theme park expansion (Epic Universe Orlando opening 2025) is a new EBITDA driver independent of media cycle.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Fixed wireless access from T-Mobile and Verizon is taking broadband market share — net subscriber additions are under pressure.
+- Peacock content spending ($3B+ annually) is a drag on FCF with an uncertain path to profitability.
+- Video revenue decline is accelerating — the EBITDA contribution from video will become negligible within 3-5 years.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Broadband ARPU growth offsetting subscriber losses and Peacock scaling to breakeven. Theme park expansion impact is in consensus.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Broadband subscriber net adds — any acceleration in losses to FWA would be significant.
+- Broadband ARPU growth rate — pricing power vs. competitive pressure.
+- Peacock subscriber count and ARPU — path to profitability.

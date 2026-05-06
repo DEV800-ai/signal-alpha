@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Regional wireless_
+United States Cellular is a regional wireless carrier operating primarily in rural and suburban markets across the Midwest and Southeast. It is majority-controlled by TDS. T-Mobile has entered into an agreement to acquire USM's wireless operations and a significant portion of its spectrum. If completed, USM would exit the wireless business.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- T-Mobile acquisition of wireless operations at approximately $4.4B — provides near-term value crystallization.
+- Spectrum assets being sold to T-Mobile are valuable at above-market prices — validates the spectrum value.
+- Rural market stability — USM has strong brand loyalty in markets where it has operated for decades.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Post-acquisition, the remaining USM entity would be primarily towers — a much smaller and less valuable business.
+- T-Mobile transaction regulatory approval is not guaranteed.
+- If the deal falls through, USM faces an increasingly difficult competitive environment against T-Mobile's national network.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+T-Mobile acquisition closing at announced terms. Spread reflects regulatory and closing risk.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -63,4 +63,6 @@ _No signal firings recorded for this ticker._
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- T-Mobile acquisition regulatory approval — FCC and DOJ review.
+- Transaction closing timeline.
+- Tower asset valuation post-acquisition — what the remaining entity is worth.

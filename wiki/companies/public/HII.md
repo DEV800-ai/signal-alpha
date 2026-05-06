@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Naval shipbuilding_
+Huntington Ingalls Industries is the largest US military shipbuilder, operating Newport News Shipbuilding (nuclear carriers and submarines) and Ingalls Shipbuilding (surface combatants, amphibious ships). It is the only US builder of nuclear aircraft carriers and, along with Electric Boat, one of two producers of nuclear submarines. Revenue is entirely US Navy and Coast Guard.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Nuclear shipbuilding is a protected US industrial base — HII is irreplaceable for aircraft carrier production and shares submarine work with General Dynamics.
+- Navy shipbuilding budget is growing — the National Defense Strategy emphasizes naval competition with China, supporting multi-year ship programs.
+- Long-cycle programs (carriers take 8+ years to build) provide exceptional revenue visibility.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- Production rate for Virginia-class submarines and Ford-class carriers is below Navy targets — workforce and supply chain constraints are binding.
+- Fixed-price elements in ship contracts expose HII to cost overruns on complex first-of-class vessels.
+- Cost growth on CVN-82 (third Ford-class carrier) has drawn Congressional attention.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+Shipbuilding workforce growing to meet Navy demand and fixed-price exposure manageable. Long-cycle revenue provides stability.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- Virginia-class submarine delivery rate vs. Navy two-per-year target.
+- CVN-82 cost-at-completion estimate vs. original contract value.
+- Navy shipbuilding budget in annual NDAA — quantity of ships authorized.

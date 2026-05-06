@@ -19,29 +19,29 @@ schema_version: 1
 
 <!-- claim_type: interpretation -->
 
-_Hyperscaler / AWS_
+Amazon operates e-commerce, AWS (cloud infrastructure), advertising, and logistics. AWS is the largest cloud platform globally with 30%+ market share. It develops custom AI chips (Trainium for training, Inferentia for inference) to reduce NVIDIA dependency. Its advertising segment is the third-largest digital ad business. AWS generates the majority of operating income.
 
 ## Bull case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- AWS AI services (Bedrock, SageMaker) are growing faster than core AWS, and Trainium chip adoption reduces per-unit compute cost — enabling margin expansion as AI workloads scale.
+- Advertising revenue is growing at 20%+ with high margins, becoming a third major profit engine alongside AWS and retail.
+- Logistics network investments are now generating returns — same-day delivery capability creates a durable retail moat.
 
 ## Bear case
 
 <!-- claim_type: interpretation -->
 
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
-- _TODO: One-sentence claim + source citation._
+- AWS market share has been slowly eroding as Azure and GCP grow faster; enterprise AI workloads skew toward Azure (OpenAI) and GCP (Gemini).
+- Retail segment faces margin pressure from increased competition (Temu, Shein) and continued logistics cost inflation.
+- Trainium adoption outside of Amazon's own workloads is limited — external customer wins are necessary to justify the chip investment.
 
 ## Priced in
 
 <!-- claim_type: interpretation -->
 
-_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+AWS reaccelerating to 20%+ growth and advertising continuing at current trajectory. Market prices in Trainium as a cost-savings tool, not a revenue driver.
 
 ## Recent catalysts
 
@@ -49,7 +49,7 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 | Date | Event | Source | Horizon | Outcome |
 |------|-------|--------|---------|---------|
-| _TODO_ | | | | |
+| — | | | | |
 
 ## Signal history
 
@@ -84,4 +84,6 @@ _TODO: What is the market already pricing in? What would need to be true for the
 
 <!-- claim_type: risk_note -->
 
-- _TODO: Concrete things to watch with measurable triggers._
+- AWS revenue growth rate — any reacceleration above 20% signals enterprise workload return.
+- Trainium external customer wins — any hyperscaler or large enterprise adoption beyond Amazon.
+- Retail operating margin — recovery toward pre-COVID levels would be significant.
