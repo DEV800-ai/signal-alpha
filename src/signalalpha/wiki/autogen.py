@@ -260,7 +260,126 @@ _TODO: Describe the economic intuition behind why this signal should have predic
     page_path.write_text(content, encoding="utf-8")
 
 
+# ── Company signal history renderer ──────────────────────────────────────────
+
+def render_signal_history(ticker: str, db: duckdb.DuckDBPyConnection) -> str:
+    """Render the AUTOGEN:BEGIN…END content for signal_history on a company page."""
+    try:
+        rows = db.execute("""
+            SELECT se.event_date, sr.signal_name, se.run_id,
+                   se.net_return, se.alpha_sector, se.entry_date, se.exit_date
+            FROM signal_events se
+            JOIN signal_runs sr ON sr.run_id = se.run_id
+            WHERE se.ticker = ?
+            ORDER BY se.event_date DESC
+            LIMIT 20
+        """, [ticker]).fetchall()
+    except Exception:
+        rows = []
+
+    lines = ["<!-- claim_type: signal_summary -->", ""]
+    if not rows:
+        lines.append("_No signal firings recorded for this ticker._")
+        return "\n".join(lines)
+
+    lines.append("| Date | Signal | Return | Alpha vs Sector | Source |")
+    lines.append("|------|--------|--------|-----------------|--------|")
+    for event_date, signal_name, run_id, net_return, alpha_sector, entry_date, exit_date in rows:
+        date_str = str(event_date)[:10]
+        ret = f"{net_return*100:+.1f}%" if net_return is not None else "—"
+        alpha = f"{alpha_sector*100:+.1f}%" if alpha_sector is not None else "—"
+        sid = _clean_signal_id(signal_name)
+        lines.append(f"| {date_str} | [{sid}](../signals/{sid}.md) | {ret} | {alpha} | [run #{run_id}](signal_run:{run_id}) |")
+
+    return "\n".join(lines)
+
+
+def scaffold_company_page(
+    ticker: str,
+    name: str,
+    sector: str,
+    listing: str,
+    notes: str,
+    page_path: Path,
+    today: date,
+    db: duckdb.DuckDBPyConnection,
+) -> None:
+    """Write a fresh stub company page."""
+    signal_history_content = render_signal_history(ticker, db)
+
+    content = f"""\
+---
+ticker: {ticker}
+slug: {ticker.lower()}
+name: {name}
+status: public
+sector: {sector}
+listing: {listing}
+lifecycle: draft
+last_updated: {today}
+last_reviewed: {today}
+freshness_status: current
+confidence: low
+schema_version: 1
+---
+
+# {name} ({ticker})
+
+## Strategic position
+
+<!-- claim_type: interpretation -->
+
+_{notes or 'TODO: Describe the company strategic position in ≤80 words.'}_
+
+## Bull case
+
+<!-- claim_type: interpretation -->
+
+- _TODO: One-sentence claim + source citation._
+- _TODO: One-sentence claim + source citation._
+- _TODO: One-sentence claim + source citation._
+
+## Bear case
+
+<!-- claim_type: interpretation -->
+
+- _TODO: One-sentence claim + source citation._
+- _TODO: One-sentence claim + source citation._
+- _TODO: One-sentence claim + source citation._
+
+## Priced in
+
+<!-- claim_type: interpretation -->
+
+_TODO: What is the market already pricing in? What would need to be true for the stock to outperform from here?_
+
+## Recent catalysts
+
+<!-- claim_type: factual_claim -->
+
+| Date | Event | Source | Horizon | Outcome |
+|------|-------|--------|---------|---------|
+| _TODO_ | | | | |
+
+## Signal history
+
+<!-- AUTOGEN:BEGIN signal_history -->
+{signal_history_content}
+<!-- AUTOGEN:END signal_history -->
+
+## Watch list
+
+<!-- claim_type: risk_note -->
+
+- _TODO: Concrete things to watch with measurable triggers._
+"""
+    page_path.write_text(content, encoding="utf-8")
+
+
 # ── Main entry point ──────────────────────────────────────────────────────────
+
+_BENCHMARK_SECTORS = frozenset(["benchmark"])
+
 
 def run_autogen(
     wiki_root: Path | None = None,
@@ -268,13 +387,15 @@ def run_autogen(
     dry_run: bool = False,
 ) -> list[str]:
     """
-    Scaffold missing signal pages and refresh all AUTOGEN sections.
+    Scaffold missing signal + company pages and refresh all AUTOGEN sections.
     Returns list of file paths that were created or updated.
     """
     if wiki_root is None:
         wiki_root = WIKI_ROOT
     signals_dir = wiki_root / "signals"
+    companies_dir = wiki_root / "companies" / "public"
     signals_dir.mkdir(parents=True, exist_ok=True)
+    companies_dir.mkdir(parents=True, exist_ok=True)
 
     close_db = False
     if db is None:
@@ -282,50 +403,73 @@ def run_autogen(
         close_db = True
 
     try:
-        rows = db.execute(
-            "SELECT * FROM signal_runs ORDER BY run_id"
-        ).fetchall()
+        today = date.today()
+        code_version = _git_short_hash()
+        changed: list[str] = []
+
+        # ── Signal pages ──────────────────────────────────────────────────────
+        rows = db.execute("SELECT * FROM signal_runs ORDER BY run_id").fetchall()
         cols = [d[0] for d in db.execute("DESCRIBE signal_runs").fetchall()]
+        run_dicts = [dict(zip(cols, r)) for r in rows]
+
+        by_signal: dict[str, list[dict]] = defaultdict(list)
+        for r in run_dicts:
+            sid = _clean_signal_id(r["signal_name"])
+            by_signal[sid].append(r)
+
+        for signal_id, runs in sorted(by_signal.items()):
+            page_path = signals_dir / f"{signal_id}.md"
+            primary = min(runs, key=lambda r: r.get("p_value_vs_sector") or 1.0)
+
+            if not page_path.exists():
+                if not dry_run:
+                    scaffold_signal_page(signal_id, primary, runs, page_path, code_version, today)
+                changed.append(f"CREATED {page_path}")
+            else:
+                new_content = render_validation_summary(runs)
+                if not dry_run:
+                    try:
+                        updated = update_autogen_section(page_path, "validation_summary", new_content)
+                        if updated:
+                            changed.append(f"UPDATED {page_path}")
+                    except ValueError as e:
+                        changed.append(f"SKIP {page_path}: {e}")
+                else:
+                    changed.append(f"WOULD UPDATE {page_path}")
+
+        # ── Company pages ─────────────────────────────────────────────────────
+        universe = db.execute(
+            "SELECT ticker, name, sector, notes FROM universe ORDER BY ticker"
+        ).fetchall()
+
+        for ticker, name, sector, notes in universe:
+            if sector in _BENCHMARK_SECTORS:
+                continue
+            page_path = companies_dir / f"{ticker}.md"
+
+            if not page_path.exists():
+                if not dry_run:
+                    scaffold_company_page(
+                        ticker, name or ticker, sector, "NASDAQ",
+                        notes or "", page_path, today, db,
+                    )
+                changed.append(f"CREATED {page_path}")
+            else:
+                # Refresh AUTOGEN signal_history section
+                new_content = render_signal_history(ticker, db)
+                if not dry_run:
+                    try:
+                        updated = update_autogen_section(page_path, "signal_history", new_content)
+                        if updated:
+                            changed.append(f"UPDATED {page_path}")
+                    except ValueError as e:
+                        changed.append(f"SKIP {page_path}: {e}")
+                else:
+                    changed.append(f"WOULD UPDATE {page_path}")
+
     finally:
         if close_db:
             db.close()
-
-    run_dicts = [dict(zip(cols, r)) for r in rows]
-
-    # Group by clean signal_id
-    by_signal: dict[str, list[dict]] = defaultdict(list)
-    for r in run_dicts:
-        sid = _clean_signal_id(r["signal_name"])
-        by_signal[sid].append(r)
-
-    today = date.today()
-    code_version = _git_short_hash()
-    changed: list[str] = []
-
-    for signal_id, runs in sorted(by_signal.items()):
-        page_path = signals_dir / f"{signal_id}.md"
-        # Pick the run with the best (lowest) p_value_vs_sector as primary.
-        primary = min(
-            runs,
-            key=lambda r: r.get("p_value_vs_sector") or 1.0,
-        )
-
-        if not page_path.exists():
-            if not dry_run:
-                scaffold_signal_page(signal_id, primary, runs, page_path, code_version, today)
-            changed.append(f"CREATED {page_path}")
-        else:
-            # Update AUTOGEN section only.
-            new_content = render_validation_summary(runs)
-            if not dry_run:
-                try:
-                    updated = update_autogen_section(page_path, "validation_summary", new_content)
-                    if updated:
-                        changed.append(f"UPDATED {page_path}")
-                except ValueError as e:
-                    changed.append(f"SKIP {page_path}: {e}")
-            else:
-                changed.append(f"WOULD UPDATE {page_path}")
 
     return changed
 

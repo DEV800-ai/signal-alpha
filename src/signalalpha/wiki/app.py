@@ -468,7 +468,7 @@ async function toggleDrilldown(runId, ev) {
     const cls = v => v === null ? 'neu' : v >= 0 ? 'pos' : 'neg';
     const rows = events.slice(0, 50).map(e =>
       `<tr>
-        <td style="font-weight:600">${escHtml(e.ticker)}</td>
+        <td style="font-weight:600"><button class="wiki-link" style="font-weight:700;font-size:.78rem" onclick="openWikiPage('wiki/companies/public/${escAttr(e.ticker)}.md')">${escHtml(e.ticker)}</button></td>
         <td class="td-mono">${e.event_date ?? '—'}</td>
         <td class="td-mono">${e.entry_date ?? '—'}</td>
         <td class="td-mono">${e.exit_date ?? '—'}</td>
