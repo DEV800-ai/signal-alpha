@@ -139,7 +139,13 @@ CREATE TABLE IF NOT EXISTS signal_runs (
 
 
 def connect(read_only: bool = False) -> duckdb.DuckDBPyConnection:
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    # Ensure the directory exists (important when DB_PATH points to a volume).
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    # Bootstrap: create schema if the file doesn't exist yet.
+    if not DB_PATH.exists():
+        bootstrap = duckdb.connect(str(DB_PATH))
+        bootstrap.execute(SCHEMA_SQL)
+        bootstrap.close()
     con = duckdb.connect(str(DB_PATH), read_only=read_only)
     if not read_only:
         con.execute(SCHEMA_SQL)
