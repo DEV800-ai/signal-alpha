@@ -268,6 +268,51 @@ _HTML = r"""<!DOCTYPE html>
   .issue-loc { color:#7a8aaa; font-size:.7rem; margin-top:.15rem; }
   .empty { color:#7a8aaa; font-size:.78rem; font-style:italic; }
 
+  /* ── How It Works ─────────────────────────────────── */
+  .howto-wrap { max-width: 860px; }
+  .howto-section { margin-bottom: 2rem; }
+  .howto-h2 {
+    font-size: .95rem; font-weight: 700; color: #a5b4fc;
+    margin-bottom: .75rem; padding-bottom: .4rem;
+    border-bottom: 1px solid #2d3348;
+  }
+  .howto-p { font-size: .83rem; color: #c0cce0; line-height: 1.75; margin-bottom: .6rem; }
+
+  .pipeline { display:flex; align-items:center; flex-wrap:wrap; gap:.3rem; margin:1rem 0; }
+  .pipe-step {
+    background:#1e2330; border:1px solid #2d3348; border-radius:8px;
+    padding:.55rem 1rem;
+  }
+  .pipe-step strong { display:block; font-size:.68rem; color:#a5b4fc; letter-spacing:.05em; text-transform:uppercase; margin-bottom:.15rem; }
+  .pipe-step span { font-size:.76rem; color:#8899bb; }
+  .pipe-arrow { color:#4f46e5; font-size:1.1rem; padding:0 .2rem; }
+
+  .metric-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.75rem; margin-top:.75rem; }
+  @media(max-width:760px){ .metric-grid { grid-template-columns:1fr; } }
+  .metric-card {
+    background:#141720; border:1px solid #2d3348; border-radius:9px; padding:.9rem 1rem;
+  }
+  .metric-name { font-size:.8rem; font-weight:700; color:#e2e8f0; margin-bottom:.25rem; }
+  .metric-abbr { font-size:.68rem; color:#6366f1; font-family:monospace; margin-bottom:.4rem; }
+  .metric-desc { font-size:.75rem; color:#8899bb; line-height:1.65; }
+  .metric-good { display:inline-block; margin-top:.4rem; font-size:.68rem; color:#4ade80; }
+  .metric-bad  { display:inline-block; margin-top:.4rem; font-size:.68rem; color:#f87171; }
+
+  .signal-list { display:flex; flex-direction:column; gap:.6rem; }
+  .signal-item { background:#141720; border:1px solid #2d3348; border-radius:8px; padding:.8rem 1rem; }
+  .signal-item-name { font-weight:700; color:#e2e8f0; font-size:.85rem; margin-bottom:.3rem; }
+  .signal-item-desc { font-size:.75rem; color:#8899bb; line-height:1.65; }
+
+  .dir-explainer { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; margin-top:.75rem; }
+  @media(max-width:760px){ .dir-explainer { grid-template-columns:1fr; } }
+  .dir-card { border-radius:9px; padding:1rem; }
+  .dir-card-long  { background:#0c1a0c; border:1px solid #166534; }
+  .dir-card-short { background:#1a0c0c; border:1px solid #7f1d1d; }
+  .dir-card-title { font-weight:700; font-size:.88rem; margin-bottom:.5rem; }
+  .dir-card-long  .dir-card-title { color:#4ade80; }
+  .dir-card-short .dir-card-title { color:#f87171; }
+  .dir-card p { font-size:.76rem; color:#8899bb; line-height:1.65; }
+
   /* ── Top 10 ───────────────────────────────────────── */
   .filter-bar { display:flex; gap:1rem; align-items:center; flex-wrap:wrap; padding:.2rem 0; }
   .filter-group { display:flex; flex-direction:column; gap:.25rem; }
@@ -334,6 +379,22 @@ _HTML = r"""<!DOCTYPE html>
   .lb-bar-cell { width:110px; }
   .lb-bar { height:5px; background:#2d3348; border-radius:999px; margin-top:.3rem; overflow:hidden; }
   .lb-bar-fill { height:100%; background:#6366f1; border-radius:999px; }
+  .lb-bar-fill.short { background:#ef4444; }
+
+  .dir-toggle { display:flex; border:1px solid #2d3348; border-radius:7px; overflow:hidden; }
+  .dir-btn { background:none; border:none; color:#8899bb; padding:.35rem .9rem; font-size:.82rem; font-weight:600; cursor:pointer; transition:background .12s,color .12s; }
+  .dir-btn.active-long  { background:#14532d; color:#4ade80; }
+  .dir-btn.active-short { background:#7f1d1d; color:#f87171; }
+
+  .podium-card.short-rank-1 { border-color:#ef4444; box-shadow:0 0 22px rgba(239,68,68,.13); }
+  .podium-card.short-rank-2 { border-color:#f97316; }
+  .podium-card.short-rank-3 { border-color:#eab308; }
+  .short-rank-1 .podium-ticker { color:#ef4444; }
+  .short-rank-2 .podium-ticker { color:#f97316; }
+  .short-rank-3 .podium-ticker { color:#eab308; }
+  .short-rank-1 .score-bar-fill { background:#ef4444; }
+  .short-rank-2 .score-bar-fill { background:#f97316; }
+  .short-rank-3 .score-bar-fill { background:#eab308; }
 
   /* Toast */
   #toast {
@@ -356,6 +417,7 @@ _HTML = r"""<!DOCTYPE html>
   <button class="tab-btn active" onclick="switchTab('brief', this)">Daily Brief</button>
   <button class="tab-btn" onclick="switchTab('top10', this)">Top 10</button>
   <button class="tab-btn" onclick="switchTab('editor', this)">Wiki Editor</button>
+  <button class="tab-btn" onclick="switchTab('howto', this)">How It Works</button>
 </div>
 
 <!-- ═══════════════════════ DAILY BRIEF TAB -->
@@ -403,6 +465,13 @@ _HTML = r"""<!DOCTYPE html>
           <option value="hitrate">Hit rate</option>
         </select>
       </div>
+      <div class="filter-group">
+        <label class="filter-label">Direction</label>
+        <div class="dir-toggle">
+          <button id="dir-long"  class="dir-btn active-long"  onclick="setDirection('long')">▲ Long</button>
+          <button id="dir-short" class="dir-btn"              onclick="setDirection('short')">▼ Short</button>
+        </div>
+      </div>
       <button class="secondary" style="font-size:.7rem;padding:.3rem .6rem;align-self:flex-end;margin-top:.2rem" onclick="loadTop10()">↻ Refresh</button>
     </div>
   </div>
@@ -413,6 +482,119 @@ _HTML = r"""<!DOCTYPE html>
     <div class="card-title">Leaderboard</div>
     <p class="state-msg">Loading…</p>
   </div>
+</div>
+
+<!-- ═══════════════════════ HOW IT WORKS TAB -->
+<div class="tab-panel" id="tab-howto">
+<div class="card howto-wrap">
+
+  <div class="howto-section">
+    <div class="howto-h2">What is SignalAlpha?</div>
+    <p class="howto-p">SignalAlpha is a systematic signal research system. It detects recurring patterns in price volume and corporate event data, backtests each pattern against historical returns, and statistically validates whether the pattern produces alpha above the relevant sector ETF. Only patterns that clear a strict statistical bar (p&nbsp;&lt;&nbsp;0.05) are considered validated.</p>
+    <p class="howto-p">The universe covers 68 public companies across three sectors: AI Infrastructure, Space &amp; Defense, and Telecom.</p>
+  </div>
+
+  <div class="howto-section">
+    <div class="howto-h2">The Pipeline</div>
+    <div class="pipeline">
+      <div class="pipe-step"><strong>1 — Detect</strong><span>Scan price / volume / SEC filing data for candidate events</span></div>
+      <span class="pipe-arrow">→</span>
+      <div class="pipe-step"><strong>2 — Backtest</strong><span>Entry T+1 open, hold N days, exit at open. 10 bps slippage.</span></div>
+      <span class="pipe-arrow">→</span>
+      <div class="pipe-step"><strong>3 — Validate</strong><span>Paired t-test: stock return vs sector ETF over same window</span></div>
+      <span class="pipe-arrow">→</span>
+      <div class="pipe-step"><strong>4 — Holdout</strong><span>One-time out-of-sample test on reserved 2025+ data</span></div>
+    </div>
+  </div>
+
+  <div class="howto-section">
+    <div class="howto-h2">Key Metrics</div>
+    <div class="metric-grid">
+
+      <div class="metric-card">
+        <div class="metric-name">Alpha vs Sector</div>
+        <div class="metric-abbr">stock_return − sector_ETF_return</div>
+        <div class="metric-desc">How much the stock outperformed (or underperformed) its sector ETF over the hold period. A positive alpha means the signal identifies idiosyncratic edge above the sector move. The sector benchmarks are SOXX (ai_infra), ITA (space_defense), and IYZ (telecom).</div>
+        <span class="metric-good">+1.5% = strong edge</span>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-name">Hit Rate</div>
+        <div class="metric-abbr">wins / total_events</div>
+        <div class="metric-desc">Percentage of signal firings that closed with a positive net return. A random strategy expects ~50%. Hit rate above 55% combined with positive alpha is a strong reliability indicator. For short candidates, the inverse applies — a low hit rate is desirable.</div>
+        <span class="metric-good">&gt;55% long</span>
+        <span class="metric-bad" style="margin-left:.5rem">&lt;45% short</span>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-name">Avg Return</div>
+        <div class="metric-abbr">mean(net_return)</div>
+        <div class="metric-desc">Mean net return across all signal firings after deducting 10 bps round-trip slippage. Includes both winners and losers. This is the raw P&amp;L per trade — compare it against alpha to understand how much of the return is idiosyncratic vs sector-driven.</div>
+        <span class="metric-good">+3% over 15d = strong</span>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-name">p-value</div>
+        <div class="metric-abbr">paired t-test(stock, sector)</div>
+        <div class="metric-desc">Statistical significance of the alpha. A paired t-test compares stock returns vs sector ETF returns for identical entry/exit dates. p&nbsp;&lt;&nbsp;0.05 means there is less than a 5% chance the observed alpha is random. This is the primary validation gate.</div>
+        <span class="metric-good">&lt;0.05 = validated</span>
+        <span class="metric-bad" style="margin-left:.5rem">&gt;0.10 = graveyard</span>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-name">Sharpe (annualized)</div>
+        <div class="metric-abbr">mean / std × √(252 / hold_days)</div>
+        <div class="metric-desc">Risk-adjusted return. Divides mean return by its standard deviation and scales to annual frequency. A Sharpe above 0.5 is good for a signal strategy; above 1.0 is excellent. The volume anomaly at 15d hold produces Sharpe 1.22 in the holdout period.</div>
+        <span class="metric-good">&gt;0.5 good  &gt;1.0 excellent</span>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-name">Composite Score</div>
+        <div class="metric-abbr">alpha × hit_rate × log(1 + N)</div>
+        <div class="metric-desc">The ranking metric used in the Top 10 leaderboard. Rewards signals with high alpha AND consistent winning AND enough historical observations to trust. A signal with great alpha but only 5 events scores lower than one with moderate alpha across 200 events.</div>
+        <span class="metric-good">Higher = better ranked</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="howto-section">
+    <div class="howto-h2">Signals</div>
+    <div class="signal-list">
+      <div class="signal-item">
+        <div class="signal-item-name">Volume Anomaly ×2.0 — 15d Hold &nbsp;<span class="status-pill pill-validated">validated</span></div>
+        <div class="signal-item-desc">Fires when a ticker's 5-day average volume exceeds 2× its 60-day median volume. Debounced to one firing per ticker per 5 trading days. Entry at T+1 open, exit 15 trading days later. In-sample p=0.0046 across 1,480 events (2018–2024). Holdout alpha +1.58%, Sharpe 1.22 (2025–2026). The only currently validated signal.</div>
+      </div>
+      <div class="signal-item">
+        <div class="signal-item-name">8-K Filing — Excluding Earnings &nbsp;<span class="status-pill pill-borderline">borderline</span></div>
+        <div class="signal-item-desc">Fires on any non-earnings 8-K SEC filing. In-sample p=0.053 at 30d hold. Holdout p=0.27 — does not confirm out-of-sample. Currently in the graveyard for production use. Further filtering by 8-K item type or sector may be needed.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="howto-section">
+    <div class="howto-h2">Long vs Short Rankings</div>
+    <div class="dir-explainer">
+      <div class="dir-card dir-card-long">
+        <div class="dir-card-title">▲ Long — Top 10</div>
+        <p>Stocks where the signal consistently fires before price appreciation above the sector ETF. Ranked by <b>composite score</b> = alpha × hit_rate × log(N). These are candidates to buy when the volume anomaly fires on them. Positive alpha means the stock beat SOXX/ITA/IYZ over the hold period.</p>
+      </div>
+      <div class="dir-card dir-card-short">
+        <div class="dir-card-title">▼ Short — Top 10</div>
+        <p>Stocks where the signal consistently fires before price declines relative to the sector ETF. Ranked by <b>short composite score</b> = |alpha| × (1 − hit_rate) × log(N). A low hit rate and negative alpha means the stock drops below its sector when volume spikes — a candidate to short. These are often stocks with structural problems where volume spikes are distribution events, not accumulation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="howto-section">
+    <div class="howto-h2">Statistical Guardrails</div>
+    <p class="howto-p"><b>Minimum N = 30 events</b> to report any result. Signals with fewer events are inconclusive regardless of p-value.</p>
+    <p class="howto-p"><b>Holdout window:</b> all data from 2025-01-01 onward was never seen during parameter development. The holdout was run once, results are final, and they are not used to tune parameters.</p>
+    <p class="howto-p"><b>Slippage:</b> 10 bps round-trip is deducted from every trade to model realistic execution costs.</p>
+    <p class="howto-p"><b>No look-ahead:</b> all signals use only data available at signal-fire time. Rolling windows are right-aligned at T; entry is T+1 open.</p>
+  </div>
+
+</div>
 </div>
 
 <!-- ═══════════════════════ WIKI EDITOR TAB -->
@@ -479,6 +661,14 @@ function switchTab(name, btn) {
   btn.classList.add('active');
   document.getElementById('tab-' + name).classList.add('active');
   if (name === 'top10' && !_tabLoaded.top10) { _tabLoaded.top10 = true; loadTop10(); }
+}
+
+let _t10Direction = 'long';
+function setDirection(dir) {
+  _t10Direction = dir;
+  document.getElementById('dir-long').className  = 'dir-btn' + (dir === 'long'  ? ' active-long'  : '');
+  document.getElementById('dir-short').className = 'dir-btn' + (dir === 'short' ? ' active-short' : '');
+  loadTop10();
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
@@ -751,12 +941,13 @@ async function loadTop10() {
   const sig   = document.getElementById('t10-signal').value;
   const sec   = document.getElementById('t10-sector').value;
   const score = document.getElementById('t10-score').value;
+  const dir   = _t10Direction;
   document.getElementById('t10-podium').innerHTML =
     '<p class="state-msg" style="grid-column:1/-1">Loading…</p>';
   document.getElementById('t10-board').innerHTML =
     '<div class="card-title">Leaderboard</div><p class="state-msg">Loading…</p>';
   try {
-    const p = new URLSearchParams({ signal_filter: sig, sector: sec, score_by: score, limit: 10 });
+    const p = new URLSearchParams({ signal_filter: sig, sector: sec, score_by: score, direction: dir, limit: 10 });
     const data = await (await fetch('/top10?' + p)).json();
     renderTop10(data);
   } catch(e) {
@@ -768,9 +959,10 @@ async function loadTop10() {
 }
 
 function renderTop10(data) {
-  const stocks   = data.stocks || [];
-  const scoreKey = data.score_by || 'composite_score';
-  const maxScore = stocks.length && stocks[0][scoreKey] ? stocks[0][scoreKey] : 1;
+  const stocks    = data.stocks || [];
+  const isShort   = data.direction === 'short';
+  const scoreKey  = isShort ? 'short_score' : (data.score_by || 'composite_score');
+  const maxScore  = stocks.length && stocks[0][scoreKey] ? stocks[0][scoreKey] : 1;
 
   const pct = v => v === null || v === undefined ? '—'
     : `${v >= 0 ? '+' : ''}${(v * 100).toFixed(1)}%`;
@@ -781,24 +973,39 @@ function renderTop10(data) {
     return `<span class="sector-badge sec-${escAttr(s||'unknown')}">${escHtml(SECTOR_LABELS[s]||s||'—')}</span>`;
   }
 
-  const MEDALS = ['🥇','🥈','🥉'];
-  const RANK_CLS = ['rank-1','rank-2','rank-3'];
+  const LONG_MEDALS  = ['🥇','🥈','🥉'];
+  const SHORT_MEDALS = ['📉','📉','📉'];
+  const LONG_RANK_CLS  = ['rank-1','rank-2','rank-3'];
+  const SHORT_RANK_CLS = ['short-rank-1','short-rank-2','short-rank-3'];
+  const MEDALS   = isShort ? SHORT_MEDALS  : LONG_MEDALS;
+  const RANK_CLS = isShort ? SHORT_RANK_CLS : LONG_RANK_CLS;
 
   // ── Podium (top 3) ──────────────────────────────────────────────────────────
   const podiumEl = document.getElementById('t10-podium');
+  const emptyMsg = isShort
+    ? 'No short candidates found — try relaxing the signal filter.'
+    : 'No stocks matched — try relaxing the signal filter.';
+
   if (!stocks.length) {
-    podiumEl.innerHTML =
-      '<p class="state-msg" style="grid-column:1/-1">No stocks matched — try relaxing the signal filter.</p>';
+    podiumEl.innerHTML = `<p class="state-msg" style="grid-column:1/-1">${emptyMsg}</p>`;
     document.getElementById('t10-board').innerHTML = '<div class="card-title">Leaderboard</div>';
     return;
   }
 
   podiumEl.innerHTML = stocks.slice(0, 3).map((s, i) => {
-    const score   = s[scoreKey] ?? 0;
-    const barPct  = maxScore > 0 ? (score / maxScore * 100).toFixed(1) : 0;
-    const hrDisp  = s.hit_rate !== null ? Math.round(s.hit_rate * 100) + '%' : '—';
-    const hrCls   = s.hit_rate !== null ? (s.hit_rate >= 0.5 ? 'pos' : 'neg') : 'neu';
-    const wiki    = `wiki/companies/public/${s.ticker}.md`;
+    const score      = s[scoreKey] ?? 0;
+    const barPct     = maxScore > 0 ? (score / maxScore * 100).toFixed(1) : 0;
+    const wiki       = `wiki/companies/public/${s.ticker}.md`;
+
+    // Long: hit rate. Short: short win rate = 1 - hit_rate
+    const hrVal  = isShort
+      ? (s.hit_rate !== null ? 1 - s.hit_rate : null)
+      : s.hit_rate;
+    const hrDisp = hrVal !== null ? Math.round(hrVal * 100) + '%' : '—';
+    const hrCls  = hrVal !== null ? (hrVal >= 0.5 ? 'pos' : 'neg') : 'neu';
+    const hrLabel = isShort ? 'Short win rate' : 'Hit rate';
+    const alphaLabel = isShort ? 'Alpha (short ↓)' : 'Alpha';
+
     return `
     <div class="podium-card ${RANK_CLS[i]}">
       <div class="podium-medal">${MEDALS[i]}</div>
@@ -807,8 +1014,8 @@ function renderTop10(data) {
       <div>${sectorBadge(s.sector)}</div>
       <div class="podium-stats">
         <div class="stat-item"><span class="stat-label">Signals</span><span class="stat-val neu">${s.n_signals}</span></div>
-        <div class="stat-item"><span class="stat-label">Alpha</span><span class="stat-val ${cls(s.avg_alpha)}">${pct(s.avg_alpha)}</span></div>
-        <div class="stat-item"><span class="stat-label">Hit rate</span><span class="stat-val ${hrCls}">${hrDisp}</span></div>
+        <div class="stat-item"><span class="stat-label">${alphaLabel}</span><span class="stat-val ${cls(s.avg_alpha)}">${pct(s.avg_alpha)}</span></div>
+        <div class="stat-item"><span class="stat-label">${hrLabel}</span><span class="stat-val ${hrCls}">${hrDisp}</span></div>
         <div class="stat-item"><span class="stat-label">Avg return</span><span class="stat-val ${cls(s.avg_return)}">${pct(s.avg_return)}</span></div>
         <div class="stat-item"><span class="stat-label">Last signal</span><span class="stat-val neu" style="font-size:.72rem">${s.last_signal || '—'}</span></div>
       </div>
@@ -823,24 +1030,34 @@ function renderTop10(data) {
   // ── Leaderboard (#4–10) ─────────────────────────────────────────────────────
   const rest    = stocks.slice(3);
   const boardEl = document.getElementById('t10-board');
+  const boardTitle = isShort
+    ? `Short Candidates — #4 to #${stocks.length}`
+    : `Leaderboard — #4 to #${stocks.length}`;
+
   if (!rest.length) {
-    boardEl.innerHTML = '<div class="card-title">Leaderboard</div>' +
+    boardEl.innerHTML = `<div class="card-title">${boardTitle}</div>` +
       '<p class="state-msg">Only ' + stocks.length + ' stock(s) matched the current filters.</p>';
     return;
   }
-  let html = `<div class="card-title">Leaderboard — #4 to #${stocks.length}</div>
+
+  const alphaHdr  = isShort ? 'Alpha (↓ below sector)' : 'Avg Alpha';
+  const hrHdr     = isShort ? 'Short Win Rate' : 'Hit Rate';
+  const barClass  = isShort ? 'lb-bar-fill short' : 'lb-bar-fill';
+
+  let html = `<div class="card-title">${boardTitle}</div>
     <div style="overflow-x:auto"><table class="lb-tbl"><thead><tr>
       <th class="lb-rank">#</th>
       <th>Ticker</th><th>Company</th><th>Sector</th>
-      <th>Signals</th><th>Avg Alpha</th><th>Hit Rate</th><th>Avg Return</th>
+      <th>Signals</th><th>${alphaHdr}</th><th>${hrHdr}</th><th>Avg Return</th>
       <th>Last Signal</th><th class="lb-bar-cell">Score</th>
     </tr></thead><tbody>`;
 
   rest.forEach((s, i) => {
     const score  = s[scoreKey] ?? 0;
     const barPct = maxScore > 0 ? (score / maxScore * 100).toFixed(1) : 0;
-    const hrDisp = s.hit_rate !== null ? Math.round(s.hit_rate * 100) + '%' : '—';
-    const hrCls  = s.hit_rate !== null ? (s.hit_rate >= 0.5 ? 'pos' : 'neg') : 'neu';
+    const hrVal  = isShort ? (s.hit_rate !== null ? 1 - s.hit_rate : null) : s.hit_rate;
+    const hrDisp = hrVal !== null ? Math.round(hrVal * 100) + '%' : '—';
+    const hrCls  = hrVal !== null ? (hrVal >= 0.5 ? 'pos' : 'neg') : 'neu';
     const wiki   = `wiki/companies/public/${s.ticker}.md`;
     html += `<tr onclick="openWikiPage('${escAttr(wiki)}')">
       <td class="lb-rank">${i + 4}</td>
@@ -853,7 +1070,7 @@ function renderTop10(data) {
       <td><span class="${cls(s.avg_return)}">${pct(s.avg_return)}</span></td>
       <td class="neu" style="font-size:.73rem">${s.last_signal || '—'}</td>
       <td class="lb-bar-cell">
-        <div class="lb-bar"><div class="lb-bar-fill" style="width:${barPct}%"></div></div>
+        <div class="lb-bar"><div class="${barClass}" style="width:${barPct}%"></div></div>
       </td>
     </tr>`;
   });
@@ -979,59 +1196,82 @@ async def top10_endpoint(
     signal_filter: str = Query("validated"),
     sector: str = Query("all"),
     score_by: str = Query("composite"),
+    direction: str = Query("long"),
     limit: int = Query(10),
 ):
-    VALID_FILTERS = {"all", "validated", "borderline"}
-    VALID_SECTORS = {"all", "ai_infra", "space_defense", "telecom"}
-    VALID_SCORE   = {"composite", "alpha", "hitrate"}
-    if signal_filter not in VALID_FILTERS: signal_filter = "validated"
-    if sector        not in VALID_SECTORS: sector        = "all"
-    if score_by      not in VALID_SCORE:   score_by      = "composite"
+    VALID_FILTERS   = {"all", "validated", "borderline"}
+    VALID_SECTORS   = {"all", "ai_infra", "space_defense", "telecom"}
+    VALID_SCORE     = {"composite", "alpha", "hitrate"}
+    VALID_DIRECTION = {"long", "short"}
+    if signal_filter not in VALID_FILTERS:   signal_filter = "validated"
+    if sector        not in VALID_SECTORS:   sector        = "all"
+    if score_by      not in VALID_SCORE:     score_by      = "composite"
+    if direction     not in VALID_DIRECTION: direction      = "long"
 
     sig_cond = (
-        "AND sr.p_value_vs_sector < 0.05"  if signal_filter == "validated"
+        "AND sr.p_value_vs_sector < 0.05"      if signal_filter == "validated"
         else "AND sr.p_value_vs_sector < 0.10" if signal_filter == "borderline"
         else ""
     )
     sec_cond = f"AND u.sector = '{sector}'" if sector != "all" else ""
-    order_col = {"composite": "composite_score", "alpha": "avg_alpha", "hitrate": "hit_rate"}[score_by]
+
+    if direction == "long":
+        dir_having = ""
+        order_col  = {"composite": "composite_score", "alpha": "avg_alpha", "hitrate": "hit_rate"}[score_by]
+        order_dir  = "DESC"
+    else:
+        dir_having = "AND AVG(se.alpha_sector) < 0"
+        order_col  = {"composite": "short_score", "alpha": "abs_alpha", "hitrate": "short_hit_rate"}[score_by]
+        order_dir  = "DESC"
 
     db = _open_db()
     try:
         rows = db.execute(f"""
             SELECT se.ticker, u.name, u.sector,
-                   COUNT(*)                                                              AS n_signals,
-                   AVG(se.alpha_sector)                                                  AS avg_alpha,
-                   AVG(se.net_return)                                                    AS avg_return,
+                   COUNT(*)                                                                   AS n_signals,
+                   AVG(se.alpha_sector)                                                       AS avg_alpha,
+                   AVG(se.net_return)                                                         AS avg_return,
                    SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END)
-                     / NULLIF(COUNT(*), 0)                                               AS hit_rate,
-                   MAX(se.event_date)                                                    AS last_signal,
+                     / NULLIF(COUNT(*), 0)                                                    AS hit_rate,
+                   MAX(se.event_date)                                                         AS last_signal,
+                   -- Long composite
                    AVG(se.alpha_sector)
                      * (SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END)
                         / NULLIF(COUNT(*), 0))
-                     * LN(COUNT(*) + 1)                                                  AS composite_score
+                     * LN(COUNT(*) + 1)                                                       AS composite_score,
+                   -- Short composite: |alpha| × (1 − hit_rate) × log(n+1)
+                   ABS(AVG(se.alpha_sector))
+                     * (1 - SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END)
+                              / NULLIF(COUNT(*), 0))
+                     * LN(COUNT(*) + 1)                                                       AS short_score,
+                   ABS(AVG(se.alpha_sector))                                                  AS abs_alpha,
+                   1 - SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END)
+                         / NULLIF(COUNT(*), 0)                                                AS short_hit_rate
             FROM signal_events se
             JOIN signal_runs sr ON sr.run_id = se.run_id
             JOIN universe    u  ON u.ticker  = se.ticker
             WHERE 1=1 {sig_cond} {sec_cond}
             GROUP BY se.ticker, u.name, u.sector
-            HAVING COUNT(*) >= 3
-            ORDER BY {order_col} DESC NULLS LAST
+            HAVING COUNT(*) >= 3 {dir_having}
+            ORDER BY {order_col} {order_dir} NULLS LAST
             LIMIT ?
         """, [limit]).fetchall()
 
         cols = ["ticker", "name", "sector", "n_signals",
-                "avg_alpha", "avg_return", "hit_rate", "last_signal", "composite_score"]
+                "avg_alpha", "avg_return", "hit_rate", "last_signal",
+                "composite_score", "short_score", "abs_alpha", "short_hit_rate"]
         stocks = []
         for r in rows:
             d = dict(zip(cols, r))
             d["last_signal"] = str(d["last_signal"])[:10] if d["last_signal"] else None
-            for k in ("avg_alpha", "avg_return", "hit_rate", "composite_score"):
+            for k in ("avg_alpha", "avg_return", "hit_rate",
+                      "composite_score", "short_score", "abs_alpha", "short_hit_rate"):
                 d[k] = round(float(d[k]), 6) if d[k] is not None else None
             stocks.append(d)
 
         return JSONResponse({
             "score_by": order_col,
+            "direction": direction,
             "signal_filter": signal_filter,
             "sector": sector,
             "stocks": stocks,
