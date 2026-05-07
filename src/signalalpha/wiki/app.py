@@ -12,7 +12,7 @@ import duckdb
 import uvicorn
 import os
 
-from fastapi import FastAPI, Form, Query, UploadFile
+from fastapi import BackgroundTasks, FastAPI, Form, Query, UploadFile
 from fastapi.responses import HTMLResponse, JSONResponse
 
 from signalalpha.config import DB_PATH
@@ -1365,6 +1365,21 @@ async def top10_endpoint(
 async def autogen_endpoint():
     results = run_autogen()
     return JSONResponse({"results": results})
+
+
+@app.post("/admin/ingest")
+async def ingest_endpoint(background_tasks: BackgroundTasks, secret: str = Query(...)):
+    """Trigger incremental price ingestion. Runs in background; returns immediately."""
+    expected = os.environ.get("ADMIN_SECRET", "")
+    if not expected or secret != expected:
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+
+    def _run():
+        from signalalpha.ingest_prices import ingest_all
+        ingest_all()
+
+    background_tasks.add_task(_run)
+    return JSONResponse({"ok": True, "status": "ingestion started in background"})
 
 
 @app.post("/admin/restore-db")

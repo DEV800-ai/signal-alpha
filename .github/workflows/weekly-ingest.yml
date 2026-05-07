@@ -1,0 +1,28 @@
+name: Weekly price ingest
+
+on:
+  schedule:
+    - cron: "0 6 * * 0"  # Every Sunday at 06:00 UTC
+  workflow_dispatch:       # Allow manual trigger from GitHub UI
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Trigger ingestion
+        run: |
+          response=$(curl -s -o /tmp/response.json -w "%{http_code}" \
+            -X POST \
+            "https://signal-alpha-production.up.railway.app/admin/ingest?secret=${{ secrets.ADMIN_SECRET }}")
+
+          cat /tmp/response.json
+          echo ""
+
+          if [ "$response" != "200" ]; then
+            echo "ERROR: ingest endpoint returned HTTP $response"
+            exit 1
+          fi
+
+          echo "Ingestion triggered successfully."
