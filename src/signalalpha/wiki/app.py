@@ -412,6 +412,14 @@ _HTML = r"""<!DOCTYPE html>
   .vol-med  { color:#fbbf24; }
   .vol-high { color:#f87171; }
 
+  .risk-badge {
+    display:inline-block; padding:.11rem .42rem; border-radius:4px;
+    font-size:.62rem; font-weight:700; letter-spacing:.05em; white-space:nowrap;
+  }
+  .risk-low  { background:#0c2120; color:#34d399; border:1px solid #065f46; }
+  .risk-med  { background:#1c1708; color:#fbbf24; border:1px solid #78350f; }
+  .risk-high { background:#1a0c0c; color:#f87171; border:1px solid #7f1d1d; }
+
   /* Toast */
   #toast {
     position:fixed; bottom:1.5rem; right:1.5rem;
@@ -568,8 +576,17 @@ _HTML = r"""<!DOCTYPE html>
       <div class="metric-card">
         <div class="metric-name">Composite Score</div>
         <div class="metric-abbr">alpha × hit_rate × log(1 + N)</div>
-        <div class="metric-desc">The ranking metric used in the Top 10 leaderboard. Rewards signals with high alpha AND consistent winning AND enough historical observations to trust. A signal with great alpha but only 5 events scores lower than one with moderate alpha across 200 events.</div>
+        <div class="metric-desc">The Long ranking metric. Rewards signals with high alpha AND consistent winning AND enough historical observations to trust. A signal with great alpha but only 5 events scores lower than one with moderate alpha across 200 events.</div>
         <span class="metric-good">Higher = better ranked</span>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-name">Risk Level</div>
+        <div class="metric-abbr">std(net_return) per stock</div>
+        <div class="metric-desc">Volatility of net returns across all signal firings for that stock. Used to classify investment risk and power the Mid-term ranking.</div>
+        <span class="metric-good" style="display:block">🟢 LOW &lt;10% std</span>
+        <span class="metric-bad" style="color:#fbbf24;display:block">🟡 MED 10–20%</span>
+        <span class="metric-bad" style="display:block">🔴 HIGH &gt;20%</span>
       </div>
 
     </div>
@@ -594,11 +611,15 @@ _HTML = r"""<!DOCTYPE html>
     <div class="dir-explainer">
       <div class="dir-card dir-card-long">
         <div class="dir-card-title">▲ Long — Top 10</div>
-        <p>Stocks where the signal consistently fires before price appreciation above the sector ETF. Ranked by <b>composite score</b> = alpha × hit_rate × log(N). These are candidates to buy when the volume anomaly fires on them. Positive alpha means the stock beat SOXX/ITA/IYZ over the hold period.</p>
+        <p>Stocks where the signal consistently fires before price appreciation above the sector ETF. Ranked by <b>composite score</b> = alpha × hit_rate × log(N). Candidates to buy when the volume anomaly fires. Each stock shows a <b>risk badge</b> (LOW / MED / HIGH) based on return volatility.</p>
+      </div>
+      <div class="dir-card" style="background:#0b1a1f;border:1px solid #0e7490;border-radius:9px;padding:1rem">
+        <div class="dir-card-title" style="color:#22d3ee">📈 Mid-term — 1 to 3 Months</div>
+        <p style="font-size:.76rem;color:#8899bb;line-height:1.65">Stocks with positive alpha and low volatility — suitable for patient 1–3 month holds. Ranked by <b>Information Ratio score</b> = (alpha / volatility) × hit_rate × log(N). High-volatility names score low even with great alpha. Look for <span style="color:#34d399;font-weight:700">LOW RISK</span> badges.</p>
       </div>
       <div class="dir-card dir-card-short">
         <div class="dir-card-title">▼ Short — Top 10</div>
-        <p>Stocks where the signal consistently fires before price declines relative to the sector ETF. Ranked by <b>short composite score</b> = |alpha| × (1 − hit_rate) × log(N). A low hit rate and negative alpha means the stock drops below its sector when volume spikes — a candidate to short. These are often stocks with structural problems where volume spikes are distribution events, not accumulation.</p>
+        <p>Stocks where the signal fires before underperformance vs sector ETF. Ranked by <b>short score</b> = |alpha| × (1 − hit_rate) × log(N). Volume spikes here are distribution events, not accumulation. Short Win Rate = probability the position profits when shorted.</p>
       </div>
     </div>
   </div>
@@ -991,6 +1012,12 @@ function renderTop10(data) {
   function sectorBadge(s) {
     return `<span class="sector-badge sec-${escAttr(s||'unknown')}">${escHtml(SECTOR_LABELS[s]||s||'—')}</span>`;
   }
+  function riskBadge(std) {
+    if (std === null || std === undefined) return '';
+    const cls   = std < 0.10 ? 'risk-low' : std < 0.20 ? 'risk-med' : 'risk-high';
+    const label = std < 0.10 ? 'LOW RISK' : std < 0.20 ? 'MED RISK' : 'HIGH RISK';
+    return `<span class="risk-badge ${cls}">${label}</span>`;
+  }
 
   const LONG_MEDALS    = ['🥇','🥈','🥉'];
   const SHORT_MEDALS   = ['📉','📉','📉'];
@@ -1039,7 +1066,7 @@ function renderTop10(data) {
       <div class="podium-medal">${MEDALS[i]}</div>
       <div class="podium-ticker">${escHtml(s.ticker)}</div>
       <div class="podium-company">${escHtml(s.name || '')}</div>
-      <div>${sectorBadge(s.sector)}</div>
+      <div style="display:flex;gap:.35rem;flex-wrap:wrap;align-items:center">${sectorBadge(s.sector)}${riskBadge(s.std_return)}</div>
       <div class="podium-stats">
         <div class="stat-item"><span class="stat-label">Signals</span><span class="stat-val neu">${s.n_signals}</span></div>
         <div class="stat-item"><span class="stat-label">${alphaLabel}</span><span class="stat-val ${cls(s.avg_alpha)}">${pct(s.avg_alpha)}</span></div>
@@ -1096,7 +1123,7 @@ function renderTop10(data) {
       : `<span class="${cls(s.avg_return)}">${pct(s.avg_return)}</span>`;
     html += `<tr onclick="openWikiPage('${escAttr(wiki)}')">
       <td class="lb-rank">${i + 4}</td>
-      <td class="lb-ticker-cell">${escHtml(s.ticker)}</td>
+      <td class="lb-ticker-cell">${escHtml(s.ticker)} ${riskBadge(s.std_return)}</td>
       <td style="color:#8899bb;font-size:.75rem">${escHtml(s.name || '—')}</td>
       <td>${sectorBadge(s.sector)}</td>
       <td class="neu">${s.n_signals}</td>
