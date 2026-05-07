@@ -1331,6 +1331,13 @@ async def top10_endpoint(
             FROM signal_events se
             JOIN signal_runs sr ON sr.run_id = se.run_id
             JOIN universe    u  ON u.ticker  = se.ticker
+            -- Only use the latest run per signal_name to avoid double-counting
+            -- events when weekly re-runs supersede historical backtests.
+            JOIN (
+                SELECT signal_name, MAX(run_id) AS latest_run_id
+                FROM signal_runs
+                GROUP BY signal_name
+            ) lr ON lr.signal_name = sr.signal_name AND lr.latest_run_id = sr.run_id
             WHERE 1=1 {sig_cond} {sec_cond}
             GROUP BY se.ticker, u.name, u.sector
             HAVING COUNT(*) >= 5 {dir_having}
@@ -1376,10 +1383,12 @@ async def ingest_endpoint(background_tasks: BackgroundTasks, secret: str = Query
 
     def _run():
         from signalalpha.ingest_prices import ingest_all
+        from signalalpha.live_signals import run_live_signals
         ingest_all()
+        run_live_signals()
 
     background_tasks.add_task(_run)
-    return JSONResponse({"ok": True, "status": "ingestion started in background"})
+    return JSONResponse({"ok": True, "status": "ingestion + signal re-run started in background"})
 
 
 @app.post("/admin/restore-db")
