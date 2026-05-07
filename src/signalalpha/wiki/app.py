@@ -396,6 +396,22 @@ _HTML = r"""<!DOCTYPE html>
   .short-rank-2 .score-bar-fill { background:#f97316; }
   .short-rank-3 .score-bar-fill { background:#eab308; }
 
+  .podium-card.mt-rank-1 { border-color:#06b6d4; box-shadow:0 0 22px rgba(6,182,212,.13); }
+  .podium-card.mt-rank-2 { border-color:#0891b2; }
+  .podium-card.mt-rank-3 { border-color:#0e7490; }
+  .mt-rank-1 .podium-ticker { color:#22d3ee; }
+  .mt-rank-2 .podium-ticker { color:#67e8f9; }
+  .mt-rank-3 .podium-ticker { color:#a5f3fc; }
+  .mt-rank-1 .score-bar-fill { background:#06b6d4; }
+  .mt-rank-2 .score-bar-fill { background:#0891b2; }
+  .mt-rank-3 .score-bar-fill { background:#0e7490; }
+  .lb-bar-fill.midterm { background:#06b6d4; }
+  .dir-btn.active-midterm { background:#164e63; color:#22d3ee; }
+
+  .vol-low  { color:#4ade80; }
+  .vol-med  { color:#fbbf24; }
+  .vol-high { color:#f87171; }
+
   /* Toast */
   #toast {
     position:fixed; bottom:1.5rem; right:1.5rem;
@@ -468,8 +484,9 @@ _HTML = r"""<!DOCTYPE html>
       <div class="filter-group">
         <label class="filter-label">Direction</label>
         <div class="dir-toggle">
-          <button id="dir-long"  class="dir-btn active-long"  onclick="setDirection('long')">▲ Long</button>
-          <button id="dir-short" class="dir-btn"              onclick="setDirection('short')">▼ Short</button>
+          <button id="dir-long"    class="dir-btn active-long"  onclick="setDirection('long')">▲ Long</button>
+          <button id="dir-midterm" class="dir-btn"              onclick="setDirection('midterm')">📈 Mid-term</button>
+          <button id="dir-short"   class="dir-btn"              onclick="setDirection('short')">▼ Short</button>
         </div>
       </div>
       <button class="secondary" style="font-size:.7rem;padding:.3rem .6rem;align-self:flex-end;margin-top:.2rem" onclick="loadTop10()">↻ Refresh</button>
@@ -666,8 +683,9 @@ function switchTab(name, btn) {
 let _t10Direction = 'long';
 function setDirection(dir) {
   _t10Direction = dir;
-  document.getElementById('dir-long').className  = 'dir-btn' + (dir === 'long'  ? ' active-long'  : '');
-  document.getElementById('dir-short').className = 'dir-btn' + (dir === 'short' ? ' active-short' : '');
+  document.getElementById('dir-long').className    = 'dir-btn' + (dir === 'long'    ? ' active-long'    : '');
+  document.getElementById('dir-midterm').className = 'dir-btn' + (dir === 'midterm' ? ' active-midterm' : '');
+  document.getElementById('dir-short').className   = 'dir-btn' + (dir === 'short'   ? ' active-short'   : '');
   loadTop10();
 }
 
@@ -961,7 +979,8 @@ async function loadTop10() {
 function renderTop10(data) {
   const stocks    = data.stocks || [];
   const isShort   = data.direction === 'short';
-  const scoreKey  = isShort ? 'short_score' : (data.score_by || 'composite_score');
+  const isMidterm = data.direction === 'midterm';
+  const scoreKey  = isShort ? 'short_score' : isMidterm ? 'midterm_score' : (data.score_by || 'composite_score');
   const maxScore  = stocks.length && stocks[0][scoreKey] ? stocks[0][scoreKey] : 1;
 
   const pct = v => v === null || v === undefined ? '—'
@@ -973,17 +992,19 @@ function renderTop10(data) {
     return `<span class="sector-badge sec-${escAttr(s||'unknown')}">${escHtml(SECTOR_LABELS[s]||s||'—')}</span>`;
   }
 
-  const LONG_MEDALS  = ['🥇','🥈','🥉'];
-  const SHORT_MEDALS = ['📉','📉','📉'];
-  const LONG_RANK_CLS  = ['rank-1','rank-2','rank-3'];
-  const SHORT_RANK_CLS = ['short-rank-1','short-rank-2','short-rank-3'];
-  const MEDALS   = isShort ? SHORT_MEDALS  : LONG_MEDALS;
-  const RANK_CLS = isShort ? SHORT_RANK_CLS : LONG_RANK_CLS;
+  const LONG_MEDALS    = ['🥇','🥈','🥉'];
+  const SHORT_MEDALS   = ['📉','📉','📉'];
+  const MIDTERM_MEDALS = ['🏅','🏅','🏅'];
+  const LONG_RANK_CLS    = ['rank-1','rank-2','rank-3'];
+  const SHORT_RANK_CLS   = ['short-rank-1','short-rank-2','short-rank-3'];
+  const MIDTERM_RANK_CLS = ['mt-rank-1','mt-rank-2','mt-rank-3'];
+  const MEDALS   = isShort ? SHORT_MEDALS   : isMidterm ? MIDTERM_MEDALS : LONG_MEDALS;
+  const RANK_CLS = isShort ? SHORT_RANK_CLS : isMidterm ? MIDTERM_RANK_CLS : LONG_RANK_CLS;
 
   // ── Podium (top 3) ──────────────────────────────────────────────────────────
   const podiumEl = document.getElementById('t10-podium');
-  const emptyMsg = isShort
-    ? 'No short candidates found — try relaxing the signal filter.'
+  const emptyMsg = isShort   ? 'No short candidates found — try relaxing the signal filter.'
+    : isMidterm ? 'No mid-term candidates found — try relaxing the signal filter.'
     : 'No stocks matched — try relaxing the signal filter.';
 
   if (!stocks.length) {
@@ -997,14 +1018,21 @@ function renderTop10(data) {
     const barPct     = maxScore > 0 ? (score / maxScore * 100).toFixed(1) : 0;
     const wiki       = `wiki/companies/public/${s.ticker}.md`;
 
-    // Long: hit rate. Short: short win rate = 1 - hit_rate
-    const hrVal  = isShort
-      ? (s.hit_rate !== null ? 1 - s.hit_rate : null)
-      : s.hit_rate;
-    const hrDisp = hrVal !== null ? Math.round(hrVal * 100) + '%' : '—';
-    const hrCls  = hrVal !== null ? (hrVal >= 0.5 ? 'pos' : 'neg') : 'neu';
-    const hrLabel = isShort ? 'Short win rate' : 'Hit rate';
+    // Labels and values vary by direction
+    const hrVal    = isShort ? (s.hit_rate !== null ? 1 - s.hit_rate : null) : s.hit_rate;
+    const hrDisp   = hrVal !== null ? Math.round(hrVal * 100) + '%' : '—';
+    const hrCls    = hrVal !== null ? (hrVal >= 0.5 ? 'pos' : 'neg') : 'neu';
+    const hrLabel  = isShort ? 'Short win rate' : 'Hit rate';
     const alphaLabel = isShort ? 'Alpha (short ↓)' : 'Alpha';
+
+    // Volatility display for mid-term
+    const volPct  = s.std_return !== null ? Math.round(s.std_return * 100) + '%' : '—';
+    const volCls  = s.std_return === null ? 'neu'
+      : s.std_return < 0.10 ? 'vol-low' : s.std_return < 0.20 ? 'vol-med' : 'vol-high';
+
+    const extraStat = isMidterm
+      ? `<div class="stat-item"><span class="stat-label">Volatility</span><span class="stat-val ${volCls}">${volPct}</span></div>`
+      : `<div class="stat-item"><span class="stat-label">Avg return</span><span class="stat-val ${cls(s.avg_return)}">${pct(s.avg_return)}</span></div>`;
 
     return `
     <div class="podium-card ${RANK_CLS[i]}">
@@ -1016,7 +1044,7 @@ function renderTop10(data) {
         <div class="stat-item"><span class="stat-label">Signals</span><span class="stat-val neu">${s.n_signals}</span></div>
         <div class="stat-item"><span class="stat-label">${alphaLabel}</span><span class="stat-val ${cls(s.avg_alpha)}">${pct(s.avg_alpha)}</span></div>
         <div class="stat-item"><span class="stat-label">${hrLabel}</span><span class="stat-val ${hrCls}">${hrDisp}</span></div>
-        <div class="stat-item"><span class="stat-label">Avg return</span><span class="stat-val ${cls(s.avg_return)}">${pct(s.avg_return)}</span></div>
+        ${extraStat}
         <div class="stat-item"><span class="stat-label">Last signal</span><span class="stat-val neu" style="font-size:.72rem">${s.last_signal || '—'}</span></div>
       </div>
       <div class="score-bar-wrap">
@@ -1030,8 +1058,8 @@ function renderTop10(data) {
   // ── Leaderboard (#4–10) ─────────────────────────────────────────────────────
   const rest    = stocks.slice(3);
   const boardEl = document.getElementById('t10-board');
-  const boardTitle = isShort
-    ? `Short Candidates — #4 to #${stocks.length}`
+  const boardTitle = isShort   ? `Short Candidates — #4 to #${stocks.length}`
+    : isMidterm ? `Mid-term (1–3 months, lower risk) — #4 to #${stocks.length}`
     : `Leaderboard — #4 to #${stocks.length}`;
 
   if (!rest.length) {
@@ -1040,25 +1068,32 @@ function renderTop10(data) {
     return;
   }
 
-  const alphaHdr  = isShort ? 'Alpha (↓ below sector)' : 'Avg Alpha';
-  const hrHdr     = isShort ? 'Short Win Rate' : 'Hit Rate';
-  const barClass  = isShort ? 'lb-bar-fill short' : 'lb-bar-fill';
+  const alphaHdr = isShort   ? 'Alpha (↓ below sector)'
+    : isMidterm ? 'Alpha vs Sector' : 'Avg Alpha';
+  const hrHdr   = isShort   ? 'Short Win Rate'
+    : isMidterm ? 'Hit Rate' : 'Hit Rate';
+  const retHdr  = isMidterm ? 'Volatility' : 'Avg Return';
+  const barClass = isShort ? 'lb-bar-fill short' : isMidterm ? 'lb-bar-fill midterm' : 'lb-bar-fill';
 
   let html = `<div class="card-title">${boardTitle}</div>
     <div style="overflow-x:auto"><table class="lb-tbl"><thead><tr>
       <th class="lb-rank">#</th>
       <th>Ticker</th><th>Company</th><th>Sector</th>
-      <th>Signals</th><th>${alphaHdr}</th><th>${hrHdr}</th><th>Avg Return</th>
+      <th>Signals</th><th>${alphaHdr}</th><th>${hrHdr}</th><th>${retHdr}</th>
       <th>Last Signal</th><th class="lb-bar-cell">Score</th>
     </tr></thead><tbody>`;
 
   rest.forEach((s, i) => {
-    const score  = s[scoreKey] ?? 0;
-    const barPct = maxScore > 0 ? (score / maxScore * 100).toFixed(1) : 0;
-    const hrVal  = isShort ? (s.hit_rate !== null ? 1 - s.hit_rate : null) : s.hit_rate;
-    const hrDisp = hrVal !== null ? Math.round(hrVal * 100) + '%' : '—';
-    const hrCls  = hrVal !== null ? (hrVal >= 0.5 ? 'pos' : 'neg') : 'neu';
-    const wiki   = `wiki/companies/public/${s.ticker}.md`;
+    const score   = s[scoreKey] ?? 0;
+    const barPct  = maxScore > 0 ? (score / maxScore * 100).toFixed(1) : 0;
+    const hrVal   = isShort ? (s.hit_rate !== null ? 1 - s.hit_rate : null) : s.hit_rate;
+    const hrDisp  = hrVal !== null ? Math.round(hrVal * 100) + '%' : '—';
+    const hrCls   = hrVal !== null ? (hrVal >= 0.5 ? 'pos' : 'neg') : 'neu';
+    const wiki    = `wiki/companies/public/${s.ticker}.md`;
+    // Mid-term: show volatility instead of avg return
+    const retVal  = isMidterm
+      ? `<span class="${s.std_return === null ? 'neu' : s.std_return < 0.10 ? 'vol-low' : s.std_return < 0.20 ? 'vol-med' : 'vol-high'}">${s.std_return !== null ? Math.round(s.std_return * 100) + '%' : '—'}</span>`
+      : `<span class="${cls(s.avg_return)}">${pct(s.avg_return)}</span>`;
     html += `<tr onclick="openWikiPage('${escAttr(wiki)}')">
       <td class="lb-rank">${i + 4}</td>
       <td class="lb-ticker-cell">${escHtml(s.ticker)}</td>
@@ -1067,7 +1102,7 @@ function renderTop10(data) {
       <td class="neu">${s.n_signals}</td>
       <td><span class="${cls(s.avg_alpha)}">${pct(s.avg_alpha)}</span></td>
       <td><span class="${hrCls}">${hrDisp}</span></td>
-      <td><span class="${cls(s.avg_return)}">${pct(s.avg_return)}</span></td>
+      <td>${retVal}</td>
       <td class="neu" style="font-size:.73rem">${s.last_signal || '—'}</td>
       <td class="lb-bar-cell">
         <div class="lb-bar"><div class="${barClass}" style="width:${barPct}%"></div></div>
@@ -1202,7 +1237,7 @@ async def top10_endpoint(
     VALID_FILTERS   = {"all", "validated", "borderline"}
     VALID_SECTORS   = {"all", "ai_infra", "space_defense", "telecom"}
     VALID_SCORE     = {"composite", "alpha", "hitrate"}
-    VALID_DIRECTION = {"long", "short"}
+    VALID_DIRECTION = {"long", "short", "midterm"}
     if signal_filter not in VALID_FILTERS:   signal_filter = "validated"
     if sector        not in VALID_SECTORS:   sector        = "all"
     if score_by      not in VALID_SCORE:     score_by      = "composite"
@@ -1219,53 +1254,66 @@ async def top10_endpoint(
         dir_having = ""
         order_col  = {"composite": "composite_score", "alpha": "avg_alpha", "hitrate": "hit_rate"}[score_by]
         order_dir  = "DESC"
-    else:
+    elif direction == "short":
         dir_having = "AND AVG(se.alpha_sector) < 0"
         order_col  = {"composite": "short_score", "alpha": "abs_alpha", "hitrate": "short_hit_rate"}[score_by]
+        order_dir  = "DESC"
+    else:  # midterm
+        # Only positive-alpha stocks; score penalises volatility
+        dir_having = "AND AVG(se.alpha_sector) > 0 AND STDDEV(se.net_return) > 0"
+        order_col  = "midterm_score"
         order_dir  = "DESC"
 
     db = _open_db()
     try:
         rows = db.execute(f"""
             SELECT se.ticker, u.name, u.sector,
-                   COUNT(*)                                                                   AS n_signals,
-                   AVG(se.alpha_sector)                                                       AS avg_alpha,
-                   AVG(se.net_return)                                                         AS avg_return,
+                   COUNT(*)                                                                    AS n_signals,
+                   AVG(se.alpha_sector)                                                        AS avg_alpha,
+                   AVG(se.net_return)                                                          AS avg_return,
+                   STDDEV(se.net_return)                                                       AS std_return,
                    SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END)
-                     / NULLIF(COUNT(*), 0)                                                    AS hit_rate,
-                   MAX(se.event_date)                                                         AS last_signal,
+                     / NULLIF(COUNT(*), 0)                                                     AS hit_rate,
+                   MAX(se.event_date)                                                          AS last_signal,
                    -- Long composite
                    AVG(se.alpha_sector)
                      * (SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END)
                         / NULLIF(COUNT(*), 0))
-                     * LN(COUNT(*) + 1)                                                       AS composite_score,
+                     * LN(COUNT(*) + 1)                                                        AS composite_score,
                    -- Short composite: |alpha| × (1 − hit_rate) × log(n+1)
                    ABS(AVG(se.alpha_sector))
                      * (1 - SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END)
                               / NULLIF(COUNT(*), 0))
-                     * LN(COUNT(*) + 1)                                                       AS short_score,
-                   ABS(AVG(se.alpha_sector))                                                  AS abs_alpha,
+                     * LN(COUNT(*) + 1)                                                        AS short_score,
+                   ABS(AVG(se.alpha_sector))                                                   AS abs_alpha,
                    1 - SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END)
-                         / NULLIF(COUNT(*), 0)                                                AS short_hit_rate
+                         / NULLIF(COUNT(*), 0)                                                 AS short_hit_rate,
+                   -- Mid-term score: (alpha / std) × hit_rate × log(n+1) — rewards risk-adjusted consistency
+                   CASE WHEN STDDEV(se.net_return) > 0
+                        THEN (AVG(se.alpha_sector) / STDDEV(se.net_return))
+                               * (SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END)
+                                  / NULLIF(COUNT(*), 0))
+                               * LN(COUNT(*) + 1)
+                        ELSE 0 END                                                             AS midterm_score
             FROM signal_events se
             JOIN signal_runs sr ON sr.run_id = se.run_id
             JOIN universe    u  ON u.ticker  = se.ticker
             WHERE 1=1 {sig_cond} {sec_cond}
             GROUP BY se.ticker, u.name, u.sector
-            HAVING COUNT(*) >= 3 {dir_having}
+            HAVING COUNT(*) >= 5 {dir_having}
             ORDER BY {order_col} {order_dir} NULLS LAST
             LIMIT ?
         """, [limit]).fetchall()
 
         cols = ["ticker", "name", "sector", "n_signals",
-                "avg_alpha", "avg_return", "hit_rate", "last_signal",
-                "composite_score", "short_score", "abs_alpha", "short_hit_rate"]
+                "avg_alpha", "avg_return", "std_return", "hit_rate", "last_signal",
+                "composite_score", "short_score", "abs_alpha", "short_hit_rate", "midterm_score"]
         stocks = []
         for r in rows:
             d = dict(zip(cols, r))
             d["last_signal"] = str(d["last_signal"])[:10] if d["last_signal"] else None
-            for k in ("avg_alpha", "avg_return", "hit_rate",
-                      "composite_score", "short_score", "abs_alpha", "short_hit_rate"):
+            for k in ("avg_alpha", "avg_return", "std_return", "hit_rate",
+                      "composite_score", "short_score", "abs_alpha", "short_hit_rate", "midterm_score"):
                 d[k] = round(float(d[k]), 6) if d[k] is not None else None
             stocks.append(d)
 
