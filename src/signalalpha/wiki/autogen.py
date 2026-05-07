@@ -110,9 +110,9 @@ def render_validation_summary(runs: list[dict]) -> str:
         p = row.get("p_value_vs_sector")
         if p is not None:
             if p < 0.05:
-                verdict = f"below the 0.05 bar — **VALIDATED**"
+                verdict = "below the 0.05 bar — **VALIDATED**"
             else:
-                verdict = f"above the 0.05 bar — **NOT VALIDATED**"
+                verdict = "above the 0.05 bar — **NOT VALIDATED**"
             lines.append(f"- p-value vs sector: **{p:.4f}** — {verdict}")
 
         sh = row.get("sharpe_ann")
@@ -174,7 +174,6 @@ def scaffold_signal_page(
     data_sources = _infer_data_sources(primary_run["signal_name"])
     data_sources_yaml = "\n".join(f"  - {ds}" for ds in data_sources)
     event_max = str(primary_run.get("event_window_end") or today)
-    run_date = str(primary_run["run_at"])[:10]
     hold_days = primary_run.get("hold_days", 30)
     validated_run_id = primary_run["run_id"]
 

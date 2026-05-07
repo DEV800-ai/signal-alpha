@@ -9,23 +9,19 @@ already-parsed accessions are skipped via the sec_form4 PRIMARY KEY.
 """
 from __future__ import annotations
 
+import time
 from xml.etree import ElementTree as ET
 
 import pandas as pd
+import requests
+import signalalpha.edgar as _edgar
 from tqdm import tqdm
 
-from signalalpha.db import connect
-from signalalpha.edgar import _get_json  # reuse the rate-limited HTTP wrapper
-import requests
-
 from signalalpha.config import EDGAR_USER_AGENT
+from signalalpha.db import connect
 
 _session = requests.Session()
 _session.headers.update({"User-Agent": EDGAR_USER_AGENT, "Accept-Encoding": "gzip, deflate"})
-
-# Reuse the EDGAR rate-limiter by routing through edgar's lock.
-import signalalpha.edgar as _edgar
-import time
 
 
 def _fetch_xml(url: str, retries: int = 3) -> str | None:

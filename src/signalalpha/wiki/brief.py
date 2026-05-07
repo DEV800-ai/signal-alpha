@@ -1,7 +1,7 @@
 """Daily Signal Brief — aggregate signal state with wiki context."""
 from __future__ import annotations
 
-from datetime import date, timedelta
+from datetime import date
 from pathlib import Path
 
 import duckdb

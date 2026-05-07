@@ -5,7 +5,6 @@ limits to <10 req/sec per SEC's fair-access policy. All endpoints are JSON.
 """
 from __future__ import annotations
 
-import json
 import threading
 import time
 from dataclasses import dataclass

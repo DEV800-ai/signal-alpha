@@ -1265,10 +1265,14 @@ async def top10_endpoint(
     VALID_SECTORS   = {"all", "ai_infra", "space_defense", "telecom"}
     VALID_SCORE     = {"composite", "alpha", "hitrate"}
     VALID_DIRECTION = {"long", "short", "midterm"}
-    if signal_filter not in VALID_FILTERS:   signal_filter = "validated"
-    if sector        not in VALID_SECTORS:   sector        = "all"
-    if score_by      not in VALID_SCORE:     score_by      = "composite"
-    if direction     not in VALID_DIRECTION: direction      = "long"
+    if signal_filter not in VALID_FILTERS:
+        signal_filter = "validated"
+    if sector not in VALID_SECTORS:
+        sector = "all"
+    if score_by not in VALID_SCORE:
+        score_by = "composite"
+    if direction not in VALID_DIRECTION:
+        direction = "long"
 
     sig_cond = (
         "AND sr.p_value_vs_sector < 0.05"      if signal_filter == "validated"

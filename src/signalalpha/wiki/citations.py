@@ -97,7 +97,7 @@ def _resolve_earnings(entity_ids: list[str], db: duckdb.DuckDBPyConnection) -> s
     """entity_id is TICKER:YYYY-MM-DD."""
     pairs = [eid.split(":", 1) for eid in entity_ids]
     conditions = " OR ".join(
-        f"(ticker = ? AND date(event_date)::text = ?)" for _ in pairs
+        "(ticker = ? AND date(event_date)::text = ?)" for _ in pairs
     )
     params = [x for pair in pairs for x in pair]
     rows = db.execute(
@@ -111,7 +111,7 @@ def _resolve_price(entity_ids: list[str], db: duckdb.DuckDBPyConnection) -> set[
     """entity_id is TICKER:YYYY-MM-DD."""
     pairs = [eid.split(":", 1) for eid in entity_ids]
     conditions = " OR ".join(
-        f"(ticker = ? AND date::text = ?)" for _ in pairs
+        "(ticker = ? AND date::text = ?)" for _ in pairs
     )
     params = [x for pair in pairs for x in pair]
     rows = db.execute(
@@ -213,8 +213,6 @@ def run_pass3(body: str, db: duckdb.DuckDBPyConnection) -> PassResult:
             continue
         scheme, _, entity_id = base.partition(":")
         if scheme in _SOURCES_SCHEMES:
-            # For external schemes, we stored full URI; check entity_id presence differently.
-            full_uri = base
             found_set = resolved.get(scheme, set())
             if entity_id not in found_set:
                 failures.append(Issue(
