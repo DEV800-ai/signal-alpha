@@ -10,7 +10,9 @@ from pathlib import Path
 
 import duckdb
 import uvicorn
-from fastapi import FastAPI, Form, Query
+import os
+
+from fastapi import FastAPI, Form, Query, UploadFile
 from fastapi.responses import HTMLResponse, JSONResponse
 
 from signalalpha.config import DB_PATH
@@ -1363,6 +1365,18 @@ async def top10_endpoint(
 async def autogen_endpoint():
     results = run_autogen()
     return JSONResponse({"results": results})
+
+
+@app.post("/admin/restore-db")
+async def restore_db(file: UploadFile, secret: str = Query(...)):
+    """Upload a DuckDB snapshot to the volume. Requires ADMIN_SECRET env var."""
+    expected = os.environ.get("ADMIN_SECRET", "")
+    if not expected or secret != expected:
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    data = await file.read()
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    DB_PATH.write_bytes(data)
+    return JSONResponse({"ok": True, "bytes": len(data), "path": str(DB_PATH)})
 
 
 if __name__ == "__main__":
