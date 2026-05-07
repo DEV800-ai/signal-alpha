@@ -1,0 +1,15 @@
+# Never ship the database — it lives on a Railway volume.
+data/*.duckdb
+data/*.duckdb.wal
+data/cache/
+data/raw/
+
+# Dev / test artifacts
+.venv/
+.pytest_cache/
+.ruff_cache/
+tests/
+notebooks/
+reports/
+docs/
+scripts/

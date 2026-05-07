@@ -1,11 +1,13 @@
 """Project paths and constants."""
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = ROOT / "data"
-DB_PATH = DATA_DIR / "signalalpha.duckdb"
+# DB_PATH can be overridden via env var to point to a Railway volume.
+DB_PATH = Path(os.environ.get("DB_PATH", str(DATA_DIR / "signalalpha.duckdb")))
 UNIVERSE_CSV = DATA_DIR / "universe.csv"
 
 PRICE_HISTORY_START = "2018-01-01"
