@@ -1,17 +1,17 @@
-name: Weekly price ingest
+name: Scheduled ingest (every 3 days)
 
 on:
   schedule:
-    - cron: "0 6 * * 0"  # Every Sunday at 06:00 UTC
+    - cron: "17 6 1,4,7,10,13,16,19,22,25,28 * *"  # ~every 3 days at 06:17 UTC
   workflow_dispatch:       # Allow manual trigger from GitHub UI
 
 jobs:
   ingest:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     steps:
-      - name: Trigger ingestion
+      - name: Trigger ingestion + signal re-run
         run: |
           response=$(curl -s -o /tmp/response.json -w "%{http_code}" \
             -X POST \
@@ -25,4 +25,21 @@ jobs:
             exit 1
           fi
 
-          echo "Ingestion triggered successfully."
+          echo "Ingest triggered — waiting 10 minutes for signals to complete..."
+          sleep 600
+
+      - name: Take rotation snapshot
+        run: |
+          response=$(curl -s -o /tmp/snap.json -w "%{http_code}" \
+            -X POST \
+            "https://signal-alpha-production.up.railway.app/admin/snapshot?secret=${{ secrets.ADMIN_SECRET }}")
+
+          cat /tmp/snap.json
+          echo ""
+
+          if [ "$response" != "200" ]; then
+            echo "ERROR: snapshot endpoint returned HTTP $response"
+            exit 1
+          fi
+
+          echo "Snapshot complete."
