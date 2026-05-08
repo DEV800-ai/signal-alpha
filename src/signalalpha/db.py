@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import duckdb
 
-from signalalpha.config import DB_PATH, DATA_DIR
+from signalalpha.config import DB_PATH
 
 SCHEMA_SQL = """
 CREATE TABLE IF NOT EXISTS universe (
@@ -87,6 +87,14 @@ CREATE TABLE IF NOT EXISTS sources (
 );
 CREATE INDEX IF NOT EXISTS sources_scheme_idx ON sources(scheme);
 CREATE INDEX IF NOT EXISTS sources_published_idx ON sources(published_at);
+
+CREATE TABLE IF NOT EXISTS patents (
+    patent_id     VARCHAR NOT NULL PRIMARY KEY,
+    grant_date    DATE    NOT NULL,
+    ticker        VARCHAR NOT NULL,
+    assignee_name VARCHAR
+);
+CREATE INDEX IF NOT EXISTS patents_ticker_date_idx ON patents(ticker, grant_date);
 
 CREATE SEQUENCE IF NOT EXISTS signal_event_seq START 1;
 
