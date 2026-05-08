@@ -309,10 +309,10 @@ _HTML = r"""<!DOCTYPE html>
   @media(max-width:760px){ .dir-explainer { grid-template-columns:1fr; } }
   .dir-card { border-radius:9px; padding:1rem; }
   .dir-card-long  { background:#0c1a0c; border:1px solid #166534; }
-  .dir-card-short { background:#1a0f00; border:1px solid #9a3412; }
+  .dir-card-opp { background:#1a1500; border:1px solid #854d0e; }
   .dir-card-title { font-weight:700; font-size:.88rem; margin-bottom:.5rem; }
   .dir-card-long  .dir-card-title { color:#4ade80; }
-  .dir-card-short .dir-card-title { color:#fb923c; }
+  .dir-card-opp .dir-card-title { color:#fb923c; }
   .dir-card p { font-size:.76rem; color:#8899bb; line-height:1.65; }
 
   /* ── Top 10 ───────────────────────────────────────── */
@@ -386,17 +386,17 @@ _HTML = r"""<!DOCTYPE html>
   .dir-toggle { display:flex; border:1px solid #2d3348; border-radius:7px; overflow:hidden; }
   .dir-btn { background:none; border:none; color:#8899bb; padding:.35rem .9rem; font-size:.82rem; font-weight:600; cursor:pointer; transition:background .12s,color .12s; }
   .dir-btn.active-long  { background:#14532d; color:#4ade80; }
-  .dir-btn.active-short { background:#431407; color:#fb923c; }
+  .dir-btn.active-opp { background:#431407; color:#fb923c; }
 
-  .podium-card.short-rank-1 { border-color:#f97316; box-shadow:0 0 22px rgba(249,115,22,.15); }
-  .podium-card.short-rank-2 { border-color:#fb923c; }
-  .podium-card.short-rank-3 { border-color:#fdba74; }
-  .short-rank-1 .podium-ticker { color:#f97316; }
-  .short-rank-2 .podium-ticker { color:#fb923c; }
-  .short-rank-3 .podium-ticker { color:#fdba74; }
-  .short-rank-1 .score-bar-fill { background:#f97316; }
-  .short-rank-2 .score-bar-fill { background:#fb923c; }
-  .short-rank-3 .score-bar-fill { background:#fdba74; }
+  .podium-card.opp-rank-1 { border-color:#f97316; box-shadow:0 0 22px rgba(249,115,22,.15); }
+  .podium-card.opp-rank-2 { border-color:#fb923c; }
+  .podium-card.opp-rank-3 { border-color:#fdba74; }
+  .opp-rank-1 .podium-ticker { color:#f97316; }
+  .opp-rank-2 .podium-ticker { color:#fb923c; }
+  .opp-rank-3 .podium-ticker { color:#fdba74; }
+  .opp-rank-1 .score-bar-fill { background:#f97316; }
+  .opp-rank-2 .score-bar-fill { background:#fb923c; }
+  .opp-rank-3 .score-bar-fill { background:#fdba74; }
 
   .podium-card.mt-rank-1 { border-color:#06b6d4; box-shadow:0 0 22px rgba(6,182,212,.13); }
   .podium-card.mt-rank-2 { border-color:#0891b2; }
@@ -514,7 +514,7 @@ _HTML = r"""<!DOCTYPE html>
         <div class="dir-toggle">
           <button id="dir-long"    class="dir-btn active-long"  onclick="setDirection('long')">Long</button>
           <button id="dir-midterm" class="dir-btn"              onclick="setDirection('midterm')">📈 Mid-term</button>
-          <button id="dir-short"   class="dir-btn"              onclick="setDirection('short')">Short</button>
+          <button id="dir-opp"     class="dir-btn"              onclick="setDirection('opportunity')">Opportunity</button>
         </div>
       </div>
       <div class="filter-group">
@@ -550,7 +550,7 @@ _HTML = r"""<!DOCTYPE html>
         <select id="rot-direction" class="filter-sel" onchange="loadRotation()">
           <option value="long">Long</option>
           <option value="midterm">Mid-term</option>
-          <option value="short">Short</option>
+          <option value="opportunity">Opportunity</option>
         </select>
       </div>
       <button class="secondary" style="font-size:.7rem;padding:.3rem .6rem;align-self:flex-end" onclick="loadRotation()">↻ Refresh</button>
@@ -682,9 +682,9 @@ _HTML = r"""<!DOCTYPE html>
         <div class="dir-card-title" style="color:#22d3ee">📈 Mid-term — 1 to 3 Months</div>
         <p style="font-size:.76rem;color:#8899bb;line-height:1.65"><b>Best for:</b> patient holds of 1–3 months. Same signal, but ranks stocks that win consistently <em>and</em> with low volatility. A stock that gains +2% steadily every time beats one that averages +3% with wild swings. Look for <span style="color:#34d399;font-weight:700">LOW RISK</span> badges here.</p>
       </div>
-      <div class="dir-card dir-card-short">
-        <div class="dir-card-title">Short — Up to 3 months</div>
-        <p>Stocks with high potential for short-term gains of up to 3 months. When the volume spike pattern fires in these names it has historically led to rapid price moves — creating opportunities for active traders looking for quick entries and exits. <b>Short Win Rate</b> = how often the position profited historically.</p>
+      <div class="dir-card dir-card-opp">
+        <div class="dir-card-title">💎 Opportunity — Buy the Dip</div>
+        <p style="font-size:.76rem;color:#8899bb;line-height:1.65"><b>Best for:</b> active traders looking to buy low and capture a recovery. These are stocks with a <em>proven positive edge</em> that are currently trading <em>below their 50-day moving average</em> — a technical dip. The ranking boosts stocks that are both historically strong <em>and</em> currently at a discount, so the top of the list represents the best combination of signal quality and current price weakness. The <b>Discount vs 50d MA</b> column shows how far below the moving average the stock is — the deeper the dip, the higher the opportunity bonus.</p>
       </div>
     </div>
   </div>
@@ -771,9 +771,9 @@ function switchTab(name, btn) {
 let _t10Direction = 'long';
 function setDirection(dir) {
   _t10Direction = dir;
-  document.getElementById('dir-long').className    = 'dir-btn' + (dir === 'long'    ? ' active-long'    : '');
-  document.getElementById('dir-midterm').className = 'dir-btn' + (dir === 'midterm' ? ' active-midterm' : '');
-  document.getElementById('dir-short').className   = 'dir-btn' + (dir === 'short'   ? ' active-short'   : '');
+  document.getElementById('dir-long').className    = 'dir-btn' + (dir === 'long'        ? ' active-long'    : '');
+  document.getElementById('dir-midterm').className = 'dir-btn' + (dir === 'midterm'    ? ' active-midterm' : '');
+  document.getElementById('dir-opp').className     = 'dir-btn' + (dir === 'opportunity'? ' active-opp'     : '');
   loadTop10();
 }
 
@@ -1205,9 +1205,9 @@ async function loadTop10() {
 
 function renderTop10(data) {
   const stocks    = data.stocks || [];
-  const isShort   = data.direction === 'short';
+  const isOpp     = data.direction === 'opportunity';
   const isMidterm = data.direction === 'midterm';
-  const scoreKey  = isShort ? 'short_score' : isMidterm ? 'midterm_score' : (data.score_by || 'composite_score');
+  const scoreKey  = isOpp ? 'opp_score' : isMidterm ? 'midterm_score' : (data.score_by || 'composite_score');
   const maxScore  = stocks.length && stocks[0][scoreKey] ? stocks[0][scoreKey] : 1;
 
   const pct = v => v === null || v === undefined ? '—'
@@ -1226,17 +1226,17 @@ function renderTop10(data) {
   }
 
   const LONG_MEDALS    = ['🥇','🥈','🥉'];
-  const SHORT_MEDALS   = ['📉','📉','📉'];
+  const OPP_MEDALS     = ['💎','💎','💎'];
   const MIDTERM_MEDALS = ['🏅','🏅','🏅'];
   const LONG_RANK_CLS    = ['rank-1','rank-2','rank-3'];
-  const SHORT_RANK_CLS   = ['short-rank-1','short-rank-2','short-rank-3'];
+  const OPP_RANK_CLS     = ['opp-rank-1','opp-rank-2','opp-rank-3'];
   const MIDTERM_RANK_CLS = ['mt-rank-1','mt-rank-2','mt-rank-3'];
-  const MEDALS   = isShort ? SHORT_MEDALS   : isMidterm ? MIDTERM_MEDALS : LONG_MEDALS;
-  const RANK_CLS = isShort ? SHORT_RANK_CLS : isMidterm ? MIDTERM_RANK_CLS : LONG_RANK_CLS;
+  const MEDALS   = isOpp ? OPP_MEDALS   : isMidterm ? MIDTERM_MEDALS : LONG_MEDALS;
+  const RANK_CLS = isOpp ? OPP_RANK_CLS : isMidterm ? MIDTERM_RANK_CLS : LONG_RANK_CLS;
 
   // ── Podium (top 3) ──────────────────────────────────────────────────────────
   const podiumEl = document.getElementById('t10-podium');
-  const emptyMsg = isShort   ? 'No short candidates found — try relaxing the signal filter.'
+  const emptyMsg = isOpp     ? 'No opportunity candidates found — try extending the recency window or relaxing the signal filter.'
     : isMidterm ? 'No mid-term candidates found — try relaxing the signal filter.'
     : 'No stocks matched — try relaxing the signal filter.';
 
@@ -1252,11 +1252,13 @@ function renderTop10(data) {
     const wiki       = `wiki/companies/public/${s.ticker}.md`;
 
     // Labels and values vary by direction
-    const hrVal    = isShort ? (s.hit_rate !== null ? 1 - s.hit_rate : null) : s.hit_rate;
+    const hrVal    = s.hit_rate;
     const hrDisp   = hrVal !== null ? Math.round(hrVal * 100) + '%' : '—';
     const hrCls    = hrVal !== null ? (hrVal >= 0.5 ? 'pos' : 'neg') : 'neu';
-    const hrLabel  = isShort ? 'Short win rate' : 'Hit rate';
-    const alphaLabel = isShort ? 'Alpha (short ↓)' : 'Alpha';
+    const hrLabel  = 'Hit rate';
+    const alphaLabel = 'Alpha';
+    const discountDisp = isOpp && s.pct_vs_50d !== null
+      ? `<div class="stat-item"><span class="stat-label">Discount vs 50d MA</span><span class="stat-val ${s.pct_vs_50d < 0 ? 'pos' : 'neg'}">${s.pct_vs_50d >= 0 ? '+' : ''}${s.pct_vs_50d}%</span></div>` : '';
 
     // Volatility display for mid-term
     const volPct  = s.std_return !== null ? Math.round(s.std_return * 100) + '%' : '—';
@@ -1279,6 +1281,7 @@ function renderTop10(data) {
         <div class="stat-item"><span class="stat-label">${hrLabel}</span><span class="stat-val ${hrCls}">${hrDisp}</span></div>
         ${extraStat}
         <div class="stat-item"><span class="stat-label">Last signal</span><span class="stat-val neu" style="font-size:.72rem">${s.last_signal || '—'}</span></div>
+        ${discountDisp}
       </div>
       <div class="score-bar-wrap">
         <div class="score-bar-fill" style="width:${barPct}%"></div>
@@ -1291,7 +1294,7 @@ function renderTop10(data) {
   // ── Leaderboard (#4–10) ─────────────────────────────────────────────────────
   const rest    = stocks.slice(3);
   const boardEl = document.getElementById('t10-board');
-  const boardTitle = isShort   ? `Short Candidates — #4 to #${stocks.length}`
+  const boardTitle = isOpp     ? `Opportunity Candidates — #4 to #${stocks.length}`
     : isMidterm ? `Mid-term (1–3 months, lower risk) — #4 to #${stocks.length}`
     : `Leaderboard — #4 to #${stocks.length}`;
 
@@ -1301,12 +1304,10 @@ function renderTop10(data) {
     return;
   }
 
-  const alphaHdr = isShort   ? 'Alpha (↓ below sector)'
-    : isMidterm ? 'Alpha vs Sector' : 'Avg Alpha';
-  const hrHdr   = isShort   ? 'Short Win Rate'
-    : isMidterm ? 'Hit Rate' : 'Hit Rate';
-  const retHdr  = isMidterm ? 'Volatility' : 'Avg Return';
-  const barClass = isShort ? 'lb-bar-fill short' : isMidterm ? 'lb-bar-fill midterm' : 'lb-bar-fill';
+  const alphaHdr = isMidterm ? 'Alpha vs Sector' : 'Avg Alpha';
+  const hrHdr    = 'Hit Rate';
+  const retHdr   = isMidterm ? 'Volatility' : isOpp ? 'Discount vs 50d MA' : 'Avg Return';
+  const barClass = isOpp ? 'lb-bar-fill opp' : isMidterm ? 'lb-bar-fill midterm' : 'lb-bar-fill';
 
   let html = `<div class="card-title">${boardTitle}</div>
     <div style="overflow-x:auto"><table class="lb-tbl"><thead><tr>
@@ -1319,14 +1320,18 @@ function renderTop10(data) {
   rest.forEach((s, i) => {
     const score   = s[scoreKey] ?? 0;
     const barPct  = maxScore > 0 ? (score / maxScore * 100).toFixed(1) : 0;
-    const hrVal   = isShort ? (s.hit_rate !== null ? 1 - s.hit_rate : null) : s.hit_rate;
+    const hrVal   = s.hit_rate;
     const hrDisp  = hrVal !== null ? Math.round(hrVal * 100) + '%' : '—';
     const hrCls   = hrVal !== null ? (hrVal >= 0.5 ? 'pos' : 'neg') : 'neu';
     const wiki    = `wiki/companies/public/${s.ticker}.md`;
-    // Mid-term: show volatility instead of avg return
-    const retVal  = isMidterm
-      ? `<span class="${s.std_return === null ? 'neu' : s.std_return < 0.10 ? 'vol-low' : s.std_return < 0.20 ? 'vol-med' : 'vol-high'}">${s.std_return !== null ? Math.round(s.std_return * 100) + '%' : '—'}</span>`
-      : `<span class="${cls(s.avg_return)}">${pct(s.avg_return)}</span>`;
+    // Opportunity: show discount vs 50d MA; Mid-term: show volatility; else avg return
+    const retVal  = isOpp
+      ? (s.pct_vs_50d !== null
+          ? `<span class="${s.pct_vs_50d < 0 ? 'pos' : 'neg'}">${s.pct_vs_50d >= 0 ? '+' : ''}${s.pct_vs_50d}%</span>`
+          : '<span class="neu">—</span>')
+      : isMidterm
+        ? `<span class="${s.std_return === null ? 'neu' : s.std_return < 0.10 ? 'vol-low' : s.std_return < 0.20 ? 'vol-med' : 'vol-high'}">${s.std_return !== null ? Math.round(s.std_return * 100) + '%' : '—'}</span>`
+        : `<span class="${cls(s.avg_return)}">${pct(s.avg_return)}</span>`;
     html += `<tr onclick="openWikiPage('${escAttr(wiki)}')">
       <td class="lb-rank">${i + 4}</td>
       <td class="lb-ticker-cell">${escHtml(s.ticker)} ${riskBadge(s.std_return)}</td>
@@ -1474,7 +1479,7 @@ async def top10_endpoint(
     VALID_FILTERS   = {"all", "validated", "borderline"}
     VALID_SECTORS   = {"all", "ai_infra", "space_defense", "telecom"}
     VALID_SCORE     = {"composite", "alpha", "hitrate"}
-    VALID_DIRECTION = {"long", "short", "midterm"}
+    VALID_DIRECTION = {"long", "short", "midterm", "opportunity"}
     if signal_filter not in VALID_FILTERS:
         signal_filter = "validated"
     if sector not in VALID_SECTORS:
@@ -1505,8 +1510,12 @@ async def top10_endpoint(
         dir_having = "AND AVG(se.alpha_sector) < 0"
         order_col  = {"composite": "short_score", "alpha": "abs_alpha", "hitrate": "short_hit_rate"}[score_by]
         order_dir  = "DESC"
+    elif direction == "opportunity":
+        # Positive alpha + currently trading below 50d SMA (buy-the-dip)
+        dir_having = "AND AVG(se.alpha_sector) > 0 AND STDDEV(se.net_return) > 0"
+        order_col  = "opp_score"
+        order_dir  = "DESC"
     else:  # midterm
-        # Only positive-alpha stocks; score penalises volatility
         dir_having = "AND AVG(se.alpha_sector) > 0 AND STDDEV(se.net_return) > 0"
         order_col  = "midterm_score"
         order_dir  = "DESC"
@@ -1514,6 +1523,13 @@ async def top10_endpoint(
     db = _open_db()
     try:
         rows = db.execute(f"""
+            WITH sma50_cte AS (
+                SELECT ticker,
+                       LAST(close ORDER BY date) AS current_price,
+                       AVG(close) FILTER (WHERE date >= CURRENT_DATE - INTERVAL '50 days') AS sma50
+                FROM prices
+                GROUP BY ticker
+            )
             SELECT se.ticker, u.name, u.sector,
                    COUNT(*)                                                                    AS n_signals,
                    AVG(se.alpha_sector)                                                        AS avg_alpha,
@@ -1535,25 +1551,42 @@ async def top10_endpoint(
                    ABS(AVG(se.alpha_sector))                                                   AS abs_alpha,
                    1 - SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END)
                          / NULLIF(COUNT(*), 0)                                                 AS short_hit_rate,
-                   -- Mid-term score: (alpha / std) × hit_rate × log(n+1) — rewards risk-adjusted consistency
+                   -- Mid-term score: (alpha / std) × hit_rate × log(n+1)
                    CASE WHEN STDDEV(se.net_return) > 0
                         THEN (AVG(se.alpha_sector) / STDDEV(se.net_return))
                                * (SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END)
                                   / NULLIF(COUNT(*), 0))
                                * LN(COUNT(*) + 1)
-                        ELSE 0 END                                                             AS midterm_score
+                        ELSE 0 END                                                             AS midterm_score,
+                   -- Opportunity: composite × (1 + dip_bonus) — rewards stocks below 50d MA
+                   CASE WHEN sma.sma50 IS NOT NULL AND sma.current_price < sma.sma50
+                        THEN (AVG(se.alpha_sector)
+                               * (SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END)
+                                  / NULLIF(COUNT(*), 0))
+                               * LN(COUNT(*) + 1))
+                             * (1 + GREATEST(0, (sma.sma50 - sma.current_price)
+                                              / NULLIF(sma.sma50, 0)) * 3)
+                        ELSE (AVG(se.alpha_sector)
+                               * (SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END)
+                                  / NULLIF(COUNT(*), 0))
+                               * LN(COUNT(*) + 1))
+                        END                                                                    AS opp_score,
+                   -- % vs 50d MA (negative = below = dip)
+                   CASE WHEN sma.sma50 IS NOT NULL AND sma.sma50 > 0
+                        THEN ROUND((sma.current_price / sma.sma50 - 1) * 100, 1)
+                        ELSE NULL END                                                          AS pct_vs_50d
             FROM signal_events se
             JOIN signal_runs sr ON sr.run_id = se.run_id
             JOIN universe    u  ON u.ticker  = se.ticker
+            LEFT JOIN sma50_cte sma ON sma.ticker = se.ticker
             -- Only use the latest run per signal_name to avoid double-counting
-            -- events when weekly re-runs supersede historical backtests.
             JOIN (
                 SELECT signal_name, MAX(run_id) AS latest_run_id
                 FROM signal_runs
                 GROUP BY signal_name
             ) lr ON lr.signal_name = sr.signal_name AND lr.latest_run_id = sr.run_id
             WHERE 1=1 {sig_cond} {sec_cond}
-            GROUP BY se.ticker, u.name, u.sector
+            GROUP BY se.ticker, u.name, u.sector, sma.current_price, sma.sma50
             HAVING COUNT(*) >= 5 {dir_having} {recency_having}
             ORDER BY {order_col} {order_dir} NULLS LAST
             LIMIT ?
@@ -1561,13 +1594,15 @@ async def top10_endpoint(
 
         cols = ["ticker", "name", "sector", "n_signals",
                 "avg_alpha", "avg_return", "std_return", "hit_rate", "last_signal",
-                "composite_score", "short_score", "abs_alpha", "short_hit_rate", "midterm_score"]
+                "composite_score", "short_score", "abs_alpha", "short_hit_rate", "midterm_score",
+                "opp_score", "pct_vs_50d"]
         stocks = []
         for r in rows:
             d = dict(zip(cols, r))
             d["last_signal"] = str(d["last_signal"])[:10] if d["last_signal"] else None
             for k in ("avg_alpha", "avg_return", "std_return", "hit_rate",
-                      "composite_score", "short_score", "abs_alpha", "short_hit_rate", "midterm_score"):
+                      "composite_score", "short_score", "abs_alpha", "short_hit_rate",
+                      "midterm_score", "opp_score", "pct_vs_50d"):
                 d[k] = round(float(d[k]), 6) if d[k] is not None else None
             stocks.append(d)
 
@@ -1596,7 +1631,7 @@ async def snapshot_endpoint(secret: str = Query(...)):
                 d: db.execute(
                     "SELECT COUNT(*) FROM top10_snapshots WHERE direction = ?", [d]
                 ).fetchone()[0]
-                for d in ("long", "midterm", "short")
+                for d in ("long", "midterm", "opportunity")
             }
         finally:
             db.close()
@@ -1715,7 +1750,7 @@ def _snapshot_top10() -> None:
     try:
         _init_rotation_tables(db)
 
-        for direction in ("long", "midterm", "short"):
+        for direction in ("long", "midterm", "opportunity"):
             # Skip if already snapshotted today
             last_date = db.execute(
                 "SELECT MAX(snapshot_date) FROM top10_snapshots WHERE direction = ?",
@@ -1726,11 +1761,24 @@ def _snapshot_top10() -> None:
 
             # Build current top10 using same logic as the endpoint
             if direction == "long":
-                dir_having, score_col = "", "AVG(se.alpha_sector) * (SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END) / NULLIF(COUNT(*), 0)) * LN(COUNT(*) + 1)"
-            elif direction == "short":
-                dir_having, score_col = "AND AVG(se.alpha_sector) < 0", "ABS(AVG(se.alpha_sector)) * (1 - SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END) / NULLIF(COUNT(*), 0)) * LN(COUNT(*) + 1)"
-            else:
-                dir_having, score_col = "AND AVG(se.alpha_sector) > 0 AND STDDEV(se.net_return) > 0", "CASE WHEN STDDEV(se.net_return) > 0 THEN (AVG(se.alpha_sector) / STDDEV(se.net_return)) * (SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END) / NULLIF(COUNT(*), 0)) * LN(COUNT(*) + 1) ELSE 0 END"
+                dir_having = ""
+                score_col = "AVG(se.alpha_sector) * (SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END) / NULLIF(COUNT(*), 0)) * LN(COUNT(*) + 1)"
+                extra_join = ""
+                extra_group = ""
+            elif direction == "opportunity":
+                dir_having = "AND AVG(se.alpha_sector) > 0 AND STDDEV(se.net_return) > 0"
+                score_col = """CASE WHEN sma.sma50 IS NOT NULL AND sma.current_price < sma.sma50
+                    THEN (AVG(se.alpha_sector) * (SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END) / NULLIF(COUNT(*), 0)) * LN(COUNT(*) + 1))
+                         * (1 + GREATEST(0, (sma.sma50 - sma.current_price) / NULLIF(sma.sma50, 0)) * 3)
+                    ELSE (AVG(se.alpha_sector) * (SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END) / NULLIF(COUNT(*), 0)) * LN(COUNT(*) + 1))
+                    END"""
+                extra_join = "LEFT JOIN (SELECT ticker, LAST(close ORDER BY date) AS current_price, AVG(close) FILTER (WHERE date >= CURRENT_DATE - INTERVAL '50 days') AS sma50 FROM prices GROUP BY ticker) sma ON sma.ticker = se.ticker"
+                extra_group = ", sma.current_price, sma.sma50"
+            else:  # midterm
+                dir_having = "AND AVG(se.alpha_sector) > 0 AND STDDEV(se.net_return) > 0"
+                score_col = "CASE WHEN STDDEV(se.net_return) > 0 THEN (AVG(se.alpha_sector) / STDDEV(se.net_return)) * (SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END) / NULLIF(COUNT(*), 0)) * LN(COUNT(*) + 1) ELSE 0 END"
+                extra_join = ""
+                extra_group = ""
 
             rows = db.execute(f"""
                 SELECT se.ticker, MAX(se.event_date) AS last_signal,
@@ -1739,10 +1787,11 @@ def _snapshot_top10() -> None:
                 FROM signal_events se
                 JOIN signal_runs sr ON sr.run_id = se.run_id
                 JOIN universe    u  ON u.ticker  = se.ticker
+                {extra_join}
                 JOIN (SELECT signal_name, MAX(run_id) AS latest_run_id FROM signal_runs GROUP BY signal_name) lr
                   ON lr.signal_name = sr.signal_name AND lr.latest_run_id = sr.run_id
                 WHERE sr.p_value_vs_sector < 0.05
-                GROUP BY se.ticker
+                GROUP BY se.ticker {extra_group}
                 HAVING COUNT(*) >= 5 {dir_having}
                   AND MAX(se.event_date) >= CURRENT_DATE - INTERVAL '90 days'
                 ORDER BY score DESC NULLS LAST
@@ -1790,7 +1839,7 @@ def _snapshot_top10() -> None:
 
 @app.get("/api/changes")
 async def changes_endpoint(direction: str = Query("long"), limit: int = Query(100)):
-    if direction not in {"long", "midterm", "short"}:
+    if direction not in {"long", "midterm", "opportunity"}:
         direction = "long"
     db = _open_db()
     try:
