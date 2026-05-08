@@ -446,6 +446,62 @@ _HTML = r"""<!DOCTYPE html>
     opacity:0; transition:opacity .2s; pointer-events:none;
   }
   #toast.show { opacity:1; }
+
+  /* Disclaimer footer */
+  .disclaimer-bar {
+    width:100%; max-width:1200px; margin-top:2rem; padding:.55rem .8rem;
+    background:#13151d; border:1px solid #1e2330; border-radius:7px;
+    font-size:.72rem; color:#4a5568; text-align:center; line-height:1.5;
+  }
+
+  /* Stock detail modal */
+  .modal-backdrop {
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,.7);
+    z-index:1000; align-items:center; justify-content:center;
+    padding:1rem;
+  }
+  .modal-backdrop.open { display:flex; }
+  .modal-box {
+    background:#1e2330; border:1px solid #2d3348; border-radius:12px;
+    width:100%; max-width:820px; max-height:88vh; overflow-y:auto;
+    padding:1.4rem 1.6rem; position:relative;
+  }
+  .modal-close {
+    position:absolute; top:.8rem; right:1rem;
+    background:none; border:none; color:#64748b; font-size:1.2rem;
+    cursor:pointer; line-height:1;
+  }
+  .modal-close:hover { color:#e2e8f0; }
+  .modal-ticker { font-size:1.6rem; font-weight:900; letter-spacing:-.03em; }
+  .modal-name { font-size:.8rem; color:#8899bb; margin-bottom:1rem; }
+  .modal-section { margin-top:1.1rem; }
+  .modal-section-title {
+    font-size:.68rem; text-transform:uppercase; letter-spacing:.08em;
+    color:#64748b; margin-bottom:.5rem; border-bottom:1px solid #2d3348;
+    padding-bottom:.3rem;
+  }
+  .rank-chip {
+    display:inline-block; padding:.1rem .45rem; border-radius:4px;
+    font-size:.68rem; font-weight:700; background:#14532d; color:#4ade80;
+    border:1px solid #166534; margin:.15rem;
+  }
+  .rank-chip.opp { background:#431407; color:#fb923c; border-color:#7c2d12; }
+  .rank-chip.mid { background:#164e63; color:#22d3ee; border-color:#0e7490; }
+
+  /* Mobile layout */
+  @media(max-width:640px) {
+    body { padding:1rem .5rem; }
+    .tabs { gap:0; overflow-x:auto; }
+    .tab-btn { padding:.45rem .7rem; font-size:.78rem; white-space:nowrap; }
+    .filter-bar { gap:.5rem; }
+    .dir-btns { flex-wrap:wrap; gap:.25rem; }
+    .podium-grid { grid-template-columns:1fr !important; }
+    .lb-tbl-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    .lb-tbl { font-size:.72rem; min-width:560px; }
+    .lb-tbl th, .lb-tbl td { padding:.35rem .45rem; }
+    .modal-box { padding:1rem; border-radius:8px; }
+    .modal-ticker { font-size:1.3rem; }
+  }
 </style>
 </head>
 <body>
@@ -1073,6 +1129,78 @@ function openWikiPage(path) {
   });
 }
 
+// ── Stock detail modal ────────────────────────────────────────────────────────
+
+function closeStockModal() {
+  document.getElementById('stock-modal').classList.remove('open');
+}
+
+async function openStockDetail(ticker, name) {
+  const modal = document.getElementById('stock-modal');
+  document.getElementById('modal-ticker').textContent = ticker;
+  document.getElementById('modal-name').textContent = name || '';
+  document.getElementById('modal-ta').innerHTML = '<span style="color:#64748b;font-size:.8rem">Loading…</span>';
+  document.getElementById('modal-ranks').innerHTML = '<span style="color:#64748b;font-size:.8rem">Loading…</span>';
+  document.getElementById('modal-signals').innerHTML = '<span style="color:#64748b;font-size:.8rem">Loading…</span>';
+  modal.classList.add('open');
+
+  try {
+    const r = await fetch(`/api/stock/${encodeURIComponent(ticker)}`);
+    const d = await r.json();
+
+    // TA section
+    const ta = d.ta;
+    if (ta) {
+      const taSignalCls = ta.ta_signal === 'bullish' ? 'pos' : ta.ta_signal === 'bearish' ? 'neg' : 'neu';
+      document.getElementById('modal-ta').innerHTML =
+        `<div class="ta-overlay" style="margin:0">` +
+        `<span class="ta-pill ${taSignalCls}">${ta.ta_signal?.toUpperCase() ?? '—'}</span>` +
+        `<span class="ta-item">Price <b>$${ta.price ?? '—'}</b></span>` +
+        `<span class="ta-item">RSI(14) <b class="${ta.rsi > 70 ? 'neg' : ta.rsi < 30 ? 'pos' : 'neu'}">${ta.rsi ?? '—'}</b></span>` +
+        `<span class="ta-item">vs 50d MA <b class="${ta.pct_vs_50d < 0 ? 'pos' : 'neg'}">${ta.pct_vs_50d !== null ? (ta.pct_vs_50d >= 0 ? '+' : '') + ta.pct_vs_50d + '%' : '—'}</b></span>` +
+        `<span class="ta-item">vs 200d MA <b class="${ta.pct_vs_200d < 0 ? 'pos' : 'neg'}">${ta.pct_vs_200d !== null ? (ta.pct_vs_200d >= 0 ? '+' : '') + ta.pct_vs_200d + '%' : '—'}</b></span>` +
+        `</div>`;
+    } else {
+      document.getElementById('modal-ta').innerHTML = '<span style="color:#64748b;font-size:.8rem">No TA data available.</span>';
+    }
+
+    // Rank history section
+    const ranks = d.rank_history ?? [];
+    if (ranks.length) {
+      const dirLabel = { long: 'Long', midterm: 'Mid', opportunity: 'Opp' };
+      const dirCls   = { long: '', midterm: 'mid', opportunity: 'opp' };
+      document.getElementById('modal-ranks').innerHTML = ranks.map(r =>
+        `<span class="rank-chip ${dirCls[r.direction] ?? ''}">#${r.rank} ${dirLabel[r.direction] ?? r.direction} · ${r.snapshot_date}</span>`
+      ).join('');
+    } else {
+      document.getElementById('modal-ranks').innerHTML = '<span style="color:#64748b;font-size:.8rem">Not in Top 10 history yet.</span>';
+    }
+
+    // Signal history table
+    const events = d.events ?? [];
+    if (events.length) {
+      let tbl = `<div class="lb-tbl-wrap"><table class="lb-tbl"><thead><tr>
+        <th>Date</th><th>Signal</th><th>Hold</th><th>Net Return</th><th>Alpha vs Sector</th>
+      </tr></thead><tbody>`;
+      events.forEach(e => {
+        tbl += `<tr>
+          <td class="neu">${e.event_date}</td>
+          <td style="color:#8899bb;font-size:.72rem">${escHtml(e.signal_name)}</td>
+          <td class="neu">${e.hold_days}d</td>
+          <td><span class="${e.net_return >= 0 ? 'pos' : 'neg'}">${e.net_return >= 0 ? '+' : ''}${(e.net_return * 100).toFixed(2)}%</span></td>
+          <td><span class="${e.alpha_sector >= 0 ? 'pos' : 'neg'}">${e.alpha_sector >= 0 ? '+' : ''}${(e.alpha_sector * 100).toFixed(2)}%</span></td>
+        </tr>`;
+      });
+      tbl += '</tbody></table></div>';
+      document.getElementById('modal-signals').innerHTML = tbl;
+    } else {
+      document.getElementById('modal-signals').innerHTML = '<span style="color:#64748b;font-size:.8rem">No signal events in the last 18 months.</span>';
+    }
+  } catch(err) {
+    document.getElementById('modal-signals').innerHTML = `<span style="color:#f87171;font-size:.8rem">Error loading data: ${escHtml(String(err))}</span>`;
+  }
+}
+
 // ── Page browser ──────────────────────────────────────────────────────────────
 let _activePage = null;
 
@@ -1269,7 +1397,8 @@ function renderTop10(data) {
       : `<div class="stat-item"><span class="stat-label">Avg return</span><span class="stat-val ${cls(s.avg_return)}">${pct(s.avg_return)}</span></div>`;
 
     return `
-    <div class="podium-card ${RANK_CLS[i]}" data-ta-ticker="${escAttr(s.ticker)}">
+    <div class="podium-card ${RANK_CLS[i]}" data-ta-ticker="${escAttr(s.ticker)}"
+         onclick="openStockDetail('${escAttr(s.ticker)}','${escAttr(s.name||'')}')">
       <div class="podium-medal">${MEDALS[i]}</div>
       <div class="podium-ticker">${escHtml(s.ticker)}</div>
       <div class="podium-company">${escHtml(s.name || '')}</div>
@@ -1286,7 +1415,7 @@ function renderTop10(data) {
         <div class="score-bar-fill" style="width:${barPct}%"></div>
       </div>
       <button class="wiki-link" style="margin-top:.45rem;font-size:.76rem"
-        onclick="openWikiPage('${escAttr(wiki)}')">View company wiki →</button>
+        onclick="event.stopPropagation();openWikiPage('${escAttr(wiki)}')">View company wiki →</button>
     </div>`;
   }).join('');
 
@@ -1309,7 +1438,7 @@ function renderTop10(data) {
   const barClass = isOpp ? 'lb-bar-fill opp' : isMidterm ? 'lb-bar-fill midterm' : 'lb-bar-fill';
 
   let html = `<div class="card-title">${boardTitle}</div>
-    <div style="overflow-x:auto"><table class="lb-tbl"><thead><tr>
+    <div class="lb-tbl-wrap"><table class="lb-tbl"><thead><tr>
       <th class="lb-rank">#</th>
       <th>Ticker</th><th>Company</th><th>Sector</th>
       <th>Signals</th><th>${alphaHdr}</th><th>${hrHdr}</th><th>${retHdr}</th>
@@ -1331,7 +1460,7 @@ function renderTop10(data) {
       : isMidterm
         ? `<span class="${s.std_return === null ? 'neu' : s.std_return < 0.10 ? 'vol-low' : s.std_return < 0.20 ? 'vol-med' : 'vol-high'}">${s.std_return !== null ? Math.round(s.std_return * 100) + '%' : '—'}</span>`
         : `<span class="${cls(s.avg_return)}">${pct(s.avg_return)}</span>`;
-    html += `<tr onclick="openWikiPage('${escAttr(wiki)}')">
+    html += `<tr onclick="openStockDetail('${escAttr(s.ticker)}','${escAttr(s.name||'')}')">
       <td class="lb-rank">${i + 4}</td>
       <td class="lb-ticker-cell">${escHtml(s.ticker)} ${riskBadge(s.std_return)}</td>
       <td style="color:#8899bb;font-size:.75rem">${escHtml(s.name || '—')}</td>
@@ -1387,6 +1516,38 @@ function escAttr(s) { return String(s).replace(/'/g,"\\'").replace(/"/g,'&quot;'
 loadBrief();
 loadPages();
 </script>
+
+<!-- ═══════════════════════ STOCK DETAIL MODAL -->
+<div class="modal-backdrop" id="stock-modal" onclick="if(event.target===this)closeStockModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeStockModal()">✕</button>
+    <div class="modal-ticker" id="modal-ticker"></div>
+    <div class="modal-name" id="modal-name"></div>
+
+    <div class="modal-section" id="modal-ta-section">
+      <div class="modal-section-title">Technical Analysis</div>
+      <div id="modal-ta"></div>
+    </div>
+
+    <div class="modal-section" id="modal-ranks-section">
+      <div class="modal-section-title">Past Rankings</div>
+      <div id="modal-ranks"></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Signal History — last 18 months</div>
+      <div id="modal-signals"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ DISCLAIMER -->
+<div class="disclaimer-bar">
+  Not financial advice. SignalAlpha surfaces historical statistical patterns only.
+  Past edge does not guarantee future results. All results are backtested and may not reflect live trading conditions.
+  Always apply your own judgment before acting on any output.
+</div>
+
 </body>
 </html>
 """
@@ -1464,6 +1625,62 @@ async def validate_endpoint(content: str = Form(...)):
     finally:
         tmp_path.unlink(missing_ok=True)
     return JSONResponse(_to_dict(result))
+
+
+@app.get("/api/stock/{ticker}")
+async def stock_detail(ticker: str):
+    """Return signal history (18m), TA, and rank history for a single ticker."""
+    ticker = ticker.upper()
+    db = _open_db()
+    try:
+        # Signal events last 18 months across all validated runs
+        event_rows = db.execute("""
+            SELECT se.event_date, sr.signal_name,
+                   (se.exit_date - se.entry_date) AS hold_days,
+                   se.net_return, se.alpha_sector
+            FROM signal_events se
+            JOIN signal_runs sr ON sr.run_id = se.run_id
+            JOIN (SELECT signal_name, MAX(run_id) AS latest_run_id
+                  FROM signal_runs GROUP BY signal_name) lr
+              ON lr.signal_name = sr.signal_name AND lr.latest_run_id = sr.run_id
+            WHERE se.ticker = ?
+              AND se.event_date >= CURRENT_DATE - INTERVAL '18 months'
+            ORDER BY se.event_date DESC
+            LIMIT 100
+        """, [ticker]).fetchall()
+
+        events = []
+        for r in event_rows:
+            events.append({
+                "event_date":   str(r[0])[:10] if r[0] else None,
+                "signal_name":  r[1],
+                "hold_days":    r[2],
+                "net_return":   round(float(r[3]), 4) if r[3] is not None else None,
+                "alpha_sector": round(float(r[4]), 4) if r[4] is not None else None,
+            })
+
+        # Rank history from snapshots
+        tables = {r[0] for r in db.execute("SHOW TABLES").fetchall()}
+        rank_history = []
+        if "top10_snapshots" in tables:
+            rank_rows = db.execute("""
+                SELECT direction, rank, snapshot_date
+                FROM top10_snapshots
+                WHERE ticker = ?
+                ORDER BY snapshot_date DESC
+                LIMIT 30
+            """, [ticker]).fetchall()
+            rank_history = [
+                {"direction": r[0], "rank": r[1], "snapshot_date": str(r[2])[:10]}
+                for r in rank_rows
+            ]
+
+        # TA
+        ta = _compute_ta([ticker]).get(ticker)
+
+        return JSONResponse({"ticker": ticker, "events": events, "rank_history": rank_history, "ta": ta})
+    finally:
+        db.close()
 
 
 @app.get("/top10")
