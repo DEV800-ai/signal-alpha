@@ -309,10 +309,10 @@ _HTML = r"""<!DOCTYPE html>
   @media(max-width:760px){ .dir-explainer { grid-template-columns:1fr; } }
   .dir-card { border-radius:9px; padding:1rem; }
   .dir-card-long  { background:#0c1a0c; border:1px solid #166534; }
-  .dir-card-short { background:#1a0c0c; border:1px solid #7f1d1d; }
+  .dir-card-short { background:#1a0f00; border:1px solid #9a3412; }
   .dir-card-title { font-weight:700; font-size:.88rem; margin-bottom:.5rem; }
   .dir-card-long  .dir-card-title { color:#4ade80; }
-  .dir-card-short .dir-card-title { color:#f87171; }
+  .dir-card-short .dir-card-title { color:#fb923c; }
   .dir-card p { font-size:.76rem; color:#8899bb; line-height:1.65; }
 
   /* ── Top 10 ───────────────────────────────────────── */
@@ -381,22 +381,22 @@ _HTML = r"""<!DOCTYPE html>
   .lb-bar-cell { width:110px; }
   .lb-bar { height:5px; background:#2d3348; border-radius:999px; margin-top:.3rem; overflow:hidden; }
   .lb-bar-fill { height:100%; background:#6366f1; border-radius:999px; }
-  .lb-bar-fill.short { background:#ef4444; }
+  .lb-bar-fill.short { background:#f97316; }
 
   .dir-toggle { display:flex; border:1px solid #2d3348; border-radius:7px; overflow:hidden; }
   .dir-btn { background:none; border:none; color:#8899bb; padding:.35rem .9rem; font-size:.82rem; font-weight:600; cursor:pointer; transition:background .12s,color .12s; }
   .dir-btn.active-long  { background:#14532d; color:#4ade80; }
-  .dir-btn.active-short { background:#7f1d1d; color:#f87171; }
+  .dir-btn.active-short { background:#431407; color:#fb923c; }
 
-  .podium-card.short-rank-1 { border-color:#ef4444; box-shadow:0 0 22px rgba(239,68,68,.13); }
-  .podium-card.short-rank-2 { border-color:#f97316; }
-  .podium-card.short-rank-3 { border-color:#eab308; }
-  .short-rank-1 .podium-ticker { color:#ef4444; }
-  .short-rank-2 .podium-ticker { color:#f97316; }
-  .short-rank-3 .podium-ticker { color:#eab308; }
-  .short-rank-1 .score-bar-fill { background:#ef4444; }
-  .short-rank-2 .score-bar-fill { background:#f97316; }
-  .short-rank-3 .score-bar-fill { background:#eab308; }
+  .podium-card.short-rank-1 { border-color:#f97316; box-shadow:0 0 22px rgba(249,115,22,.15); }
+  .podium-card.short-rank-2 { border-color:#fb923c; }
+  .podium-card.short-rank-3 { border-color:#fdba74; }
+  .short-rank-1 .podium-ticker { color:#f97316; }
+  .short-rank-2 .podium-ticker { color:#fb923c; }
+  .short-rank-3 .podium-ticker { color:#fdba74; }
+  .short-rank-1 .score-bar-fill { background:#f97316; }
+  .short-rank-2 .score-bar-fill { background:#fb923c; }
+  .short-rank-3 .score-bar-fill { background:#fdba74; }
 
   .podium-card.mt-rank-1 { border-color:#06b6d4; box-shadow:0 0 22px rgba(6,182,212,.13); }
   .podium-card.mt-rank-2 { border-color:#0891b2; }
