@@ -1573,6 +1573,30 @@ async def top10_endpoint(
         db.close()
 
 
+@app.post("/admin/snapshot")
+async def snapshot_endpoint(secret: str = Query(...)):
+    """Manually trigger a top10 snapshot. Returns error details on failure."""
+    expected = os.environ.get("ADMIN_SECRET", "")
+    if not expected or secret != expected:
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    try:
+        _snapshot_top10()
+        db = _open_db()
+        try:
+            counts = {
+                d: db.execute(
+                    "SELECT COUNT(*) FROM top10_snapshots WHERE direction = ?", [d]
+                ).fetchone()[0]
+                for d in ("long", "midterm", "short")
+            }
+        finally:
+            db.close()
+        return JSONResponse({"ok": True, "snapshot_counts": counts})
+    except Exception as e:
+        import traceback
+        return JSONResponse({"ok": False, "error": str(e), "traceback": traceback.format_exc()}, status_code=500)
+
+
 @app.post("/autogen")
 async def autogen_endpoint():
     results = run_autogen()
