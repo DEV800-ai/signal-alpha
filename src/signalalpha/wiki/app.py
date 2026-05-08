@@ -422,6 +422,23 @@ _HTML = r"""<!DOCTYPE html>
   .risk-med  { background:#1c1708; color:#fbbf24; border:1px solid #78350f; }
   .risk-high { background:#1a0c0c; color:#f87171; border:1px solid #7f1d1d; }
 
+  /* TA overlay */
+  .ta-overlay {
+    display:flex; gap:.5rem; flex-wrap:wrap; align-items:center;
+    margin-top:.55rem; padding:.4rem .55rem;
+    background:#0d1117; border:1px solid #1e2d40; border-radius:6px;
+    font-size:.72rem;
+  }
+  .ta-pill {
+    display:inline-block; padding:.1rem .45rem; border-radius:4px;
+    font-size:.65rem; font-weight:700; letter-spacing:.04em;
+  }
+  .ta-pill.pos { background:#0c2120; color:#34d399; border:1px solid #065f46; }
+  .ta-pill.neg { background:#1a0c0c; color:#f87171; border:1px solid #7f1d1d; }
+  .ta-pill.neu { background:#161f2c; color:#94a3b8; border:1px solid #1e3050; }
+  .ta-item { color:#64748b; }
+  .ta-item b { font-weight:700; }
+
   /* Toast */
   #toast {
     position:fixed; bottom:1.5rem; right:1.5rem;
@@ -442,6 +459,7 @@ _HTML = r"""<!DOCTYPE html>
 <div class="tabs">
   <button class="tab-btn active" onclick="switchTab('brief', this)">Daily Brief</button>
   <button class="tab-btn" onclick="switchTab('top10', this)">Top 10</button>
+  <button class="tab-btn" onclick="switchTab('rotation', this)">Rotation Log</button>
   <button class="tab-btn" onclick="switchTab('editor', this)">Wiki Editor</button>
   <button class="tab-btn" onclick="switchTab('howto', this)">How It Works</button>
 </div>
@@ -508,7 +526,10 @@ _HTML = r"""<!DOCTYPE html>
           <option value="0">All time (no filter)</option>
         </select>
       </div>
-      <button class="secondary" style="font-size:.7rem;padding:.3rem .6rem;align-self:flex-end;margin-top:.2rem" onclick="loadTop10()">↻ Refresh</button>
+      <div class="filter-group" style="justify-content:flex-end;gap:.4rem;flex-direction:row;align-items:flex-end">
+        <button id="ta-toggle" class="secondary" style="font-size:.7rem;padding:.3rem .6rem" onclick="toggleTA()" title="Overlay RSI + moving average signals on each card">📊 TA Off</button>
+        <button class="secondary" style="font-size:.7rem;padding:.3rem .6rem" onclick="loadTop10()">↻ Refresh</button>
+      </div>
     </div>
   </div>
   <div class="podium-grid" id="t10-podium">
@@ -517,6 +538,27 @@ _HTML = r"""<!DOCTYPE html>
   <div class="card" id="t10-board">
     <div class="card-title">Leaderboard</div>
     <p class="state-msg">Loading…</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════ ROTATION LOG TAB -->
+<div class="tab-panel" id="tab-rotation">
+  <div class="card" style="padding:.7rem 1.1rem;margin-bottom:.75rem">
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label class="filter-label">Direction</label>
+        <select id="rot-direction" class="filter-sel" onchange="loadRotation()">
+          <option value="long">Long</option>
+          <option value="midterm">Mid-term</option>
+          <option value="short">Short</option>
+        </select>
+      </div>
+      <button class="secondary" style="font-size:.7rem;padding:.3rem .6rem;align-self:flex-end" onclick="loadRotation()">↻ Refresh</button>
+    </div>
+  </div>
+  <div class="card" id="rot-card">
+    <div class="card-title">Rotation History</div>
+    <p class="state-msg">Select the tab to load.</p>
   </div>
 </div>
 
@@ -713,7 +755,8 @@ function switchTab(name, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('tab-' + name).classList.add('active');
-  if (name === 'top10' && !_tabLoaded.top10) { _tabLoaded.top10 = true; loadTop10(); }
+  if (name === 'top10'    && !_tabLoaded.top10)    { _tabLoaded.top10 = true; loadTop10(); }
+  if (name === 'rotation' && !_tabLoaded.rotation) { _tabLoaded.rotation = true; loadRotation(); }
 }
 
 let _t10Direction = 'long';
@@ -723,6 +766,144 @@ function setDirection(dir) {
   document.getElementById('dir-midterm').className = 'dir-btn' + (dir === 'midterm' ? ' active-midterm' : '');
   document.getElementById('dir-short').className   = 'dir-btn' + (dir === 'short'   ? ' active-short'   : '');
   loadTop10();
+}
+
+// ── TA overlay ────────────────────────────────────────────────────────────────
+let _taEnabled = false;
+let _taCache   = null;
+
+function toggleTA() {
+  _taEnabled = !_taEnabled;
+  const btn = document.getElementById('ta-toggle');
+  btn.textContent = _taEnabled ? '📊 TA On' : '📊 TA Off';
+  btn.style.color = _taEnabled ? '#34d399' : '';
+  if (_taEnabled) _fetchAndOverlayTA();
+  else _clearTA();
+}
+
+async function _fetchAndOverlayTA() {
+  // Collect tickers currently shown
+  const cards = document.querySelectorAll('[data-ta-ticker]');
+  if (!cards.length) return;
+  const tickers = [...new Set([...cards].map(c => c.dataset.taTicker))].join(',');
+  try {
+    const data = await (await fetch('/api/ta?tickers=' + encodeURIComponent(tickers))).json();
+    _taCache = data;
+    _applyTA(data);
+  } catch(e) { console.error('TA fetch failed', e); }
+}
+
+function _applyTA(data) {
+  document.querySelectorAll('[data-ta-ticker]').forEach(el => {
+    const ticker = el.dataset.taTicker;
+    const ta = data[ticker];
+    const existing = el.querySelector('.ta-overlay');
+    if (existing) existing.remove();
+    if (!ta) return;
+    const rsiCls = ta.rsi === null ? 'neu'
+      : ta.rsi < 40 ? 'pos' : ta.rsi > 70 ? 'neg' : 'neu';
+    const ma50Cls  = ta.pct_vs_50d  === null ? 'neu' : ta.pct_vs_50d  >= 0 ? 'pos' : 'neg';
+    const ma200Cls = ta.pct_vs_200d === null ? 'neu' : ta.pct_vs_200d >= 0 ? 'pos' : 'neg';
+    const sigCls   = ta.ta_signal === 'bullish' ? 'pos' : ta.ta_signal === 'bearish' ? 'neg' : 'neu';
+    const sigLabel = ta.ta_signal === 'bullish' ? '▲ Bullish' : ta.ta_signal === 'bearish' ? '▼ Bearish' : '● Neutral';
+    const div = document.createElement('div');
+    div.className = 'ta-overlay';
+    div.innerHTML =
+      `<span class="ta-pill ${sigCls}">${sigLabel}</span>` +
+      `<span class="ta-item">RSI <b class="${rsiCls}">${ta.rsi !== null ? ta.rsi : '—'}</b></span>` +
+      `<span class="ta-item">50d <b class="${ma50Cls}">${ta.pct_vs_50d !== null ? (ta.pct_vs_50d >= 0 ? '+' : '') + ta.pct_vs_50d + '%' : '—'}</b></span>` +
+      `<span class="ta-item">200d <b class="${ma200Cls}">${ta.pct_vs_200d !== null ? (ta.pct_vs_200d >= 0 ? '+' : '') + ta.pct_vs_200d + '%' : '—'}</b></span>`;
+    el.appendChild(div);
+  });
+}
+
+function _clearTA() {
+  document.querySelectorAll('.ta-overlay').forEach(el => el.remove());
+}
+
+// ── Rotation log ──────────────────────────────────────────────────────────────
+async function loadRotation() {
+  const dir = document.getElementById('rot-direction').value;
+  const card = document.getElementById('rot-card');
+  card.innerHTML = '<div class="card-title">Rotation History</div><p class="state-msg">Loading…</p>';
+  try {
+    const data = await (await fetch('/api/changes?direction=' + dir + '&limit=100')).json();
+    renderRotation(data, card);
+  } catch(e) {
+    card.innerHTML = '<div class="card-title">Rotation History</div>' +
+      '<p class="state-msg" style="color:#f87171">Error: ' + escHtml(e.message) + '</p>';
+  }
+}
+
+function renderRotation(data, card) {
+  const rows = data.changes || [];
+  const snapshots = data.snapshots || [];
+  let html = '<div class="card-title">Rotation History</div>';
+
+  if (!rows.length && !snapshots.length) {
+    html += '<p class="state-msg">No rotation data yet — runs after the next signal refresh.</p>';
+    card.innerHTML = html;
+    return;
+  }
+
+  // Group changes by snapshot_date
+  const byDate = {};
+  rows.forEach(r => {
+    (byDate[r.snapshot_date] = byDate[r.snapshot_date] || []).push(r);
+  });
+
+  const CHANGE_LABELS = {
+    entered:    { icon: '↗', cls: 'pos',  label: 'Entered' },
+    exited:     { icon: '↘', cls: 'neg',  label: 'Exited'  },
+    moved_up:   { icon: '▲', cls: 'pos',  label: 'Up'      },
+    moved_down: { icon: '▼', cls: 'neg',  label: 'Down'    },
+  };
+
+  const dates = Object.keys(byDate).sort().reverse();
+  if (!dates.length) {
+    html += '<p class="state-msg">No changes recorded yet — the list has been stable since the first snapshot.</p>';
+    card.innerHTML = html;
+    return;
+  }
+
+  html += '<div style="overflow-x:auto"><table class="lb-tbl"><thead><tr>' +
+    '<th>Date</th><th>Ticker</th><th>Change</th><th>Old Rank</th><th>New Rank</th>' +
+    '</tr></thead><tbody>';
+
+  dates.forEach(d => {
+    byDate[d].forEach(r => {
+      const c = CHANGE_LABELS[r.change_type] || { icon: '?', cls: 'neu', label: r.change_type };
+      html += `<tr>
+        <td class="neu" style="font-size:.73rem">${escHtml(d)}</td>
+        <td class="lb-ticker-cell"><b>${escHtml(r.ticker)}</b></td>
+        <td><span class="${c.cls}">${c.icon} ${c.label}</span></td>
+        <td class="neu">${r.old_rank !== null ? '#' + r.old_rank : '—'}</td>
+        <td class="neu">${r.new_rank !== null ? '#' + r.new_rank : '—'}</td>
+      </tr>`;
+    });
+  });
+
+  html += '</tbody></table></div>';
+
+  // Current snapshot
+  if (snapshots.length) {
+    html += '<div class="card-title" style="margin-top:1.2rem">Current Top 10 Snapshot</div>' +
+      '<div style="overflow-x:auto"><table class="lb-tbl"><thead><tr>' +
+      '<th>#</th><th>Ticker</th><th>Alpha</th><th>Last Signal</th><th>N</th>' +
+      '</tr></thead><tbody>';
+    snapshots.forEach(s => {
+      html += `<tr>
+        <td class="lb-rank">#${s.rank}</td>
+        <td class="lb-ticker-cell"><b>${escHtml(s.ticker)}</b></td>
+        <td><span class="${s.avg_alpha >= 0 ? 'pos' : 'neg'}">${s.avg_alpha >= 0 ? '+' : ''}${(s.avg_alpha * 100).toFixed(1)}%</span></td>
+        <td class="neu" style="font-size:.73rem">${escHtml(s.last_signal || '—')}</td>
+        <td class="neu">${s.n_signals}</td>
+      </tr>`;
+    });
+    html += '</tbody></table></div>';
+  }
+
+  card.innerHTML = html;
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
@@ -1078,7 +1259,7 @@ function renderTop10(data) {
       : `<div class="stat-item"><span class="stat-label">Avg return</span><span class="stat-val ${cls(s.avg_return)}">${pct(s.avg_return)}</span></div>`;
 
     return `
-    <div class="podium-card ${RANK_CLS[i]}">
+    <div class="podium-card ${RANK_CLS[i]}" data-ta-ticker="${escAttr(s.ticker)}">
       <div class="podium-medal">${MEDALS[i]}</div>
       <div class="podium-ticker">${escHtml(s.ticker)}</div>
       <div class="podium-company">${escHtml(s.name || '')}</div>
@@ -1154,6 +1335,9 @@ function renderTop10(data) {
   });
   html += '</tbody></table></div>';
   boardEl.innerHTML = html;
+
+  // Re-apply TA overlay if it was enabled before refresh
+  if (_taEnabled) _fetchAndOverlayTA();
 }
 
 // ── Autogen ───────────────────────────────────────────────────────────────────
@@ -1395,6 +1579,226 @@ async def autogen_endpoint():
     return JSONResponse({"results": results})
 
 
+# ── Technical Analysis ────────────────────────────────────────────────────────
+
+def _compute_ta(tickers: list[str]) -> dict:
+    """Compute RSI(14), SMA50, SMA200 for each ticker from prices table."""
+    db = _open_db()
+    results = {}
+    try:
+        for ticker in tickers:
+            rows = db.execute(
+                "SELECT close FROM prices WHERE ticker = ? ORDER BY date DESC LIMIT 250",
+                [ticker],
+            ).fetchall()
+            if len(rows) < 20:
+                results[ticker] = None
+                continue
+
+            closes = [r[0] for r in reversed(rows)]
+            deltas = [closes[i] - closes[i - 1] for i in range(1, len(closes))]
+            gains  = [max(d, 0) for d in deltas]
+            losses = [max(-d, 0) for d in deltas]
+
+            period = 14
+            if len(gains) >= period:
+                avg_gain = sum(gains[-period:]) / period
+                avg_loss = sum(losses[-period:]) / period
+                rsi = 100.0 if avg_loss == 0 else round(100 - 100 / (1 + avg_gain / avg_loss), 1)
+            else:
+                rsi = None
+
+            current  = closes[-1]
+            sma50    = sum(closes[-50:])  / min(50, len(closes))  if len(closes) >= 10 else None
+            sma200   = sum(closes[-200:]) / min(200, len(closes)) if len(closes) >= 50 else None
+            pct50    = round((current / sma50  - 1) * 100, 1) if sma50  else None
+            pct200   = round((current / sma200 - 1) * 100, 1) if sma200 else None
+
+            bull = sum([
+                rsi is not None and rsi < 60,
+                pct50  is not None and pct50  > 0,
+                pct200 is not None and pct200 > 0,
+            ])
+            bear = sum([
+                rsi is not None and rsi > 70,
+                pct50  is not None and pct50  < 0,
+                pct200 is not None and pct200 < 0,
+            ])
+            ta_signal = "bullish" if bull >= 2 else "bearish" if bear >= 2 else "neutral"
+
+            results[ticker] = {
+                "rsi":         rsi,
+                "pct_vs_50d":  pct50,
+                "pct_vs_200d": pct200,
+                "ta_signal":   ta_signal,
+                "price":       round(current, 2),
+            }
+    finally:
+        db.close()
+    return results
+
+
+@app.get("/api/ta")
+async def ta_endpoint(tickers: str = Query(...)):
+    """Return TA indicators (RSI14, SMA50, SMA200) for a comma-separated list of tickers."""
+    ticker_list = [t.strip().upper() for t in tickers.split(",") if t.strip()][:20]
+    return JSONResponse(_compute_ta(ticker_list))
+
+
+# ── Rotation log ──────────────────────────────────────────────────────────────
+
+def _init_rotation_tables(db: duckdb.DuckDBPyConnection) -> None:
+    db.execute("""
+        CREATE TABLE IF NOT EXISTS top10_snapshots (
+            snapshot_date DATE,
+            direction     TEXT,
+            rank          INTEGER,
+            ticker        TEXT,
+            score         DOUBLE,
+            last_signal   DATE,
+            n_signals     INTEGER,
+            avg_alpha     DOUBLE
+        )
+    """)
+    db.execute("""
+        CREATE TABLE IF NOT EXISTS top10_changes (
+            changed_at   TIMESTAMP,
+            direction    TEXT,
+            ticker       TEXT,
+            change_type  TEXT,
+            old_rank     INTEGER,
+            new_rank     INTEGER,
+            snapshot_date DATE
+        )
+    """)
+
+
+def _snapshot_top10() -> None:
+    """Snapshot current top10 (long/mid/short) and record entry/exit/rank changes."""
+    from datetime import date, datetime
+    today = date.today()
+
+    db = _open_db(read_only=False)
+    try:
+        _init_rotation_tables(db)
+
+        for direction in ("long", "midterm", "short"):
+            # Skip if already snapshotted today
+            last_date = db.execute(
+                "SELECT MAX(snapshot_date) FROM top10_snapshots WHERE direction = ?",
+                [direction],
+            ).fetchone()[0]
+            if last_date and str(last_date)[:10] == str(today):
+                continue
+
+            # Build current top10 using same logic as the endpoint
+            if direction == "long":
+                dir_having, score_col = "", "AVG(se.alpha_sector) * (SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END) / NULLIF(COUNT(*), 0)) * LN(COUNT(*) + 1)"
+            elif direction == "short":
+                dir_having, score_col = "AND AVG(se.alpha_sector) < 0", "ABS(AVG(se.alpha_sector)) * (1 - SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END) / NULLIF(COUNT(*), 0)) * LN(COUNT(*) + 1)"
+            else:
+                dir_having, score_col = "AND AVG(se.alpha_sector) > 0 AND STDDEV(se.net_return) > 0", "CASE WHEN STDDEV(se.net_return) > 0 THEN (AVG(se.alpha_sector) / STDDEV(se.net_return)) * (SUM(CASE WHEN se.net_return > 0 THEN 1.0 ELSE 0.0 END) / NULLIF(COUNT(*), 0)) * LN(COUNT(*) + 1) ELSE 0 END"
+
+            rows = db.execute(f"""
+                SELECT se.ticker, MAX(se.event_date) AS last_signal,
+                       COUNT(*) AS n_signals, AVG(se.alpha_sector) AS avg_alpha,
+                       {score_col} AS score
+                FROM signal_events se
+                JOIN signal_runs sr ON sr.run_id = se.run_id
+                JOIN universe    u  ON u.ticker  = se.ticker
+                JOIN (SELECT signal_name, MAX(run_id) AS latest_run_id FROM signal_runs GROUP BY signal_name) lr
+                  ON lr.signal_name = sr.signal_name AND lr.latest_run_id = sr.run_id
+                WHERE sr.p_value_vs_sector < 0.05
+                GROUP BY se.ticker
+                HAVING COUNT(*) >= 5 {dir_having}
+                  AND MAX(se.event_date) >= CURRENT_DATE - INTERVAL '90 days'
+                ORDER BY score DESC NULLS LAST
+                LIMIT 10
+            """).fetchall()
+
+            current_map = {r[0]: i + 1 for i, r in enumerate(rows)}
+
+            # Load previous snapshot
+            prev_rows = db.execute(
+                "SELECT ticker, rank FROM top10_snapshots WHERE direction = ? AND snapshot_date = ? ORDER BY rank",
+                [direction, last_date],
+            ).fetchall() if last_date else []
+            prev_map = {r[0]: r[1] for r in prev_rows}
+
+            # Compute changes
+            all_tickers = set(prev_map) | set(current_map)
+            for ticker in all_tickers:
+                old_rank = prev_map.get(ticker)
+                new_rank = current_map.get(ticker)
+                if old_rank == new_rank:
+                    continue
+                if old_rank is None:
+                    change_type = "entered"
+                elif new_rank is None:
+                    change_type = "exited"
+                elif new_rank < old_rank:
+                    change_type = "moved_up"
+                else:
+                    change_type = "moved_down"
+                db.execute(
+                    "INSERT INTO top10_changes VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    [datetime.now(), direction, ticker, change_type, old_rank, new_rank, today],
+                )
+
+            # Insert snapshot rows
+            for rank, r in enumerate(rows, 1):
+                db.execute(
+                    "INSERT INTO top10_snapshots VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                    [today, direction, rank, r[0], r[4], r[1], r[2], r[3]],
+                )
+    finally:
+        db.close()
+
+
+@app.get("/api/changes")
+async def changes_endpoint(direction: str = Query("long"), limit: int = Query(100)):
+    if direction not in {"long", "midterm", "short"}:
+        direction = "long"
+    db = _open_db()
+    try:
+        _init_rotation_tables(db)
+        changes = db.execute("""
+            SELECT ticker, change_type, old_rank, new_rank, snapshot_date
+            FROM top10_changes
+            WHERE direction = ?
+            ORDER BY snapshot_date DESC, changed_at DESC
+            LIMIT ?
+        """, [direction, limit]).fetchall()
+
+        last_date = db.execute(
+            "SELECT MAX(snapshot_date) FROM top10_snapshots WHERE direction = ?",
+            [direction],
+        ).fetchone()[0]
+        snapshots = []
+        if last_date:
+            snapshots = db.execute("""
+                SELECT rank, ticker, avg_alpha, last_signal, n_signals
+                FROM top10_snapshots WHERE direction = ? AND snapshot_date = ?
+                ORDER BY rank
+            """, [direction, last_date]).fetchall()
+
+        return JSONResponse({
+            "direction": direction,
+            "changes": [
+                {"ticker": r[0], "change_type": r[1], "old_rank": r[2],
+                 "new_rank": r[3], "snapshot_date": str(r[4])[:10]}
+                for r in changes
+            ],
+            "snapshots": [
+                {"rank": r[0], "ticker": r[1], "avg_alpha": round(float(r[2]), 4) if r[2] else None,
+                 "last_signal": str(r[3])[:10] if r[3] else None, "n_signals": r[4]}
+                for r in snapshots
+            ],
+        })
+    finally:
+        db.close()
+
+
 @app.post("/admin/ingest")
 async def ingest_endpoint(background_tasks: BackgroundTasks, secret: str = Query(...)):
     """Trigger incremental price ingestion. Runs in background; returns immediately."""
@@ -1407,6 +1811,7 @@ async def ingest_endpoint(background_tasks: BackgroundTasks, secret: str = Query
         from signalalpha.live_signals import run_live_signals
         ingest_all()
         run_live_signals()
+        _snapshot_top10()
 
     background_tasks.add_task(_run)
     return JSONResponse({"ok": True, "status": "ingestion + signal re-run started in background"})
