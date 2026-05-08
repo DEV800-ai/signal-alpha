@@ -659,7 +659,7 @@ _HTML = r"""<!DOCTYPE html>
         </select>
       </div>
       <div class="filter-group" style="justify-content:flex-end;gap:.4rem;flex-direction:row;align-items:flex-end">
-        <button id="ta-toggle" class="secondary" style="font-size:.7rem;padding:.3rem .6rem" onclick="toggleTA()" title="Overlay RSI + moving average signals on each card">📊 TA Off</button>
+        <button id="ta-toggle" class="secondary" style="font-size:.7rem;padding:.3rem .6rem" onclick="toggleTA()" title="Overlay RSI + moving average signals on each card">📊 Technical Analysis</button>
         <button class="secondary" style="font-size:.7rem;padding:.3rem .6rem" onclick="loadTop10()">↻ Refresh</button>
       </div>
     </div>
@@ -916,7 +916,7 @@ let _taCache   = null;
 function toggleTA() {
   _taEnabled = !_taEnabled;
   const btn = document.getElementById('ta-toggle');
-  btn.textContent = _taEnabled ? '📊 TA On' : '📊 TA Off';
+  btn.textContent = '📊 Technical Analysis';
   btn.style.color = _taEnabled ? '#34d399' : '';
   if (_taEnabled) _fetchAndOverlayTA();
   else _clearTA();
