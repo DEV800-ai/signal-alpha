@@ -499,6 +499,15 @@ _HTML = r"""<!DOCTYPE html>
           <button id="dir-short"   class="dir-btn"              onclick="setDirection('short')">▼ Short</button>
         </div>
       </div>
+      <div class="filter-group">
+        <label class="filter-label">Active within</label>
+        <select id="t10-recency" class="filter-sel" onchange="loadTop10()">
+          <option value="90">Last 90 days</option>
+          <option value="180">Last 180 days</option>
+          <option value="365">Last 1 year</option>
+          <option value="0">All time (no filter)</option>
+        </select>
+      </div>
       <button class="secondary" style="font-size:.7rem;padding:.3rem .6rem;align-self:flex-end;margin-top:.2rem" onclick="loadTop10()">↻ Refresh</button>
     </div>
   </div>
@@ -983,16 +992,17 @@ function renderResult(data) {
 
 // ── Top 10 ────────────────────────────────────────────────────────────────────
 async function loadTop10() {
-  const sig   = document.getElementById('t10-signal').value;
-  const sec   = document.getElementById('t10-sector').value;
-  const score = document.getElementById('t10-score').value;
-  const dir   = _t10Direction;
+  const sig     = document.getElementById('t10-signal').value;
+  const sec     = document.getElementById('t10-sector').value;
+  const score   = document.getElementById('t10-score').value;
+  const dir     = _t10Direction;
+  const recency = document.getElementById('t10-recency').value;
   document.getElementById('t10-podium').innerHTML =
     '<p class="state-msg" style="grid-column:1/-1">Loading…</p>';
   document.getElementById('t10-board').innerHTML =
     '<div class="card-title">Leaderboard</div><p class="state-msg">Loading…</p>';
   try {
-    const p = new URLSearchParams({ signal_filter: sig, sector: sec, score_by: score, direction: dir, limit: 10 });
+    const p = new URLSearchParams({ signal_filter: sig, sector: sec, score_by: score, direction: dir, limit: 10, recency_days: recency });
     const data = await (await fetch('/top10?' + p)).json();
     renderTop10(data);
   } catch(e) {
@@ -1266,6 +1276,7 @@ async def top10_endpoint(
     score_by: str = Query("composite"),
     direction: str = Query("long"),
     limit: int = Query(10),
+    recency_days: int = Query(90),
 ):
     VALID_FILTERS   = {"all", "validated", "borderline"}
     VALID_SECTORS   = {"all", "ai_infra", "space_defense", "telecom"}
@@ -1279,6 +1290,8 @@ async def top10_endpoint(
         score_by = "composite"
     if direction not in VALID_DIRECTION:
         direction = "long"
+    if recency_days < 0:
+        recency_days = 90
 
     sig_cond = (
         "AND sr.p_value_vs_sector < 0.05"      if signal_filter == "validated"
@@ -1286,6 +1299,10 @@ async def top10_endpoint(
         else ""
     )
     sec_cond = f"AND u.sector = '{sector}'" if sector != "all" else ""
+    recency_having = (
+        f"AND MAX(se.event_date) >= CURRENT_DATE - INTERVAL '{recency_days} days'"
+        if recency_days > 0 else ""
+    )
 
     if direction == "long":
         dir_having = ""
@@ -1344,7 +1361,7 @@ async def top10_endpoint(
             ) lr ON lr.signal_name = sr.signal_name AND lr.latest_run_id = sr.run_id
             WHERE 1=1 {sig_cond} {sec_cond}
             GROUP BY se.ticker, u.name, u.sector
-            HAVING COUNT(*) >= 5 {dir_having}
+            HAVING COUNT(*) >= 5 {dir_having} {recency_having}
             ORDER BY {order_col} {order_dir} NULLS LAST
             LIMIT ?
         """, [limit]).fetchall()
