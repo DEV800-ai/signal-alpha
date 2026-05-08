@@ -15,7 +15,8 @@ jobs:
         run: |
           response=$(curl -s -o /tmp/response.json -w "%{http_code}" \
             -X POST \
-            "https://signal-alpha-production.up.railway.app/admin/ingest?secret=${{ secrets.ADMIN_SECRET }}")
+            -H "Authorization: Bearer ${{ secrets.ADMIN_SECRET }}" \
+            "https://signal-alpha-production.up.railway.app/admin/ingest")
 
           cat /tmp/response.json
           echo ""
@@ -32,7 +33,8 @@ jobs:
         run: |
           response=$(curl -s -o /tmp/snap.json -w "%{http_code}" \
             -X POST \
-            "https://signal-alpha-production.up.railway.app/admin/snapshot?secret=${{ secrets.ADMIN_SECRET }}")
+            -H "Authorization: Bearer ${{ secrets.ADMIN_SECRET }}" \
+            "https://signal-alpha-production.up.railway.app/admin/snapshot")
 
           cat /tmp/snap.json
           echo ""

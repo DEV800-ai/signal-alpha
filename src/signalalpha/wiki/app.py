@@ -12,7 +12,7 @@ import duckdb
 import uvicorn
 import os
 
-from fastapi import BackgroundTasks, FastAPI, Form, Query, UploadFile
+from fastapi import BackgroundTasks, FastAPI, Form, Header, Query, UploadFile
 from fastapi.responses import HTMLResponse, JSONResponse
 
 from signalalpha.config import DB_PATH
@@ -28,6 +28,15 @@ app = FastAPI(title="SignalAlpha")
 
 def _open_db(read_only: bool = True) -> duckdb.DuckDBPyConnection:
     return duckdb.connect(str(DB_PATH), read_only=read_only)
+
+
+def _check_admin(authorization: str | None) -> bool:
+    """Return True if the Authorization header carries the correct Bearer token."""
+    expected = os.environ.get("ADMIN_SECRET", "")
+    if not expected or not authorization:
+        return False
+    parts = authorization.split(" ", 1)
+    return len(parts) == 2 and parts[0].lower() == "bearer" and parts[1] == expected
 
 
 def _list_wiki_pages() -> list[dict]:
@@ -1618,10 +1627,9 @@ async def top10_endpoint(
 
 
 @app.post("/admin/snapshot")
-async def snapshot_endpoint(secret: str = Query(...)):
-    """Manually trigger a top10 snapshot. Returns error details on failure."""
-    expected = os.environ.get("ADMIN_SECRET", "")
-    if not expected or secret != expected:
+async def snapshot_endpoint(authorization: str | None = Header(default=None)):
+    """Manually trigger a top10 snapshot. Requires Authorization: Bearer <secret>."""
+    if not _check_admin(authorization):
         return JSONResponse({"error": "unauthorized"}, status_code=401)
     try:
         _snapshot_top10()
@@ -1886,10 +1894,9 @@ async def changes_endpoint(direction: str = Query("long"), limit: int = Query(10
 
 
 @app.post("/admin/ingest")
-async def ingest_endpoint(background_tasks: BackgroundTasks, secret: str = Query(...)):
-    """Trigger incremental price ingestion. Runs in background; returns immediately."""
-    expected = os.environ.get("ADMIN_SECRET", "")
-    if not expected or secret != expected:
+async def ingest_endpoint(background_tasks: BackgroundTasks, authorization: str | None = Header(default=None)):
+    """Trigger incremental price ingestion. Requires Authorization: Bearer <secret>."""
+    if not _check_admin(authorization):
         return JSONResponse({"error": "unauthorized"}, status_code=401)
 
     def _run():
@@ -1904,10 +1911,9 @@ async def ingest_endpoint(background_tasks: BackgroundTasks, secret: str = Query
 
 
 @app.post("/admin/restore-db")
-async def restore_db(file: UploadFile, secret: str = Query(...)):
-    """Upload a DuckDB snapshot to the volume. Requires ADMIN_SECRET env var."""
-    expected = os.environ.get("ADMIN_SECRET", "")
-    if not expected or secret != expected:
+async def restore_db(file: UploadFile, authorization: str | None = Header(default=None)):
+    """Upload a DuckDB snapshot to the volume. Requires Authorization: Bearer <secret>."""
+    if not _check_admin(authorization):
         return JSONResponse({"error": "unauthorized"}, status_code=401)
     data = await file.read()
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
