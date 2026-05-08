@@ -55,31 +55,31 @@ _HTML = r"""<!DOCTYPE html>
 <style>
   /* ── Dark mode (default) ── */
   :root {
-    --bg-page:     #0d1117;
-    --bg-card:     #161b22;
-    --bg-card2:    #1c2128;
-    --bg-card3:    #21262d;
-    --border:      #30363d;
-    --text:        #e6edf3;
-    --text-2:      #c9d1d9;
-    --text-muted:  #8b949e;
-    --text-muted2: #768390;
-    --text-dim:    #6e7681;
-    --text-faint:  #484f58;
+    --bg-page:     #1e1e1e;
+    --bg-card:     #2a2a2a;
+    --bg-card2:    #252525;
+    --bg-card3:    #303030;
+    --border:      #3d3d3d;
+    --text:        #f0f0f0;
+    --text-2:      #d4d4d4;
+    --text-muted:  #9e9e9e;
+    --text-muted2: #888888;
+    --text-dim:    #757575;
+    --text-faint:  #555555;
   }
   /* ── Light mode overrides ── */
   body.light {
-    --bg-page:     #f6f8fa;
+    --bg-page:     #ffffff;
     --bg-card:     #ffffff;
-    --bg-card2:    #f0f3f6;
-    --bg-card3:    #e6ebf0;
-    --border:      #d0d7de;
-    --text:        #1f2328;
-    --text-2:      #3d444d;
-    --text-muted:  #59636e;
-    --text-muted2: #6e7781;
-    --text-dim:    #6e7781;
-    --text-faint:  #9ea7b0;
+    --bg-card2:    #f5f5f5;
+    --bg-card3:    #ebebeb;
+    --border:      #d4d4d4;
+    --text:        #1a1a1a;
+    --text-2:      #333333;
+    --text-muted:  #555555;
+    --text-muted2: #6b6b6b;
+    --text-dim:    #757575;
+    --text-faint:  #9e9e9e;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
