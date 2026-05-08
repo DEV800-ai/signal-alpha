@@ -43,3 +43,23 @@ jobs:
           fi
 
           echo "Snapshot complete."
+
+      - name: Send failure email
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_USER }}
+          password: ${{ secrets.GMAIL_PASSWORD }}
+          subject: "SignalAlpha — ingest job failed (${{ github.run_id }})"
+          to: pinto2004@gmail.com
+          from: SignalAlpha Actions <${{ secrets.GMAIL_USER }}>
+          body: |
+            The scheduled SignalAlpha ingest job failed.
+
+            Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+            Check the logs above for details. You may need to manually trigger the ingest
+            or upload a fresh DB to Railway.

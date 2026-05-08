@@ -568,125 +568,134 @@ _HTML = r"""<!DOCTYPE html>
 
   <div class="howto-section">
     <div class="howto-h2">What is SignalAlpha?</div>
-    <p class="howto-p">SignalAlpha is a systematic signal research system. It detects recurring patterns in price volume and corporate event data, backtests each pattern against historical returns, and statistically validates whether the pattern produces alpha above the relevant sector ETF. Only patterns that clear a strict statistical bar (p&nbsp;&lt;&nbsp;0.05) are considered validated.</p>
-    <p class="howto-p">The universe covers 68 public companies across three sectors: AI Infrastructure, Space &amp; Defense, and Telecom.</p>
+    <p class="howto-p">SignalAlpha watches 68 stocks across AI, Space &amp; Defense, and Telecom for repeating patterns — things like unusual volume spikes or bursts of patent grants. When a pattern is detected, the system goes back in history to see: <em>every time this happened before, what did the stock do over the next 10–45 days compared to its sector?</em> If the answer is consistently positive — and the math confirms it's not luck — the stock shows up in the Top 10.</p>
+    <p class="howto-p">Think of it as a fact-checker for trading patterns. It does not give financial advice. It tells you which patterns have historically worked and which stocks are currently showing those patterns.</p>
   </div>
 
   <div class="howto-section">
-    <div class="howto-h2">The Pipeline</div>
+    <div class="howto-h2">How It Works — Step by Step</div>
     <div class="pipeline">
-      <div class="pipe-step"><strong>1 — Detect</strong><span>Scan price / volume / SEC filing data for candidate events</span></div>
+      <div class="pipe-step"><strong>1 — Spot the Pattern</strong><span>Look for unusual events: a volume spike 2× the 60-day average, or 5+ patent grants in 30 days for a telecom company</span></div>
       <span class="pipe-arrow">→</span>
-      <div class="pipe-step"><strong>2 — Backtest</strong><span>Entry T+1 open, hold N days, exit at open. 10 bps slippage.</span></div>
+      <div class="pipe-step"><strong>2 — Replay History</strong><span>For every past occurrence, measure what the stock actually returned over the next 10–45 days vs its sector ETF benchmark</span></div>
       <span class="pipe-arrow">→</span>
-      <div class="pipe-step"><strong>3 — Validate</strong><span>Paired t-test: stock return vs sector ETF over same window</span></div>
+      <div class="pipe-step"><strong>3 — Check the Math</strong><span>Run a statistical test (p-value). If there's less than a 5% chance the results are random, the signal is <b>validated</b></span></div>
       <span class="pipe-arrow">→</span>
-      <div class="pipe-step"><strong>4 — Holdout</strong><span>One-time out-of-sample test on reserved 2025+ data</span></div>
+      <div class="pipe-step"><strong>4 — Test on Fresh Data</strong><span>Verify on 2025+ data the system never trained on. Only signals that pass both tests reach the Top 10</span></div>
     </div>
+    <p class="howto-p" style="margin-top:1rem">Every 3 days, fresh prices are pulled and the system re-checks whether the pattern has fired recently. The Top 10 only shows stocks where the signal fired in the <b>last 90 days</b> — so you're seeing what's active now, not historical relics.</p>
   </div>
 
   <div class="howto-section">
-    <div class="howto-h2">Key Metrics</div>
+    <div class="howto-h2">The Numbers — Plain English</div>
     <div class="metric-grid">
 
       <div class="metric-card">
         <div class="metric-name">Alpha vs Sector</div>
-        <div class="metric-abbr">stock_return − sector_ETF_return</div>
-        <div class="metric-desc">How much the stock outperformed (or underperformed) its sector ETF over the hold period. A positive alpha means the signal identifies idiosyncratic edge above the sector move. The sector benchmarks are SOXX (ai_infra), ITA (space_defense), and IYZ (telecom).</div>
-        <span class="metric-good">+1.5% = strong edge</span>
+        <div class="metric-abbr">stock return − sector ETF return</div>
+        <div class="metric-desc"><b>The most important number.</b> If the stock gained 5% and its sector ETF gained 3% over the same period, the alpha is +2%. A positive alpha means the stock did something the whole sector didn't — that's what we're looking for. Benchmarks: SOXX (AI), ITA (Defense), IYZ (Telecom).</div>
+        <span class="metric-good">+1.5% or more = meaningful edge</span>
       </div>
 
       <div class="metric-card">
         <div class="metric-name">Hit Rate</div>
-        <div class="metric-abbr">wins / total_events</div>
-        <div class="metric-desc">Percentage of signal firings that closed with a positive net return. A random strategy expects ~50%. Hit rate above 55% combined with positive alpha is a strong reliability indicator. For short candidates, the inverse applies — a low hit rate is desirable.</div>
-        <span class="metric-good">&gt;55% long</span>
-        <span class="metric-bad" style="margin-left:.5rem">&lt;45% short</span>
+        <div class="metric-abbr">how often it wins</div>
+        <div class="metric-desc">Out of every 100 times the signal fired in the past, how many ended in a profit? A coin flip is 50%. A hit rate above 55% means the pattern wins more often than chance. Above 60% is strong. For <b>short candidates</b>, you actually want a <em>low</em> hit rate — that means it usually goes down.</div>
+        <span class="metric-good">&gt;55% for longs</span>
+        <span class="metric-bad" style="margin-left:.5rem">&lt;45% for shorts</span>
       </div>
 
       <div class="metric-card">
         <div class="metric-name">Avg Return</div>
-        <div class="metric-abbr">mean(net_return)</div>
-        <div class="metric-desc">Mean net return across all signal firings after deducting 10 bps round-trip slippage. Includes both winners and losers. This is the raw P&amp;L per trade — compare it against alpha to understand how much of the return is idiosyncratic vs sector-driven.</div>
-        <span class="metric-good">+3% over 15d = strong</span>
+        <div class="metric-abbr">average profit per trade</div>
+        <div class="metric-desc">The average gain (or loss) across all past signal firings, after subtracting a small transaction cost (0.10%). If the average is +3% over 15 days, you made 3% per trade on average. Compare this with alpha — if avg return is +5% but alpha is only +0.5%, most of that gain was just the sector rising, not the signal's edge.</div>
+        <span class="metric-good">+3% over 15 days = strong</span>
       </div>
 
       <div class="metric-card">
         <div class="metric-name">p-value</div>
-        <div class="metric-abbr">paired t-test(stock, sector)</div>
-        <div class="metric-desc">Statistical significance of the alpha. A paired t-test compares stock returns vs sector ETF returns for identical entry/exit dates. p&nbsp;&lt;&nbsp;0.05 means there is less than a 5% chance the observed alpha is random. This is the primary validation gate.</div>
-        <span class="metric-good">&lt;0.05 = validated</span>
+        <div class="metric-abbr">probability the result is luck</div>
+        <div class="metric-desc">A p-value of 0.05 means there's only a 5% chance the alpha you see is due to random noise. We require p&nbsp;&lt;&nbsp;0.05 to call a signal <b>validated</b>. A p-value of 0.30 means a 30% chance it's just luck — that goes to the graveyard. This is the main filter that separates real patterns from coincidences.</div>
+        <span class="metric-good">&lt;0.05 = validated ✓</span>
         <span class="metric-bad" style="margin-left:.5rem">&gt;0.10 = graveyard</span>
       </div>
 
       <div class="metric-card">
-        <div class="metric-name">Sharpe (annualized)</div>
-        <div class="metric-abbr">mean / std × √(252 / hold_days)</div>
-        <div class="metric-desc">Risk-adjusted return. Divides mean return by its standard deviation and scales to annual frequency. A Sharpe above 0.5 is good for a signal strategy; above 1.0 is excellent. The volume anomaly at 15d hold produces Sharpe 1.22 in the holdout period.</div>
-        <span class="metric-good">&gt;0.5 good  &gt;1.0 excellent</span>
-      </div>
-
-      <div class="metric-card">
         <div class="metric-name">Composite Score</div>
-        <div class="metric-abbr">alpha × hit_rate × log(1 + N)</div>
-        <div class="metric-desc">The Long ranking metric. Rewards signals with high alpha AND consistent winning AND enough historical observations to trust. A signal with great alpha but only 5 events scores lower than one with moderate alpha across 200 events.</div>
+        <div class="metric-abbr">alpha × hit rate × log(events)</div>
+        <div class="metric-desc">The ranking formula for the Long Top 10. A stock scores higher if it has: big alpha AND consistent wins AND many historical examples. A pattern with +10% alpha but only 3 past occurrences scores low — there's not enough history to trust it. More events = more trust = higher rank.</div>
         <span class="metric-good">Higher = better ranked</span>
       </div>
 
       <div class="metric-card">
+        <div class="metric-name">Mid-term Score</div>
+        <div class="metric-abbr">alpha ÷ volatility × hit rate × log(events)</div>
+        <div class="metric-desc">The ranking formula for the 1–3 month view. Same idea as Composite, but it divides by volatility first. A stock that earns +2% with low swings scores higher than one that earns +3% with wild swings. Look for the <span style="color:#34d399;font-weight:700">LOW RISK</span> badge — those are the smoothest rides.</div>
+        <span class="metric-good">Rewards consistency over raw returns</span>
+      </div>
+
+      <div class="metric-card">
         <div class="metric-name">Risk Level</div>
-        <div class="metric-abbr">std(net_return) per stock</div>
-        <div class="metric-desc">Volatility of net returns across all signal firings for that stock. Used to classify investment risk and power the Mid-term ranking.</div>
-        <span class="metric-good" style="display:block">🟢 LOW &lt;10% std</span>
-        <span class="metric-bad" style="color:#fbbf24;display:block">🟡 MED 10–20%</span>
-        <span class="metric-bad" style="display:block">🔴 HIGH &gt;20%</span>
+        <div class="metric-abbr">how wild the returns swing</div>
+        <div class="metric-desc">Measures how much individual trade returns vary from the average. A low-risk stock makes roughly the same gain each time the signal fires. A high-risk stock might make +20% one time and −15% the next — same average, very different experience. Risk level is calculated from the standard deviation of all past returns for that stock.</div>
+        <span class="metric-good" style="display:block">🟢 LOW — steady, under 10% swing</span>
+        <span class="metric-bad" style="color:#fbbf24;display:block">🟡 MED — 10–20% swing</span>
+        <span class="metric-bad" style="display:block">🔴 HIGH — over 20% swing</span>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-name">TA Overlay (optional)</div>
+        <div class="metric-abbr">RSI · 50-day MA · 200-day MA</div>
+        <div class="metric-desc">Toggle the <b>📊 TA</b> button to add technical context on top of the signal ranking. RSI below 40 means oversold (often a better entry). Price above the 50-day moving average means the stock is in short-term uptrend. The TA badge (Bullish / Neutral / Bearish) reflects the overall picture. This is a secondary layer — the signal alpha is the primary signal.</div>
+        <span class="metric-good">Bullish TA + validated signal = stronger setup</span>
       </div>
 
     </div>
   </div>
 
   <div class="howto-section">
-    <div class="howto-h2">Signals</div>
+    <div class="howto-h2">The Two Validated Signals</div>
     <div class="signal-list">
       <div class="signal-item">
         <div class="signal-item-name">Volume Anomaly ×2.0 — 15d Hold &nbsp;<span class="status-pill pill-validated">validated</span></div>
-        <div class="signal-item-desc">Fires when a ticker's 5-day average volume exceeds 2× its 60-day median volume. Debounced to one firing per ticker per 5 trading days. Entry at T+1 open, exit 15 trading days later. In-sample p=0.0046 across 1,480 events (2018–2024). Holdout alpha +1.58%, Sharpe 1.22 (2025–2026).</div>
+        <div class="signal-item-desc"><b>What it looks for:</b> a stock's trading volume over the last 5 days is more than 2× its normal 60-day average — something unusual is happening. <b>What happens next:</b> historically, these stocks outperform their sector ETF by ~1.6% over the following 15 trading days, with a 55%+ win rate. Validated on 1,480 events from 2018–2024 (p=0.005), confirmed on fresh 2025–2026 data (Sharpe 1.22). Fires across all three sectors.</div>
       </div>
       <div class="signal-item">
         <div class="signal-item-name">Patent Cluster — Telecom, 45d Hold &nbsp;<span class="status-pill pill-validated">validated</span></div>
-        <div class="signal-item-desc">Fires when a telecom company receives ≥5 patent grants within any rolling 30-day window (debounced 30 days). Restricted to telecom sector (QCOM, IDCC, NOK, ERIC, VZ, T…) where patent bursts signal IP-licensing pipeline rather than routine R&amp;D. 45-day hold captures the full pricing-in period. In-sample p=0.0001, alpha +1.53% vs IYZ, hit rate 55.2% across 810 events (2018–2024). Data: PatentsView S3 bulk files (no auth required, monthly snapshots).</div>
+        <div class="signal-item-desc"><b>What it looks for:</b> a telecom company (QCOM, IDCC, ERIC, NOK…) receives 5 or more patent grants in any 30-day window. <b>Why telecom specifically:</b> telecom companies are IP-licensing businesses — a burst of patents signals an upcoming licensing deal or competitive moat event, which takes longer to show up in the stock price. <b>What happens next:</b> these stocks outperform the IYZ telecom ETF by ~1.5% over 45 trading days. Validated on 810 events (p=0.0001). Patent data from PatentsView (USPTO), updated monthly.</div>
       </div>
       <div class="signal-item">
         <div class="signal-item-name">8-K Filing — Excluding Earnings &nbsp;<span class="status-pill pill-borderline">borderline</span></div>
-        <div class="signal-item-desc">Fires on any non-earnings 8-K SEC filing. In-sample p=0.053 at 30d hold. Holdout p=0.27 — does not confirm out-of-sample. Currently in the graveyard for production use. Further filtering by 8-K item type or sector may be needed.</div>
+        <div class="signal-item-desc"><b>What it looks for:</b> any major SEC filing that isn't an earnings report (mergers, agreements, officer changes, etc.). <b>Why it's borderline:</b> it showed marginal significance in historical data (p=0.053) but failed to confirm on fresh 2025–2026 data (p=0.27). Currently in the graveyard — not used in the Top 10. It may work with more specific filtering (e.g. only material agreements in specific sectors).</div>
       </div>
     </div>
   </div>
 
   <div class="howto-section">
-    <div class="howto-h2">Long vs Short Rankings</div>
+    <div class="howto-h2">The Three Rankings Explained</div>
     <div class="dir-explainer">
       <div class="dir-card dir-card-long">
-        <div class="dir-card-title">▲ Long — Top 10</div>
-        <p>Stocks where the signal consistently fires before price appreciation above the sector ETF. Ranked by <b>composite score</b> = alpha × hit_rate × log(N). Candidates to buy when the volume anomaly fires. Each stock shows a <b>risk badge</b> (LOW / MED / HIGH) based on return volatility.</p>
+        <div class="dir-card-title">▲ Long — Best setups to buy</div>
+        <p>Stocks where the signal fired recently AND historically the stock outperformed its sector after each firing. <b>Best for:</b> short-term trades of 10–20 days. Ranked by alpha × hit rate × history. Check the <b>risk badge</b> — LOW RISK means results are consistent, HIGH RISK means more volatile swings.</p>
       </div>
       <div class="dir-card" style="background:#0b1a1f;border:1px solid #0e7490;border-radius:9px;padding:1rem">
-        <div class="dir-card-title" style="color:#22d3ee">📈 Mid-term — 1 to 3 Months</div>
-        <p style="font-size:.76rem;color:#8899bb;line-height:1.65">Stocks with positive alpha and low volatility — suitable for patient 1–3 month holds. Ranked by <b>Information Ratio score</b> = (alpha / volatility) × hit_rate × log(N). High-volatility names score low even with great alpha. Look for <span style="color:#34d399;font-weight:700">LOW RISK</span> badges.</p>
+        <div class="dir-card-title" style="color:#22d3ee">📈 Mid-term — Steadier holds</div>
+        <p style="font-size:.76rem;color:#8899bb;line-height:1.65"><b>Best for:</b> patient holds of 1–3 months. Same signal, but ranks stocks that win consistently <em>and</em> with low volatility. A stock that gains +2% steadily every time beats one that averages +3% with wild swings. Look for <span style="color:#34d399;font-weight:700">LOW RISK</span> badges here.</p>
       </div>
       <div class="dir-card dir-card-short">
-        <div class="dir-card-title">▼ Short — Top 10</div>
-        <p>Stocks where the signal fires before underperformance vs sector ETF. Ranked by <b>short score</b> = |alpha| × (1 − hit_rate) × log(N). Volume spikes here are distribution events, not accumulation. Short Win Rate = probability the position profits when shorted.</p>
+        <div class="dir-card-title">▼ Short — Stocks to avoid or short</div>
+        <p>Stocks where the same volume spike pattern has historically led to underperformance vs the sector. The signal here is a warning: when volume spikes in these names, it tends to be selling pressure, not buying. <b>Short Win Rate</b> = how often shorting it profited historically.</p>
       </div>
     </div>
   </div>
 
   <div class="howto-section">
-    <div class="howto-h2">Statistical Guardrails</div>
-    <p class="howto-p"><b>Minimum N = 30 events</b> to report any result. Signals with fewer events are inconclusive regardless of p-value.</p>
-    <p class="howto-p"><b>Holdout window:</b> all data from 2025-01-01 onward was never seen during parameter development. The holdout was run once, results are final, and they are not used to tune parameters.</p>
-    <p class="howto-p"><b>Slippage:</b> 10 bps round-trip is deducted from every trade to model realistic execution costs.</p>
-    <p class="howto-p"><b>No look-ahead:</b> all signals use only data available at signal-fire time. Rolling windows are right-aligned at T; entry is T+1 open.</p>
+    <div class="howto-h2">Important Guardrails</div>
+    <p class="howto-p"><b>Minimum 30 events required.</b> If a pattern has fired fewer than 30 times in history, the result is statistically unreliable and is not shown — even if the numbers look great.</p>
+    <p class="howto-p"><b>Fresh data test (holdout).</b> All signals were developed on data from 2018–2024. The 2025–2026 data was kept completely separate and only used once to verify the signal still works on data the system never saw. This prevents overfitting.</p>
+    <p class="howto-p"><b>Transaction cost included.</b> Every trade deducts 0.10% for estimated buy/sell costs. Returns shown are what you'd actually keep, not paper gains.</p>
+    <p class="howto-p"><b>Only recent signals shown.</b> The Top 10 only includes stocks where the pattern fired in the last 90 days. A stock with a great historical record but no recent signal is filtered out — the ranking reflects what's happening <em>now</em>.</p>
+    <p class="howto-p"><b>This is research, not financial advice.</b> Signals show historical tendencies, not guarantees. Always apply your own judgment before acting on any output.</p>
   </div>
 
 </div>
