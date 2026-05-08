@@ -29,7 +29,7 @@ The system does **not** predict prices. It surfaces statistically validated setu
 
 | Sector | Benchmark |
 | --- | --- |
-| AI infrastructure | SOXX (semis) + IGV (software) |
+| AI infrastructure | SOXX |
 | Space / Defense | ITA |
 | Telecom | IYZ |
 | Broad baseline | SPY |
@@ -103,11 +103,13 @@ Signals that fail go to the **signal graveyard** — a dated log — so they are
 Even a personal tool needs a closed loop. Defaults:
 
 - **Position size:** 2% of capital per signal firing. Max 10% per ticker across signals.
-- **Hold:** 30 days for fast signals (earnings, 8-K, volume), 90 days for slow signals (patents, insider buying).
+- **Hold:** validated per signal via hold-period sweep. Volume anomaly validated at 15 days (best p + Sharpe). 90 days for slow signals (patents, insider buying).
 - **Stop loss:** 10% from entry.
 - **Take profit:** none — let it run to time exit.
 
 These are starting defaults. Tune them only after a signal has shown an edge under the default rule. Tuning rules first turns the tool into a curve-fit machine.
+
+> **Note:** Position sizing is out of scope until signals stabilize. The dashboard surfaces signal firings; the user decides whether to act. No buy/sell recommendations are generated.
 
 ## Phase 5 — Pipeline
 
@@ -123,27 +125,18 @@ EDGAR / yfinance / USPTO  →  raw tables (DuckDB)
 - Python, DuckDB, pandas/Polars
 - `yfinance` for prices, `sec-edgar-downloader` for filings, USPTO PatentsView API for patents
 - Claude API for filing summarization only, cached aggressively
-- Streamlit or markdown email for the daily report — no web app
+- FastAPI web dashboard (deployed on Railway) — replaced the markdown email format
 
-## Phase 6 — Daily report format
+## Phase 6 — Dashboard
 
-```
-Date: 2026-05-03
-Universe scanned: 87 tickers
-Signals fired today: 2
+The markdown daily report format was superseded by the FastAPI web dashboard. The dashboard provides:
 
-INTC — 8-K Item 1.01 (material agreement)
-  Signal stats (2018–2024): N=312, mean 30d return +1.8%,
-                            vs SOXX +0.4%, p=0.02
-  Suggested: 2% position, 30-day hold, 10% stop
+- **Daily Brief** — validation status for every signal run (p-value, alpha, Sharpe, freshness)
+- **Top 10** — ranked stock leaderboard with Long / Mid-term / Short modes
+- **Wiki Editor** — browse and validate signal/company wiki pages
+- **How It Works** — full methodology explainer
 
-RKLB — Insider buy, Form 4, $480k
-  Signal stats (2018–2024): N=44, mean 90d return +6.1%,
-                            vs ITA +1.2%, p=0.04
-  Suggested: 2% position, 90-day hold, 10% stop
-```
-
-The report is opinionated on the **signal**, not on the trade. The user decides whether to act.
+The dashboard surfaces signal firings and historical statistics. It is opinionated on the **signal**, not on the trade. No buy/sell recommendations or position sizing suggestions are shown. The user decides whether to act.
 
 ## Phase 7 — Cost control
 
@@ -170,32 +163,37 @@ The "Stoke Space → Rocket Lab" idea is the most interesting potential differen
 
 **Decision deferred** until signals 1–5 are validated. Until then, a manual notes file is enough.
 
-## 4-week execution plan (revised)
+## Execution plan — status
 
-### Week 1 — Foundations
+### Week 1 — Foundations ✅ DONE
 
-- Define the universe (60–90 tickers) and write it to a versioned table with start dates.
-- Pull 2018–2025 daily prices for the universe + benchmark ETFs into DuckDB.
-- Implement `backtest(events, hold_days)` with all guardrails above.
-- **Smoke test:** feed it post-earnings-announcement drift events and verify results match published academic numbers. If they don't, the framework is broken — fix before moving on.
+- Universe: 68 tickers across 3 sectors, versioned with start dates.
+- Prices: 2018–present daily OHLCV in DuckDB via yfinance (weekly auto-update).
+- `backtest(events, hold_days)` implemented with all guardrails.
 
-### Week 2 — First signals
+### Week 2 — First signals ✅ DONE
 
-- Implement signals 1–4 (earnings, 8-K, insider buying, volume anomaly).
-- Run on 2018–2024. Record results in the signal registry.
-- Kill any that fail the validation bar. Do not tune them yet.
+| Signal | Verdict | Notes |
+|--------|---------|-------|
+| volume_anomaly ×2.0 | ✅ VALIDATED | p=0.0046, alpha +1.27%, hold 15d |
+| earnings_surprise q75 | ❌ GRAVEYARD | p=0.459 |
+| 8k_excl_earnings | ❌ GRAVEYARD | p=0.053, failed holdout p=0.27 |
+| insider_buy_100k | ❌ GRAVEYARD | p=0.918, sector alpha ~0 |
 
-### Week 3 — Sector signal + summarization
+Hold-period sweep completed (5/10/15/20/30d). 15d is optimal.
+Holdout validation completed on 2025–2026 data: volume anomaly held up (alpha +1.58%, Sharpe 1.22).
+Dashboard deployed on Railway with weekly auto-update via GitHub Actions.
 
-- Implement signal 5 (patent grants).
-- Add SEC filing summarization (Claude API, cached).
-- First end-to-end run: nightly job → event tables → daily report.
+### Week 3 — Differentiator signal + summarization 🔄 IN PROGRESS
 
-### Week 4 — Out-of-sample and reporting
+- [ ] Signal 5: patent-grant cluster (USPTO PatentsView API)
+- [ ] SEC filing summarization (Claude API, cached by accession)
 
-- Run validated signals on 2025 holdout. Record the result. Do not tune.
-- Polish the daily report (markdown or Streamlit).
-- Write signal-graveyard entries for everything that died.
+### Week 4 — Out-of-sample ✅ DONE (pulled forward)
+
+- Holdout run on 2025+ data completed (run_ids 22–24).
+- volume_anomaly passed holdout. 8k_excl_earnings failed.
+- Signal graveyard maintained in wiki.
 
 ## What changed from v2
 
