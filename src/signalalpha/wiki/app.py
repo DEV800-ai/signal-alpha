@@ -512,9 +512,9 @@ _HTML = r"""<!DOCTYPE html>
       <div class="filter-group">
         <label class="filter-label">Direction</label>
         <div class="dir-toggle">
-          <button id="dir-long"    class="dir-btn active-long"  onclick="setDirection('long')">▲ Long</button>
+          <button id="dir-long"    class="dir-btn active-long"  onclick="setDirection('long')">Long</button>
           <button id="dir-midterm" class="dir-btn"              onclick="setDirection('midterm')">📈 Mid-term</button>
-          <button id="dir-short"   class="dir-btn"              onclick="setDirection('short')">▼ Short</button>
+          <button id="dir-short"   class="dir-btn"              onclick="setDirection('short')">Short</button>
         </div>
       </div>
       <div class="filter-group">
@@ -675,7 +675,7 @@ _HTML = r"""<!DOCTYPE html>
     <div class="howto-h2">The Three Rankings Explained</div>
     <div class="dir-explainer">
       <div class="dir-card dir-card-long">
-        <div class="dir-card-title">▲ Long — 12 months+</div>
+        <div class="dir-card-title">Long — 12 months+</div>
         <p>Stocks with strong historical indicators suited for long-term investors. <b>Best for:</b> buy-and-hold positions of 12 months or more. The analysis identifies stocks that consistently outperform their sector over time — good fundamentals for patient capital. Ranked by alpha × hit rate × history. Check the <b>risk badge</b> — LOW RISK means consistent results, HIGH RISK means more volatile swings.</p>
       </div>
       <div class="dir-card" style="background:#0b1a1f;border:1px solid #0e7490;border-radius:9px;padding:1rem">
@@ -683,7 +683,7 @@ _HTML = r"""<!DOCTYPE html>
         <p style="font-size:.76rem;color:#8899bb;line-height:1.65"><b>Best for:</b> patient holds of 1–3 months. Same signal, but ranks stocks that win consistently <em>and</em> with low volatility. A stock that gains +2% steadily every time beats one that averages +3% with wild swings. Look for <span style="color:#34d399;font-weight:700">LOW RISK</span> badges here.</p>
       </div>
       <div class="dir-card dir-card-short">
-        <div class="dir-card-title">▼ Short — Up to 3 months</div>
+        <div class="dir-card-title">Short — Up to 3 months</div>
         <p>Stocks with high potential for short-term gains of up to 3 months. When the volume spike pattern fires in these names it has historically led to rapid price moves — creating opportunities for active traders looking for quick entries and exits. <b>Short Win Rate</b> = how often the position profited historically.</p>
       </div>
     </div>
