@@ -53,31 +53,33 @@ _HTML = r"""<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SignalAlpha</title>
 <style>
+  /* ── Dark mode (default) ── */
   :root {
-    --bg-page:     var(--bg-page);
-    --bg-card:     var(--bg-card);
-    --bg-card2:    var(--bg-card2);
-    --bg-card3:    var(--bg-card3);
-    --border:      var(--border);
-    --text:        var(--text);
-    --text-2:      var(--text-2);
-    --text-muted:  var(--text-muted);
-    --text-muted2: var(--text-muted2);
-    --text-dim:    var(--text-dim);
-    --text-faint:  var(--text-faint);
+    --bg-page:     #0d1117;
+    --bg-card:     #161b22;
+    --bg-card2:    #1c2128;
+    --bg-card3:    #21262d;
+    --border:      #30363d;
+    --text:        #e6edf3;
+    --text-2:      #c9d1d9;
+    --text-muted:  #8b949e;
+    --text-muted2: #768390;
+    --text-dim:    #6e7681;
+    --text-faint:  #484f58;
   }
+  /* ── Light mode overrides ── */
   body.light {
-    --bg-page:     #f1f5f9;
+    --bg-page:     #f6f8fa;
     --bg-card:     #ffffff;
-    --bg-card2:    #f8fafc;
-    --bg-card3:    #eef2f7;
-    --border:      #dde3ed;
-    --text:        #0f172a;
-    --text-2:      #334155;
-    --text-muted:  #4a5568;
-    --text-muted2: var(--text-faint);
-    --text-dim:    #718096;
-    --text-faint:  var(--text-muted2);
+    --bg-card2:    #f0f3f6;
+    --bg-card3:    #e6ebf0;
+    --border:      #d0d7de;
+    --text:        #1f2328;
+    --text-2:      #3d444d;
+    --text-muted:  #59636e;
+    --text-muted2: #6e7781;
+    --text-dim:    #6e7781;
+    --text-faint:  #9ea7b0;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -108,7 +110,8 @@ _HTML = r"""<!DOCTYPE html>
     margin-bottom: -1px; transition: color .12s, border-color .12s;
   }
   .tab-btn:hover { color: var(--text-muted2); }
-  .tab-btn.active { color: #a5b4fc; border-bottom-color: #6366f1; }
+  .tab-btn.active { color: #818cf8; border-bottom-color: #6366f1; }
+  body.light .tab-btn.active { color: #4f46e5; border-bottom-color: #4f46e5; }
 
   .tab-panel { display: none; width: 100%; max-width: 1200px; }
   .tab-panel.active { display: block; }
@@ -159,9 +162,9 @@ _HTML = r"""<!DOCTYPE html>
     border-radius: 999px; font-size: .68rem; font-weight: 700; letter-spacing: .04em;
     white-space: nowrap;
   }
-  .pill-validated  { background: #14532d; color: #4ade80; }
-  .pill-borderline { background: #78350f; color: #fbbf24; }
-  .pill-graveyard  { background: #1f2937; color: #6b7280; }
+  .pill-validated  { background: #0d2818; color: #3fb950; border: 1px solid #238636; }
+  .pill-borderline { background: #2d1f00; color: #d29922; border: 1px solid #9e6a03; }
+  .pill-graveyard  { background: var(--bg-card3); color: var(--text-muted); border: 1px solid var(--border); }
 
   .ctx-pill {
     display: inline-flex; align-items: center; gap: .3rem;
@@ -333,12 +336,14 @@ _HTML = r"""<!DOCTYPE html>
 
   .dir-explainer { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; margin-top:.75rem; }
   @media(max-width:760px){ .dir-explainer { grid-template-columns:1fr; } }
-  .dir-card { border-radius:9px; padding:1rem; }
-  .dir-card-long  { background:#0c1a0c; border:1px solid #166534; }
-  .dir-card-opp { background:#1a1500; border:1px solid #854d0e; }
-  .dir-card-title { font-weight:700; font-size:.88rem; margin-bottom:.5rem; }
-  .dir-card-long  .dir-card-title { color:#4ade80; }
-  .dir-card-opp .dir-card-title { color:#fb923c; }
+  .dir-card { border-radius:9px; padding:1rem; border:1px solid var(--border); background:var(--bg-card2); }
+  .dir-card-long  { background:#0d2818; border-color:#238636; }
+  .dir-card-mid   { background:#0d1f2d; border-color:#1d6fa6; }
+  .dir-card-opp   { background:#2d1f00; border-color:#9e6a03; }
+  .dir-card-title { font-weight:700; font-size:.88rem; margin-bottom:.5rem; color:var(--text); }
+  .dir-card-long .dir-card-title { color:#3fb950; }
+  .dir-card-mid  .dir-card-title { color:#58b6e8; }
+  .dir-card-opp  .dir-card-title { color:#d29922; }
   .dir-card p { font-size:.76rem; color:var(--text-muted); line-height:1.65; }
 
   /* ── Top 10 ───────────────────────────────────────── */
@@ -380,10 +385,10 @@ _HTML = r"""<!DOCTYPE html>
     display:inline-block; padding:.12rem .45rem; border-radius:4px;
     font-size:.65rem; font-weight:700; letter-spacing:.04em; white-space:nowrap;
   }
-  .sec-ai_infra      { background:#1e1b4b; color:#a5b4fc; border:1px solid #3730a3; }
-  .sec-space_defense { background:#064e3b; color:#34d399; border:1px solid #065f46; }
-  .sec-telecom       { background:#1c1708; color:#fbbf24; border:1px solid #78350f; }
-  .sec-unknown       { background:#1a1a1a; color:var(--text-dim); border:1px solid #374151; }
+  .sec-ai_infra      { background:#1a1f6e; color:#a5b4fc; border:1px solid #4f55c8; }
+  .sec-space_defense { background:#0d3b2a; color:#3fb950; border:1px solid #238636; }
+  .sec-telecom       { background:#2d1e00; color:#d29922; border:1px solid #9e6a03; }
+  .sec-unknown       { background:var(--bg-card3); color:var(--text-dim); border:1px solid var(--border); }
 
   .podium-stats { display:flex; flex-wrap:wrap; gap:.35rem .75rem; margin-top:.15rem; }
 
@@ -444,9 +449,9 @@ _HTML = r"""<!DOCTYPE html>
     display:inline-block; padding:.11rem .42rem; border-radius:4px;
     font-size:.62rem; font-weight:700; letter-spacing:.05em; white-space:nowrap;
   }
-  .risk-low  { background:#0c2120; color:#34d399; border:1px solid #065f46; }
-  .risk-med  { background:#1c1708; color:#fbbf24; border:1px solid #78350f; }
-  .risk-high { background:#1a0c0c; color:#f87171; border:1px solid #7f1d1d; }
+  .risk-low  { background:#0d2818; color:#3fb950; border:1px solid #238636; }
+  .risk-med  { background:#2d1f00; color:#d29922; border:1px solid #9e6a03; }
+  .risk-high { background:#2d0f0f; color:#f85149; border:1px solid #8b2020; }
 
   /* TA overlay */
   .ta-overlay {
@@ -526,10 +531,12 @@ _HTML = r"""<!DOCTYPE html>
   body.light .ev-tbl tr:hover td { background:var(--bg-card2); }
   body.light .lb-tbl tbody tr:hover td { background:var(--bg-card2); }
   body.light .stat-box { background:var(--bg-page); }
-  body.light .dir-card-long { background:#f0fdf4; border-color:#86efac; }
-  body.light .dir-card-long .dir-card-title { color:#16a34a; }
-  body.light .dir-card-opp { background:#fff7ed; border-color:#fed7aa; }
-  body.light .dir-card-opp .dir-card-title { color:#d97706; }
+  body.light .dir-card-long { background:#f0fff4; border-color:#82cfaf; }
+  body.light .dir-card-long .dir-card-title { color:#1a7f37; }
+  body.light .dir-card-mid  { background:#f0f8ff; border-color:#54aeff; }
+  body.light .dir-card-mid  .dir-card-title { color:#0969da; }
+  body.light .dir-card-opp  { background:#fffbeb; border-color:#d4a72c; }
+  body.light .dir-card-opp  .dir-card-title { color:#9a6700; }
   body.light .dir-card p { color:var(--text-muted); }
   body.light .howto-h2 { color:#4f46e5; }
   body.light .filter-sel { background:var(--bg-card); color:var(--text); border-color:var(--border); }
@@ -539,27 +546,27 @@ _HTML = r"""<!DOCTYPE html>
   body.light button.secondary { background:var(--bg-card); border-color:var(--border); color:var(--text-muted); }
   body.light button.secondary:hover { background:var(--bg-card2); }
   body.light .page-item:hover { background:var(--bg-card3); color:var(--text); }
-  body.light .pill-validated  { background:#d1fae5; color:#059669; }
-  body.light .pill-borderline { background:#fef3c7; color:#d97706; }
-  body.light .pill-graveyard  { background:var(--bg-card2); color:var(--text-faint); }
-  body.light .ctx-current { background:#d1fae5; color:#059669; border-color:#6ee7b7; }
-  body.light .ctx-stale   { background:#fef3c7; color:#d97706; border-color:#fcd34d; }
-  body.light .ctx-missing { background:var(--bg-card2); color:var(--text-faint); border-color:var(--border); }
-  body.light .risk-low  { background:#f0fdf4; color:#16a34a; border-color:#86efac; }
-  body.light .risk-med  { background:#fffbeb; color:#d97706; border-color:#fcd34d; }
-  body.light .risk-high { background:#fef2f2; color:#dc2626; border-color:#fca5a5; }
-  body.light .ta-pill.pos { background:#f0fdf4; color:#16a34a; border-color:#86efac; }
-  body.light .ta-pill.neg { background:#fef2f2; color:#dc2626; border-color:#fca5a5; }
-  body.light .ta-pill.neu { background:var(--bg-card2); color:var(--text-faint); border-color:var(--border); }
-  body.light .sec-ai_infra      { background:#ede9fe; color:#4f46e5; border-color:#c4b5fd; }
-  body.light .sec-space_defense { background:#d1fae5; color:#059669; border-color:#6ee7b7; }
-  body.light .sec-telecom       { background:#fef3c7; color:#d97706; border-color:#fcd34d; }
+  body.light .pill-validated  { background:#dafbe1; color:#1a7f37; border-color:#82cfaf; }
+  body.light .pill-borderline { background:#fff8c5; color:#9a6700; border-color:#d4a72c; }
+  body.light .pill-graveyard  { background:var(--bg-card2); color:var(--text-muted); border-color:var(--border); }
+  body.light .ctx-current { background:#dafbe1; color:#1a7f37; border-color:#82cfaf; }
+  body.light .ctx-stale   { background:#fff8c5; color:#9a6700; border-color:#d4a72c; }
+  body.light .ctx-missing { background:var(--bg-card2); color:var(--text-muted); border-color:var(--border); }
+  body.light .risk-low  { background:#dafbe1; color:#1a7f37; border-color:#82cfaf; }
+  body.light .risk-med  { background:#fff8c5; color:#9a6700; border-color:#d4a72c; }
+  body.light .risk-high { background:#ffebe9; color:#cf222e; border-color:#ff8182; }
+  body.light .ta-pill.pos { background:#dafbe1; color:#1a7f37; border-color:#82cfaf; }
+  body.light .ta-pill.neg { background:#ffebe9; color:#cf222e; border-color:#ff8182; }
+  body.light .ta-pill.neu { background:var(--bg-card2); color:var(--text-muted); border-color:var(--border); }
+  body.light .sec-ai_infra      { background:#ddf4ff; color:#0969da; border-color:#54aeff; }
+  body.light .sec-space_defense { background:#dafbe1; color:#1a7f37; border-color:#82cfaf; }
+  body.light .sec-telecom       { background:#fff8c5; color:#9a6700; border-color:#d4a72c; }
   body.light .rank-2 .podium-ticker { color:var(--text-2); }
   body.light #toast { background:var(--bg-card); border-color:var(--border); color:var(--text); }
-  body.light .disclaimer-bar { background:#fffbeb; border-color:#fde68a; color:#78350f; }
-  body.light .rank-chip     { background:#d1fae5; color:#059669; border-color:#6ee7b7; }
-  body.light .rank-chip.opp { background:#fff7ed; color:#d97706; border-color:#fed7aa; }
-  body.light .rank-chip.mid { background:#e0f2fe; color:#0369a1; border-color:#7dd3fc; }
+  body.light .disclaimer-bar { background:#fff8c5; border-color:#d4a72c; color:#6e4f00; }
+  body.light .rank-chip     { background:#dafbe1; color:#1a7f37; border-color:#82cfaf; }
+  body.light .rank-chip.opp { background:#fff8c5; color:#9a6700; border-color:#d4a72c; }
+  body.light .rank-chip.mid { background:#ddf4ff; color:#0969da; border-color:#54aeff; }
 
   /* Mobile layout */
   @media(max-width:640px) {
@@ -810,9 +817,9 @@ _HTML = r"""<!DOCTYPE html>
         <div class="dir-card-title">Long — 12 months+</div>
         <p>Stocks with strong historical indicators suited for long-term investors. <b>Best for:</b> buy-and-hold positions of 12 months or more. The analysis identifies stocks that consistently outperform their sector over time — good fundamentals for patient capital. Ranked by alpha × hit rate × history. Check the <b>risk badge</b> — LOW RISK means consistent results, HIGH RISK means more volatile swings.</p>
       </div>
-      <div class="dir-card" style="background:#0b1a1f;border:1px solid #0e7490;border-radius:9px;padding:1rem">
-        <div class="dir-card-title" style="color:#22d3ee">📈 Mid-term — 1 to 3 Months</div>
-        <p style="font-size:.76rem;color:var(--text-muted);line-height:1.65"><b>Best for:</b> patient holds of 1–3 months. Same signal, but ranks stocks that win consistently <em>and</em> with low volatility. A stock that gains +2% steadily every time beats one that averages +3% with wild swings. Look for <span style="color:#34d399;font-weight:700">LOW RISK</span> badges here.</p>
+      <div class="dir-card dir-card-mid">
+        <div class="dir-card-title">📈 Mid-term — 1 to 3 Months</div>
+        <p><b>Best for:</b> patient holds of 1–3 months. Same signal, but ranks stocks that win consistently <em>and</em> with low volatility. A stock that gains +2% steadily every time beats one that averages +3% with wild swings. Look for <b>LOW RISK</b> badges here.</p>
       </div>
       <div class="dir-card dir-card-opp">
         <div class="dir-card-title">💎 Opportunity — Buy the Dip</div>
