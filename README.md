@@ -25,17 +25,18 @@ uv run python -m signalalpha.wiki.app
 
 ### Top 10 — Three Investment Modes
 
-**▲ Long — 12 months+**
-Stocks with strong historical indicators for long-term investors. The analysis identifies stocks that consistently outperform their sector over time — suited for buy-and-hold positions of 12 months or more.
+**Long — 12 months+**
+Stocks with strong historical indicators for long-term investors. Identifies stocks that consistently outperform their sector over time — suited for buy-and-hold positions of 12 months or more.
 Ranked by: `alpha × hit_rate × log(N)`
 
 **📈 Mid-term — 1 to 3 months**
 Same signal, but ranks stocks that win consistently *and* with low volatility. A stock that gains steadily beats one with the same average but wild swings. Suitable for patient holds of 1–3 months.
 Ranked by: `(alpha / volatility) × hit_rate × log(N)`
 
-**▼ Short — Up to 3 months**
-Stocks with high potential for short-term gains of up to 3 months. When the volume spike pattern fires in these names it has historically led to rapid price moves — opportunities for active traders.
-Ranked by: `|alpha| × (1 − hit_rate) × log(N)`
+**💎 Opportunity — Buy the Dip**
+Stocks with a proven positive edge that are currently trading *below* their 50-day moving average. The ranking boosts stocks that are both historically strong and currently at a discount — the deeper the dip, the higher the score.
+Ranked by: `composite_score × (1 + dip_pct × 3)`
+The **Discount vs 50d MA** column shows how far below the moving average the stock is.
 
 Each stock shows a **risk badge** based on return volatility:
 - 🟢 LOW — std < 10%
@@ -45,6 +46,13 @@ Each stock shows a **risk badge** based on return volatility:
 **Filters available:** signal quality (validated / borderline / all), sector, ranking method, and recency (only shows stocks where the signal fired in the last 90 days by default).
 
 **TA Overlay (optional):** toggle the 📊 button to add RSI(14), 50-day MA, and 200-day MA on each card as a secondary context layer.
+
+### Stock Detail
+
+Click any ticker — in the podium or the leaderboard — to open a detail panel showing:
+- **TA snapshot** — current price, RSI(14), % vs 50d and 200d MA, bullish/bearish/neutral signal
+- **Past rankings** — every time this stock appeared in the Top 10, by direction and date
+- **Signal history** — last 18 months of signal events: date, signal name, hold period, net return, alpha vs sector
 
 ---
 
@@ -101,6 +109,7 @@ Detect → Backtest → Validate → Holdout → Live Re-run (every 3 days)
 | **p-value** | Probability the alpha is due to luck (<0.05 = validated, >0.10 = graveyard) |
 | **Composite Score** | `alpha × hit_rate × log(N)` — rewards alpha + consistency + history |
 | **Mid-term Score** | `(alpha / volatility) × hit_rate × log(N)` — rewards steady gains |
+| **Opportunity Score** | `composite × (1 + dip_pct × 3)` — boosts stocks below their 50d MA |
 | **Risk Level** | LOW / MED / HIGH based on how much individual trade returns vary |
 
 ---
@@ -110,6 +119,7 @@ Detect → Backtest → Validate → Holdout → Live Re-run (every 3 days)
 - **Ingest + signals:** GitHub Actions runs every 3 days, triggers Railway to pull fresh prices and re-run all signals
 - **Rotation log:** after each ingest, a snapshot of the Top 10 is saved; changes (entered / exited / rank moved) are recorded
 - **Failure alerts:** email sent to the configured address if the scheduled job fails
+- **Admin security:** all admin endpoints require `Authorization: Bearer <secret>` — the secret never appears in URLs or logs
 
 ---
 
@@ -134,6 +144,8 @@ src/signalalpha/
   signals/           # Signal detectors (volume_anomaly, patent_cluster …)
   wiki/
     app.py           # FastAPI web UI (dashboard + API endpoints)
+    admin.py         # Admin endpoints (ingest, snapshot, restore-db) + rotation logic
+    ranking.py       # Ranking SQL + scoring formulas (no FastAPI dependency)
     autogen.py       # Wiki page scaffolder + AUTOGEN section updater
     brief.py         # Daily brief builder
     validate.py      # Wiki page validator
@@ -141,6 +153,7 @@ src/signalalpha/
   ingest_prices.py   # Price ingestion
   ingest_patents.py  # Patent ingestion (PatentsView S3 bulk files)
 scripts/             # One-off research scripts (backtests, sweeps, holdout)
+tests/               # Pytest suite — ranking formulas, recency filter, Opportunity score
 wiki/                # Research pages (signals, companies, sectors)
 .github/workflows/   # Scheduled ingest job (every 3 days) with failure email
 ```
