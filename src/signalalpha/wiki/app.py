@@ -599,7 +599,11 @@ _HTML = r"""<!DOCTYPE html>
     <div class="signal-list">
       <div class="signal-item">
         <div class="signal-item-name">Volume Anomaly ×2.0 — 15d Hold &nbsp;<span class="status-pill pill-validated">validated</span></div>
-        <div class="signal-item-desc">Fires when a ticker's 5-day average volume exceeds 2× its 60-day median volume. Debounced to one firing per ticker per 5 trading days. Entry at T+1 open, exit 15 trading days later. In-sample p=0.0046 across 1,480 events (2018–2024). Holdout alpha +1.58%, Sharpe 1.22 (2025–2026). The only currently validated signal.</div>
+        <div class="signal-item-desc">Fires when a ticker's 5-day average volume exceeds 2× its 60-day median volume. Debounced to one firing per ticker per 5 trading days. Entry at T+1 open, exit 15 trading days later. In-sample p=0.0046 across 1,480 events (2018–2024). Holdout alpha +1.58%, Sharpe 1.22 (2025–2026).</div>
+      </div>
+      <div class="signal-item">
+        <div class="signal-item-name">Patent Cluster — Telecom, 45d Hold &nbsp;<span class="status-pill pill-validated">validated</span></div>
+        <div class="signal-item-desc">Fires when a telecom company receives ≥5 patent grants within any rolling 30-day window (debounced 30 days). Restricted to telecom sector (QCOM, IDCC, NOK, ERIC, VZ, T…) where patent bursts signal IP-licensing pipeline rather than routine R&amp;D. 45-day hold captures the full pricing-in period. In-sample p=0.0001, alpha +1.53% vs IYZ, hit rate 55.2% across 810 events (2018–2024). Data: PatentsView S3 bulk files (no auth required, monthly snapshots).</div>
       </div>
       <div class="signal-item">
         <div class="signal-item-name">8-K Filing — Excluding Earnings &nbsp;<span class="status-pill pill-borderline">borderline</span></div>

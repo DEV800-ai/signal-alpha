@@ -39,6 +39,10 @@ DISPLAY_NAMES: dict[str, str] = {
     "volume_anomaly_5_60_t2.0_space_defense":              "Volume Anomaly ×2.0 — space_defense only",
     "volume_anomaly_5_60_t2.0_defense_excl_speculative":  "Volume Anomaly ×2.0 — defense excl speculative",
     "volume_anomaly_5_60_t3.0_space_defense":              "Volume Anomaly ×3.0 — space_defense only",
+
+    # ── Patent cluster ────────────────────────────────────────────────────────
+    "patent_cluster_n5_w30d":                             "Patent Cluster — All Sectors (30d hold)",
+    "patent_cluster_telecom_n5_w30d_hold45":              "Patent Cluster — Telecom ≥5 grants / 30d ★ validated",
 }
 
 
