@@ -1761,7 +1761,11 @@ async def changes_endpoint(direction: str = Query("long"), limit: int = Query(10
         direction = "long"
     db = _open_db()
     try:
-        _init_rotation_tables(db)
+        # Tables may not exist yet — return empty gracefully
+        tables = {r[0] for r in db.execute("SHOW TABLES").fetchall()}
+        if "top10_changes" not in tables or "top10_snapshots" not in tables:
+            return JSONResponse({"direction": direction, "changes": [], "snapshots": []})
+
         changes = db.execute("""
             SELECT ticker, change_type, old_rank, new_rank, snapshot_date
             FROM top10_changes
