@@ -12,10 +12,15 @@ import duckdb
 import uvicorn
 import os
 
-from fastapi import FastAPI, Form, Query
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi import FastAPI, Form, Query, Request
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from starlette.middleware.base import BaseHTTPMiddleware
 
 from signalalpha.wiki.admin import _open_db, router as admin_router
+from signalalpha.wiki.auth import (
+    LOGIN_HTML, check_invite_code, is_public, make_token, verify_token,
+    COOKIE_NAME, MAX_AGE_DAYS,
+)
 from signalalpha.wiki.autogen import WIKI_ROOT
 from signalalpha.wiki.ranking import (
     VALID_DIRECTION, VALID_FILTERS, VALID_SCORE, VALID_SECTORS,
@@ -27,6 +32,47 @@ from signalalpha.wiki.validate import validate
 
 app = FastAPI(title="SignalAlpha")
 app.include_router(admin_router)
+
+
+class _AuthMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        if is_public(request.url.path):
+            return await call_next(request)
+        token = request.cookies.get(COOKIE_NAME, "")
+        if not verify_token(token):
+            if request.url.path.startswith(("/api/", "/top10", "/brief", "/admin")):
+                return JSONResponse({"error": "Unauthorized"}, status_code=401)
+            return RedirectResponse("/login", status_code=302)
+        return await call_next(request)
+
+
+app.add_middleware(_AuthMiddleware)
+
+
+@app.get("/login", response_class=HTMLResponse)
+async def login_page():
+    return LOGIN_HTML.format(error="")
+
+
+@app.post("/login")
+async def login_submit(code: str = Form(...)):
+    if not check_invite_code(code):
+        err = '<div class="err">Invalid invite code. Please try again.</div>'
+        return HTMLResponse(LOGIN_HTML.format(error=err), status_code=401)
+    resp = RedirectResponse("/", status_code=302)
+    resp.set_cookie(
+        COOKIE_NAME, make_token(),
+        max_age=MAX_AGE_DAYS * 86400,
+        httponly=True, samesite="lax",
+    )
+    return resp
+
+
+@app.get("/logout")
+async def logout():
+    resp = RedirectResponse("/login", status_code=302)
+    resp.delete_cookie(COOKIE_NAME)
+    return resp
 
 
 def _list_wiki_pages() -> list[dict]:
@@ -602,10 +648,16 @@ _HTML = r"""<!DOCTYPE html>
 <header>
   <h1>SignalAlpha</h1>
   <span class="tagline">Signal-driven research system</span>
-  <button id="theme-btn" onclick="toggleTheme()"
-    style="margin-left:auto;background:none;border:1px solid var(--border);color:var(--text-muted);
-           padding:.3rem .75rem;border-radius:6px;font-size:.78rem;font-weight:600;cursor:pointer;
-           transition:background .15s,color .15s">☀ Light</button>
+  <div style="margin-left:auto;display:flex;gap:.5rem;align-items:center">
+    <button id="theme-btn" onclick="toggleTheme()"
+      style="background:none;border:1px solid var(--border);color:var(--text-muted);
+             padding:.3rem .75rem;border-radius:6px;font-size:.78rem;font-weight:600;cursor:pointer;
+             transition:background .15s,color .15s">☀ Light</button>
+    <a href="/logout"
+      style="background:none;border:1px solid var(--border);color:var(--text-muted);
+             padding:.3rem .75rem;border-radius:6px;font-size:.78rem;font-weight:600;cursor:pointer;
+             text-decoration:none;transition:background .15s,color .15s">Sign out</a>
+  </div>
 </header>
 
 <div class="tabs">
