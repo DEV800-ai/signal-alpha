@@ -1416,14 +1416,15 @@ async function loadTop10() {
   document.getElementById('t10-board').innerHTML =
     '<div class="card-title">Leaderboard</div><p class="state-msg">Loading…</p>';
   try {
-    const base = { signal_filter: sig, sector: sec, score_by: score, recency_days: recency, limit: 10 };
-    const mkUrl = d => '/top10?' + new URLSearchParams({ ...base, direction: d });
-    // Fetch current direction + all three modes in parallel (for "all modes" badge)
+    const base    = { signal_filter: sig, sector: sec, score_by: score, recency_days: recency, limit: 10 };
+    const podBase = { signal_filter: sig, sector: sec, score_by: score, recency_days: recency, limit: 3 };
+    const mkUrl   = (d, b = base) => '/top10?' + new URLSearchParams({ ...b, direction: d });
+    // Fetch current direction (top 10) + podium of all three modes (top 3) in parallel
     const [data, rLong, rMid, rOpp] = await Promise.all([
       fetch(mkUrl(dir)).then(r => r.json()),
-      fetch(mkUrl('long')).then(r => r.json()).catch(() => ({ stocks: [] })),
-      fetch(mkUrl('midterm')).then(r => r.json()).catch(() => ({ stocks: [] })),
-      fetch(mkUrl('opportunity')).then(r => r.json()).catch(() => ({ stocks: [] })),
+      fetch(mkUrl('long',        podBase)).then(r => r.json()).catch(() => ({ stocks: [] })),
+      fetch(mkUrl('midterm',     podBase)).then(r => r.json()).catch(() => ({ stocks: [] })),
+      fetch(mkUrl('opportunity', podBase)).then(r => r.json()).catch(() => ({ stocks: [] })),
     ]);
     const inLong = new Set((rLong.stocks || []).map(s => s.ticker));
     const inMid  = new Set((rMid.stocks  || []).map(s => s.ticker));
