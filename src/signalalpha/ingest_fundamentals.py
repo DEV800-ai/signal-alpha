@@ -49,9 +49,34 @@ def _safe_float(info: dict, key: str) -> float | None:
         return None
 
 
+def _eps_growth_from_income_stmt(tkr_obj: yf.Ticker) -> float | None:
+    """Compute YoY EPS growth from annual income statement (Diluted EPS row).
+
+    Used as a fallback when earningsGrowth is not available in ticker.info.
+    Handles negative prior-year EPS correctly via abs(prior).
+    """
+    try:
+        stmt = tkr_obj.income_stmt
+        if stmt is None or stmt.empty:
+            return None
+        eps_rows = [r for r in stmt.index if "Diluted EPS" in str(r)]
+        if not eps_rows:
+            return None
+        eps = stmt.loc[eps_rows[0]].dropna().sort_index(ascending=False)
+        if len(eps) < 2:
+            return None
+        current, prior = float(eps.iloc[0]), float(eps.iloc[1])
+        if prior == 0:
+            return None
+        return (current - prior) / abs(prior)
+    except Exception:
+        return None
+
+
 def ingest_ticker(con, ticker: str, as_of_date: dt.date) -> FundamentalsStats:
     try:
-        info = yf.Ticker(ticker).info
+        tkr_obj = yf.Ticker(ticker)
+        info    = tkr_obj.info
     except Exception as e:
         return FundamentalsStats(ticker=ticker, fetched=False, error=str(e))
 
@@ -64,6 +89,10 @@ def ingest_ticker(con, ticker: str, as_of_date: dt.date) -> FundamentalsStats:
     trailing_eps         = _safe_float(info, "trailingEps")
     eps_growth_yoy       = _safe_float(info, "earningsGrowth")
     eps_growth_quarterly = _safe_float(info, "earningsQuarterlyGrowth")
+
+    # Fall back to income statement computation when yfinance doesn't carry earningsGrowth
+    if eps_growth_yoy is None and eps_growth_quarterly is None:
+        eps_growth_yoy = _eps_growth_from_income_stmt(tkr_obj)
 
     con.execute("""
         INSERT INTO fundamentals
