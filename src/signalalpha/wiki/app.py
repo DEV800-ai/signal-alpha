@@ -1976,9 +1976,17 @@ async def top10_endpoint(
         quality    = evaluate_human_quality_batch(db, [s["ticker"] for s in stocks], sector_map)
         for s in stocks:
             q = quality.get(s["ticker"], {})
-            s["human_quality_score"]   = q.get("score")
+            hq_score = q.get("score") or 0.5
+            s["human_quality_score"]   = hq_score
             s["human_quality"]         = q.get("checks", {})
             s["human_quality_summary"] = q.get("summary", "")
+            # Apply quality multiplier to all score columns so ranking reflects quality
+            multiplier = 0.75 + 0.25 * hq_score
+            for col in ("composite_score", "midterm_score", "opp_score"):
+                if s.get(col) is not None:
+                    s[col] = round(s[col] * multiplier, 6)
+
+        stocks.sort(key=lambda s: s.get(order_col) or 0, reverse=True)
 
         return JSONResponse({
             "score_by": order_col,

@@ -207,8 +207,10 @@ async def ingest_endpoint(
 
     def _run():
         from signalalpha.ingest_prices import ingest_all
+        from signalalpha.ingest_fundamentals import ingest_all as ingest_fundamentals
         from signalalpha.live_signals import run_live_signals
         ingest_all()
+        ingest_fundamentals()
         run_live_signals()
         _snapshot_top10()
 

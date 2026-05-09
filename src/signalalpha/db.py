@@ -143,6 +143,20 @@ CREATE TABLE IF NOT EXISTS signal_runs (
     params_json         VARCHAR,
     notes               VARCHAR
 );
+
+CREATE TABLE IF NOT EXISTS fundamentals (
+    ticker                   VARCHAR NOT NULL,
+    as_of_date               DATE    NOT NULL,
+    trailing_pe              DOUBLE,
+    forward_pe               DOUBLE,
+    price_to_book            DOUBLE,
+    trailing_eps             DOUBLE,
+    eps_growth_yoy           DOUBLE,
+    eps_growth_quarterly     DOUBLE,
+    fetched_at               TIMESTAMP DEFAULT now(),
+    PRIMARY KEY (ticker, as_of_date)
+);
+CREATE INDEX IF NOT EXISTS fundamentals_ticker_idx ON fundamentals(ticker);
 """
 
 

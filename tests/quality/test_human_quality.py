@@ -244,3 +244,108 @@ class TestBatch:
 
     def test_batch_empty_input(self, db):
         assert evaluate_human_quality_batch(db, [], {}, as_of_date=AS_OF) == {}
+
+
+# ── EPS Growth (with fundamentals table) ─────────────────────────────────────
+
+def _db_with_fundamentals(
+    eps_growth_yoy: float | None = None,
+    eps_growth_quarterly: float | None = None,
+    trailing_pe: float | None = None,
+    forward_pe: float | None = None,
+    price_to_book: float | None = None,
+) -> duckdb.DuckDBPyConnection:
+    """In-memory DB with prices for AAA (passes trend/liquidity) + fundamentals row."""
+    db = _fresh_db()
+    db.execute("""
+        CREATE TABLE fundamentals (
+            ticker VARCHAR, as_of_date DATE,
+            trailing_pe DOUBLE, forward_pe DOUBLE, price_to_book DOUBLE,
+            trailing_eps DOUBLE, eps_growth_yoy DOUBLE, eps_growth_quarterly DOUBLE,
+            fetched_at TIMESTAMP
+        )
+    """)
+    db.execute(
+        "INSERT INTO fundamentals VALUES (?, ?, ?, ?, ?, NULL, ?, ?, now())",
+        ["AAA", TODAY, trailing_pe, forward_pe, price_to_book,
+         eps_growth_yoy, eps_growth_quarterly],
+    )
+    return db
+
+
+class TestEpsGrowthWithFundamentals:
+    def test_pass_strong_yoy(self):
+        db = _db_with_fundamentals(eps_growth_yoy=0.20)
+        r = evaluate_human_quality(db, "AAA", sector="ai_infra", as_of_date=AS_OF)
+        assert r["checks"]["eps_growth"]["status"] == "pass"
+        db.close()
+
+    def test_warn_modest_yoy(self):
+        db = _db_with_fundamentals(eps_growth_yoy=0.05)
+        r = evaluate_human_quality(db, "AAA", sector="ai_infra", as_of_date=AS_OF)
+        assert r["checks"]["eps_growth"]["status"] == "warn"
+        db.close()
+
+    def test_warn_mild_decline(self):
+        db = _db_with_fundamentals(eps_growth_yoy=-0.05)
+        r = evaluate_human_quality(db, "AAA", sector="ai_infra", as_of_date=AS_OF)
+        assert r["checks"]["eps_growth"]["status"] == "warn"
+        db.close()
+
+    def test_fail_steep_decline(self):
+        db = _db_with_fundamentals(eps_growth_yoy=-0.25)
+        r = evaluate_human_quality(db, "AAA", sector="ai_infra", as_of_date=AS_OF)
+        assert r["checks"]["eps_growth"]["status"] == "fail"
+        db.close()
+
+    def test_quarterly_fallback(self):
+        db = _db_with_fundamentals(eps_growth_yoy=None, eps_growth_quarterly=0.15)
+        r = evaluate_human_quality(db, "AAA", sector="ai_infra", as_of_date=AS_OF)
+        assert r["checks"]["eps_growth"]["status"] == "pass"
+        db.close()
+
+
+# ── Valuation (with fundamentals table) ───────────────────────────────────────
+
+class TestValuationWithFundamentals:
+    def test_pass_value_sector_low_pe(self):
+        db = _db_with_fundamentals(trailing_pe=15.0)
+        r = evaluate_human_quality(db, "AAA", sector="networking", as_of_date=AS_OF)
+        assert r["checks"]["valuation"]["status"] == "pass"
+        db.close()
+
+    def test_warn_value_sector_elevated_pe(self):
+        db = _db_with_fundamentals(trailing_pe=28.0)
+        r = evaluate_human_quality(db, "AAA", sector="networking", as_of_date=AS_OF)
+        assert r["checks"]["valuation"]["status"] == "warn"
+        db.close()
+
+    def test_pass_growth_sector_moderate_pe(self):
+        db = _db_with_fundamentals(trailing_pe=45.0)
+        r = evaluate_human_quality(db, "AAA", sector="ai_infra", as_of_date=AS_OF)
+        assert r["checks"]["valuation"]["status"] == "pass"
+        db.close()
+
+    def test_warn_growth_sector_stretched_pe(self):
+        db = _db_with_fundamentals(trailing_pe=80.0)
+        r = evaluate_human_quality(db, "AAA", sector="ai_infra", as_of_date=AS_OF)
+        assert r["checks"]["valuation"]["status"] == "warn"
+        db.close()
+
+    def test_pb_fallback_below_book(self):
+        db = _db_with_fundamentals(trailing_pe=None, price_to_book=0.8)
+        r = evaluate_human_quality(db, "AAA", sector="networking", as_of_date=AS_OF)
+        assert r["checks"]["valuation"]["status"] == "pass"
+        db.close()
+
+    def test_pb_fallback_above_book(self):
+        db = _db_with_fundamentals(trailing_pe=None, price_to_book=2.5)
+        r = evaluate_human_quality(db, "AAA", sector="networking", as_of_date=AS_OF)
+        assert r["checks"]["valuation"]["status"] == "warn"
+        db.close()
+
+    def test_forward_pe_fallback(self):
+        db = _db_with_fundamentals(trailing_pe=None, forward_pe=18.0)
+        r = evaluate_human_quality(db, "AAA", sector="networking", as_of_date=AS_OF)
+        assert r["checks"]["valuation"]["status"] == "pass"
+        db.close()
