@@ -448,6 +448,14 @@ _HTML = r"""<!DOCTYPE html>
   .vol-med  { color:#fbbf24; }
   .vol-high { color:#f87171; }
 
+  .all-modes-badge {
+    display:inline-block; padding:.1rem .38rem; border-radius:4px;
+    font-size:.6rem; font-weight:700; letter-spacing:.04em; white-space:nowrap;
+    background:#1f1a36; color:#a78bfa; border:1px solid #4c3d8f;
+    vertical-align:middle;
+  }
+  body.light .all-modes-badge { background:#f3f0ff; color:#6d28d9; border-color:#c4b5fd; }
+
   .risk-badge {
     display:inline-block; padding:.11rem .42rem; border-radius:4px;
     font-size:.62rem; font-weight:700; letter-spacing:.05em; white-space:nowrap;
@@ -1408,9 +1416,20 @@ async function loadTop10() {
   document.getElementById('t10-board').innerHTML =
     '<div class="card-title">Leaderboard</div><p class="state-msg">Loading…</p>';
   try {
-    const p = new URLSearchParams({ signal_filter: sig, sector: sec, score_by: score, direction: dir, limit: 10, recency_days: recency });
-    const data = await (await fetch('/top10?' + p)).json();
-    renderTop10(data);
+    const base = { signal_filter: sig, sector: sec, score_by: score, recency_days: recency, limit: 10 };
+    const mkUrl = d => '/top10?' + new URLSearchParams({ ...base, direction: d });
+    // Fetch current direction + all three modes in parallel (for "all modes" badge)
+    const [data, rLong, rMid, rOpp] = await Promise.all([
+      fetch(mkUrl(dir)).then(r => r.json()),
+      fetch(mkUrl('long')).then(r => r.json()).catch(() => ({ stocks: [] })),
+      fetch(mkUrl('midterm')).then(r => r.json()).catch(() => ({ stocks: [] })),
+      fetch(mkUrl('opportunity')).then(r => r.json()).catch(() => ({ stocks: [] })),
+    ]);
+    const inLong = new Set((rLong.stocks || []).map(s => s.ticker));
+    const inMid  = new Set((rMid.stocks  || []).map(s => s.ticker));
+    const inOpp  = new Set((rOpp.stocks  || []).map(s => s.ticker));
+    const allModes = new Set([...inLong].filter(t => inMid.has(t) && inOpp.has(t)));
+    renderTop10(data, allModes);
   } catch(e) {
     document.getElementById('t10-podium').innerHTML = '';
     document.getElementById('t10-board').innerHTML =
@@ -1419,7 +1438,7 @@ async function loadTop10() {
   }
 }
 
-function renderTop10(data) {
+function renderTop10(data, allModes = new Set()) {
   const stocks    = data.stocks || [];
   const isOpp     = data.direction === 'opportunity';
   const isMidterm = data.direction === 'midterm';
@@ -1485,12 +1504,14 @@ function renderTop10(data) {
       ? `<div class="stat-item"><span class="stat-label">Volatility</span><span class="stat-val ${volCls}">${volPct}</span></div>`
       : `<div class="stat-item"><span class="stat-label">Avg return</span><span class="stat-val ${cls(s.avg_return)}">${pct(s.avg_return)}</span></div>`;
 
+    const allModeBadge = allModes.has(s.ticker)
+      ? `<span class="all-modes-badge" title="Ranks in Long, Mid-term & Opportunity">★ All modes</span>` : '';
     return `
     <div class="podium-card ${RANK_CLS[i]}" data-ta-ticker="${escAttr(s.ticker)}"
          onclick="openStockDetail('${escAttr(s.ticker)}','${escAttr(s.name||'')}')">
       <div class="podium-medal">${MEDALS[i]}</div>
       <div class="podium-ticker">${escHtml(s.ticker)}</div>
-      <div class="podium-company">${escHtml(s.name || '')}</div>
+      <div class="podium-company">${escHtml(s.name || '')} ${allModeBadge}</div>
       <div style="display:flex;gap:.35rem;flex-wrap:wrap;align-items:center">${sectorBadge(s.sector)}${riskBadge(s.std_return)}</div>
       <div class="podium-stats">
         <div class="stat-item"><span class="stat-label">Signals</span><span class="stat-val neu">${s.n_signals}</span></div>
@@ -1549,9 +1570,11 @@ function renderTop10(data) {
       : isMidterm
         ? `<span class="${s.std_return === null ? 'neu' : s.std_return < 0.10 ? 'vol-low' : s.std_return < 0.20 ? 'vol-med' : 'vol-high'}">${s.std_return !== null ? Math.round(s.std_return * 100) + '%' : '—'}</span>`
         : `<span class="${cls(s.avg_return)}">${pct(s.avg_return)}</span>`;
+    const lbAllMode = allModes.has(s.ticker)
+      ? `<span class="all-modes-badge" title="Ranks in Long, Mid-term & Opportunity">★ All modes</span>` : '';
     html += `<tr onclick="openStockDetail('${escAttr(s.ticker)}','${escAttr(s.name||'')}')">
       <td class="lb-rank">${i + 4}</td>
-      <td class="lb-ticker-cell">${escHtml(s.ticker)} ${riskBadge(s.std_return)}</td>
+      <td class="lb-ticker-cell">${escHtml(s.ticker)} ${riskBadge(s.std_return)} ${lbAllMode}</td>
       <td style="color:var(--text-muted);font-size:.75rem">${escHtml(s.name || '—')}</td>
       <td>${sectorBadge(s.sector)}</td>
       <td class="neu">${s.n_signals}</td>
