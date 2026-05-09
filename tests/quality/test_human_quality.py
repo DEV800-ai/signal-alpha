@@ -84,7 +84,7 @@ def _fresh_db() -> duckdb.DuckDBPyConnection:
     # DDD: low volume → liquidity fail
     _insert("DDD", 110.0, 105.0, 100.0, 100_000)
     # EEE: only 50 days of history → trend unknown
-    _insert("EEE", 110.0, 105.0, 100.0, 1_000_000, days=50)
+    _insert("EEE", 110.0, 105.0, 100.0, 1_000_000, days=100)  # below _MIN_ROWS_200D=120
     # SPY: above 200d MA → market pass
     _insert("SPY",  500.0, 490.0, 480.0, 5_000_000)
     # SOXX (ai_infra ETF): above 200d MA

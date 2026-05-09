@@ -35,9 +35,11 @@ STATUS_SCORE: dict[str, float] = {
     "fail":    0.0,
 }
 
-# Need at least this many trading-day rows within the window to trust the MA
-_MIN_ROWS_200D = 140
-_MIN_ROWS_50D  = 35
+# 200 calendar days ≈ 136 trading days (weekends + ~7 US holidays).
+# 50 calendar days ≈ 34 trading days.
+# Set thresholds slightly below to handle gaps without false unknowns.
+_MIN_ROWS_200D = 120
+_MIN_ROWS_50D  = 28
 
 
 # ── Check builders ─────────────────────────────────────────────────────────────
@@ -76,16 +78,13 @@ def _trend(close: float | None, sma50: float | None, sma200: float | None,
 def _market_alignment(etf_above: bool | None, spy_above: bool | None) -> dict:
     knowns = [x for x in (etf_above, spy_above) if x is not None]
     if not knowns:
-        return _check("unknown", "Benchmark price data unavailable.")
+        return _check("unknown", "Benchmark price data not yet ingested — will resolve on next data refresh.")
     n_pass = sum(knowns)
     if n_pass == len(knowns):
-        return _check("pass",
-            "Sector benchmark and SPY are both above their 200d MA.")
+        return _check("pass", "Sector benchmark and SPY are both above their 200d MA.")
     if n_pass == 0:
-        return _check("fail",
-            "Sector benchmark and SPY are both below their 200d MA.")
-    return _check("warn",
-        "Mixed market: one benchmark above 200d MA, the other below.")
+        return _check("fail", "Sector benchmark and SPY are both below their 200d MA.")
+    return _check("warn", "Mixed market: one benchmark above 200d MA, the other below.")
 
 
 def _summary(checks: dict[str, dict]) -> str:
