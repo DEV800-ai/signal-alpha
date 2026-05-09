@@ -47,7 +47,8 @@ class _AuthMiddleware(BaseHTTPMiddleware):
         return await call_next(request)
 
 
-app.add_middleware(_AuthMiddleware)
+if os.getenv("AUTH_ENABLED", "0") == "1":
+    app.add_middleware(_AuthMiddleware)
 
 
 @app.get("/login", response_class=HTMLResponse)
