@@ -51,14 +51,14 @@ app.add_middleware(_AuthMiddleware)
 
 @app.get("/login", response_class=HTMLResponse)
 async def login_page():
-    return LOGIN_HTML.format(error="")
+    return LOGIN_HTML.replace("{error}", "")
 
 
 @app.post("/login")
 async def login_submit(code: str = Form(...)):
     if not check_invite_code(code):
         err = '<div class="err">Invalid invite code. Please try again.</div>'
-        return HTMLResponse(LOGIN_HTML.format(error=err), status_code=401)
+        return HTMLResponse(LOGIN_HTML.replace("{error}", err), status_code=401)
     resp = RedirectResponse("/", status_code=302)
     resp.set_cookie(
         COOKIE_NAME, make_token(),
