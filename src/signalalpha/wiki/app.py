@@ -29,6 +29,7 @@ from signalalpha.wiki.ranking import (
 )
 from signalalpha.wiki.brief import build_daily_brief
 from signalalpha.wiki.cli import _to_dict
+from signalalpha.wiki.research import build_research
 from signalalpha.wiki.validate import validate
 
 app = FastAPI(title="SignalAlpha")
@@ -597,6 +598,49 @@ _HTML = r"""<!DOCTYPE html>
   }
   .rank-chip.opp { background:#431407; color:#fb923c; border-color:#7c2d12; }
   .rank-chip.mid { background:#164e63; color:#22d3ee; border-color:#0e7490; }
+
+  /* ── Research button ──────────────────────────────────────────────────── */
+  .research-btn {
+    display:inline-block; margin-top:.4rem; padding:.28rem .65rem;
+    font-size:.72rem; font-weight:600; border-radius:5px; cursor:pointer;
+    background:rgba(99,102,241,.13); color:#a5b4fc;
+    border:1px solid rgba(99,102,241,.3);
+    transition:background .12s, color .12s;
+  }
+  .research-btn:hover { background:rgba(99,102,241,.25); color:#c7d2fe; }
+
+  /* ── Research modal sections ──────────────────────────────────────────── */
+  .rs-signal-stat { display:flex; gap:.5rem; flex-wrap:wrap; margin:.5rem 0; }
+  .rs-stat-pill {
+    background:var(--bg-card3); border:1px solid var(--border);
+    border-radius:6px; padding:.3rem .7rem; font-size:.72rem;
+  }
+  .rs-stat-pill b { display:block; font-size:1rem; font-weight:800; }
+  .rs-stat-pill span { color:var(--text-faint); font-size:.65rem; }
+  .rs-badge {
+    display:inline-block; padding:.15rem .5rem; border-radius:4px;
+    font-size:.68rem; font-weight:700; margin:.15rem .1rem;
+  }
+  .rs-pass { background:#14532d; color:#4ade80; }
+  .rs-warn { background:#451a03; color:#fbbf24; }
+  .rs-fail { background:#450a0a; color:#f87171; }
+  .rs-unknown { background:var(--bg-card3); color:var(--text-faint); }
+  .rs-fresh  { background:#14532d; color:#4ade80; }
+  .rs-stale  { background:#451a03; color:#fbbf24; }
+  .rs-missing { background:var(--bg-card3); color:var(--text-faint); }
+  .rs-steps { padding-left:1.2rem; margin:.4rem 0; }
+  .rs-steps li { font-size:.8rem; color:var(--text-muted); margin:.3rem 0; line-height:1.4; }
+  .rs-history-row { font-size:.78rem; color:var(--text-muted); margin:.2rem 0; }
+  .rs-dir-chip {
+    display:inline-block; padding:.05rem .35rem; border-radius:3px;
+    font-size:.65rem; font-weight:700; margin-right:.3rem;
+  }
+  .rs-dir-long { background:#14532d; color:#4ade80; }
+  .rs-dir-midterm { background:#164e63; color:#22d3ee; }
+  .rs-dir-opportunity { background:#431407; color:#fb923c; }
+  .rs-signal-status-validated { color:#4ade80; font-weight:700; }
+  .rs-signal-status-borderline { color:#fbbf24; font-weight:700; }
+  .rs-signal-status-exploratory { color:var(--text-faint); font-weight:700; }
 
   /* ── Light mode overrides ─────────────────────────────────────────────── */
   body.light .signal-card { background:var(--bg-card2); }
@@ -1394,6 +1438,109 @@ async function openStockDetail(ticker, name) {
   }
 }
 
+// ── Research modal ────────────────────────────────────────────────────────────
+
+function closeResearch() {
+  document.getElementById('research-modal').classList.remove('open');
+}
+
+function _rsStatusCls(status) {
+  return { pass:'rs-pass', warn:'rs-warn', fail:'rs-fail', unknown:'rs-unknown' }[status] || 'rs-unknown';
+}
+function _rsBadge(status, label) {
+  return `<span class="rs-badge ${_rsStatusCls(status)}">${escHtml(label.toUpperCase())}: ${escHtml((status||'unknown').toUpperCase())}</span>`;
+}
+function _rsDirChip(dir) {
+  const cls = { long:'rs-dir-long', midterm:'rs-dir-midterm', opportunity:'rs-dir-opportunity' }[dir] || '';
+  const lbl = { long:'Long', midterm:'Mid-term', opportunity:'Opp' }[dir] || dir;
+  return `<span class="rs-dir-chip ${cls}">${escHtml(lbl)}</span>`;
+}
+
+async function openResearch(ticker, name) {
+  document.getElementById('rs-ticker').textContent = ticker;
+  document.getElementById('rs-name').textContent = name || '';
+  ['rs-signal','rs-quality','rs-context','rs-history','rs-steps'].forEach(id => {
+    document.getElementById(id).innerHTML = '<span style="color:var(--text-faint);font-size:.8rem">Loading…</span>';
+  });
+  document.getElementById('research-modal').classList.add('open');
+
+  try {
+    const d = await (await fetch(`/api/research/${encodeURIComponent(ticker)}`)).json();
+
+    // 1. Signal Strength
+    const sig = d.signal;
+    if (sig) {
+      const alpha  = sig.alpha  !== null ? `${(sig.alpha*100>=0?'+':'')}${(sig.alpha*100).toFixed(1)}%` : '—';
+      const hr     = sig.hit_rate !== null ? Math.round(sig.hit_rate*100)+'%' : '—';
+      const pv     = sig.p_value !== null ? sig.p_value.toFixed(3) : '—';
+      const stCls  = `rs-signal-status-${sig.status}`;
+      document.getElementById('rs-signal').innerHTML = `
+        <div class="rs-signal-stat">
+          <div class="rs-stat-pill"><b>${escHtml(sig.name||'—')}</b><span>Signal name</span></div>
+          <div class="rs-stat-pill"><b class="${sig.alpha!==null?(sig.alpha>=0?'pos':'neg'):'neu'}">${alpha}</b><span>Avg alpha vs sector</span></div>
+          <div class="rs-stat-pill"><b class="${sig.hit_rate!==null?(sig.hit_rate>=.5?'pos':'neg'):'neu'}">${hr}</b><span>Win rate</span></div>
+          <div class="rs-stat-pill"><b class="neu">${sig.n_events}</b><span>Historical events</span></div>
+          <div class="rs-stat-pill"><b class="neu">${pv}</b><span>p-value</span></div>
+        </div>
+        <div style="margin:.4rem 0"><span class="${stCls}">● ${escHtml(sig.status.toUpperCase())}</span></div>
+        <div style="font-size:.78rem;color:var(--text-muted);line-height:1.5">${escHtml(sig.summary)}</div>`;
+    } else {
+      document.getElementById('rs-signal').innerHTML = '<span style="color:var(--text-faint);font-size:.8rem">No signal data found for this ticker.</span>';
+    }
+
+    // 2. Human Quality
+    const hq = d.human_quality || {};
+    const checks = hq.checks || {};
+    const CHECK_LABELS = { liquidity:'Liquidity', trend:'Trend', eps_growth:'EPS Growth', valuation:'Valuation', market_alignment:'Market Alignment' };
+    let qHtml = Object.entries(CHECK_LABELS).map(([k, lbl]) => {
+      const c = checks[k] || { status:'unknown', reason:'' };
+      return `<div style="margin:.3rem 0">
+        ${_rsBadge(c.status, lbl)}
+        <span style="font-size:.73rem;color:var(--text-faint);margin-left:.3rem">${escHtml(c.reason||'')}</span>
+      </div>`;
+    }).join('');
+    if (hq.summary) {
+      qHtml += `<div style="font-size:.78rem;color:var(--text-muted);margin-top:.5rem;line-height:1.4">${escHtml(hq.summary)}</div>`;
+    }
+    document.getElementById('rs-quality').innerHTML = qHtml || '<span style="color:var(--text-faint);font-size:.8rem">No quality data.</span>';
+
+    // 3. Context Status
+    const ctx = d.context || {};
+    const freshCls = { current:'rs-fresh', stale:'rs-stale', missing:'rs-missing' }[ctx.freshness_status] || 'rs-missing';
+    document.getElementById('rs-context').innerHTML = `
+      <div style="font-size:.8rem;line-height:1.8">
+        <div><b>Company page:</b> ${ctx.has_company_page
+          ? `<a href="#" onclick="event.preventDefault();openWikiPage('${escAttr(ctx.company_page||'')}');closeResearch();" style="color:#a5b4fc">${escHtml(ctx.company_page||'')}</a>`
+          : '<span style="color:var(--text-faint)">Not yet created</span>'}</div>
+        <div><b>Freshness:</b> <span class="rs-badge ${freshCls}">${escHtml((ctx.freshness_status||'missing').toUpperCase())}</span></div>
+        ${ctx.last_updated ? `<div><b>Last updated:</b> <span style="color:var(--text-muted)">${escHtml(ctx.last_updated)}</span></div>` : ''}
+        ${ctx.last_reviewed ? `<div><b>Last reviewed:</b> <span style="color:var(--text-muted)">${escHtml(ctx.last_reviewed)}</span></div>` : ''}
+        ${ctx.freshness_status === 'stale' ? '<div style="color:#fbbf24;margin-top:.3rem;font-size:.75rem">⚠ Context is stale — verify before relying on this candidate.</div>' : ''}
+      </div>`;
+
+    // 4. Recent Appearances
+    const appearances = (d.history || {}).recent_appearances || [];
+    if (appearances.length) {
+      document.getElementById('rs-history').innerHTML = appearances.map(a =>
+        `<div class="rs-history-row">${_rsDirChip(a.direction)}<b>#${a.rank}</b> on ${escHtml(a.date)}</div>`
+      ).join('');
+    } else {
+      document.getElementById('rs-history').innerHTML = '<span style="color:var(--text-faint);font-size:.8rem">Not yet in ranking snapshots.</span>';
+    }
+
+    // 5. Next Steps
+    const steps = d.next_steps || [];
+    document.getElementById('rs-steps').innerHTML = steps.length
+      ? `<ul class="rs-steps">${steps.map(s => `<li>${escHtml(s)}</li>`).join('')}</ul>`
+      : '<span style="color:var(--text-faint);font-size:.8rem">No steps available.</span>';
+
+  } catch(err) {
+    ['rs-signal','rs-quality','rs-context','rs-history','rs-steps'].forEach(id => {
+      document.getElementById(id).innerHTML = `<span style="color:#f87171;font-size:.8rem">Error: ${escHtml(String(err))}</span>`;
+    });
+  }
+}
+
 // ── Page browser ──────────────────────────────────────────────────────────────
 let _activePage = null;
 
@@ -1637,8 +1784,12 @@ function renderTop10(data, allModes = new Set()) {
       <div class="score-bar-wrap">
         <div class="score-bar-fill" style="width:${barPct}%"></div>
       </div>
-      <button class="wiki-link" style="margin-top:.45rem;font-size:.76rem"
-        onclick="event.stopPropagation();openWikiPage('${escAttr(wiki)}')">View company wiki →</button>
+      <div style="display:flex;gap:.4rem;margin-top:.45rem;flex-wrap:wrap">
+        <button class="wiki-link" style="font-size:.76rem"
+          onclick="event.stopPropagation();openWikiPage('${escAttr(wiki)}')">View company wiki →</button>
+        <button class="research-btn"
+          onclick="event.stopPropagation();openResearch('${escAttr(s.ticker)}','${escAttr(s.name||'')}')">Research →</button>
+      </div>
     </div>`;
   }).join('');
 
@@ -1687,7 +1838,11 @@ function renderTop10(data, allModes = new Set()) {
       ? `<span class="all-modes-badge" title="Ranks in Long, Mid-term & Opportunity">★ All modes</span>` : '';
     html += `<tr onclick="openStockDetail('${escAttr(s.ticker)}','${escAttr(s.name||'')}')">
       <td class="lb-rank">${i + 4}</td>
-      <td class="lb-ticker-cell">${escHtml(s.ticker)} ${riskBadge(s.std_return)} ${lbAllMode}</td>
+      <td class="lb-ticker-cell">
+        ${escHtml(s.ticker)} ${riskBadge(s.std_return)} ${lbAllMode}
+        <button class="research-btn" style="display:block;margin-top:.25rem"
+          onclick="event.stopPropagation();openResearch('${escAttr(s.ticker)}','${escAttr(s.name||'')}')">Research →</button>
+      </td>
       <td style="color:var(--text-muted);font-size:.75rem">${escHtml(s.name || '—')}</td>
       <td>${sectorBadge(s.sector)}</td>
       <td class="neu">${s.n_signals}</td>
@@ -1781,6 +1936,43 @@ loadPages();
     <div class="modal-section">
       <div class="modal-section-title">Signal History — last 18 months</div>
       <div id="modal-signals"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ RESEARCH MODAL -->
+<div class="modal-backdrop" id="research-modal" onclick="if(event.target===this)closeResearch()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeResearch()">✕</button>
+    <div class="modal-ticker" id="rs-ticker"></div>
+    <div class="modal-name" id="rs-name" style="margin-bottom:.6rem"></div>
+    <div style="font-size:.68rem;color:#a5b4fc;font-weight:700;letter-spacing:.06em;margin-bottom:.8rem">
+      TOP RESEARCH CANDIDATE
+    </div>
+
+    <div class="modal-section" id="rs-signal-section">
+      <div class="modal-section-title">Signal Strength</div>
+      <div id="rs-signal"><span style="color:var(--text-faint);font-size:.8rem">Loading…</span></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Human Quality Checks</div>
+      <div id="rs-quality"><span style="color:var(--text-faint);font-size:.8rem">Loading…</span></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Context Status</div>
+      <div id="rs-context"><span style="color:var(--text-faint);font-size:.8rem">Loading…</span></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Recent Appearances</div>
+      <div id="rs-history"><span style="color:var(--text-faint);font-size:.8rem">Loading…</span></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">What To Investigate Next</div>
+      <div id="rs-steps"><span style="color:var(--text-faint);font-size:.8rem">Loading…</span></div>
     </div>
   </div>
 </div>
@@ -2063,6 +2255,18 @@ async def ta_endpoint(tickers: str = Query(...)):
     """Return TA indicators (RSI14, SMA50, SMA200) for a comma-separated list of tickers."""
     ticker_list = [t.strip().upper() for t in tickers.split(",") if t.strip()][:20]
     return JSONResponse(_compute_ta(ticker_list))
+
+
+@app.get("/api/research/{ticker}")
+async def research_endpoint(ticker: str):
+    """Return a deterministic research pack for a single ticker."""
+    ticker = ticker.upper()
+    db = _open_db()
+    try:
+        result = build_research(db, ticker, WIKI_ROOT)
+        return JSONResponse(result)
+    finally:
+        db.close()
 
 
 # ── Rotation log ──────────────────────────────────────────────────────────────
