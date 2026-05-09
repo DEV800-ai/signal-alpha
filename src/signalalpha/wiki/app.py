@@ -17,6 +17,7 @@ from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from signalalpha.wiki.admin import _open_db, router as admin_router
+from signalalpha.quality.human_quality import evaluate_human_quality_batch
 from signalalpha.wiki.auth import (
     LOGIN_HTML, check_invite_code, is_public, make_token, verify_token,
     COOKIE_NAME, MAX_AGE_DAYS,
@@ -510,6 +511,25 @@ _HTML = r"""<!DOCTYPE html>
   .risk-med  { background:#2d1f00; color:#d29922; border:1px solid #9e6a03; }
   .risk-high { background:#2d0f0f; color:#f85149; border:1px solid #8b2020; }
 
+  /* ── Human Quality badges ──────────────────────────────────────────────── */
+  .hq-row {
+    display:flex; gap:.3rem; flex-wrap:wrap; align-items:center;
+    margin-top:.4rem;
+  }
+  .hq-badge {
+    display:inline-block; padding:.1rem .35rem; border-radius:3px;
+    font-size:.58rem; font-weight:700; letter-spacing:.04em; white-space:nowrap;
+  }
+  .hq-pass    { background:#0d2818; color:#3fb950; border:1px solid #238636; }
+  .hq-warn    { background:#2d1f00; color:#d29922; border:1px solid #9e6a03; }
+  .hq-fail    { background:#2d0f0f; color:#f85149; border:1px solid #8b2020; }
+  .hq-unknown { background:var(--bg-card3); color:var(--text-muted); border:1px solid var(--border); }
+  .hq-score   { font-size:.65rem; color:var(--text-dim); margin-left:.15rem; }
+  body.light .hq-pass    { background:#dafbe1; color:#1a7f37; border-color:#82cfaf; }
+  body.light .hq-warn    { background:#fff8c5; color:#9a6700; border-color:#d4a72c; }
+  body.light .hq-fail    { background:#ffebe9; color:#cf222e; border-color:#ff8182; }
+  body.light .hq-unknown { background:var(--bg-card2); color:var(--text-muted); border-color:var(--border); }
+
   /* TA overlay */
   .ta-overlay {
     display:flex; gap:.5rem; flex-wrap:wrap; align-items:center;
@@ -662,7 +682,7 @@ _HTML = r"""<!DOCTYPE html>
 
 <div class="tabs">
   <button class="tab-btn active" onclick="switchTab('brief', this)">Daily Brief</button>
-  <button class="tab-btn" onclick="switchTab('top10', this)">Top 10</button>
+  <button class="tab-btn" onclick="switchTab('top10', this)">Top Research Candidates</button>
   <button class="tab-btn" onclick="switchTab('rotation', this)">Rotation Log</button>
   <button class="tab-btn" onclick="switchTab('editor', this)">Wiki Editor</button>
   <button class="tab-btn" onclick="switchTab('howto', this)">How It Works</button>
@@ -1289,6 +1309,7 @@ async function openStockDetail(ticker, name) {
   document.getElementById('modal-ticker').textContent = ticker;
   document.getElementById('modal-name').textContent = name || '';
   document.getElementById('modal-ta').innerHTML = '<span style="color:var(--text-faint);font-size:.8rem">Loading…</span>';
+  document.getElementById('modal-quality').innerHTML = '<span style="color:var(--text-faint);font-size:.8rem">Loading…</span>';
   document.getElementById('modal-ranks').innerHTML = '<span style="color:var(--text-faint);font-size:.8rem">Loading…</span>';
   document.getElementById('modal-signals').innerHTML = '<span style="color:var(--text-faint);font-size:.8rem">Loading…</span>';
   modal.classList.add('open');
@@ -1312,6 +1333,28 @@ async function openStockDetail(ticker, name) {
     } else {
       document.getElementById('modal-ta').innerHTML = '<span style="color:var(--text-faint);font-size:.8rem">No TA data available.</span>';
     }
+
+    // Human Quality section
+    const hq = d.human_quality || {};
+    const hqLabels = {
+      liquidity: 'Liquidity', trend: 'Trend',
+      eps_growth: 'EPS Growth', valuation: 'Valuation', market_alignment: 'Market Alignment'
+    };
+    const hqKeys = ['liquidity', 'trend', 'market_alignment', 'eps_growth', 'valuation'];
+    let hqHtml = `<div style="font-size:.72rem;color:var(--text-muted);margin-bottom:.5rem">${escHtml(d.human_quality_summary || '')}</div>`;
+    hqHtml += hqKeys.map(k => {
+      const c = hq[k];
+      if (!c) return '';
+      const badgeCls = {pass:'hq-pass',warn:'hq-warn',fail:'hq-fail',unknown:'hq-unknown'}[c.status] || 'hq-unknown';
+      return `<div style="display:flex;align-items:baseline;gap:.5rem;margin-bottom:.3rem">
+        <span class="hq-badge ${badgeCls}" style="min-width:3.2rem;text-align:center">${c.status.toUpperCase()}</span>
+        <span style="font-size:.72rem;color:var(--text-muted)"><b style="color:var(--text-2)">${escHtml(hqLabels[k])}</b> — ${escHtml(c.reason)}</span>
+      </div>`;
+    }).join('');
+    if (d.human_quality_score !== null && d.human_quality_score !== undefined) {
+      hqHtml += `<div style="font-size:.68rem;color:var(--text-faint);margin-top:.4rem">Quality score: ${(d.human_quality_score * 100).toFixed(0)}/100</div>`;
+    }
+    document.getElementById('modal-quality').innerHTML = hqHtml;
 
     // Rank history section
     const ranks = d.rank_history ?? [];
@@ -1491,6 +1534,21 @@ async function loadTop10() {
   }
 }
 
+function _hqBadge(status, label) {
+  const cls = { pass:'hq-pass', warn:'hq-warn', fail:'hq-fail', unknown:'hq-unknown' }[status] || 'hq-unknown';
+  return `<span class="hq-badge ${cls}" title="${escAttr(label)}">${escHtml(label)}</span>`;
+}
+function _hqRow(hq) {
+  if (!hq) return '';
+  const LIQ = hq.liquidity,  TRD = hq.trend,  MKT = hq.market_alignment;
+  if (!LIQ && !TRD && !MKT) return '';
+  return `<div class="hq-row">` +
+    (LIQ ? _hqBadge(LIQ.status, 'LIQ') : '') +
+    (TRD ? _hqBadge(TRD.status, 'TRD') : '') +
+    (MKT ? _hqBadge(MKT.status, 'MKT') : '') +
+  `</div>`;
+}
+
 function renderTop10(data, allModes = new Set()) {
   const stocks    = data.stocks || [];
   const isOpp     = data.direction === 'opportunity';
@@ -1574,6 +1632,7 @@ function renderTop10(data, allModes = new Set()) {
         <div class="stat-item"><span class="stat-label">Last signal</span><span class="stat-val neu" style="font-size:.72rem">${s.last_signal || '—'}</span></div>
         ${discountDisp}
       </div>
+      ${_hqRow(s.human_quality)}
       <div class="score-bar-wrap">
         <div class="score-bar-fill" style="width:${barPct}%"></div>
       </div>
@@ -1605,7 +1664,7 @@ function renderTop10(data, allModes = new Set()) {
       <th class="lb-rank">#</th>
       <th>Ticker</th><th>Company</th><th>Sector</th>
       <th>Signals</th><th>${alphaHdr}</th><th>${hrHdr}</th><th>${retHdr}</th>
-      <th>Last Signal</th><th class="lb-bar-cell">Score</th>
+      <th>Last Signal</th><th>Quality</th><th class="lb-bar-cell">Score</th>
     </tr></thead><tbody>`;
 
   rest.forEach((s, i) => {
@@ -1635,6 +1694,7 @@ function renderTop10(data, allModes = new Set()) {
       <td><span class="${hrCls}">${hrDisp}</span></td>
       <td>${retVal}</td>
       <td class="neu" style="font-size:.73rem">${s.last_signal || '—'}</td>
+      <td>${_hqRow(s.human_quality)}</td>
       <td class="lb-bar-cell">
         <div class="lb-bar"><div class="${barClass}" style="width:${barPct}%"></div></div>
       </td>
@@ -1705,6 +1765,11 @@ loadPages();
     <div class="modal-section" id="modal-ta-section">
       <div class="modal-section-title">Technical Analysis</div>
       <div id="modal-ta"></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Research Quality Filters</div>
+      <div id="modal-quality"><span style="color:var(--text-faint);font-size:.8rem">Loading…</span></div>
     </div>
 
     <div class="modal-section" id="modal-ranks-section">
@@ -1856,7 +1921,21 @@ async def stock_detail(ticker: str):
         # TA
         ta = _compute_ta([ticker]).get(ticker)
 
-        return JSONResponse({"ticker": ticker, "events": events, "rank_history": rank_history, "ta": ta})
+        # Human quality
+        sector_row = db.execute("SELECT sector FROM universe WHERE ticker = ?", [ticker]).fetchone()
+        sector = sector_row[0] if sector_row else None
+        quality = evaluate_human_quality_batch(db, [ticker], {ticker: sector or ""})
+        hq = quality.get(ticker, {})
+
+        return JSONResponse({
+            "ticker": ticker,
+            "events": events,
+            "rank_history": rank_history,
+            "ta": ta,
+            "human_quality": hq.get("checks", {}),
+            "human_quality_score": hq.get("score"),
+            "human_quality_summary": hq.get("summary", ""),
+        })
     finally:
         db.close()
 
@@ -1892,6 +1971,14 @@ async def top10_endpoint(
             recency_days=recency_days,
             limit=limit,
         )
+        sector_map = {s["ticker"]: s["sector"] for s in stocks}
+        quality    = evaluate_human_quality_batch(db, [s["ticker"] for s in stocks], sector_map)
+        for s in stocks:
+            q = quality.get(s["ticker"], {})
+            s["human_quality_score"]   = q.get("score")
+            s["human_quality"]         = q.get("checks", {})
+            s["human_quality_summary"] = q.get("summary", "")
+
         return JSONResponse({
             "score_by": order_col,
             "direction": direction,
