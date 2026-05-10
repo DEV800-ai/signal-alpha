@@ -624,7 +624,7 @@ _HTML = r"""<!DOCTYPE html>
     border-radius:6px; padding:.3rem .7rem; font-size:.72rem;
   }
   .rs-stat-pill b { display:block; font-size:1rem; font-weight:800; }
-  .rs-stat-pill span { color:var(--text-faint); font-size:.65rem; }
+  .rs-stat-pill span { color:var(--text-muted); font-size:.65rem; }
   .rs-badge {
     display:inline-block; padding:.15rem .5rem; border-radius:4px;
     font-size:.68rem; font-weight:700; margin:.15rem .1rem;
@@ -1655,7 +1655,7 @@ async function openResearch(ticker, name) {
       const c = checks[k] || { status:'unknown', reason:'' };
       return `<div style="margin:.3rem 0">
         ${_rsBadge(c.status, lbl)}
-        <span style="font-size:.73rem;color:var(--text-faint);margin-left:.3rem">${escHtml(c.reason||'')}</span>
+        <span style="font-size:.73rem;color:var(--text-2);margin-left:.3rem">${escHtml(c.reason||'')}</span>
       </div>`;
     }).join('');
     if (hq.summary) {
@@ -1676,14 +1676,14 @@ async function openResearch(ticker, name) {
     if (opp.status) {
       oppHtml += `<div style="margin-bottom:.5rem">
         <span class="opp-badge ${oppStatusCls[opp.status]||'opp-unknown'}">${escHtml((opp.status||'unknown').toUpperCase())}</span>
-        <span style="font-size:.73rem;color:var(--text-faint);margin-left:.4rem">Opportunity Potential</span>
+        <span style="font-size:.73rem;color:var(--text-muted);margin-left:.4rem">Opportunity Potential</span>
       </div>`;
     }
     oppHtml += Object.entries(OPP_LABELS).map(([k, lbl]) => {
       const c = oppChecks[k] || { status:'unknown', reason:'' };
       return `<div style="margin:.3rem 0">
         ${_rsBadge(c.status, lbl)}
-        <span style="font-size:.73rem;color:var(--text-faint);margin-left:.3rem">${escHtml(c.reason||'')}</span>
+        <span style="font-size:.73rem;color:var(--text-2);margin-left:.3rem">${escHtml(c.reason||'')}</span>
       </div>`;
     }).join('');
     if (opp.summary) {
