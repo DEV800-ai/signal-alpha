@@ -871,77 +871,162 @@ _HTML = r"""<!DOCTYPE html>
 
   <div class="howto-section">
     <div class="howto-h2">What is SignalAlpha?</div>
-    <p class="howto-p">SignalAlpha watches 68 stocks across AI, Space &amp; Defense, and Telecom for repeating patterns — things like unusual volume spikes or bursts of patent grants. When a pattern is detected, the system goes back in history to see: <em>every time this happened before, what did the stock do over the next 10–45 days compared to its sector?</em> If the answer is consistently positive — and the math confirms it's not luck — the stock shows up in the Top 10.</p>
-    <p class="howto-p">Think of it as a fact-checker for trading patterns. It does not give financial advice. It tells you which patterns have historically worked and which stocks are currently showing those patterns.</p>
+    <p class="howto-p">SignalAlpha is a <b>research prioritization system</b>. It watches 68 stocks across AI, Space &amp; Defense, and Telecom for repeating statistical patterns — unusual volume spikes, patent grant clusters — and measures what historically followed. Patterns that prove statistically significant surface as research candidates.</p>
+    <p class="howto-p">The system answers one question: <em>what deserves investigation right now?</em> It does not predict prices, recommend positions, or tell you what to do. Every candidate requires your own judgment before acting.</p>
   </div>
 
   <div class="howto-section">
-    <div class="howto-h2">How It Works — Step by Step</div>
+    <div class="howto-h2">How Candidates Are Discovered — Step by Step</div>
     <div class="pipeline">
-      <div class="pipe-step"><strong>1 — Spot the Pattern</strong><span>Look for unusual events: a volume spike 2× the 60-day average, or 5+ patent grants in 30 days for a telecom company</span></div>
+      <div class="pipe-step"><strong>1 — Detect</strong><span>Scan for unusual events: volume 2× the 60-day average, or 5+ patent grants in 30 days for a telecom company</span></div>
       <span class="pipe-arrow">→</span>
-      <div class="pipe-step"><strong>2 — Replay History</strong><span>For every past occurrence, measure what the stock actually returned over the next 10–45 days vs its sector ETF benchmark</span></div>
+      <div class="pipe-step"><strong>2 — Backtest</strong><span>For every past occurrence, measure the stock's return vs its sector ETF over the next 10–45 days. Entry at next-day open, 10 bps slippage deducted</span></div>
       <span class="pipe-arrow">→</span>
-      <div class="pipe-step"><strong>3 — Check the Math</strong><span>Run a statistical test (p-value). If there's less than a 5% chance the results are random, the signal is <b>validated</b></span></div>
+      <div class="pipe-step"><strong>3 — Validate</strong><span>Paired t-test: p &lt; 0.05 required. Only patterns that pass this threshold are called <b>validated</b></span></div>
       <span class="pipe-arrow">→</span>
-      <div class="pipe-step"><strong>4 — Test on Fresh Data</strong><span>Verify on 2025+ data the system never trained on. Only signals that pass both tests reach the Top 10</span></div>
+      <div class="pipe-step"><strong>4 — Holdout</strong><span>One final test on 2025+ data the system never trained on. Results are locked — no re-tuning after this</span></div>
     </div>
-    <p class="howto-p" style="margin-top:1rem">Every 3 days, fresh prices are pulled and the system re-checks whether the pattern has fired recently. The Top 10 only shows stocks where the signal fired in the <b>last 90 days</b> — so you're seeing what's active now, not historical relics.</p>
+    <p class="howto-p" style="margin-top:1rem">Every 3 days, fresh prices and fundamentals are pulled and all signals re-run. The ranking only shows stocks where the signal fired in the <b>last 90 days</b> — so every candidate is active now, not a historical relic.</p>
   </div>
 
   <div class="howto-section">
-    <div class="howto-h2">The Numbers — Plain English</div>
+    <div class="howto-h2">Three Layers of Scoring</div>
+    <p class="howto-p">Every candidate passes through three compounding layers. Each layer adds context — none replaces the one before it.</p>
+    <div class="metric-grid">
+
+      <div class="metric-card">
+        <div class="metric-name">Layer 1 — Signal Score</div>
+        <div class="metric-abbr">alpha × hit rate × log(N)</div>
+        <div class="metric-desc">Pure backtest edge. A stock scores higher if it has big alpha <em>and</em> consistent wins <em>and</em> many historical events. A pattern with +10% alpha but only 3 past occurrences scores low — not enough history to trust. This is the base layer. Everything else adjusts it.</div>
+        <span class="metric-good">Primary driver of ranking order</span>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-name">Layer 2 — Human Quality</div>
+        <div class="metric-abbr">4 checks: liquidity · trend · market · EPS</div>
+        <div class="metric-desc">Four fundamentals checks applied as a soft multiplier on the signal score. <b>Liquidity:</b> sufficient daily volume. <b>Trend:</b> price above 50d and 200d MA. <b>Market alignment:</b> SPY above its 200d MA. <b>EPS growth:</b> earnings trajectory from fundamentals. A stock that fails multiple checks gets a slightly lower ranking — the signal still dominates, but quality adds confidence context.</div>
+        <span class="metric-good">Multiplier range: 0.875–1.0 (narrow — signal stays primary)</span>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-name">Layer 3 — Opportunity Potential</div>
+        <div class="metric-abbr">6 checks: valuation · growth · extension · cap · sector · risk</div>
+        <div class="metric-desc">Six checks that assess research upside — does this candidate still look interesting from a forward-looking perspective, or has the move already happened? <b>Valuation room:</b> P/E or P/B vs sector norms. <b>Growth support:</b> EPS + revenue growth. <b>Technical extension:</b> how far above SMA50/200 and 12-month return. <b>Market cap:</b> smaller caps have more room. <b>Sector tailwind:</b> sector-level momentum. <b>Risk penalty:</b> quality flags. Always shown as a badge — used as a ranking multiplier only in Blended and Investor modes.</div>
+        <span class="metric-good">Status: high / medium / low / unknown</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="howto-section">
+    <div class="howto-h2">Research Candidates vs Investor Candidates</div>
+    <p class="howto-p">The same candidate pool can be viewed through two different lenses, selectable in the <b>Rank by</b> dropdown.</p>
+    <div class="dir-explainer">
+      <div class="dir-card dir-card-long">
+        <div class="dir-card-title">Research Candidates (default)</div>
+        <p><b>Signal-first.</b> The backtest edge determines the ranking. Quality and opportunity add small adjustments. Use this to answer: <em>what has statistical evidence right now?</em> This is the discovery layer — it surfaces what deserves investigation regardless of fundamentals.</p>
+      </div>
+      <div class="dir-card dir-card-mid">
+        <div class="dir-card-title">Investor Candidates</div>
+        <p><b>Quality + opportunity weighted.</b> Same candidate pool, but quality and opportunity have a much wider impact on the final order (multiplier range 0.4–1.0 vs 0.875–1.0). A strong signal with poor quality and limited upside drops significantly. A moderate signal with healthy fundamentals and room to run rises. Use this to answer: <em>of the signal candidates, which look more investable from a long-term research perspective?</em></p>
+      </div>
+    </div>
+    <p class="howto-p">The difference is most visible on stocks at the edges — a mega-cap with a great signal but stretched valuation will rank lower on Investor; a mid-cap with solid EPS growth and a healthy chart will rank higher. This is not a recommendation — it is a different prioritization lens on the same data.</p>
+  </div>
+
+  <div class="howto-section">
+    <div class="howto-h2">Research This Signal — The Explanation Layer</div>
+    <p class="howto-p">Click the <b>Research →</b> button on any candidate to open a full research pack. Built entirely from existing data — no AI generation, no buy/sell language. You should be able to understand why a candidate is here in under 30 seconds.</p>
+    <div class="metric-grid">
+
+      <div class="metric-card">
+        <div class="metric-name">Why This Candidate Is Here</div>
+        <div class="metric-abbr">4-line summary at the top of the modal</div>
+        <div class="metric-desc">A deterministic summary of: signal strength and validation status, quality check result, opportunity potential status, and the single most important caution pulled from the check data. The SIGNAL label is green for validated, amber for borderline, gray for exploratory. The CAUTION row surfaces the most critical concern.</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-name">Signal Strength</div>
+        <div class="metric-abbr">best signal for this ticker</div>
+        <div class="metric-desc">The validated or best-available signal for this ticker: signal name, average alpha vs sector, win rate, number of historical events, p-value, and status. If the signal is exploratory, the summary flags that explicitly.</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-name">Human Quality Checks</div>
+        <div class="metric-abbr">5 checks with pass / warn / fail</div>
+        <div class="metric-desc">Each of the five quality checks (liquidity, trend, EPS growth, valuation, market alignment) shown individually with the specific reason. Lets you see exactly which fundamentals are healthy and which need further review.</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-name">Opportunity Potential</div>
+        <div class="metric-abbr">6 checks with scores</div>
+        <div class="metric-desc">All six opportunity checks with individual status and reason text. Helps you understand whether this candidate still has potential asymmetric upside or whether the move may already be mature.</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-name">Context &amp; Wiki</div>
+        <div class="metric-abbr">company page freshness</div>
+        <div class="metric-desc">Whether a company wiki page exists, when it was last updated and reviewed, and a freshness flag (current / stale / missing). Stale context is flagged — you should verify before relying on it.</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-name">What To Investigate Next</div>
+        <div class="metric-abbr">deterministic checklist</div>
+        <div class="metric-desc">A checklist of the most important next research steps, generated from the data state — not a generic list. If the wiki page is stale, it says so. If the price trend is mixed, it flags it. If EPS data is missing, it tells you to check manually. Every item is actionable.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="howto-section">
+    <div class="howto-h2">Direction Modes</div>
+    <div class="dir-explainer">
+      <div class="dir-card dir-card-long">
+        <div class="dir-card-title">Long — 12 months+</div>
+        <p>Candidates with the strongest historical signal edge across all three sectors. Ranked by alpha × hit rate × history. Useful for longer research horizons where signal consistency matters most.</p>
+      </div>
+      <div class="dir-card dir-card-mid">
+        <div class="dir-card-title">📈 Mid-term — 1 to 3 Months</div>
+        <p>Same signal base, but ranks stocks that win consistently <em>and</em> with low volatility. Divides alpha by standard deviation first — steady results rank above high-average but volatile ones. Look for <b>LOW RISK</b> badges.</p>
+      </div>
+      <div class="dir-card dir-card-opp">
+        <div class="dir-card-title">💎 Opportunity — Pullback Candidates</div>
+        <p style="font-size:.76rem;color:var(--text-muted);line-height:1.65">Candidates with a validated edge that are currently trading below their 50-day moving average. Surfaces stocks where signal quality and recent price weakness coincide — worth additional research context. The <b>Discount vs 50d MA</b> column shows how far below the moving average the stock is trading.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="howto-section">
+    <div class="howto-h2">Key Metrics</div>
     <div class="metric-grid">
 
       <div class="metric-card">
         <div class="metric-name">Alpha vs Sector</div>
         <div class="metric-abbr">stock return − sector ETF return</div>
-        <div class="metric-desc"><b>The most important number.</b> If the stock gained 5% and its sector ETF gained 3% over the same period, the alpha is +2%. A positive alpha means the stock did something the whole sector didn't — that's what we're looking for. Benchmarks: SOXX (AI), ITA (Defense), IYZ (Telecom).</div>
+        <div class="metric-desc"><b>The most important number.</b> If the stock gained 5% and its sector ETF gained 3%, the alpha is +2%. Positive alpha means the stock did something the whole sector didn't — that's the edge we're measuring. Benchmarks: SOXX (AI), ITA (Defense), IYZ (Telecom).</div>
         <span class="metric-good">+1.5% or more = meaningful edge</span>
       </div>
 
       <div class="metric-card">
         <div class="metric-name">Hit Rate</div>
-        <div class="metric-abbr">how often it wins</div>
-        <div class="metric-desc">Out of every 100 times the signal fired in the past, how many ended in a profit? A coin flip is 50%. A hit rate above 55% means the pattern wins more often than chance. Above 60% is strong. For <b>short candidates</b>, you actually want a <em>low</em> hit rate — that means it usually goes down.</div>
+        <div class="metric-abbr">% of past signal firings that ended in profit</div>
+        <div class="metric-desc">Out of every 100 times the signal fired historically, how many ended positive? Above 55% means the pattern wins more often than chance. Above 60% is strong. A high hit rate combined with positive alpha is the best combination — consistent and directional.</div>
         <span class="metric-good">&gt;55% for longs</span>
-        <span class="metric-bad" style="margin-left:.5rem">&lt;45% for shorts</span>
-      </div>
-
-      <div class="metric-card">
-        <div class="metric-name">Avg Return</div>
-        <div class="metric-abbr">average profit per trade</div>
-        <div class="metric-desc">The average gain (or loss) across all past signal firings, after subtracting a small transaction cost (0.10%). If the average is +3% over 15 days, you made 3% per trade on average. Compare this with alpha — if avg return is +5% but alpha is only +0.5%, most of that gain was just the sector rising, not the signal's edge.</div>
-        <span class="metric-good">+3% over 15 days = strong</span>
       </div>
 
       <div class="metric-card">
         <div class="metric-name">p-value</div>
-        <div class="metric-abbr">probability the result is luck</div>
-        <div class="metric-desc">A p-value of 0.05 means there's only a 5% chance the alpha you see is due to random noise. We require p&nbsp;&lt;&nbsp;0.05 to call a signal <b>validated</b>. A p-value of 0.30 means a 30% chance it's just luck — that goes to the graveyard. This is the main filter that separates real patterns from coincidences.</div>
+        <div class="metric-abbr">probability the result is due to chance</div>
+        <div class="metric-desc">Less than 0.05 means there is under a 5% chance the alpha is random noise — the signal is <b>validated</b>. Above 0.10 goes to the graveyard. This is the primary filter between real statistical patterns and coincidences.</div>
         <span class="metric-good">&lt;0.05 = validated ✓</span>
         <span class="metric-bad" style="margin-left:.5rem">&gt;0.10 = graveyard</span>
       </div>
 
       <div class="metric-card">
-        <div class="metric-name">Composite Score</div>
-        <div class="metric-abbr">alpha × hit rate × log(events)</div>
-        <div class="metric-desc">The ranking formula for the Long Top 10. A stock scores higher if it has: big alpha AND consistent wins AND many historical examples. A pattern with +10% alpha but only 3 past occurrences scores low — there's not enough history to trust it. More events = more trust = higher rank.</div>
-        <span class="metric-good">Higher = better ranked</span>
-      </div>
-
-      <div class="metric-card">
-        <div class="metric-name">Mid-term Score</div>
-        <div class="metric-abbr">alpha ÷ volatility × hit rate × log(events)</div>
-        <div class="metric-desc">The ranking formula for the 1–3 month view. Same idea as Composite, but it divides by volatility first. A stock that earns +2% with low swings scores higher than one that earns +3% with wild swings. Look for the <span style="color:#34d399;font-weight:700">LOW RISK</span> badge — those are the smoothest rides.</div>
-        <span class="metric-good">Rewards consistency over raw returns</span>
-      </div>
-
-      <div class="metric-card">
         <div class="metric-name">Risk Level</div>
-        <div class="metric-abbr">how wild the returns swing</div>
-        <div class="metric-desc">Measures how much individual trade returns vary from the average. A low-risk stock makes roughly the same gain each time the signal fires. A high-risk stock might make +20% one time and −15% the next — same average, very different experience. Risk level is calculated from the standard deviation of all past returns for that stock.</div>
-        <span class="metric-good" style="display:block">🟢 LOW — steady, under 10% swing</span>
+        <div class="metric-abbr">standard deviation of past returns</div>
+        <div class="metric-desc">How much individual signal results vary from the average. LOW means consistent outcomes; HIGH means wide swings — same average, very different experience. Especially relevant for mid-term research candidates where volatility matters.</div>
+        <span class="metric-good" style="display:block">🟢 LOW — under 10% swing</span>
         <span class="metric-bad" style="color:#fbbf24;display:block">🟡 MED — 10–20% swing</span>
         <span class="metric-bad" style="display:block">🔴 HIGH — over 20% swing</span>
       </div>
@@ -949,7 +1034,7 @@ _HTML = r"""<!DOCTYPE html>
       <div class="metric-card">
         <div class="metric-name">TA Overlay (optional)</div>
         <div class="metric-abbr">RSI · 50-day MA · 200-day MA</div>
-        <div class="metric-desc">Toggle the <b>📊 TA</b> button to add technical context on top of the signal ranking. RSI below 40 means oversold (often a better entry). Price above the 50-day moving average means the stock is in short-term uptrend. The TA badge (Bullish / Neutral / Bearish) reflects the overall picture. This is a secondary layer — the signal alpha is the primary signal.</div>
+        <div class="metric-desc">Toggle the <b>📊 TA</b> button to add technical context. RSI below 40 indicates oversold conditions. Price above the 50-day MA means short-term uptrend. The TA badge (Bullish / Neutral / Bearish) reflects the overall technical picture. This is a secondary context layer — the signal alpha is the primary input.</div>
         <span class="metric-good">Technical trend supports the signal context</span>
       </div>
 
@@ -961,44 +1046,27 @@ _HTML = r"""<!DOCTYPE html>
     <div class="signal-list">
       <div class="signal-item">
         <div class="signal-item-name">Volume Anomaly ×2.0 — 15d Hold &nbsp;<span class="status-pill pill-validated">validated</span></div>
-        <div class="signal-item-desc"><b>What it looks for:</b> a stock's trading volume over the last 5 days is more than 2× its normal 60-day average — something unusual is happening. <b>What happens next:</b> historically, these stocks outperform their sector ETF by ~1.6% over the following 15 trading days, with a 55%+ win rate. Validated on 1,480 events from 2018–2024 (p=0.005), confirmed on fresh 2025–2026 data (Sharpe 1.22). Fires across all three sectors.</div>
+        <div class="signal-item-desc"><b>What it detects:</b> a stock's 5-day average volume exceeds 2× its 60-day median — something unusual is attracting attention. <b>Historical result:</b> these stocks outperform their sector ETF by ~1.6% over the following 15 trading days, with a 55%+ win rate. Validated on 1,480 events from 2018–2024 (p=0.005), confirmed on fresh 2025–2026 data (Sharpe 1.22). Fires across all three sectors.</div>
       </div>
       <div class="signal-item">
         <div class="signal-item-name">Patent Cluster — Telecom, 45d Hold &nbsp;<span class="status-pill pill-validated">validated</span></div>
-        <div class="signal-item-desc"><b>What it looks for:</b> a telecom company (QCOM, IDCC, ERIC, NOK…) receives 5 or more patent grants in any 30-day window. <b>Why telecom specifically:</b> telecom companies are IP-licensing businesses — a burst of patents signals an upcoming licensing deal or competitive moat event, which takes longer to show up in the stock price. <b>What happens next:</b> these stocks outperform the IYZ telecom ETF by ~1.5% over 45 trading days. Validated on 810 events (p=0.0001). Patent data from PatentsView (USPTO), updated monthly.</div>
+        <div class="signal-item-desc"><b>What it detects:</b> a telecom company receives 5 or more patent grants in any 30-day window. <b>Why telecom:</b> telecom companies are IP-licensing businesses — a burst of patents signals an upcoming licensing deal or competitive moat event, which takes ~45 days to be reflected in price. <b>Historical result:</b> these stocks outperform the IYZ telecom ETF by ~1.5% over 45 trading days. Validated on 810 events (p=0.0001). Patent data from PatentsView (USPTO), updated monthly.</div>
       </div>
       <div class="signal-item">
-        <div class="signal-item-name">8-K Filing — Excluding Earnings &nbsp;<span class="status-pill pill-borderline">borderline</span></div>
-        <div class="signal-item-desc"><b>What it looks for:</b> any major SEC filing that isn't an earnings report (mergers, agreements, officer changes, etc.). <b>Why it's borderline:</b> it showed marginal significance in historical data (p=0.053) but failed to confirm on fresh 2025–2026 data (p=0.27). Currently in the graveyard — not used in the Top 10. It may work with more specific filtering (e.g. only material agreements in specific sectors).</div>
+        <div class="signal-item-name">8-K Filing — Excluding Earnings &nbsp;<span class="status-pill pill-borderline">graveyard</span></div>
+        <div class="signal-item-desc"><b>What it detects:</b> any major SEC filing that is not an earnings report. <b>Why it failed:</b> showed marginal significance in historical data (p=0.053) but failed to confirm on fresh 2025–2026 data (p=0.27). Not used in the ranking. Logged in the graveyard so it is not retried without a clear refinement hypothesis.</div>
       </div>
     </div>
   </div>
 
   <div class="howto-section">
-    <div class="howto-h2">The Three Rankings Explained</div>
-    <div class="dir-explainer">
-      <div class="dir-card dir-card-long">
-        <div class="dir-card-title">Long — 12 months+</div>
-        <p>Stocks with strong historical indicators and consistent sector outperformance over time. <b>Useful for:</b> long-term research candidates where the signal has fired repeatedly with statistical significance. Ranked by alpha × hit rate × history. Check the <b>risk badge</b> — LOW RISK means consistent results, HIGH RISK means more volatile historical swings.</p>
-      </div>
-      <div class="dir-card dir-card-mid">
-        <div class="dir-card-title">📈 Mid-term — 1 to 3 Months</div>
-        <p><b>Useful for:</b> research candidates with consistent, low-volatility signal performance over 1–3 month horizons. Same signal base, but ranks stocks that win consistently <em>and</em> with low variance. A stock with steady +2% results ranks above one averaging +3% with wild swings. Look for <b>LOW RISK</b> badges here.</p>
-      </div>
-      <div class="dir-card dir-card-opp">
-        <div class="dir-card-title">💎 Opportunity — Pullback Candidates</div>
-        <p style="font-size:.76rem;color:var(--text-muted);line-height:1.65"><b>Useful for:</b> reviewing candidates with a validated historical edge that are currently trading below their 50-day moving average. The ranking surfaces stocks where signal quality and recent price weakness coincide — a combination worth further research context. The <b>Discount vs 50d MA</b> column shows how far below the moving average the stock is trading.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="howto-section">
-    <div class="howto-h2">Important Guardrails</div>
-    <p class="howto-p"><b>Minimum 30 events required.</b> If a pattern has fired fewer than 30 times in history, the result is statistically unreliable and is not shown — even if the numbers look great.</p>
-    <p class="howto-p"><b>Fresh data test (holdout).</b> All signals were developed on data from 2018–2024. The 2025–2026 data was kept completely separate and only used once to verify the signal still works on data the system never saw. This prevents overfitting.</p>
-    <p class="howto-p"><b>Transaction cost included.</b> Every trade deducts 0.10% for estimated buy/sell costs. Returns shown are what you'd actually keep, not paper gains.</p>
-    <p class="howto-p"><b>Only recent signals shown.</b> The Top 10 only includes stocks where the pattern fired in the last 90 days. A stock with a great historical record but no recent signal is filtered out — the ranking reflects what's happening <em>now</em>.</p>
-    <p class="howto-p"><b>This is research, not financial advice.</b> Signals show historical tendencies, not guarantees. Always apply your own judgment before acting on any output.</p>
+    <div class="howto-h2">Methodology Guardrails</div>
+    <p class="howto-p"><b>Minimum 30 events required.</b> Fewer than 30 historical firings is not enough data to trust — results are not shown even if the numbers look impressive.</p>
+    <p class="howto-p"><b>Out-of-sample holdout.</b> All signals were developed on 2018–2024 data. The 2025–2026 data was kept completely separate and used only once per signal to confirm it still holds on unseen data. This prevents overfitting.</p>
+    <p class="howto-p"><b>Transaction cost included.</b> Every backtest trade deducts 0.10% for round-trip costs. Returns shown are net — not paper gains.</p>
+    <p class="howto-p"><b>Sector-relative benchmarks.</b> Alpha is measured against the relevant sector ETF (SOXX, ITA, IYZ), not SPY alone. Beating SPY in a bull market for AI stocks is not meaningful edge — beating SOXX is.</p>
+    <p class="howto-p"><b>Only recent signals shown.</b> The ranking only includes stocks where the pattern fired in the last 90 days. Historical edge without a recent firing is filtered out.</p>
+    <p class="howto-p"><b>This is research, not financial advice.</b> Signals show historical statistical tendencies, not guarantees. Past patterns do not predict future results. Always apply independent judgment before acting on any output.</p>
   </div>
 
 </div>
