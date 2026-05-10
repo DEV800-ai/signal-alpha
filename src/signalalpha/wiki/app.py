@@ -612,10 +612,10 @@ _HTML = r"""<!DOCTYPE html>
 
   /* ── Opportunity badge ────────────────────────────────────────────────── */
   .opp-badge { display:inline-block; padding:.15rem .5rem; border-radius:4px; font-size:.65rem; font-weight:700; letter-spacing:.03em; }
-  .opp-high    { background:#14532d; color:#4ade80; }
-  .opp-medium  { background:#451a03; color:#fbbf24; }
-  .opp-low     { background:#450a0a; color:#f87171; }
-  .opp-unknown { background:var(--bg-card3); color:var(--text-faint); }
+  .opp-high    { background:#16a34a; color:#fff; }
+  .opp-medium  { background:#d97706; color:#fff; }
+  .opp-low     { background:#dc2626; color:#fff; }
+  .opp-unknown { background:#6b7280; color:#fff; }
 
   /* ── Research modal sections ──────────────────────────────────────────── */
   .rs-signal-stat { display:flex; gap:.5rem; flex-wrap:wrap; margin:.5rem 0; }
@@ -629,13 +629,13 @@ _HTML = r"""<!DOCTYPE html>
     display:inline-block; padding:.15rem .5rem; border-radius:4px;
     font-size:.68rem; font-weight:700; margin:.15rem .1rem;
   }
-  .rs-pass { background:#14532d; color:#4ade80; }
-  .rs-warn { background:#451a03; color:#fbbf24; }
-  .rs-fail { background:#450a0a; color:#f87171; }
-  .rs-unknown { background:var(--bg-card3); color:var(--text-faint); }
-  .rs-fresh  { background:#14532d; color:#4ade80; }
-  .rs-stale  { background:#451a03; color:#fbbf24; }
-  .rs-missing { background:var(--bg-card3); color:var(--text-faint); }
+  .rs-pass    { background:#16a34a; color:#fff; }
+  .rs-warn    { background:#d97706; color:#fff; }
+  .rs-fail    { background:#dc2626; color:#fff; }
+  .rs-unknown { background:#6b7280; color:#fff; }
+  .rs-fresh   { background:#16a34a; color:#fff; }
+  .rs-stale   { background:#d97706; color:#fff; }
+  .rs-missing { background:#6b7280; color:#fff; }
   .rs-steps { padding-left:1.2rem; margin:.4rem 0; }
   .rs-steps li { font-size:.8rem; color:var(--text-muted); margin:.3rem 0; line-height:1.4; }
   .rs-history-row { font-size:.78rem; color:var(--text-muted); margin:.2rem 0; }
