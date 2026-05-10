@@ -589,7 +589,7 @@ _HTML = r"""<!DOCTYPE html>
   .modal-section { margin-top:1.1rem; }
   .modal-section-title {
     font-size:.68rem; text-transform:uppercase; letter-spacing:.08em;
-    color:var(--text-faint); margin-bottom:.5rem; border-bottom:1px solid var(--border);
+    color:var(--text-muted2); margin-bottom:.5rem; border-bottom:1px solid var(--border);
     padding-bottom:.3rem;
   }
   .rank-chip {
@@ -648,7 +648,7 @@ _HTML = r"""<!DOCTYPE html>
     padding:.17rem .5rem; border-radius:.25rem;
     min-width:5.8rem; text-align:center; margin-top:.12rem;
   }
-  .why-text { font-size:.8rem; color:var(--text-muted); line-height:1.5; }
+  .why-text { font-size:.8rem; color:var(--text-2); line-height:1.5; }
   .why-sig-validated  { background:#166534; color:#fff; }
   .why-sig-borderline { background:#92400e; color:#fff; }
   .why-sig-exploratory, .why-sig-none { background:#374151; color:#fff; }
@@ -667,9 +667,9 @@ _HTML = r"""<!DOCTYPE html>
     display:inline-block; padding:.05rem .35rem; border-radius:3px;
     font-size:.65rem; font-weight:700; margin-right:.3rem;
   }
-  .rs-dir-long { background:#14532d; color:#4ade80; }
-  .rs-dir-midterm { background:#164e63; color:#22d3ee; }
-  .rs-dir-opportunity { background:#431407; color:#fb923c; }
+  .rs-dir-long { background:#166534; color:#fff; }
+  .rs-dir-midterm { background:#155e75; color:#fff; }
+  .rs-dir-opportunity { background:#7c2d12; color:#fff; }
   .rs-signal-status-validated { color:#4ade80; font-weight:700; }
   .rs-signal-status-borderline { color:#fbbf24; font-weight:700; }
   .rs-signal-status-exploratory { color:var(--text-faint); font-weight:700; }
