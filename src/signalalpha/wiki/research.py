@@ -11,6 +11,7 @@ from pathlib import Path
 import duckdb
 
 from signalalpha.quality.human_quality import evaluate_human_quality_batch
+from signalalpha.opportunity.opportunity_potential import evaluate_opportunity_batch
 
 _FORBIDDEN = ("buy", "sell", "hold", "recommend", "target price", "stop loss")
 
@@ -174,6 +175,11 @@ def build_research(
     signal  = _signal_stats(db, ticker)
     quality = evaluate_human_quality_batch(db, [ticker], {ticker: sector or ""})
     hq      = quality.get(ticker, {})
+    opp_map = evaluate_opportunity_batch(
+        db, [ticker], {ticker: sector or ""},
+        human_quality_map={ticker: hq},
+    )
+    opp     = opp_map.get(ticker, {})
     context = _wiki_context(ticker, wiki_root)
     history = _recent_appearances(db, ticker)
     steps   = _next_steps(context, hq)
@@ -186,6 +192,12 @@ def build_research(
             "score":   hq.get("score"),
             "checks":  hq.get("checks", {}),
             "summary": hq.get("summary", ""),
+        },
+        "opportunity_potential": {
+            "score":   opp.get("score"),
+            "status":  opp.get("status"),
+            "checks":  opp.get("checks", {}),
+            "summary": opp.get("summary", ""),
         },
         "context":    context,
         "history":    {"recent_appearances": history},

@@ -30,6 +30,8 @@ _FIELDS = (
     "trailingEps",
     "earningsGrowth",
     "earningsQuarterlyGrowth",
+    "marketCap",
+    "revenueGrowth",
 )
 
 
@@ -89,6 +91,8 @@ def ingest_ticker(con, ticker: str, as_of_date: dt.date) -> FundamentalsStats:
     trailing_eps         = _safe_float(info, "trailingEps")
     eps_growth_yoy       = _safe_float(info, "earningsGrowth")
     eps_growth_quarterly = _safe_float(info, "earningsQuarterlyGrowth")
+    market_cap           = _safe_float(info, "marketCap")
+    revenue_growth       = _safe_float(info, "revenueGrowth")
 
     # Fall back to income statement computation when yfinance doesn't carry earningsGrowth
     if eps_growth_yoy is None and eps_growth_quarterly is None:
@@ -97,8 +101,9 @@ def ingest_ticker(con, ticker: str, as_of_date: dt.date) -> FundamentalsStats:
     con.execute("""
         INSERT INTO fundamentals
             (ticker, as_of_date, trailing_pe, forward_pe, price_to_book,
-             trailing_eps, eps_growth_yoy, eps_growth_quarterly, fetched_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, now())
+             trailing_eps, eps_growth_yoy, eps_growth_quarterly,
+             market_cap, revenue_growth, fetched_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now())
         ON CONFLICT (ticker, as_of_date) DO UPDATE SET
             trailing_pe          = excluded.trailing_pe,
             forward_pe           = excluded.forward_pe,
@@ -106,9 +111,12 @@ def ingest_ticker(con, ticker: str, as_of_date: dt.date) -> FundamentalsStats:
             trailing_eps         = excluded.trailing_eps,
             eps_growth_yoy       = excluded.eps_growth_yoy,
             eps_growth_quarterly = excluded.eps_growth_quarterly,
+            market_cap           = excluded.market_cap,
+            revenue_growth       = excluded.revenue_growth,
             fetched_at           = excluded.fetched_at
     """, [ticker, as_of_date, trailing_pe, forward_pe, price_to_book,
-          trailing_eps, eps_growth_yoy, eps_growth_quarterly])
+          trailing_eps, eps_growth_yoy, eps_growth_quarterly,
+          market_cap, revenue_growth])
 
     return FundamentalsStats(ticker=ticker, fetched=True)
 

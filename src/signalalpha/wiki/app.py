@@ -18,6 +18,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 
 from signalalpha.wiki.admin import _open_db, router as admin_router
 from signalalpha.quality.human_quality import evaluate_human_quality_batch
+from signalalpha.opportunity.opportunity_potential import evaluate_opportunity_batch
 from signalalpha.wiki.auth import (
     LOGIN_HTML, check_invite_code, is_public, make_token, verify_token,
     COOKIE_NAME, MAX_AGE_DAYS,
@@ -608,6 +609,13 @@ _HTML = r"""<!DOCTYPE html>
     transition:background .12s, color .12s;
   }
   .research-btn:hover { background:rgba(99,102,241,.25); color:#c7d2fe; }
+
+  /* ── Opportunity badge ────────────────────────────────────────────────── */
+  .opp-badge { display:inline-block; padding:.15rem .5rem; border-radius:4px; font-size:.65rem; font-weight:700; letter-spacing:.03em; }
+  .opp-high    { background:#14532d; color:#4ade80; }
+  .opp-medium  { background:#451a03; color:#fbbf24; }
+  .opp-low     { background:#450a0a; color:#f87171; }
+  .opp-unknown { background:var(--bg-card3); color:var(--text-faint); }
 
   /* ── Research modal sections ──────────────────────────────────────────── */
   .rs-signal-stat { display:flex; gap:.5rem; flex-wrap:wrap; margin:.5rem 0; }
@@ -1459,7 +1467,7 @@ function _rsDirChip(dir) {
 async function openResearch(ticker, name) {
   document.getElementById('rs-ticker').textContent = ticker;
   document.getElementById('rs-name').textContent = name || '';
-  ['rs-signal','rs-quality','rs-context','rs-history','rs-steps'].forEach(id => {
+  ['rs-signal','rs-quality','rs-opportunity','rs-context','rs-history','rs-steps'].forEach(id => {
     document.getElementById(id).innerHTML = '<span style="color:var(--text-faint);font-size:.8rem">Loading…</span>';
   });
   document.getElementById('research-modal').classList.add('open');
@@ -1504,7 +1512,35 @@ async function openResearch(ticker, name) {
     }
     document.getElementById('rs-quality').innerHTML = qHtml || '<span style="color:var(--text-faint);font-size:.8rem">No quality data.</span>';
 
-    // 3. Context Status
+    // 3. Opportunity Potential
+    const opp = d.opportunity_potential || {};
+    const oppChecks = opp.checks || {};
+    const OPP_LABELS = {
+      valuation_room:'Valuation Room', growth_support:'Growth Support',
+      technical_extension:'Technical Extension', market_cap_asymmetry:'Market Cap',
+      sector_tailwind:'Sector Tailwind', risk_penalty:'Risk Penalty',
+    };
+    const oppStatusCls = { high:'opp-high', medium:'opp-medium', low:'opp-low', unknown:'opp-unknown' };
+    let oppHtml = '';
+    if (opp.status) {
+      oppHtml += `<div style="margin-bottom:.5rem">
+        <span class="opp-badge ${oppStatusCls[opp.status]||'opp-unknown'}">${escHtml((opp.status||'unknown').toUpperCase())}</span>
+        <span style="font-size:.73rem;color:var(--text-faint);margin-left:.4rem">Opportunity Potential</span>
+      </div>`;
+    }
+    oppHtml += Object.entries(OPP_LABELS).map(([k, lbl]) => {
+      const c = oppChecks[k] || { status:'unknown', reason:'' };
+      return `<div style="margin:.3rem 0">
+        ${_rsBadge(c.status, lbl)}
+        <span style="font-size:.73rem;color:var(--text-faint);margin-left:.3rem">${escHtml(c.reason||'')}</span>
+      </div>`;
+    }).join('');
+    if (opp.summary) {
+      oppHtml += `<div style="font-size:.78rem;color:var(--text-muted);margin-top:.5rem;line-height:1.4">${escHtml(opp.summary)}</div>`;
+    }
+    document.getElementById('rs-opportunity').innerHTML = oppHtml || '<span style="color:var(--text-faint);font-size:.8rem">No opportunity data.</span>';
+
+    // 4. Context Status
     const ctx = d.context || {};
     const freshCls = { current:'rs-fresh', stale:'rs-stale', missing:'rs-missing' }[ctx.freshness_status] || 'rs-missing';
     document.getElementById('rs-context').innerHTML = `
@@ -1518,7 +1554,7 @@ async function openResearch(ticker, name) {
         ${ctx.freshness_status === 'stale' ? '<div style="color:#fbbf24;margin-top:.3rem;font-size:.75rem">⚠ Context is stale — verify before relying on this candidate.</div>' : ''}
       </div>`;
 
-    // 4. Recent Appearances
+    // 5. Recent Appearances
     const appearances = (d.history || {}).recent_appearances || [];
     if (appearances.length) {
       document.getElementById('rs-history').innerHTML = appearances.map(a =>
@@ -1528,14 +1564,14 @@ async function openResearch(ticker, name) {
       document.getElementById('rs-history').innerHTML = '<span style="color:var(--text-faint);font-size:.8rem">Not yet in ranking snapshots.</span>';
     }
 
-    // 5. Next Steps
+    // 6. Next Steps
     const steps = d.next_steps || [];
     document.getElementById('rs-steps').innerHTML = steps.length
       ? `<ul class="rs-steps">${steps.map(s => `<li>${escHtml(s)}</li>`).join('')}</ul>`
       : '<span style="color:var(--text-faint);font-size:.8rem">No steps available.</span>';
 
   } catch(err) {
-    ['rs-signal','rs-quality','rs-context','rs-history','rs-steps'].forEach(id => {
+    ['rs-signal','rs-quality','rs-opportunity','rs-context','rs-history','rs-steps'].forEach(id => {
       document.getElementById(id).innerHTML = `<span style="color:#f87171;font-size:.8rem">Error: ${escHtml(String(err))}</span>`;
     });
   }
@@ -1686,6 +1722,13 @@ function _hqBadge(status, label) {
   const cls = { pass:'hq-pass', warn:'hq-warn', fail:'hq-fail', unknown:'hq-unknown' }[status] || 'hq-unknown';
   return `<span class="hq-badge ${cls}" title="${escAttr(label)}">${escHtml(label)}</span>`;
 }
+function _oppBadge(status) {
+  if (!status) return '';
+  const CLS = { high:'opp-high', medium:'opp-medium', low:'opp-low', unknown:'opp-unknown' };
+  const LBL = { high:'OPP: HIGH', medium:'OPP: MED', low:'OPP: LOW', unknown:'OPP: —' };
+  return `<span class="opp-badge ${CLS[status]||'opp-unknown'}" title="Opportunity Potential: ${status.toUpperCase()}">${LBL[status]||'OPP: —'}</span>`;
+}
+
 function _hqRow(hq) {
   if (!hq) return '';
   const LIQ = hq.liquidity,  TRD = hq.trend,  MKT = hq.market_alignment;
@@ -1781,6 +1824,7 @@ function renderTop10(data, allModes = new Set()) {
         ${discountDisp}
       </div>
       ${_hqRow(s.human_quality)}
+      <div style="margin:.25rem 0">${_oppBadge(s.opportunity_status)}</div>
       <div class="score-bar-wrap">
         <div class="score-bar-fill" style="width:${barPct}%"></div>
       </div>
@@ -1816,7 +1860,7 @@ function renderTop10(data, allModes = new Set()) {
       <th class="lb-rank">#</th>
       <th>Ticker</th><th>Company</th><th>Sector</th>
       <th>Signals</th><th>${alphaHdr}</th><th>${hrHdr}</th><th>${retHdr}</th>
-      <th>Last Signal</th><th>Quality</th><th class="lb-bar-cell">Score</th>
+      <th>Last Signal</th><th>Quality</th><th>Opportunity</th><th class="lb-bar-cell">Score</th>
     </tr></thead><tbody>`;
 
   rest.forEach((s, i) => {
@@ -1851,6 +1895,7 @@ function renderTop10(data, allModes = new Set()) {
       <td>${retVal}</td>
       <td class="neu" style="font-size:.73rem">${s.last_signal || '—'}</td>
       <td>${_hqRow(s.human_quality)}</td>
+      <td>${_oppBadge(s.opportunity_status)}</td>
       <td class="lb-bar-cell">
         <div class="lb-bar"><div class="${barClass}" style="width:${barPct}%"></div></div>
       </td>
@@ -1958,6 +2003,11 @@ loadPages();
     <div class="modal-section">
       <div class="modal-section-title">Human Quality Checks</div>
       <div id="rs-quality"><span style="color:var(--text-faint);font-size:.8rem">Loading…</span></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Opportunity Potential</div>
+      <div id="rs-opportunity"><span style="color:var(--text-faint);font-size:.8rem">Loading…</span></div>
     </div>
 
     <div class="modal-section">
@@ -2179,6 +2229,17 @@ async def top10_endpoint(
                     s[col] = round(s[col] * multiplier, 6)
 
         stocks.sort(key=lambda s: s.get(order_col) or 0, reverse=True)
+
+        # Opportunity potential (metadata only — does not affect ranking in v1)
+        hq_map = {s["ticker"]: {"checks": s["human_quality"]} for s in stocks}
+        opp    = evaluate_opportunity_batch(db, [s["ticker"] for s in stocks], sector_map,
+                                            human_quality_map=hq_map)
+        for s in stocks:
+            o = opp.get(s["ticker"], {})
+            s["opportunity_score"]   = o.get("score")
+            s["opportunity_status"]  = o.get("status")
+            s["opportunity_summary"] = o.get("summary", "")
+            s["opportunity"]         = o.get("checks", {})
 
         return JSONResponse({
             "score_by": order_col,

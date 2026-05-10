@@ -153,10 +153,15 @@ CREATE TABLE IF NOT EXISTS fundamentals (
     trailing_eps             DOUBLE,
     eps_growth_yoy           DOUBLE,
     eps_growth_quarterly     DOUBLE,
+    market_cap               DOUBLE,
+    revenue_growth           DOUBLE,
     fetched_at               TIMESTAMP DEFAULT now(),
     PRIMARY KEY (ticker, as_of_date)
 );
 CREATE INDEX IF NOT EXISTS fundamentals_ticker_idx ON fundamentals(ticker);
+-- Migrate existing fundamentals tables to add new columns (safe to run repeatedly)
+ALTER TABLE fundamentals ADD COLUMN IF NOT EXISTS market_cap DOUBLE;
+ALTER TABLE fundamentals ADD COLUMN IF NOT EXISTS revenue_growth DOUBLE;
 """
 
 
