@@ -802,6 +802,7 @@ _HTML = r"""<!DOCTYPE html>
           <option value="alpha">Avg alpha vs sector</option>
           <option value="hitrate">Hit rate</option>
           <option value="blended">Blended (Signal &times; Quality &times; Opportunity)</option>
+          <option value="investor">Investor Rank (Quality &amp; Opportunity weighted)</option>
         </select>
       </div>
       <div class="filter-group">
@@ -1789,7 +1790,7 @@ function renderTop10(data, allModes = new Set()) {
   const isOpp     = data.direction === 'opportunity';
   const isMidterm = data.direction === 'midterm';
   const scoreKey  = isOpp ? 'opp_score' : isMidterm ? 'midterm_score'
-    : (data.score_by === 'blended' ? 'composite_score' : (data.score_by || 'composite_score'));
+    : (['blended','investor'].includes(data.score_by) ? 'composite_score' : (data.score_by || 'composite_score'));
   const maxScore  = stocks.length && stocks[0][scoreKey] ? stocks[0][scoreKey] : 1;
 
   const pct = v => v === null || v === undefined ? '—'
@@ -1885,8 +1886,10 @@ function renderTop10(data, allModes = new Set()) {
   // ── Leaderboard (#4–10) ─────────────────────────────────────────────────────
   const rest    = stocks.slice(3);
   const boardEl = document.getElementById('t10-board');
-  const boardTitle = isOpp     ? `Pullback Candidates — #4 to #${stocks.length}`
-    : isMidterm ? `Mid-term Candidates (1–3 months, lower volatility) — #4 to #${stocks.length}`
+  const isInvestor = data.score_by === 'investor';
+  const boardTitle = isOpp      ? `Pullback Candidates — #4 to #${stocks.length}`
+    : isMidterm  ? `Mid-term Candidates (1–3 months, lower volatility) — #4 to #${stocks.length}`
+    : isInvestor ? `Investor Candidates — #4 to #${stocks.length}`
     : `Research Candidates — #4 to #${stocks.length}`;
 
   if (!rest.length) {
@@ -2272,15 +2275,18 @@ async def top10_endpoint(
             s["human_quality_score"]   = hq_score
             s["human_quality"]         = q.get("checks", {})
             s["human_quality_summary"] = q.get("summary", "")
-            # Apply quality multiplier to all score columns so ranking reflects quality
-            multiplier = 0.75 + 0.25 * hq_score
+            # Quality multiplier: narrow range for standard modes, wide for investor
+            q_base   = 0.4  if score_by == "investor" else 0.75
+            q_range  = 0.6  if score_by == "investor" else 0.25
+            multiplier = q_base + q_range * hq_score
             for col in ("composite_score", "midterm_score", "opp_score"):
                 if s.get(col) is not None:
                     s[col] = round(s[col] * multiplier, 6)
 
         stocks.sort(key=lambda s: s.get(order_col) or 0, reverse=True)
 
-        # Opportunity potential (metadata only — does not affect ranking in v1)
+        # Opportunity potential — always computed; also used as a ranking multiplier
+        # for blended (narrow range) and investor (wide range) modes
         hq_map = {s["ticker"]: {"checks": s["human_quality"]} for s in stocks}
         opp    = evaluate_opportunity_batch(db, [s["ticker"] for s in stocks], sector_map,
                                             human_quality_map=hq_map)
@@ -2291,16 +2297,18 @@ async def top10_endpoint(
             s["opportunity_summary"] = o.get("summary", "")
             s["opportunity"]         = o.get("checks", {})
 
-        if score_by == "blended":
+        if score_by in ("blended", "investor"):
+            o_base  = 0.4  if score_by == "investor" else 0.75
+            o_range = 0.6  if score_by == "investor" else 0.25
             for s in stocks:
-                opp_mult = 0.75 + 0.25 * (s.get("opportunity_score") or 0.5)
+                opp_mult = o_base + o_range * (s.get("opportunity_score") or 0.5)
                 for col in ("composite_score", "midterm_score", "opp_score"):
                     if s.get(col) is not None:
                         s[col] = round(s[col] * opp_mult, 6)
             stocks.sort(key=lambda s: s.get(order_col) or 0, reverse=True)
 
         return JSONResponse({
-            "score_by": score_by if score_by == "blended" else order_col,
+            "score_by": score_by if score_by in ("blended", "investor") else order_col,
             "direction": direction,
             "signal_filter": signal_filter,
             "sector": sector,

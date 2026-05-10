@@ -9,7 +9,7 @@ import duckdb
 
 VALID_FILTERS   = {"all", "validated", "borderline"}
 VALID_SECTORS   = {"all", "ai_infra", "space_defense", "telecom"}
-VALID_SCORE     = {"composite", "alpha", "hitrate", "blended"}
+VALID_SCORE     = {"composite", "alpha", "hitrate", "blended", "investor"}
 VALID_DIRECTION = {"long", "short", "midterm", "opportunity"}
 
 NUMERIC_COLS = (
@@ -23,11 +23,11 @@ def resolve_direction(direction: str, score_by: str) -> tuple[str, str, str]:
     """Return (dir_having, order_col, order_dir) for the given direction."""
     if direction == "long":
         dir_having = ""
-        _sb = "composite" if score_by == "blended" else score_by
+        _sb = "composite" if score_by in ("blended", "investor") else score_by
         order_col = {"composite": "composite_score", "alpha": "avg_alpha", "hitrate": "hit_rate"}[_sb]
     elif direction == "short":
         dir_having = "AND AVG(se.alpha_sector) < 0"
-        _sb = "composite" if score_by == "blended" else score_by
+        _sb = "composite" if score_by in ("blended", "investor") else score_by
         order_col = {"composite": "short_score", "alpha": "abs_alpha", "hitrate": "short_hit_rate"}[_sb]
     elif direction == "opportunity":
         dir_having = "AND AVG(se.alpha_sector) > 0 AND STDDEV(se.net_return) > 0"
