@@ -1456,7 +1456,7 @@ async function openStockDetail(ticker, name) {
       events.forEach(e => {
         tbl += `<tr>
           <td class="neu">${e.event_date}</td>
-          <td style="color:var(--text-muted);font-size:.72rem">${escHtml(e.signal_name)}</td>
+          <td style="color:var(--text-muted);font-size:.72rem">${escHtml(_sigLabel(e.signal_name))}</td>
           <td class="neu">${e.hold_days}d</td>
           <td><span class="${e.net_return >= 0 ? 'pos' : 'neg'}">${e.net_return >= 0 ? '+' : ''}${(e.net_return * 100).toFixed(2)}%</span></td>
           <td><span class="${e.alpha_sector >= 0 ? 'pos' : 'neg'}">${e.alpha_sector >= 0 ? '+' : ''}${(e.alpha_sector * 100).toFixed(2)}%</span></td>
@@ -1481,6 +1481,37 @@ function closeResearch() {
 function _rsStatusCls(status) {
   return { pass:'rs-pass', warn:'rs-warn', fail:'rs-fail', unknown:'rs-unknown' }[status] || 'rs-unknown';
 }
+const _SIGNAL_LABELS = {
+  'volume_anomaly_5_60_t2.0':                        'Volume Anomaly ×2.0',
+  'volume_anomaly_5_60_t2.0__hold5d':                'Volume Anomaly ×2.0 — 5d Hold',
+  'volume_anomaly_5_60_t2.0__hold10d':               'Volume Anomaly ×2.0 — 10d Hold',
+  'volume_anomaly_5_60_t2.0__hold15d':               'Volume Anomaly ×2.0 — 15d Hold ★',
+  'volume_anomaly_5_60_t2.0__hold20d':               'Volume Anomaly ×2.0 — 20d Hold',
+  'volume_anomaly_5_60_t2.0__hold30d':               'Volume Anomaly ×2.0 — 30d Hold',
+  'volume_anomaly_5_60_t2.0__holdout_10d':           'Volume Anomaly ×2.0 — Holdout 10d',
+  'volume_anomaly_5_60_t2.0__holdout_15d':           'Volume Anomaly ×2.0 — Holdout 15d ★',
+  'volume_anomaly_5_60_t2.0_ai_infra':               'Volume Anomaly ×2.0 — AI Infra',
+  'volume_anomaly_5_60_t2.0_space_defense':          'Volume Anomaly ×2.0 — Space & Defense',
+  'volume_anomaly_5_60_t3.0_space_defense':          'Volume Anomaly ×3.0 — Space & Defense',
+  'volume_anomaly_5_60_t2.0_defense_excl_speculative':'Volume Anomaly ×2.0 — Defense (excl. speculative)',
+  'patent_cluster_telecom_n5_w30d_hold45':           'Patent Cluster — Telecom 45d Hold ★',
+  'patent_cluster_n5_w30d':                          'Patent Cluster — All Sectors',
+  '8k_excl_earnings':                                '8-K Excl. Earnings',
+  '8k_excl_earnings__hold5d':                        '8-K Excl. Earnings — 5d Hold',
+  '8k_excl_earnings__hold10d':                       '8-K Excl. Earnings — 10d Hold',
+  '8k_excl_earnings__hold15d':                       '8-K Excl. Earnings — 15d Hold',
+  '8k_excl_earnings__hold20d':                       '8-K Excl. Earnings — 20d Hold',
+  '8k_excl_earnings__hold30d':                       '8-K Excl. Earnings — 30d Hold',
+  '8k_excl_earnings__holdout_30d':                   '8-K Excl. Earnings — Holdout 30d',
+  '8k_any':                                          '8-K Any Filing',
+  '8k_item_1_01':                                    '8-K Item 1.01 — Material Agreement',
+  'earnings_surprise_q75':                           'Earnings Surprise Q75',
+  'insider_buy_100k':                                'Insider Buy $100k+',
+};
+function _sigLabel(name) {
+  return _SIGNAL_LABELS[name] || name;
+}
+
 function _rsBadge(status, label) {
   return `<span class="rs-badge ${_rsStatusCls(status)}">${escHtml(label.toUpperCase())}: ${escHtml((status||'unknown').toUpperCase())}</span>`;
 }
@@ -1536,7 +1567,7 @@ async function openResearch(ticker, name) {
       const stCls  = `rs-signal-status-${sig.status}`;
       document.getElementById('rs-signal').innerHTML = `
         <div class="rs-signal-stat">
-          <div class="rs-stat-pill"><b>${escHtml(sig.name||'—')}</b><span>Signal name</span></div>
+          <div class="rs-stat-pill"><b>${escHtml(_sigLabel(sig.name||''))}</b><span>Signal name</span></div>
           <div class="rs-stat-pill"><b class="${sig.alpha!==null?(sig.alpha>=0?'pos':'neg'):'neu'}">${alpha}</b><span>Avg alpha vs sector</span></div>
           <div class="rs-stat-pill"><b class="${sig.hit_rate!==null?(sig.hit_rate>=.5?'pos':'neg'):'neu'}">${hr}</b><span>Win rate</span></div>
           <div class="rs-stat-pill"><b class="neu">${sig.n_events}</b><span>Historical events</span></div>
