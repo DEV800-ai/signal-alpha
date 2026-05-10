@@ -674,6 +674,45 @@ _HTML = r"""<!DOCTYPE html>
   .rs-signal-status-borderline { color:#fbbf24; font-weight:700; }
   .rs-signal-status-exploratory { color:var(--text-faint); font-weight:700; }
 
+  /* ── Portfolio Context ────────────────────────────────────────────────── */
+  .pc-grid { display:flex; flex-wrap:wrap; gap:.45rem; margin:.35rem 0 .6rem; }
+  .pc-badge {
+    display:inline-block; padding:.18rem .55rem; border-radius:5px;
+    font-size:.68rem; font-weight:700; letter-spacing:.04em;
+  }
+  .pc-role-Core        { background:#166534; color:#fff; }
+  .pc-role-Growth      { background:#155e75; color:#fff; }
+  .pc-role-Speculative { background:#7c2d12; color:#fff; }
+  .pc-role-Watchlist   { background:#374151; color:#fff; }
+  .pc-risk-Low    { background:#14532d; color:#fff; }
+  .pc-risk-Medium { background:#713f12; color:#fff; }
+  .pc-risk-High   { background:#7f1d1d; color:#fff; }
+  .pc-conv-High   { background:#1e3a5f; color:#fff; }
+  .pc-conv-Medium { background:#312e81; color:#fff; }
+  .pc-conv-Low    { background:#374151; color:#fff; }
+  .pc-theme { background:var(--bg-card3); color:var(--text-muted2); border:1px solid var(--border); }
+  .pc-exposure { background:var(--bg-card3); color:var(--text-muted); border:1px solid var(--border); font-size:.63rem; }
+  .pc-label {
+    font-size:.6rem; font-weight:700; letter-spacing:.06em;
+    color:var(--text-muted); margin-right:.3rem;
+  }
+  .pc-summary {
+    font-size:.78rem; color:var(--text-muted); line-height:1.5; margin-top:.5rem;
+  }
+  .pc-conv-reason {
+    font-size:.73rem; color:var(--text-2); margin-top:.2rem;
+  }
+  body.light .pc-role-Core        { background:#16a34a; }
+  body.light .pc-role-Growth      { background:#0891b2; }
+  body.light .pc-role-Speculative { background:#ea580c; }
+  body.light .pc-role-Watchlist   { background:#6b7280; }
+  body.light .pc-risk-Low    { background:#16a34a; }
+  body.light .pc-risk-Medium { background:#d97706; }
+  body.light .pc-risk-High   { background:#dc2626; }
+  body.light .pc-conv-High   { background:#2563eb; }
+  body.light .pc-conv-Medium { background:#7c3aed; }
+  body.light .pc-conv-Low    { background:#6b7280; }
+
   /* ── Light mode overrides ─────────────────────────────────────────────── */
   body.light .signal-card { background:var(--bg-card2); }
   body.light .signal-card:hover { background:var(--bg-card3); border-color:#6366f1; }
@@ -1592,7 +1631,7 @@ function _rsDirChip(dir) {
 async function openResearch(ticker, name) {
   document.getElementById('rs-ticker').textContent = ticker;
   document.getElementById('rs-name').textContent = name || '';
-  ['rs-why','rs-signal','rs-quality','rs-opportunity','rs-context','rs-history','rs-steps'].forEach(id => {
+  ['rs-why','rs-portfolio','rs-signal','rs-quality','rs-opportunity','rs-context','rs-history','rs-steps'].forEach(id => {
     document.getElementById(id).innerHTML = '<span style="color:var(--text-faint);font-size:.8rem">Loading…</span>';
   });
   document.getElementById('research-modal').classList.add('open');
@@ -1625,6 +1664,29 @@ async function openResearch(ticker, name) {
           <span class="why-text">${escHtml(why.main_caution || '—')}</span>
         </div>
       </div>`;
+
+    // 1b. Portfolio Context
+    const pc = d.portfolio_context || {};
+    if (pc.role) {
+      const roleCls = `pc-role-${pc.role}`;
+      const riskCls = `pc-risk-${pc.risk_bucket||'Medium'}`;
+      const conv    = pc.conviction || {};
+      const convCls = `pc-conv-${conv.level||'Low'}`;
+      const themes  = (pc.themes || []).map(t => `<span class="pc-badge pc-theme">${escHtml(t)}</span>`).join('');
+      const expo    = (pc.exposure_profile || []).map(e => `<span class="pc-badge pc-exposure">${escHtml(e)}</span>`).join('');
+      document.getElementById('rs-portfolio').innerHTML = `
+        <div class="pc-grid">
+          <span><span class="pc-label">ROLE</span><span class="pc-badge ${roleCls}">${escHtml(pc.role)}</span></span>
+          <span><span class="pc-label">RISK</span><span class="pc-badge ${riskCls}">${escHtml(pc.risk_bucket||'Medium')}</span></span>
+          <span><span class="pc-label">CONVICTION</span><span class="pc-badge ${convCls}">${escHtml(conv.level||'Low')}</span></span>
+        </div>
+        ${conv.reason ? `<div class="pc-conv-reason">${escHtml(conv.reason)}</div>` : ''}
+        ${themes ? `<div style="margin:.4rem 0"><span class="pc-label">THEMES</span>${themes}</div>` : ''}
+        ${expo   ? `<div style="margin:.2rem 0"><span class="pc-label">EXPOSURE</span>${expo}</div>` : ''}
+        ${pc.summary ? `<div class="pc-summary">${escHtml(pc.summary)}</div>` : ''}`;
+    } else {
+      document.getElementById('rs-portfolio').innerHTML = '<span style="color:var(--text-faint);font-size:.8rem">Portfolio context unavailable.</span>';
+    }
 
     // 1. Signal Strength
     const sig = d.signal;
@@ -1722,7 +1784,7 @@ async function openResearch(ticker, name) {
       : '<span style="color:var(--text-faint);font-size:.8rem">No steps available.</span>';
 
   } catch(err) {
-    ['rs-signal','rs-quality','rs-opportunity','rs-context','rs-history','rs-steps'].forEach(id => {
+    ['rs-portfolio','rs-signal','rs-quality','rs-opportunity','rs-context','rs-history','rs-steps'].forEach(id => {
       document.getElementById(id).innerHTML = `<span style="color:#f87171;font-size:.8rem">Error: ${escHtml(String(err))}</span>`;
     });
   }
@@ -2152,6 +2214,11 @@ loadPages();
     <div class="modal-section">
       <div class="modal-section-title">Why This Candidate Is Here</div>
       <div id="rs-why"><span style="color:var(--text-faint);font-size:.8rem">Loading…</span></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Portfolio Context</div>
+      <div id="rs-portfolio"><span style="color:var(--text-faint);font-size:.8rem">Loading…</span></div>
     </div>
 
     <div class="modal-section" id="rs-signal-section">

@@ -12,6 +12,7 @@ import duckdb
 
 from signalalpha.quality.human_quality import evaluate_human_quality_batch
 from signalalpha.opportunity.opportunity_potential import evaluate_opportunity_batch
+from signalalpha.portfolio.portfolio_context import build_portfolio_context
 
 _FORBIDDEN = ("buy", "sell", "hold", "recommend", "target price", "stop loss")
 
@@ -294,11 +295,19 @@ def build_research(
     history = _recent_appearances(db, ticker)
     steps   = _next_steps(context, hq)
     why     = _why_here(signal, hq, opp)
+    portfolio = build_portfolio_context(
+        ticker=ticker,
+        sector=sector or "",
+        signal_data=signal,
+        human_quality=hq,
+        opportunity=opp,
+    )
 
     return {
         "ticker":         ticker,
         "candidate_type": "Top Research Candidate",
         "why_here":       why,
+        "portfolio_context": portfolio,
         "signal":         signal,
         "human_quality":  {
             "score":   hq.get("score"),
