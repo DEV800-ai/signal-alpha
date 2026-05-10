@@ -15,6 +15,17 @@ from signalalpha.opportunity.opportunity_potential import evaluate_opportunity_b
 
 _FORBIDDEN = ("buy", "sell", "hold", "recommend", "target price", "stop loss")
 
+_CHECK_LABELS = {
+    "liquidity": "liquidity", "trend": "price trend",
+    "market_alignment": "market alignment", "eps_growth": "EPS growth",
+    "valuation": "valuation",
+}
+_OPP_LABELS = {
+    "valuation_room": "valuation", "growth_support": "growth",
+    "technical_extension": "technical extension", "market_cap_asymmetry": "market cap",
+    "sector_tailwind": "sector tailwind", "risk_penalty": "risk flags",
+}
+
 
 def _signal_stats(db: duckdb.DuckDBPyConnection, ticker: str) -> dict | None:
     """Best-signal stats for a ticker — picks the run with the lowest p-value."""
@@ -159,6 +170,105 @@ def _next_steps(context: dict, hq: dict) -> list[str]:
     return steps
 
 
+def _why_here(signal: dict | None, hq: dict, opp: dict) -> dict:
+    """Four-point explanation of why this ticker appears as a research candidate."""
+    # 1. Signal line
+    if signal is None:
+        signal_line = "No signal data found for this ticker."
+        signal_level = "none"
+    else:
+        status = signal["status"]
+        alpha_pct = f"{signal['alpha']*100:+.1f}%" if signal.get("alpha") is not None else "—"
+        n = signal.get("n_events", 0)
+        p = signal.get("p_value")
+        p_str = f"p={p:.3f}" if p is not None else ""
+        if status == "validated":
+            signal_line = (
+                f"Statistically validated signal ({p_str}) — {alpha_pct} avg alpha "
+                f"vs sector across {n} historical events."
+            )
+        elif status == "borderline":
+            signal_line = (
+                f"Borderline signal ({p_str}) — shows edge but below the p<0.05 threshold. "
+                f"{alpha_pct} avg alpha across {n} events."
+            )
+        else:
+            signal_line = (
+                f"Exploratory signal — limited statistical significance. "
+                f"{alpha_pct} avg alpha across {n} events."
+            )
+        signal_level = status
+
+    # 2. Quality line
+    checks = hq.get("checks", {})
+    fails = [k for k, v in checks.items() if v.get("status") == "fail"]
+    warns = [k for k, v in checks.items() if v.get("status") == "warn"]
+    if not checks:
+        quality_line = "Quality data unavailable."
+    elif not fails and not warns:
+        quality_line = "Passes all quality checks — liquidity, trend, market alignment, and fundamentals look healthy."
+    elif fails:
+        labels = [_CHECK_LABELS.get(f, f) for f in fails]
+        quality_line = f"Quality concern{'s' if len(fails) > 1 else ''} flagged on: {', '.join(labels)}."
+        if warns:
+            quality_line += f" Caution on: {', '.join(_CHECK_LABELS.get(w, w) for w in warns)}."
+    else:
+        quality_line = f"Mostly passes quality checks. Caution on: {', '.join(_CHECK_LABELS.get(w, w) for w in warns)}."
+
+    # 3. Opportunity line
+    opp_status = opp.get("status", "unknown")
+    opp_checks = opp.get("checks", {})
+    opp_fails = [k for k, v in opp_checks.items() if v.get("status") == "fail"]
+    if opp_status == "high":
+        opp_line = "Research upside looks strong — most opportunity checks pass."
+    elif opp_status == "medium":
+        if opp_fails:
+            labels = [_OPP_LABELS.get(f, f) for f in opp_fails]
+            opp_line = f"Research upside is medium. Concern on: {', '.join(labels)}."
+        else:
+            opp_line = "Research upside is medium — some caution flags but no hard blocks."
+    elif opp_status == "low":
+        if opp_fails:
+            labels = [_OPP_LABELS.get(f, f) for f in opp_fails]
+            opp_line = f"Research upside looks limited. Key concerns: {', '.join(labels)}."
+        else:
+            opp_line = "Research upside looks limited across multiple opportunity checks."
+    else:
+        opp_line = "Opportunity potential is unknown — insufficient data to assess research upside."
+
+    # 4. Main caution — single most important concern, pulling from reason text when available
+    caution: str | None = None
+    for f in fails:
+        reason = checks[f].get("reason", "")
+        if reason:
+            caution = reason
+            break
+    if not caution:
+        for f in opp_fails:
+            reason = opp_checks[f].get("reason", "")
+            if reason:
+                caution = reason
+                break
+    if not caution and signal and signal.get("status") != "validated":
+        caution = "Signal is not fully statistically validated — use with extra caution."
+    if not caution:
+        for w in warns:
+            reason = checks[w].get("reason", "")
+            if reason:
+                caution = reason
+                break
+    if not caution:
+        caution = "No major concerns identified from available data."
+
+    return {
+        "signal":       signal_line,
+        "signal_level": signal_level,
+        "quality":      quality_line,
+        "opportunity":  opp_line,
+        "main_caution": caution,
+    }
+
+
 def build_research(
     db: duckdb.DuckDBPyConnection,
     ticker: str,
@@ -183,10 +293,12 @@ def build_research(
     context = _wiki_context(ticker, wiki_root)
     history = _recent_appearances(db, ticker)
     steps   = _next_steps(context, hq)
+    why     = _why_here(signal, hq, opp)
 
     return {
         "ticker":         ticker,
         "candidate_type": "Top Research Candidate",
+        "why_here":       why,
         "signal":         signal,
         "human_quality":  {
             "score":   hq.get("score"),

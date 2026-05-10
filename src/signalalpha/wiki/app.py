@@ -639,6 +639,23 @@ _HTML = r"""<!DOCTYPE html>
   .rs-steps { padding-left:1.2rem; margin:.4rem 0; }
   .rs-steps li { font-size:.8rem; color:var(--text-muted); margin:.3rem 0; line-height:1.4; }
   .rs-history-row { font-size:.78rem; color:var(--text-muted); margin:.2rem 0; }
+
+  /* ── Why This Candidate Is Here ────────────────────────────────────────── */
+  .why-grid { display:flex; flex-direction:column; gap:.55rem; margin:.2rem 0; }
+  .why-row  { display:flex; align-items:flex-start; gap:.65rem; }
+  .why-label {
+    flex-shrink:0; font-size:.6rem; font-weight:800; letter-spacing:.07em;
+    padding:.17rem .5rem; border-radius:.25rem;
+    min-width:5.8rem; text-align:center; margin-top:.12rem;
+  }
+  .why-text { font-size:.8rem; color:var(--text-muted); line-height:1.5; }
+  .why-sig-validated  { background:#166534; color:#fff; }
+  .why-sig-borderline { background:#92400e; color:#fff; }
+  .why-sig-exploratory, .why-sig-none { background:#374151; color:#9ca3af; }
+  .why-label-quality  { background:#1e3a5f; color:#93c5fd; }
+  .why-label-opp      { background:#312e81; color:#a5b4fc; }
+  .why-label-caution  { background:#7c2d12; color:#fdba74; }
+  .why-caution-row .why-text { color:#fcd34d; }
   .rs-dir-chip {
     display:inline-block; padding:.05rem .35rem; border-radius:3px;
     font-size:.65rem; font-weight:700; margin-right:.3rem;
@@ -1468,13 +1485,39 @@ function _rsDirChip(dir) {
 async function openResearch(ticker, name) {
   document.getElementById('rs-ticker').textContent = ticker;
   document.getElementById('rs-name').textContent = name || '';
-  ['rs-signal','rs-quality','rs-opportunity','rs-context','rs-history','rs-steps'].forEach(id => {
+  ['rs-why','rs-signal','rs-quality','rs-opportunity','rs-context','rs-history','rs-steps'].forEach(id => {
     document.getElementById(id).innerHTML = '<span style="color:var(--text-faint);font-size:.8rem">Loading…</span>';
   });
   document.getElementById('research-modal').classList.add('open');
 
   try {
     const d = await (await fetch(`/api/research/${encodeURIComponent(ticker)}`)).json();
+
+    // 0. Why This Candidate Is Here
+    const why = d.why_here || {};
+    const sigLvlCls = {
+      validated:'why-sig-validated', borderline:'why-sig-borderline',
+      exploratory:'why-sig-exploratory', none:'why-sig-none'
+    }[why.signal_level] || 'why-sig-none';
+    document.getElementById('rs-why').innerHTML = `
+      <div class="why-grid">
+        <div class="why-row">
+          <span class="why-label ${sigLvlCls}">SIGNAL</span>
+          <span class="why-text">${escHtml(why.signal || '—')}</span>
+        </div>
+        <div class="why-row">
+          <span class="why-label why-label-quality">QUALITY</span>
+          <span class="why-text">${escHtml(why.quality || '—')}</span>
+        </div>
+        <div class="why-row">
+          <span class="why-label why-label-opp">OPPORTUNITY</span>
+          <span class="why-text">${escHtml(why.opportunity || '—')}</span>
+        </div>
+        <div class="why-row why-caution-row">
+          <span class="why-label why-label-caution">CAUTION</span>
+          <span class="why-text">${escHtml(why.main_caution || '—')}</span>
+        </div>
+      </div>`;
 
     // 1. Signal Strength
     const sig = d.signal;
@@ -1995,6 +2038,11 @@ loadPages();
     <div class="modal-name" id="rs-name" style="margin-bottom:.6rem"></div>
     <div style="font-size:.68rem;color:#a5b4fc;font-weight:700;letter-spacing:.06em;margin-bottom:.8rem">
       TOP RESEARCH CANDIDATE
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Why This Candidate Is Here</div>
+      <div id="rs-why"><span style="color:var(--text-faint);font-size:.8rem">Loading…</span></div>
     </div>
 
     <div class="modal-section" id="rs-signal-section">

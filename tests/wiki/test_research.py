@@ -12,7 +12,7 @@ from pathlib import Path
 import duckdb
 import pytest
 
-from signalalpha.wiki.research import build_research, _FORBIDDEN
+from signalalpha.wiki.research import build_research, _FORBIDDEN, _why_here
 
 TODAY = dt.date.today()
 AS_OF = str(TODAY)
@@ -255,6 +255,85 @@ class TestRecentAppearances:
         assert len(apps) == 2
         assert apps[0]["direction"] == "long"
         assert apps[0]["rank"] == 2
+        db.close()
+
+
+# ── Why Here ──────────────────────────────────────────────────────────────────
+
+class TestWhyHere:
+    def test_why_here_key_in_build_research(self):
+        db = _base_db()
+        with tempfile.TemporaryDirectory() as tmp:
+            r = build_research(db, "AAAA", Path(tmp))
+        assert "why_here" in r
+        why = r["why_here"]
+        assert {"signal", "signal_level", "quality", "opportunity", "main_caution"} <= set(why.keys())
+        db.close()
+
+    def test_validated_signal_level(self):
+        sig = {"status": "validated", "alpha": 0.02, "n_events": 10, "p_value": 0.02}
+        why = _why_here(sig, {}, {})
+        assert why["signal_level"] == "validated"
+        assert "validated" in why["signal"].lower()
+        assert "p=0.020" in why["signal"]
+
+    def test_borderline_signal_level(self):
+        sig = {"status": "borderline", "alpha": 0.01, "n_events": 5, "p_value": 0.08}
+        why = _why_here(sig, {}, {})
+        assert why["signal_level"] == "borderline"
+        assert "borderline" in why["signal"].lower()
+
+    def test_none_signal(self):
+        why = _why_here(None, {}, {})
+        assert why["signal_level"] == "none"
+        assert why["signal"]
+
+    def test_quality_all_pass(self):
+        hq = {"checks": {
+            "liquidity": {"status": "pass", "reason": "ok"},
+            "trend": {"status": "pass", "reason": "ok"},
+        }}
+        why = _why_here(None, hq, {})
+        assert "passes all" in why["quality"].lower()
+
+    def test_quality_with_fail(self):
+        hq = {"checks": {
+            "liquidity": {"status": "fail", "reason": "Low volume"},
+        }}
+        why = _why_here(None, hq, {})
+        assert "liquidity" in why["quality"].lower()
+        assert "Low volume" in why["main_caution"]
+
+    def test_quality_warn_only(self):
+        hq = {"checks": {
+            "valuation": {"status": "warn", "reason": "P/E elevated"},
+        }}
+        why = _why_here(None, hq, {})
+        assert "caution" in why["quality"].lower()
+        assert "valuation" in why["quality"].lower()
+
+    def test_opp_high(self):
+        opp = {"status": "high", "checks": {}}
+        why = _why_here(None, {}, opp)
+        assert "strong" in why["opportunity"].lower()
+
+    def test_opp_low_with_fails(self):
+        opp = {"status": "low", "checks": {
+            "valuation_room": {"status": "fail", "reason": "overvalued"},
+            "technical_extension": {"status": "fail", "reason": "extended"},
+        }}
+        why = _why_here(None, {}, opp)
+        assert "limited" in why["opportunity"].lower()
+        assert "valuation" in why["opportunity"].lower()
+
+    def test_no_forbidden_language_in_why(self):
+        db = _base_db()
+        with tempfile.TemporaryDirectory() as tmp:
+            r = build_research(db, "AAAA", Path(tmp))
+        why = r["why_here"]
+        all_text = " ".join(why.values()).lower()
+        for word in _FORBIDDEN:
+            assert word not in all_text, f"Forbidden word '{word}' found in why_here"
         db.close()
 
 
