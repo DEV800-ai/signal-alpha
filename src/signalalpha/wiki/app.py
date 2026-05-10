@@ -925,7 +925,7 @@ _HTML = r"""<!DOCTYPE html>
         <div class="metric-name">TA Overlay (optional)</div>
         <div class="metric-abbr">RSI · 50-day MA · 200-day MA</div>
         <div class="metric-desc">Toggle the <b>📊 TA</b> button to add technical context on top of the signal ranking. RSI below 40 means oversold (often a better entry). Price above the 50-day moving average means the stock is in short-term uptrend. The TA badge (Bullish / Neutral / Bearish) reflects the overall picture. This is a secondary layer — the signal alpha is the primary signal.</div>
-        <span class="metric-good">Bullish TA + validated signal = stronger setup</span>
+        <span class="metric-good">Technical trend supports the signal context</span>
       </div>
 
     </div>
@@ -954,15 +954,15 @@ _HTML = r"""<!DOCTYPE html>
     <div class="dir-explainer">
       <div class="dir-card dir-card-long">
         <div class="dir-card-title">Long — 12 months+</div>
-        <p>Stocks with strong historical indicators suited for long-term investors. <b>Best for:</b> buy-and-hold positions of 12 months or more. The analysis identifies stocks that consistently outperform their sector over time — good fundamentals for patient capital. Ranked by alpha × hit rate × history. Check the <b>risk badge</b> — LOW RISK means consistent results, HIGH RISK means more volatile swings.</p>
+        <p>Stocks with strong historical indicators and consistent sector outperformance over time. <b>Useful for:</b> long-term research candidates where the signal has fired repeatedly with statistical significance. Ranked by alpha × hit rate × history. Check the <b>risk badge</b> — LOW RISK means consistent results, HIGH RISK means more volatile historical swings.</p>
       </div>
       <div class="dir-card dir-card-mid">
         <div class="dir-card-title">📈 Mid-term — 1 to 3 Months</div>
-        <p><b>Best for:</b> patient holds of 1–3 months. Same signal, but ranks stocks that win consistently <em>and</em> with low volatility. A stock that gains +2% steadily every time beats one that averages +3% with wild swings. Look for <b>LOW RISK</b> badges here.</p>
+        <p><b>Useful for:</b> research candidates with consistent, low-volatility signal performance over 1–3 month horizons. Same signal base, but ranks stocks that win consistently <em>and</em> with low variance. A stock with steady +2% results ranks above one averaging +3% with wild swings. Look for <b>LOW RISK</b> badges here.</p>
       </div>
       <div class="dir-card dir-card-opp">
-        <div class="dir-card-title">💎 Opportunity — Buy the Dip</div>
-        <p style="font-size:.76rem;color:var(--text-muted);line-height:1.65"><b>Best for:</b> active traders looking to buy low and capture a recovery. These are stocks with a <em>proven positive edge</em> that are currently trading <em>below their 50-day moving average</em> — a technical dip. The ranking boosts stocks that are both historically strong <em>and</em> currently at a discount, so the top of the list represents the best combination of signal quality and current price weakness. The <b>Discount vs 50d MA</b> column shows how far below the moving average the stock is — the deeper the dip, the higher the opportunity bonus.</p>
+        <div class="dir-card-title">💎 Opportunity — Pullback Candidates</div>
+        <p style="font-size:.76rem;color:var(--text-muted);line-height:1.65"><b>Useful for:</b> reviewing candidates with a validated historical edge that are currently trading below their 50-day moving average. The ranking surfaces stocks where signal quality and recent price weakness coincide — a combination worth further research context. The <b>Discount vs 50d MA</b> column shows how far below the moving average the stock is trading.</p>
       </div>
     </div>
   </div>
@@ -1842,9 +1842,9 @@ function renderTop10(data, allModes = new Set()) {
   // ── Leaderboard (#4–10) ─────────────────────────────────────────────────────
   const rest    = stocks.slice(3);
   const boardEl = document.getElementById('t10-board');
-  const boardTitle = isOpp     ? `Opportunity Candidates — #4 to #${stocks.length}`
-    : isMidterm ? `Mid-term (1–3 months, lower risk) — #4 to #${stocks.length}`
-    : `Leaderboard — #4 to #${stocks.length}`;
+  const boardTitle = isOpp     ? `Pullback Candidates — #4 to #${stocks.length}`
+    : isMidterm ? `Mid-term Candidates (1–3 months, lower volatility) — #4 to #${stocks.length}`
+    : `Research Candidates — #4 to #${stocks.length}`;
 
   if (!rest.length) {
     boardEl.innerHTML = `<div class="card-title">${boardTitle}</div>` +
