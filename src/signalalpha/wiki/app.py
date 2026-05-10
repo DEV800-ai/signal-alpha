@@ -784,6 +784,7 @@ _HTML = r"""<!DOCTYPE html>
           <option value="composite">Composite (alpha &times; hit rate &times; volume)</option>
           <option value="alpha">Avg alpha vs sector</option>
           <option value="hitrate">Hit rate</option>
+          <option value="blended">Blended (Signal &times; Quality &times; Opportunity)</option>
         </select>
       </div>
       <div class="filter-group">
@@ -1744,7 +1745,8 @@ function renderTop10(data, allModes = new Set()) {
   const stocks    = data.stocks || [];
   const isOpp     = data.direction === 'opportunity';
   const isMidterm = data.direction === 'midterm';
-  const scoreKey  = isOpp ? 'opp_score' : isMidterm ? 'midterm_score' : (data.score_by || 'composite_score');
+  const scoreKey  = isOpp ? 'opp_score' : isMidterm ? 'midterm_score'
+    : (data.score_by === 'blended' ? 'composite_score' : (data.score_by || 'composite_score'));
   const maxScore  = stocks.length && stocks[0][scoreKey] ? stocks[0][scoreKey] : 1;
 
   const pct = v => v === null || v === undefined ? '—'
@@ -2241,8 +2243,16 @@ async def top10_endpoint(
             s["opportunity_summary"] = o.get("summary", "")
             s["opportunity"]         = o.get("checks", {})
 
+        if score_by == "blended":
+            for s in stocks:
+                opp_mult = 0.75 + 0.25 * (s.get("opportunity_score") or 0.5)
+                for col in ("composite_score", "midterm_score", "opp_score"):
+                    if s.get(col) is not None:
+                        s[col] = round(s[col] * opp_mult, 6)
+            stocks.sort(key=lambda s: s.get(order_col) or 0, reverse=True)
+
         return JSONResponse({
-            "score_by": order_col,
+            "score_by": score_by if score_by == "blended" else order_col,
             "direction": direction,
             "signal_filter": signal_filter,
             "sector": sector,

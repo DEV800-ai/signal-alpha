@@ -18,41 +18,94 @@ uv run python -m signalalpha.wiki.app
 | Tab | Description |
 |-----|-------------|
 | **Daily Brief** | Validation status for every signal run — p-value, alpha, Sharpe, context freshness |
-| **Top 10** | Ranked stock leaderboard with three investment modes |
+| **Top 10** | Ranked stock leaderboard with scoring modes and quality/opportunity overlays |
 | **Rotation Log** | History of stocks entering and exiting the Top 10 |
 | **Wiki Editor** | Browse and validate wiki pages; run the auto-generator |
 | **How It Works** | Plain-language explainer — what the numbers mean and how the system works |
 
-### Top 10 — Three Investment Modes
+### Top 10 — Investment Modes
 
 **Long — 12 months+**
-Stocks with strong historical indicators for long-term investors. Identifies stocks that consistently outperform their sector over time — suited for buy-and-hold positions of 12 months or more.
+Stocks with strong historical indicators for long-term investors. Identifies stocks that consistently outperform their sector over time.
 Ranked by: `alpha × hit_rate × log(N)`
 
 **📈 Mid-term — 1 to 3 months**
-Same signal, but ranks stocks that win consistently *and* with low volatility. A stock that gains steadily beats one with the same average but wild swings. Suitable for patient holds of 1–3 months.
+Same signal, but ranks stocks that win consistently *and* with low volatility. Suitable for patient holds of 1–3 months.
 Ranked by: `(alpha / volatility) × hit_rate × log(N)`
 
 **💎 Opportunity — Buy the Dip**
-Stocks with a proven positive edge that are currently trading *below* their 50-day moving average. The ranking boosts stocks that are both historically strong and currently at a discount — the deeper the dip, the higher the score.
+Stocks with a proven positive edge that are currently trading *below* their 50-day moving average. The deeper the dip, the higher the score.
 Ranked by: `composite_score × (1 + dip_pct × 3)`
-The **Discount vs 50d MA** column shows how far below the moving average the stock is.
 
 Each stock shows a **risk badge** based on return volatility:
 - 🟢 LOW — std < 10%
 - 🟡 MED — std 10–20%
 - 🔴 HIGH — std > 20%
 
+**Rank by dropdown** — four options:
+| Option | Formula |
+|--------|---------|
+| Composite | `alpha × hit_rate × log(N)` |
+| Avg alpha vs sector | raw alpha |
+| Hit rate | raw win % |
+| **Blended** | Composite × Quality multiplier × Opportunity multiplier — the full three-layer score |
+
 **Filters available:** signal quality (validated / borderline / all), sector, ranking method, and recency (only shows stocks where the signal fired in the last 90 days by default).
 
 **TA Overlay (optional):** toggle the 📊 button to add RSI(14), 50-day MA, and 200-day MA on each card as a secondary context layer.
 
-### Stock Detail
+---
 
-Click any ticker — in the podium or the leaderboard — to open a detail panel showing:
-- **TA snapshot** — current price, RSI(14), % vs 50d and 200d MA, bullish/bearish/neutral signal
-- **Past rankings** — every time this stock appeared in the Top 10, by direction and date
-- **Signal history** — last 18 months of signal events: date, signal name, hold period, net return, alpha vs sector
+## Three-Layer Scoring
+
+Every stock in the Top 10 passes through three compounding layers:
+
+### Layer 1 — Signal Score (the base)
+Pure backtest edge: `alpha × hit_rate × log(N)`. Only validated signals (p < 0.05) shown by default.
+
+### Layer 2 — Human Quality (always applied)
+Adjusts the signal score by a multiplier based on four fundamentals checks:
+
+| Check | What it looks at |
+|-------|-----------------|
+| **Liquidity** | Average daily volume ≥ 500k shares |
+| **Trend** | Price above 50d and 200d moving average |
+| **Market Alignment** | SPY above its 200d MA (broad market health) |
+| **EPS Growth** | YoY earnings growth from fundamentals |
+
+Multiplier: `0.75 + 0.25 × quality_score` — range is 0.875–1.0. A stock with bad fundamentals is ranked slightly lower; perfect quality is a small boost. The signal itself still dominates.
+
+### Layer 3 — Opportunity Potential (Blended mode only)
+Six-check assessment of *research upside* — how much room the stock still has to run. Applied on top of Layer 2 when Rank by = Blended.
+
+| Check | What it measures | Weight |
+|-------|-----------------|--------|
+| **Valuation Room** | P/E or P/B vs sector norms | 20% |
+| **Growth Support** | EPS growth + revenue growth | 20% |
+| **Technical Extension** | How far above SMA50/SMA200/12m return | 25% |
+| **Market Cap Asymmetry** | Small/mid caps have more room to move | 15% |
+| **Sector Tailwind** | Forward-looking sector momentum | 10% |
+| **Risk Penalty** | Quality layer fail/warn flags | 10% |
+
+Each check returns pass / warn / unknown / fail. Weighted score → status: **high** (≥0.75), **medium** (0.45–0.75), **low** (<0.45), or **unknown** (≥4 unknowns).
+
+Blended multiplier: `0.75 + 0.25 × opportunity_score` — applied after the quality multiplier, then re-sorted.
+
+The Opportunity badge is visible on every card and in the leaderboard regardless of which ranking mode is active.
+
+---
+
+## Research Modal
+
+Click the **Research** button on any stock to open a full research pack — built deterministically from existing data, no LLM, no buy/sell language.
+
+Sections:
+- **Signal Stats** — best signal for this ticker: alpha, hit rate, n events, p-value, validated/borderline/exploratory status
+- **Human Quality** — the four quality checks with pass/warn/fail badges
+- **Opportunity Potential** — all six opportunity checks with scores and status
+- **Company Context** — wiki page existence, freshness (current/stale/missing), last reviewed date
+- **Recent Appearances** — last 10 times this stock appeared in the Top 10
+- **Next Steps** — deterministic checklist of what to investigate next, derived from data state
 
 ---
 
@@ -66,7 +119,7 @@ Detect → Backtest → Validate → Holdout → Live Re-run (every 3 days)
 2. **Backtest** — entry at T+1 open, hold N trading days, exit at open; deduct 10 bps slippage
 3. **Validate** — paired t-test comparing stock return vs sector ETF; p < 0.05 required to be "validated"
 4. **Holdout** — one-time test on reserved 2025+ data the system never trained on; results are final
-5. **Live re-run** — every 3 days, fresh prices are pulled and signals re-checked; Top 10 only shows stocks with a signal fired in the last 90 days
+5. **Live re-run** — every 3 days, fresh prices and fundamentals are pulled and signals re-checked
 
 ---
 
@@ -110,13 +163,17 @@ Detect → Backtest → Validate → Holdout → Live Re-run (every 3 days)
 | **Composite Score** | `alpha × hit_rate × log(N)` — rewards alpha + consistency + history |
 | **Mid-term Score** | `(alpha / volatility) × hit_rate × log(N)` — rewards steady gains |
 | **Opportunity Score** | `composite × (1 + dip_pct × 3)` — boosts stocks below their 50d MA |
+| **Quality Score** | Weighted average of 4 quality checks (0–1) |
+| **Opportunity Potential** | Weighted average of 6 research-upside checks (0–1) |
+| **Blended Score** | Signal × Quality multiplier × Opportunity multiplier |
 | **Risk Level** | LOW / MED / HIGH based on how much individual trade returns vary |
 
 ---
 
 ## Automation
 
-- **Ingest + signals:** GitHub Actions runs every 3 days, triggers Railway to pull fresh prices and re-run all signals
+- **Ingest + signals:** GitHub Actions runs every 3 days, triggers Railway to pull fresh prices, fundamentals, and re-run all signals
+- **Fundamentals:** yfinance fetches trailing P/E, forward P/E, P/B, trailing EPS, EPS growth (YoY + quarterly), market cap, revenue growth for every universe ticker; falls back to income statement Diluted EPS when yfinance doesn't carry earningsGrowth directly
 - **Rotation log:** after each ingest, a snapshot of the Top 10 is saved; changes (entered / exited / rank moved) are recorded
 - **Failure alerts:** email sent to the configured address if the scheduled job fails
 - **Admin security:** all admin endpoints require `Authorization: Bearer <secret>` — the secret never appears in URLs or logs
@@ -129,8 +186,9 @@ Detect → Backtest → Validate → Holdout → Live Re-run (every 3 days)
 
 ```bash
 uv sync
-uv run python -m signalalpha.wiki.app   # → http://127.0.0.1:8000
+uv run python -m signalalpha.wiki.app        # → http://127.0.0.1:8000
 uv run python -m signalalpha.ingest_prices
+uv run python -m signalalpha.ingest_fundamentals
 uv run python scripts/run_signal_patent_telecom.py
 uv run python -m signalalpha.wiki.autogen
 ```
@@ -141,21 +199,28 @@ uv run python -m signalalpha.wiki.autogen
 
 ```
 src/signalalpha/
-  signals/           # Signal detectors (volume_anomaly, patent_cluster …)
+  signals/                    # Signal detectors (volume_anomaly, patent_cluster …)
+  quality/
+    human_quality.py          # Layer 2 — 4-check quality scoring (liquidity, trend, market, EPS)
+  opportunity/
+    opportunity_potential.py  # Layer 3 — 6-check research upside scoring
   wiki/
-    app.py           # FastAPI web UI (dashboard + API endpoints)
-    admin.py         # Admin endpoints (ingest, snapshot, restore-db) + rotation logic
-    ranking.py       # Ranking SQL + scoring formulas (no FastAPI dependency)
-    autogen.py       # Wiki page scaffolder + AUTOGEN section updater
-    brief.py         # Daily brief builder
-    validate.py      # Wiki page validator
-  live_signals.py    # Runs all validated signals on current data
-  ingest_prices.py   # Price ingestion
-  ingest_patents.py  # Patent ingestion (PatentsView S3 bulk files)
-scripts/             # One-off research scripts (backtests, sweeps, holdout)
-tests/               # Pytest suite — ranking formulas, recency filter, Opportunity score
-wiki/                # Research pages (signals, companies, sectors)
-.github/workflows/   # Scheduled ingest job (every 3 days) with failure email
+    app.py                    # FastAPI web UI (dashboard + API endpoints)
+    admin.py                  # Admin endpoints (ingest, snapshot, restore-db) + rotation logic
+    ranking.py                # Ranking SQL + scoring formulas (no FastAPI dependency)
+    research.py               # GET /api/research/{ticker} — deterministic research pack builder
+    autogen.py                # Wiki page scaffolder + AUTOGEN section updater
+    brief.py                  # Daily brief builder
+    validate.py               # Wiki page validator
+  live_signals.py             # Runs all validated signals on current data
+  ingest_prices.py            # Price ingestion (yfinance)
+  ingest_fundamentals.py      # Fundamentals ingestion (yfinance: P/E, EPS, market cap, …)
+  ingest_patents.py           # Patent ingestion (PatentsView S3 bulk files)
+  db.py                       # DuckDB connection + schema (auto-migrates on connect)
+scripts/                      # One-off research scripts (backtests, sweeps, holdout)
+tests/                        # Pytest suite — 159 tests across ranking, quality, opportunity, research
+wiki/                         # Research pages (signals, companies, sectors)
+.github/workflows/            # Scheduled ingest job (every 3 days) with failure email
 ```
 
 ---

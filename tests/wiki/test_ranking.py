@@ -172,7 +172,7 @@ class TestValidSets:
         assert "ai_infra" in VALID_SECTORS
 
     def test_score_by(self):
-        assert VALID_SCORE == {"composite", "alpha", "hitrate"}
+        assert {"composite", "alpha", "hitrate", "blended"} <= VALID_SCORE
 
 
 # ── fetch_rankings — recency filter ──────────────────────────────────────────

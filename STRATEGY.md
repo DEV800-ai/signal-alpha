@@ -132,9 +132,25 @@ EDGAR / yfinance / USPTO  →  raw tables (DuckDB)
 The markdown daily report format was superseded by the FastAPI web dashboard. The dashboard provides:
 
 - **Daily Brief** — validation status for every signal run (p-value, alpha, Sharpe, freshness)
-- **Top 10** — ranked stock leaderboard with Long / Mid-term / Short modes
+- **Top 10** — ranked stock leaderboard with Long / Mid-term / Opportunity modes and a Blended ranking option
 - **Wiki Editor** — browse and validate signal/company wiki pages
 - **How It Works** — full methodology explainer
+
+### Three-layer scoring (current)
+
+Rankings pass through three compounding layers:
+
+1. **Signal Score** — backtest edge: `alpha × hit_rate × log(N)`. Base layer; always applied.
+2. **Human Quality** — four fundamentals checks (liquidity, trend, market alignment, EPS growth). Multiplier `0.75 + 0.25 × quality_score` applied to all score columns so quality-adjusted rankings reflect fundamentals confidence.
+3. **Opportunity Potential** — six research-upside checks (valuation room, growth support, technical extension, market cap asymmetry, sector tailwind, risk penalty). Applied as a second multiplier `0.75 + 0.25 × opp_score` only when Rank by = **Blended**. Visible as a badge on every card regardless of mode.
+
+### Research modal
+
+Every stock has a **Research** button that opens a deterministic research pack: signal stats, quality checks, opportunity checks, wiki page freshness, recent Top 10 appearances, and a next-steps checklist. No LLM. No buy/sell language.
+
+### Fundamentals pipeline
+
+`ingest_fundamentals.py` fetches trailing P/E, forward P/E, P/B, trailing EPS, YoY + quarterly EPS growth, market cap, and revenue growth via yfinance on every scheduled run. Falls back to `income_stmt` Diluted EPS for tickers where yfinance doesn't carry `earningsGrowth` directly (e.g. GSAT, LITE).
 
 The dashboard surfaces signal firings and historical statistics. It is opinionated on the **signal**, not on the trade. No buy/sell recommendations or position sizing suggestions are shown. The user decides whether to act.
 
@@ -184,10 +200,19 @@ Hold-period sweep completed (5/10/15/20/30d). 15d is optimal.
 Holdout validation completed on 2025–2026 data: volume anomaly held up (alpha +1.58%, Sharpe 1.22).
 Dashboard deployed on Railway with weekly auto-update via GitHub Actions.
 
-### Week 3 — Differentiator signal + summarization 🔄 IN PROGRESS
+### Week 3 — Differentiator signal ✅ DONE
 
-- [ ] Signal 5: patent-grant cluster (USPTO PatentsView API)
-- [ ] SEC filing summarization (Claude API, cached by accession)
+- Patent cluster signal validated: p=0.0001, alpha +1.53%, 45d hold, Telecom only
+- SEC filing summarization: deferred (no active need while signal pipeline is active)
+
+### Phase 6 extension — Intelligence layers ✅ DONE
+
+- **Fundamentals ingestion** — yfinance pipeline for P/E, P/B, EPS growth, market cap, revenue growth; income statement fallback for missing earningsGrowth
+- **Human Quality layer** — 4-check quality score applied as a multiplier to all signal scores
+- **Opportunity Potential layer** — 6-check research upside score; shown as badge on all cards; used as a second multiplier in Blended ranking mode
+- **Research modal** — deterministic per-ticker research pack (signal stats, quality, opportunity, wiki context, next steps); no LLM
+- **Blended ranking** — Signal × Quality × Opportunity composite; selectable via "Rank by" dropdown
+- **159 tests** covering ranking, quality checks, opportunity checks, and research pack assembly
 
 ### Week 4 — Out-of-sample ✅ DONE (pulled forward)
 
