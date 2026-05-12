@@ -1,6 +1,6 @@
 # SignalAlpha
 
-A systematic signal research and ranking system. It watches 68 stocks across AI, Space & Defense, and Telecom for repeating patterns — unusual volume spikes, patent grant clusters — then goes back in history to measure what happened next. Only patterns that prove statistically significant are shown in the live dashboard.
+A strategic research operating system for asymmetric, thematic, and transitional investing. It watches 68 stocks across AI, Space & Defense, and Telecom for repeating statistical patterns, then layers signal validation, quality checks, opportunity assessment, portfolio context, and strategic classification on top of every candidate.
 
 > **This is not financial advice. No buy/sell recommendations are generated.**
 
@@ -17,11 +17,13 @@ uv run python -m signalalpha.wiki.app
 
 | Tab | Description |
 |-----|-------------|
-| **Daily Brief** | Validation status for every signal run — p-value, alpha, Sharpe, context freshness |
-| **Top 10** | Ranked stock leaderboard with scoring modes and quality/opportunity overlays |
-| **Rotation Log** | History of stocks entering and exiting the Top 10 |
+| **Top Research Candidates** | Ranked leaderboard with signal, quality, and opportunity overlays |
+| **Portfolio Context** | Theme exposure, role/risk/conviction distribution across top 15 candidates |
+| **Strategic View** | Candidates grouped by type: Asymmetric · Transitional · Compounder · Signal Play |
 | **Wiki Editor** | Browse and validate wiki pages; run the auto-generator |
 | **How It Works** | Plain-language explainer — what the numbers mean and how the system works |
+| **Rotation Log** | History of stocks entering and exiting the top list |
+| **Daily Brief** | Validation status for every signal run — p-value, alpha, Sharpe, context freshness |
 
 ### Top 10 — Investment Modes
 
@@ -56,9 +58,9 @@ Each stock shows a **risk badge** based on return volatility:
 
 ---
 
-## Three-Layer Scoring
+## Five-Layer Context
 
-Every stock in the Top 10 passes through three compounding layers:
+Every candidate passes through five compounding layers of analysis:
 
 ### Layer 1 — Signal Score (the base)
 Pure backtest edge: `alpha × hit_rate × log(N)`. Only validated signals (p < 0.05) shown by default.
@@ -75,7 +77,7 @@ Adjusts the signal score by a multiplier based on four fundamentals checks:
 
 Multiplier: `0.75 + 0.25 × quality_score` — range is 0.875–1.0. A stock with bad fundamentals is ranked slightly lower; perfect quality is a small boost. The signal itself still dominates.
 
-### Layer 3 — Opportunity Potential (Blended mode only)
+### Layer 3 — Opportunity Potential
 Six-check assessment of *research upside* — how much room the stock still has to run. Applied on top of Layer 2 when Rank by = Blended.
 
 | Check | What it measures | Weight |
@@ -92,6 +94,21 @@ Each check returns pass / warn / unknown / fail. Weighted score → status: **hi
 Blended multiplier: `0.75 + 0.25 × opportunity_score` — applied after the quality multiplier, then re-sorted.
 
 The Opportunity badge is visible on every card and in the leaderboard regardless of which ranking mode is active.
+
+### Layer 4 — Portfolio Context
+Soft heuristics that frame how a candidate fits into a broader portfolio thesis. Returns: **role** (Core / Growth / Speculative / Watchlist), **risk bucket** (Low / Medium / High), **conviction** (High / Medium / Low + reason), **themes**, and **exposure profile**. Visible in the research modal and the **Portfolio Context** tab.
+
+### Layer 5 — Strategic Classification
+Classifies what *type* of research opportunity each candidate represents:
+
+| Type | What it means |
+|------|--------------|
+| **Asymmetric** | Small/mid-cap, high uncertainty, high optionality — pre-profitability or emerging theme |
+| **Transitional** | Company changing regime — turnaround, business model shift, or sector rerating |
+| **Compounder** | Large-cap with durable recurring economics and consistent capital return |
+| **Signal Play** | Validated signal that doesn't fit neatly into the other three categories yet |
+
+Visible in the **Strategic View** tab.
 
 ---
 
@@ -204,6 +221,10 @@ src/signalalpha/
     human_quality.py          # Layer 2 — 4-check quality scoring (liquidity, trend, market, EPS)
   opportunity/
     opportunity_potential.py  # Layer 3 — 6-check research upside scoring
+  portfolio/
+    portfolio_context.py      # Layer 4 — role, risk, conviction, themes, exposure
+  classification/
+    strategic_classification.py  # Layer 5 — Asymmetric / Transitional / Compounder / Signal Play
   wiki/
     app.py                    # FastAPI web UI (dashboard + API endpoints)
     admin.py                  # Admin endpoints (ingest, snapshot, restore-db) + rotation logic
@@ -218,7 +239,7 @@ src/signalalpha/
   ingest_patents.py           # Patent ingestion (PatentsView S3 bulk files)
   db.py                       # DuckDB connection + schema (auto-migrates on connect)
 scripts/                      # One-off research scripts (backtests, sweeps, holdout)
-tests/                        # Pytest suite — 159 tests across ranking, quality, opportunity, research
+tests/                        # Pytest suite — 244 tests across all layers
 wiki/                         # Research pages (signals, companies, sectors)
 .github/workflows/            # Scheduled ingest job (every 3 days) with failure email
 ```

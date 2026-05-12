@@ -30,6 +30,9 @@ from signalalpha.wiki.ranking import (
 )
 from signalalpha.wiki.brief import build_daily_brief
 from signalalpha.wiki.cli import _to_dict
+from signalalpha.classification.strategic_classification import (
+    classify_candidate, build_strategic_view,
+)
 from signalalpha.portfolio.portfolio_context import build_portfolio_context
 from signalalpha.wiki.research import build_research
 from signalalpha.wiki.validate import validate
@@ -757,6 +760,46 @@ _HTML = r"""<!DOCTYPE html>
     cursor: pointer; padding: 0; font-size: .77rem; }
   .ptab-ticker-link:hover { color: #a5b4fc; }
 
+  /* ── Strategic View tab ──────────────────────────────────────────────── */
+  .strat-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; margin-bottom: .75rem;
+  }
+  @media (max-width: 900px) { .strat-grid { grid-template-columns: 1fr; } }
+  .strat-col {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+    padding: .85rem 1rem; display: flex; flex-direction: column; gap: .55rem;
+  }
+  .strat-col-hdr { margin-bottom: .2rem; }
+  .strat-col-title {
+    font-size: .78rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
+  }
+  .strat-col-title.asymmetric   { color: #f59e0b; }
+  .strat-col-title.transitional { color: #60a5fa; }
+  .strat-col-title.compounder   { color: #4ade80; }
+  .strat-col-title.signal_play  { color: #a78bfa; }
+  .strat-col-subtitle { font-size: .69rem; color: var(--text-muted); margin-top: .15rem; }
+  .strat-card {
+    background: var(--bg-card2); border: 1px solid var(--border); border-radius: 8px;
+    padding: .6rem .75rem; display: flex; flex-direction: column; gap: .3rem;
+  }
+  .strat-card-hdr { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+  .strat-ticker-btn {
+    font-weight: 800; font-size: .88rem; color: var(--text); background: none;
+    border: none; cursor: pointer; padding: 0;
+  }
+  .strat-ticker-btn:hover { color: #a5b4fc; }
+  .strat-name   { font-size: .68rem; color: var(--text-muted); }
+  .strat-reason { font-size: .71rem; color: var(--text-muted2); line-height: 1.5; }
+  .strat-themes { display: flex; flex-wrap: wrap; gap: .25rem; margin-top: .1rem; }
+  .strat-signal-row {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: .5rem;
+  }
+  body.light .strat-col-title.asymmetric   { color: #d97706; }
+  body.light .strat-col-title.transitional { color: #2563eb; }
+  body.light .strat-col-title.compounder   { color: #16a34a; }
+  body.light .strat-col-title.signal_play  { color: #7c3aed; }
+  body.light .strat-card { background: var(--bg-card3); }
+
   /* ── Light mode overrides ─────────────────────────────────────────────── */
   body.light .signal-card { background:var(--bg-card2); }
   body.light .signal-card:hover { background:var(--bg-card3); border-color:#6366f1; }
@@ -841,16 +884,17 @@ _HTML = r"""<!DOCTYPE html>
 </header>
 
 <div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('brief', this)">Daily Brief</button>
-  <button class="tab-btn" onclick="switchTab('top10', this)">Top Research Candidates</button>
-  <button class="tab-btn" onclick="switchTab('rotation', this)">Rotation Log</button>
+  <button class="tab-btn active" onclick="switchTab('top10', this)">Top Research Candidates</button>
   <button class="tab-btn" onclick="switchTab('portfolio', this)">Portfolio Context</button>
+  <button class="tab-btn" onclick="switchTab('strategic', this)">Strategic View</button>
   <button class="tab-btn" onclick="switchTab('editor', this)">Wiki Editor</button>
   <button class="tab-btn" onclick="switchTab('howto', this)">How It Works</button>
+  <button class="tab-btn" onclick="switchTab('rotation', this)">Rotation Log</button>
+  <button class="tab-btn" onclick="switchTab('brief', this)">Daily Brief</button>
 </div>
 
 <!-- ═══════════════════════ DAILY BRIEF TAB -->
-<div class="tab-panel active" id="tab-brief">
+<div class="tab-panel" id="tab-brief">
   <div class="card">
     <div class="card-title">
       Signal Research State
@@ -866,7 +910,7 @@ _HTML = r"""<!DOCTYPE html>
 </div>
 
 <!-- ═══════════════════════ TOP 10 TAB -->
-<div class="tab-panel" id="tab-top10">
+<div class="tab-panel active" id="tab-top10">
   <div class="card" style="padding:.7rem 1.1rem;margin-bottom:.75rem">
     <div class="filter-bar">
       <div class="filter-group">
@@ -956,14 +1000,21 @@ _HTML = r"""<!DOCTYPE html>
   </div>
 </div>
 
+<!-- ═══════════════════════ STRATEGIC VIEW TAB -->
+<div class="tab-panel" id="tab-strategic">
+  <div id="strat-content">
+    <p class="state-msg">Select the tab to load.</p>
+  </div>
+</div>
+
 <!-- ═══════════════════════ HOW IT WORKS TAB -->
 <div class="tab-panel" id="tab-howto">
 <div class="card howto-wrap">
 
   <div class="howto-section">
     <div class="howto-h2">What is SignalAlpha?</div>
-    <p class="howto-p">SignalAlpha is a <b>research prioritization system</b>. It watches 68 stocks across AI, Space &amp; Defense, and Telecom for repeating statistical patterns — unusual volume spikes, patent grant clusters — and measures what historically followed. Patterns that prove statistically significant surface as research candidates.</p>
-    <p class="howto-p">The system answers one question: <em>what deserves investigation right now?</em> It does not predict prices, recommend positions, or tell you what to do. Every candidate requires your own judgment before acting.</p>
+    <p class="howto-p">SignalAlpha is a <b>strategic research operating system</b>. It watches 68 stocks across AI, Space &amp; Defense, and Telecom for repeating statistical patterns — unusual volume spikes, patent grant clusters — and measures what historically followed. Patterns that prove statistically significant surface as research candidates and are then layered with quality, opportunity, portfolio context, and strategic classification.</p>
+    <p class="howto-p">The system answers: <em>what deserves investigation right now, why it matters, what kind of opportunity it is, and how it fits a broader thesis.</em> It does not predict prices, recommend positions, or tell you what to do. Every candidate requires your own judgment before acting.</p>
   </div>
 
   <div class="howto-section">
@@ -981,8 +1032,8 @@ _HTML = r"""<!DOCTYPE html>
   </div>
 
   <div class="howto-section">
-    <div class="howto-h2">Three Layers of Scoring</div>
-    <p class="howto-p">Every candidate passes through three compounding layers. Each layer adds context — none replaces the one before it.</p>
+    <div class="howto-h2">Five Layers of Context</div>
+    <p class="howto-p">Every candidate passes through five compounding layers. Each layer adds a different type of reasoning — none replaces the one before it.</p>
     <div class="metric-grid">
 
       <div class="metric-card">
@@ -1004,6 +1055,20 @@ _HTML = r"""<!DOCTYPE html>
         <div class="metric-abbr">6 checks: valuation · growth · extension · cap · sector · risk</div>
         <div class="metric-desc">Six checks that assess research upside — does this candidate still look interesting from a forward-looking perspective, or has the move already happened? <b>Valuation room:</b> P/E or P/B vs sector norms. <b>Growth support:</b> EPS + revenue growth. <b>Technical extension:</b> how far above SMA50/200 and 12-month return. <b>Market cap:</b> smaller caps have more room. <b>Sector tailwind:</b> sector-level momentum. <b>Risk penalty:</b> quality flags. Always shown as a badge — used as a ranking multiplier only in Blended and Investor modes.</div>
         <span class="metric-good">Status: high / medium / low / unknown</span>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-name">Layer 4 — Portfolio Context</div>
+        <div class="metric-abbr">role · risk bucket · conviction · themes · exposure</div>
+        <div class="metric-desc">Soft heuristics that frame how a candidate fits into a broader portfolio thesis. <b>Role:</b> Core / Growth / Speculative / Watchlist — derived from signal × quality × opportunity. <b>Risk bucket:</b> Low / Medium / High. <b>Conviction:</b> High / Medium / Low with a one-line reason. <b>Themes and exposure profile:</b> what macro or sector narratives this candidate belongs to. Visible in the research modal and in the <b>Portfolio Context</b> tab.</div>
+        <span class="metric-good">Visible in Portfolio Context tab and research modal</span>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-name">Layer 5 — Strategic Classification</div>
+        <div class="metric-abbr">Asymmetric · Transitional · Compounder · Signal Play</div>
+        <div class="metric-desc">Classifies what <em>type</em> of research opportunity each candidate represents. <b>Asymmetric:</b> small/mid-cap with high uncertainty and high optionality — early-stage or pre-profitability. <b>Transitional:</b> companies changing regime — turnarounds, business model shifts, or sector reratings. <b>Compounder:</b> large-cap with durable recurring economics and consistent capital return. <b>Signal Play:</b> validated signal that does not fit neatly into the other three categories yet. This is the strategic brain of the platform — visible in the <b>Strategic View</b> tab.</div>
+        <span class="metric-good">Visible in Strategic View tab</span>
       </div>
 
     </div>
@@ -1229,6 +1294,8 @@ function switchTab(name, btn) {
   if (name === 'top10'     && !_tabLoaded.top10)     { _tabLoaded.top10 = true; loadTop10(); }
   if (name === 'rotation'  && !_tabLoaded.rotation)  { _tabLoaded.rotation = true; loadRotation(); }
   if (name === 'portfolio' && !_tabLoaded.portfolio) { _tabLoaded.portfolio = true; loadPortfolio(); }
+  if (name === 'strategic' && !_tabLoaded.strategic) { _tabLoaded.strategic = true; loadStrategicView(); }
+  if (name === 'brief'     && !_tabLoaded.brief)     { _tabLoaded.brief = true; loadBrief(); }
 }
 
 let _t10Direction = 'long';
@@ -1473,6 +1540,71 @@ function renderPortfolio(d) {
     </tr>`;
   }
   html += `</tbody></table></div>`;
+
+  el.innerHTML = html;
+}
+
+// ── Strategic View ────────────────────────────────────────────────────────────
+async function loadStrategicView() {
+  const el = document.getElementById('strat-content');
+  el.innerHTML = '<p class="state-msg">Loading strategic view…</p>';
+  try {
+    const d = await (await fetch('/api/strategic-view')).json();
+    renderStrategicView(d);
+  } catch(e) {
+    el.innerHTML = '<p class="state-msg">Failed to load strategic view.</p>';
+  }
+}
+
+function _stratCard(c) {
+  const themes = (c.themes || []).slice(0, 3)
+    .map(t => `<span class="pc-badge pc-theme" style="font-size:.62rem">${escHtml(t)}</span>`).join('');
+  const convCls = `pc-conv-${escAttr(c.conviction_level||'Low')}`;
+  const roleCls = `pc-role-${escAttr(c.role||'Growth')}`;
+  return `<div class="strat-card">
+    <div class="strat-card-hdr">
+      <button class="strat-ticker-btn" onclick="openResearch('${escAttr(c.ticker)}')">${escHtml(c.ticker)}</button>
+      <span class="pc-badge ${roleCls}" style="font-size:.62rem">${escHtml(c.role||'')}</span>
+      <span class="pc-badge ${convCls}" style="font-size:.62rem">${escHtml(c.conviction_level||'')}</span>
+    </div>
+    <div class="strat-name">${escHtml(c.name||'')}</div>
+    ${c.reason ? `<div class="strat-reason">${escHtml(c.reason)}</div>` : ''}
+    ${themes ? `<div class="strat-themes">${themes}</div>` : ''}
+  </div>`;
+}
+
+function _stratCol(key, title, subtitle, items) {
+  const cards = items.length
+    ? items.map(_stratCard).join('')
+    : `<p class="state-msg" style="padding:.5rem 0;text-align:left;font-size:.76rem">No current candidates in this category.</p>`;
+  return `<div class="strat-col">
+    <div class="strat-col-hdr">
+      <div class="strat-col-title ${key}">${escHtml(title)} <span style="font-weight:400;font-size:.7rem;opacity:.7">(${items.length})</span></div>
+      <div class="strat-col-subtitle">${escHtml(subtitle)}</div>
+    </div>
+    ${cards}
+  </div>`;
+}
+
+function renderStrategicView(d) {
+  const el = document.getElementById('strat-content');
+  const a  = d.asymmetric   || [];
+  const tr = d.transitional || [];
+  const cp = d.compounder   || [];
+  const sp = d.signal_play  || [];
+
+  let html = `<div class="strat-grid">
+    ${_stratCol('asymmetric',   'Asymmetric',   'High uncertainty · high optionality', a)}
+    ${_stratCol('transitional', 'Transitional', 'Changing regime · rerating potential', tr)}
+    ${_stratCol('compounder',   'Compounder',   'Durable value · recurring economics', cp)}
+  </div>`;
+
+  if (sp.length) {
+    html += `<div class="card">
+      <div class="card-title">Other Signals <span style="font-weight:400;font-size:.72rem;margin-left:.3rem">validated signal · strategic category not yet determined</span></div>
+      <div class="strat-signal-row">${sp.map(_stratCard).join('')}</div>
+    </div>`;
+  }
 
   el.innerHTML = html;
 }
@@ -2320,7 +2452,7 @@ function toggleTheme() {
 })();
 
 // Boot
-loadBrief();
+loadTop10();
 loadPages();
 </script>
 
@@ -2783,6 +2915,62 @@ async def portfolio_context_endpoint():
             "risk_counts":       risk_counts,
             "conviction_counts": conviction_counts,
         })
+    finally:
+        db.close()
+
+
+# ── Strategic view (aggregated top-15 classification) ─────────────────────────
+
+@app.get("/api/strategic-view")
+async def strategic_view_endpoint():
+    db = _open_db()
+    try:
+        stocks, _ = fetch_rankings(
+            db, signal_filter="validated", sector="all",
+            direction="long", score_by="composite",
+            recency_days=90, limit=15,
+        )
+        tickers    = [s["ticker"] for s in stocks]
+        sector_map = {s["ticker"]: s.get("sector") or "" for s in stocks}
+        name_map   = {s["ticker"]: s.get("name") or s["ticker"] for s in stocks}
+        quality    = evaluate_human_quality_batch(db, tickers, sector_map)
+        hq_map     = {t: {"score": quality.get(t, {}).get("score"),
+                          "checks": quality.get(t, {}).get("checks", {})}
+                      for t in tickers}
+        opp_map    = evaluate_opportunity_batch(db, tickers, sector_map,
+                                                human_quality_map=hq_map)
+
+        candidates: list[dict] = []
+        for ticker in tickers:
+            hq  = quality.get(ticker, {})
+            opp = opp_map.get(ticker, {})
+            pc  = build_portfolio_context(
+                ticker=ticker,
+                sector=sector_map[ticker],
+                signal_data={"status": "validated"},
+                human_quality=hq,
+                opportunity=opp,
+            )
+            clf = classify_candidate(
+                ticker=ticker,
+                exposure_profile=pc["exposure_profile"],
+                signal_data={"status": "validated"},
+                hq_score=hq.get("score"),
+                opp_status=opp.get("status"),
+            )
+            candidates.append({
+                "ticker":           ticker,
+                "name":             name_map[ticker],
+                "sector":           sector_map[ticker],
+                "type":             clf["type"],
+                "reason":           clf["reason"],
+                "role":             pc["role"],
+                "risk_bucket":      pc["risk_bucket"],
+                "conviction_level": pc["conviction"]["level"],
+                "themes":           pc["themes"],
+            })
+
+        return JSONResponse(build_strategic_view(candidates))
     finally:
         db.close()
 
