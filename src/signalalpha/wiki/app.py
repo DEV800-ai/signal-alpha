@@ -28,7 +28,6 @@ from signalalpha.wiki.ranking import (
     VALID_DIRECTION, VALID_FILTERS, VALID_SCORE, VALID_SECTORS,
     fetch_rankings,
 )
-from signalalpha.wiki.brief import build_daily_brief
 from signalalpha.wiki.cli import _to_dict
 from signalalpha.classification.strategic_classification import (
     classify_candidate, build_strategic_view,
@@ -47,7 +46,7 @@ class _AuthMiddleware(BaseHTTPMiddleware):
             return await call_next(request)
         token = request.cookies.get(COOKIE_NAME, "")
         if not verify_token(token):
-            if request.url.path.startswith(("/api/", "/top10", "/brief", "/admin")):
+            if request.url.path.startswith(("/api/", "/top10", "/admin")):
                 return JSONResponse({"error": "Unauthorized"}, status_code=401)
             return RedirectResponse("/login", status_code=302)
         return await call_next(request)
@@ -182,25 +181,6 @@ _HTML = r"""<!DOCTYPE html>
   }
   .card-title .actions { margin-left: auto; display: flex; gap: .4rem; }
 
-  /* ── Daily Brief ──────────────────────────────────────── */
-  .brief-grid {
-    display: flex; flex-direction: column; gap: .6rem;
-  }
-  .signal-card {
-    background: var(--bg-card2); border: 1px solid var(--border); border-radius: 9px;
-    padding: .85rem 1rem; display: grid;
-    grid-template-columns: 200px 1fr auto;
-    gap: .5rem 1.2rem; align-items: start;
-    cursor: pointer; transition: border-color .15s, background .15s;
-  }
-  .signal-card:hover { border-color: #4f46e5; background: var(--bg-card3); }
-
-  .sc-name { font-weight: 700; font-size: .9rem; color: var(--text); margin-bottom: .3rem; }
-  .sc-meta { font-size: .73rem; color: var(--text-dim); }
-
-  .sc-stats {
-    display: flex; flex-wrap: wrap; gap: .4rem .9rem; align-items: center;
-  }
   .stat-item { font-size: .78rem; }
   .stat-label { color: var(--text-muted); margin-right: .2rem; }
   .stat-val { font-weight: 600; }
@@ -211,8 +191,6 @@ _HTML = r"""<!DOCTYPE html>
   body.light .pos   { color: #1a7f37; }
   body.light .neg   { color: #cf222e; }
   body.light .amber { color: #9a6700; }
-
-  .sc-right { display: flex; flex-direction: column; align-items: flex-end; gap: .4rem; }
 
   .status-pill {
     display: inline-block; padding: .18rem .6rem;
@@ -230,39 +208,6 @@ _HTML = r"""<!DOCTYPE html>
   .ctx-current { background: #0c2120; color: #34d399; border: 1px solid #065f46; }
   .ctx-stale   { background: #1c1708; color: #fbbf24; border: 1px solid #78350f; }
   .ctx-missing { background: #1a1a1a; color: #6b7280; border: 1px solid #374151; }
-
-  .wiki-link {
-    font-size: .7rem; color: #6366f1; text-decoration: none;
-    background: none; border: none; cursor: pointer; padding: 0;
-  }
-  .wiki-link:hover { color: #a5b4fc; text-decoration: underline; }
-
-  /* Drilldown */
-  .drilldown {
-    display: none; margin-top: .6rem;
-    border-top: 1px solid var(--border); padding-top: .7rem;
-  }
-  .drilldown.open { display: block; }
-  .drilldown-hdr {
-    font-size: .72rem; color: var(--text-muted); text-transform: uppercase;
-    letter-spacing: .06em; margin-bottom: .5rem;
-    display: flex; align-items: center; gap: .5rem;
-  }
-  .ev-tbl { width: 100%; border-collapse: collapse; font-size: .75rem; }
-  .ev-tbl th {
-    text-align: left; color: var(--text-muted); font-size: .68rem;
-    text-transform: uppercase; letter-spacing: .05em;
-    padding: .3rem .5rem; border-bottom: 1px solid var(--border);
-  }
-  .ev-tbl td { padding: .28rem .5rem; border-bottom: 1px solid var(--bg-card2); color: var(--text-2); }
-  .ev-tbl tr:hover td { background: var(--bg-card); }
-  .ev-loading { color: var(--text-dim); font-size: .75rem; font-style: italic; padding: .5rem 0; }
-
-  /* Divider */
-  .brief-meta {
-    font-size: .73rem; color: var(--text-dim); margin-bottom: .85rem;
-    display: flex; align-items: center; gap: .5rem;
-  }
 
   /* Empty / loading */
   .state-msg { color: var(--text-dim); font-size: .82rem; font-style: italic; padding: 1.5rem 0; text-align: center; }
@@ -801,14 +746,11 @@ _HTML = r"""<!DOCTYPE html>
   body.light .strat-card { background: var(--bg-card3); }
 
   /* ── Light mode overrides ─────────────────────────────────────────────── */
-  body.light .signal-card { background:var(--bg-card2); }
-  body.light .signal-card:hover { background:var(--bg-card3); border-color:#6366f1; }
   body.light .metric-card { background:var(--bg-card2); }
   body.light .signal-item { background:var(--bg-card2); }
   body.light .pipe-step { background:var(--bg-card2); }
   body.light .pass-hdr:hover { background:var(--bg-card3); }
   body.light .pass-body { background:var(--bg-page); }
-  body.light .ev-tbl tr:hover td { background:var(--bg-card2); }
   body.light .lb-tbl tbody tr:hover td { background:var(--bg-card2); }
   body.light .stat-box { background:var(--bg-page); }
   body.light .dir-card-long { background:#f0fff4; border-color:#82cfaf; }
@@ -890,24 +832,8 @@ _HTML = r"""<!DOCTYPE html>
   <button class="tab-btn" onclick="switchTab('editor', this)">Wiki Editor</button>
   <button class="tab-btn" onclick="switchTab('howto', this)">How It Works</button>
   <button class="tab-btn" onclick="switchTab('rotation', this)">Rotation Log</button>
-  <button class="tab-btn" onclick="switchTab('brief', this)">Daily Brief</button>
 </div>
 
-<!-- ═══════════════════════ DAILY BRIEF TAB -->
-<div class="tab-panel" id="tab-brief">
-  <div class="card">
-    <div class="card-title">
-      Signal Research State
-      <span class="actions">
-        <button class="secondary" style="font-size:.7rem;padding:.25rem .5rem" onclick="loadBrief()">↻ Refresh</button>
-      </span>
-    </div>
-    <div class="brief-meta" id="brief-meta"></div>
-    <div class="brief-grid" id="brief-grid">
-      <p class="state-msg">Loading…</p>
-    </div>
-  </div>
-</div>
 
 <!-- ═══════════════════════ TOP 10 TAB -->
 <div class="tab-panel active" id="tab-top10">
@@ -1295,7 +1221,6 @@ function switchTab(name, btn) {
   if (name === 'rotation'  && !_tabLoaded.rotation)  { _tabLoaded.rotation = true; loadRotation(); }
   if (name === 'portfolio' && !_tabLoaded.portfolio) { _tabLoaded.portfolio = true; loadPortfolio(); }
   if (name === 'strategic' && !_tabLoaded.strategic) { _tabLoaded.strategic = true; loadStrategicView(); }
-  if (name === 'brief'     && !_tabLoaded.brief)     { _tabLoaded.brief = true; loadBrief(); }
 }
 
 let _t10Direction = 'long';
@@ -1617,156 +1542,7 @@ function toast(msg, ms=2500) {
   setTimeout(() => el.classList.remove('show'), ms);
 }
 
-// ── Daily Brief ───────────────────────────────────────────────────────────────
-async function loadBrief() {
-  document.getElementById('brief-meta').textContent = '';
-  document.getElementById('brief-grid').innerHTML = '<p class="state-msg">Loading…</p>';
-  try {
-    const data = await (await fetch('/brief')).json();
-    renderBrief(data);
-  } catch(e) {
-    document.getElementById('brief-grid').innerHTML =
-      '<p class="state-msg" style="color:#f87171">Error: ' + escHtml(e.message) + '</p>';
-  }
-}
 
-function renderBrief(data) {
-  const signals = data.signals || [];
-  document.getElementById('brief-meta').innerHTML =
-    `As of <b>${escHtml(data.generated_at)}</b> &mdash; ${signals.length} signal${signals.length!==1?'s':''} tracked`;
-
-  if (!signals.length) {
-    document.getElementById('brief-grid').innerHTML =
-      '<p class="state-msg">No signal runs found. Run a backtest to populate signal_runs.</p>';
-    return;
-  }
-
-  const pct = v => v === null || v === undefined ? '<span class="neu">—</span>'
-    : `<span class="${v>=0?'pos':'neg'}">${v>=0?'+':''}${(v*100).toFixed(1)}%</span>`;
-  const pval = v => v === null || v === undefined ? '<span class="neu">—</span>'
-    : `<span class="${v<0.05?'pos':v<0.10?'amber':'neu'}">${v.toFixed(4)}</span>`;
-  const num = (v, d=2) => v === null || v === undefined ? '<span class="neu">—</span>'
-    : `<span class="neu">${v.toFixed(d)}</span>`;
-
-  const html = signals.map(s => {
-    const statusCls = 'pill-' + s.status;
-    const ctxCls   = 'ctx-' + s.context_status;
-    const ctxIcon  = s.context_status === 'current' ? '●' : s.context_status === 'stale' ? '◑' : '○';
-    const wikiBtn = s.wiki_path
-      ? `<button class="wiki-link" onclick="event.stopPropagation();openWikiPage('${escAttr(s.wiki_path)}')">wiki →</button>`
-      : `<span style="font-size:.68rem;color:#374151">no wiki</span>`;
-
-    return `<div class="signal-card" id="sc-${s.run_id}" onclick="toggleDrilldown(${s.run_id}, event)">
-      <div>
-        <div class="sc-name">${escHtml(s.display_name || s.signal_id)}</div>
-        <div class="sc-meta">${escHtml(s.signal_id)} &middot; run #${s.run_id} &middot; ${s.n_events ?? '?'} events &middot; ${s.hold_days}d hold</div>
-        ${s.event_window_start ? `<div class="sc-meta">${s.event_window_start} → ${s.event_window_end}</div>` : ''}
-      </div>
-      <div class="sc-stats">
-        <div class="stat-item"><span class="stat-label">Hit rate</span><span class="stat-val">${pct(s.hit_rate)}</span></div>
-        <div class="stat-item"><span class="stat-label">Return</span><span class="stat-val">${pct(s.mean_return)}</span></div>
-        <div class="stat-item"><span class="stat-label">Alpha</span><span class="stat-val">${pct(s.mean_alpha_sector)}</span></div>
-        <div class="stat-item"><span class="stat-label">p-value</span><span class="stat-val">${pval(s.p_value_vs_sector)}</span></div>
-        <div class="stat-item"><span class="stat-label">Sharpe</span><span class="stat-val">${num(s.sharpe_ann)}</span></div>
-      </div>
-      <div class="sc-right">
-        <span class="status-pill ${statusCls}">${s.status}</span>
-        <span class="ctx-pill ${ctxCls}">${ctxIcon} ${s.context_status}</span>
-        ${wikiBtn}
-      </div>
-      <div class="drilldown" id="dd-${s.run_id}" style="grid-column:1/-1">
-        <div class="drilldown-hdr">Per-event breakdown <span id="dd-count-${s.run_id}" style="color:var(--text-muted2);font-size:.7rem"></span></div>
-        <div id="dd-body-${s.run_id}"><p class="ev-loading">Loading…</p></div>
-      </div>
-    </div>`;
-  }).join('');
-
-  document.getElementById('brief-grid').innerHTML = html;
-}
-
-const _ddLoaded = new Set();
-
-async function toggleDrilldown(runId, ev) {
-  if (ev.target.classList.contains('wiki-link')) return;
-  const dd = document.getElementById('dd-' + runId);
-  if (!dd) return;
-  const isOpen = dd.classList.contains('open');
-  if (isOpen) { dd.classList.remove('open'); return; }
-  dd.classList.add('open');
-  if (_ddLoaded.has(runId)) return;
-  _ddLoaded.add(runId);
-  try {
-    const data = await (await fetch('/events?run_id=' + runId)).json();
-    const events = data.events || [];
-    document.getElementById('dd-count-' + runId).textContent = `(${events.length} events)`;
-    if (!events.length) {
-      document.getElementById('dd-body-' + runId).innerHTML = '<p class="ev-loading">No events found.</p>';
-      return;
-    }
-    const pct = v => v === null ? '—' : `${v>=0?'+':''}${(v*100).toFixed(1)}%`;
-    const cls = v => v === null ? 'neu' : v >= 0 ? 'pos' : 'neg';
-    const avg = arr => arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : null;
-
-    // Group by sector
-    const bySector = {};
-    events.forEach(e => {
-      const sec = e.sector || 'unknown';
-      if (!bySector[sec]) bySector[sec] = [];
-      bySector[sec].push(e);
-    });
-
-    let html = '';
-    for (const [sector, evs] of Object.entries(bySector)) {
-      const returns = evs.map(e=>e.net_return).filter(v=>v!==null);
-      const alphas  = evs.map(e=>e.alpha_sector).filter(v=>v!==null);
-      const hits    = returns.filter(v=>v>0).length;
-      const secAvgRet = avg(returns), secAvgAlpha = avg(alphas);
-
-      html += `<div style="margin-bottom:.9rem">
-        <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.35rem;padding:.3rem .5rem;background:#1a1d2a;border-radius:5px">
-          <span style="font-size:.72rem;font-weight:700;color:#a5b4fc;text-transform:uppercase;letter-spacing:.05em">${escHtml(sector)}</span>
-          <span style="font-size:.7rem;color:var(--text-dim)">${evs.length} events</span>
-          <span style="font-size:.7rem;color:var(--text-dim)">hit rate <span class="${cls(secAvgRet)}">${returns.length?Math.round(hits/returns.length*100)+'%':'—'}</span></span>
-          <span style="font-size:.7rem;color:var(--text-dim)">avg return <span class="${cls(secAvgRet)}">${pct(secAvgRet)}</span></span>
-          <span style="font-size:.7rem;color:var(--text-dim)">avg alpha <span class="${cls(secAvgAlpha)}">${pct(secAvgAlpha)}</span></span>
-        </div>
-        <table class="ev-tbl" style="margin-bottom:.2rem">
-          <thead><tr>
-            <th>Ticker</th><th>Name</th><th>Event date</th><th>Return</th><th>Alpha</th>
-          </tr></thead>
-          <tbody>`;
-
-      evs.slice(0, 30).forEach(e => {
-        html += `<tr>
-          <td><button class="wiki-link" style="font-weight:700;font-size:.78rem" onclick="openWikiPage('wiki/companies/public/${escAttr(e.ticker)}.md')">${escHtml(e.ticker)}</button></td>
-          <td style="color:var(--text-dim);font-size:.72rem">${escHtml(e.name ?? '—')}</td>
-          <td class="td-mono">${e.event_date ?? '—'}</td>
-          <td><span class="${cls(e.net_return)}">${pct(e.net_return)}</span></td>
-          <td><span class="${cls(e.alpha_sector)}">${pct(e.alpha_sector)}</span></td>
-        </tr>`;
-      });
-      if (evs.length > 30) html += `<tr><td colspan="5" style="color:var(--text-dim);font-size:.68rem;padding:.3rem .5rem">…and ${evs.length-30} more</td></tr>`;
-      html += `</tbody></table></div>`;
-    }
-
-    document.getElementById('dd-body-' + runId).innerHTML = `<div style="overflow-x:auto">${html}</div>`;
-  } catch(e) {
-    document.getElementById('dd-body-' + runId).innerHTML = `<p class="ev-loading" style="color:#f87171">Error: ${escHtml(e.message)}</p>`;
-  }
-}
-
-function openWikiPage(path) {
-  if (!path) { toast('No wiki page yet — run Autogen first.'); return; }
-  const editorBtn = document.querySelectorAll('.tab-btn')[1];
-  switchTab('editor', editorBtn);
-  fetch('/wiki-pages').then(r => r.json()).then(data => {
-    renderPages(data.pages);
-    setTimeout(() => {
-      const el = document.querySelector(`.page-item[data-path="${escAttr(path)}"]`);
-      if (el) loadPage(el, path);
-    }, 50);
-  });
-}
 
 // ── Stock detail modal ────────────────────────────────────────────────────────
 
@@ -2417,7 +2193,7 @@ async function runAutogen() {
     const data = await (await fetch('/autogen', {method:'POST'})).json();
     out.textContent = data.results.join('\n') || 'Nothing to update.';
     toast('Autogen done — ' + data.results.length + ' page(s) affected.');
-    loadPages(); loadBrief();
+    loadPages();
   } catch(e) { out.textContent = 'Error: ' + e.message; }
   finally { btn.disabled = false; }
 }
@@ -2556,42 +2332,6 @@ async def index():
     return _HTML
 
 
-@app.get("/brief")
-async def daily_brief():
-    db = _open_db()
-    try:
-        return JSONResponse(build_daily_brief(db))
-    finally:
-        db.close()
-
-
-@app.get("/events")
-async def signal_events(run_id: int = Query(...)):
-    db = _open_db()
-    try:
-        rows = db.execute("""
-            SELECT se.ticker, se.event_date, se.entry_date, se.exit_date,
-                   se.net_return, se.alpha_sector, se.alpha_spy, se.sector_benchmark,
-                   u.sector, u.name
-            FROM signal_events se
-            LEFT JOIN universe u ON u.ticker = se.ticker
-            WHERE se.run_id = ?
-            ORDER BY u.sector NULLS LAST, se.net_return DESC
-        """, [run_id]).fetchall()
-        cols = ["ticker", "event_date", "entry_date", "exit_date",
-                "net_return", "alpha_sector", "alpha_spy", "sector_benchmark",
-                "sector", "name"]
-        events = []
-        for r in rows:
-            d = dict(zip(cols, r))
-            for k in ("event_date", "entry_date", "exit_date"):
-                d[k] = str(d[k])[:10] if d[k] else None
-            for k in ("net_return", "alpha_sector", "alpha_spy"):
-                d[k] = round(float(d[k]), 6) if d[k] is not None else None
-            events.append(d)
-        return JSONResponse({"run_id": run_id, "events": events})
-    finally:
-        db.close()
 
 
 @app.get("/wiki-pages")
