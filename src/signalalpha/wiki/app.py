@@ -30,6 +30,7 @@ from signalalpha.wiki.ranking import (
 )
 from signalalpha.wiki.brief import build_daily_brief
 from signalalpha.wiki.cli import _to_dict
+from signalalpha.portfolio.portfolio_context import build_portfolio_context
 from signalalpha.wiki.research import build_research
 from signalalpha.wiki.validate import validate
 
@@ -713,6 +714,49 @@ _HTML = r"""<!DOCTYPE html>
   body.light .pc-conv-Medium { background:#7c3aed; }
   body.light .pc-conv-Low    { background:#6b7280; }
 
+  /* ── Portfolio Context tab ────────────────────────────────────────────── */
+  .ptab-stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: .75rem; margin-bottom: .75rem;
+  }
+  .ptab-stat-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+    padding: .85rem 1rem;
+  }
+  .ptab-stat-title {
+    font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: .55rem;
+  }
+  .ptab-dist { display: flex; flex-wrap: wrap; gap: .3rem; }
+  .ptab-theme-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: .6rem; margin-top: .6rem;
+  }
+  .ptab-theme-card {
+    background: var(--bg-card2); border: 1px solid var(--border); border-radius: 8px;
+    padding: .65rem .8rem;
+  }
+  .ptab-theme-name {
+    font-size: .72rem; font-weight: 700; color: var(--text-2); margin-bottom: .4rem;
+  }
+  .ptab-theme-tickers { display: flex; flex-wrap: wrap; gap: .25rem; }
+  .ptab-ticker-chip {
+    font-size: .65rem; font-weight: 700; padding: .12rem .4rem; border-radius: 4px;
+    background: var(--bg-card3); color: var(--text-muted2); border: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .ptab-ticker-chip:hover { color: #a5b4fc; border-color: #6366f1; }
+  .ptab-tbl { width: 100%; border-collapse: collapse; font-size: .77rem; margin-top: .5rem; }
+  .ptab-tbl th {
+    text-align: left; color: var(--text-muted); font-size: .66rem; text-transform: uppercase;
+    letter-spacing: .05em; padding: .3rem .6rem; border-bottom: 1px solid var(--border);
+  }
+  .ptab-tbl td { padding: .35rem .6rem; border-bottom: 1px solid var(--bg-card2); vertical-align: middle; }
+  .ptab-tbl tr:hover td { background: var(--bg-card3); }
+  .ptab-ticker-link { font-weight: 700; color: var(--text); background: none; border: none;
+    cursor: pointer; padding: 0; font-size: .77rem; }
+  .ptab-ticker-link:hover { color: #a5b4fc; }
+
   /* ── Light mode overrides ─────────────────────────────────────────────── */
   body.light .signal-card { background:var(--bg-card2); }
   body.light .signal-card:hover { background:var(--bg-card3); border-color:#6366f1; }
@@ -800,6 +844,7 @@ _HTML = r"""<!DOCTYPE html>
   <button class="tab-btn active" onclick="switchTab('brief', this)">Daily Brief</button>
   <button class="tab-btn" onclick="switchTab('top10', this)">Top Research Candidates</button>
   <button class="tab-btn" onclick="switchTab('rotation', this)">Rotation Log</button>
+  <button class="tab-btn" onclick="switchTab('portfolio', this)">Portfolio Context</button>
   <button class="tab-btn" onclick="switchTab('editor', this)">Wiki Editor</button>
   <button class="tab-btn" onclick="switchTab('howto', this)">How It Works</button>
 </div>
@@ -900,6 +945,13 @@ _HTML = r"""<!DOCTYPE html>
   </div>
   <div class="card" id="rot-card">
     <div class="card-title">Rotation History</div>
+    <p class="state-msg">Select the tab to load.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════ PORTFOLIO CONTEXT TAB -->
+<div class="tab-panel" id="tab-portfolio">
+  <div id="ptab-content">
     <p class="state-msg">Select the tab to load.</p>
   </div>
 </div>
@@ -1174,8 +1226,9 @@ function switchTab(name, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('tab-' + name).classList.add('active');
-  if (name === 'top10'    && !_tabLoaded.top10)    { _tabLoaded.top10 = true; loadTop10(); }
-  if (name === 'rotation' && !_tabLoaded.rotation) { _tabLoaded.rotation = true; loadRotation(); }
+  if (name === 'top10'     && !_tabLoaded.top10)     { _tabLoaded.top10 = true; loadTop10(); }
+  if (name === 'rotation'  && !_tabLoaded.rotation)  { _tabLoaded.rotation = true; loadRotation(); }
+  if (name === 'portfolio' && !_tabLoaded.portfolio) { _tabLoaded.portfolio = true; loadPortfolio(); }
 }
 
 let _t10Direction = 'long';
@@ -1323,6 +1376,105 @@ function renderRotation(data, card) {
   }
 
   card.innerHTML = html;
+}
+
+// ── Portfolio Context ─────────────────────────────────────────────────────────
+async function loadPortfolio() {
+  const el = document.getElementById('ptab-content');
+  el.innerHTML = '<p class="state-msg">Loading portfolio context…</p>';
+  try {
+    const d = await (await fetch('/api/portfolio-context')).json();
+    renderPortfolio(d);
+  } catch(e) {
+    el.innerHTML = '<p class="state-msg">Failed to load portfolio context.</p>';
+  }
+}
+
+function renderPortfolio(d) {
+  const el = document.getElementById('ptab-content');
+  const cands = d.candidates || [];
+  const rc = d.role_counts || {};
+  const rk = d.risk_counts || {};
+  const cv = d.conviction_counts || {};
+  const tt = d.theme_tickers || {};
+
+  const roleBadge = (r) => `<span class="pc-badge pc-role-${r}" style="margin-right:.25rem">${escHtml(r)} <span style="opacity:.7;font-weight:400">${rc[r]||0}</span></span>`;
+  const riskBadge = (r) => `<span class="pc-badge pc-risk-${r}" style="margin-right:.25rem">${escHtml(r)} <span style="opacity:.7;font-weight:400">${rk[r]||0}</span></span>`;
+  const convBadge = (r) => `<span class="pc-badge pc-conv-${r}" style="margin-right:.25rem">${escHtml(r)} <span style="opacity:.7;font-weight:400">${cv[r]||0}</span></span>`;
+
+  // Stats row
+  let html = `<div class="ptab-stats">
+    <div class="ptab-stat-card">
+      <div class="ptab-stat-title">Role</div>
+      <div class="ptab-dist">
+        ${['Core','Growth','Speculative','Watchlist'].map(roleBadge).join('')}
+      </div>
+    </div>
+    <div class="ptab-stat-card">
+      <div class="ptab-stat-title">Risk</div>
+      <div class="ptab-dist">
+        ${['Low','Medium','High'].map(riskBadge).join('')}
+      </div>
+    </div>
+    <div class="ptab-stat-card">
+      <div class="ptab-stat-title">Conviction</div>
+      <div class="ptab-dist">
+        ${['High','Medium','Low'].map(convBadge).join('')}
+      </div>
+    </div>
+    <div class="ptab-stat-card">
+      <div class="ptab-stat-title">Coverage</div>
+      <div style="font-size:.82rem;color:var(--text-2);margin-top:.1rem">
+        <span style="font-weight:700;font-size:1.1rem;color:var(--text)">${cands.length}</span> candidates<br>
+        <span style="font-weight:700;font-size:1.1rem;color:var(--text)">${Object.keys(tt).length}</span> themes
+      </div>
+    </div>
+  </div>`;
+
+  // Theme exposure
+  const sortedThemes = Object.entries(tt).sort((a,b) => b[1].length - a[1].length);
+  if (sortedThemes.length) {
+    html += `<div class="card">
+      <div class="card-title">Theme Exposure</div>
+      <div class="ptab-theme-grid">`;
+    for (const [theme, tickers] of sortedThemes) {
+      const chips = tickers.map(t =>
+        `<span class="ptab-ticker-chip" onclick="openResearch('${escAttr(t)}')">${escHtml(t)}</span>`
+      ).join('');
+      html += `<div class="ptab-theme-card">
+        <div class="ptab-theme-name">${escHtml(theme)} <span style="color:var(--text-muted);font-weight:400">(${tickers.length})</span></div>
+        <div class="ptab-theme-tickers">${chips}</div>
+      </div>`;
+    }
+    html += `</div></div>`;
+  }
+
+  // Candidate table
+  html += `<div class="card">
+    <div class="card-title">Top 15 Candidates — Portfolio View</div>
+    <table class="ptab-tbl">
+      <thead><tr>
+        <th>Ticker</th><th>Role</th><th>Risk</th><th>Conviction</th><th>Themes</th><th>Summary</th>
+      </tr></thead>
+      <tbody>`;
+  for (const c of cands) {
+    const themes = (c.themes || []).slice(0,3).map(t => `<span class="pc-badge pc-theme" style="font-size:.63rem">${escHtml(t)}</span>`).join(' ');
+    html += `<tr>
+      <td><button class="ptab-ticker-link" onclick="openResearch('${escAttr(c.ticker)}')">${escHtml(c.ticker)}</button>
+          <div style="font-size:.65rem;color:var(--text-muted)">${escHtml(c.name||'')}</div></td>
+      <td><span class="pc-badge pc-role-${escAttr(c.role)}">${escHtml(c.role)}</span></td>
+      <td><span class="pc-badge pc-risk-${escAttr(c.risk_bucket)}">${escHtml(c.risk_bucket)}</span></td>
+      <td>
+        <span class="pc-badge pc-conv-${escAttr(c.conviction_level)}">${escHtml(c.conviction_level)}</span>
+        <div style="font-size:.63rem;color:var(--text-muted);margin-top:.2rem">${escHtml(c.conviction_reason||'')}</div>
+      </td>
+      <td>${themes}</td>
+      <td style="font-size:.7rem;color:var(--text-muted);max-width:260px">${escHtml(c.summary||'')}</td>
+    </tr>`;
+  }
+  html += `</tbody></table></div>`;
+
+  el.innerHTML = html;
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
@@ -2565,6 +2717,72 @@ async def research_endpoint(ticker: str):
     try:
         result = build_research(db, ticker, WIKI_ROOT)
         return JSONResponse(result)
+    finally:
+        db.close()
+
+
+# ── Portfolio context (aggregated top-15 view) ────────────────────────────────
+
+@app.get("/api/portfolio-context")
+async def portfolio_context_endpoint():
+    db = _open_db()
+    try:
+        stocks, _ = fetch_rankings(
+            db, signal_filter="validated", sector="all",
+            direction="long", score_by="composite",
+            recency_days=90, limit=15,
+        )
+        tickers     = [s["ticker"] for s in stocks]
+        sector_map  = {s["ticker"]: s.get("sector") or "" for s in stocks}
+        name_map    = {s["ticker"]: s.get("name") or s["ticker"] for s in stocks}
+        quality     = evaluate_human_quality_batch(db, tickers, sector_map)
+        hq_map      = {t: {"score": quality.get(t, {}).get("score"),
+                           "checks": quality.get(t, {}).get("checks", {})}
+                       for t in tickers}
+        opp_map     = evaluate_opportunity_batch(db, tickers, sector_map,
+                                                 human_quality_map=hq_map)
+
+        candidates: list[dict] = []
+        theme_tickers: dict[str, list[str]] = {}
+        role_counts       = {"Core": 0, "Growth": 0, "Speculative": 0, "Watchlist": 0}
+        risk_counts       = {"Low": 0, "Medium": 0, "High": 0}
+        conviction_counts = {"High": 0, "Medium": 0, "Low": 0}
+
+        for ticker in tickers:
+            hq  = quality.get(ticker, {})
+            opp = opp_map.get(ticker, {})
+            pc  = build_portfolio_context(
+                ticker=ticker,
+                sector=sector_map[ticker],
+                signal_data={"status": "validated"},
+                human_quality=hq,
+                opportunity=opp,
+            )
+            candidates.append({
+                "ticker":           ticker,
+                "name":             name_map[ticker],
+                "sector":           sector_map[ticker],
+                "role":             pc["role"],
+                "risk_bucket":      pc["risk_bucket"],
+                "conviction_level": pc["conviction"]["level"],
+                "conviction_reason": pc["conviction"]["reason"],
+                "themes":           pc["themes"],
+                "exposure_profile": pc["exposure_profile"],
+                "summary":          pc["summary"],
+            })
+            role_counts[pc["role"]]                     = role_counts.get(pc["role"], 0) + 1
+            risk_counts[pc["risk_bucket"]]               = risk_counts.get(pc["risk_bucket"], 0) + 1
+            conviction_counts[pc["conviction"]["level"]] = conviction_counts.get(pc["conviction"]["level"], 0) + 1
+            for theme in pc["themes"]:
+                theme_tickers.setdefault(theme, []).append(ticker)
+
+        return JSONResponse({
+            "candidates":        candidates,
+            "theme_tickers":     theme_tickers,
+            "role_counts":       role_counts,
+            "risk_counts":       risk_counts,
+            "conviction_counts": conviction_counts,
+        })
     finally:
         db.close()
 
