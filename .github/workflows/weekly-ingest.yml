@@ -48,6 +48,34 @@ jobs:
 
           echo "Snapshot complete."
 
+      - name: Verify data freshness
+        run: |
+          response=$(curl -s -o /tmp/health.json -w "%{http_code}" \
+            -H "Authorization: Bearer ${{ secrets.ADMIN_SECRET }}" \
+            "https://signal-alpha-production.up.railway.app/admin/health")
+
+          echo "Health check response (HTTP $response):"
+          cat /tmp/health.json
+          echo ""
+
+          if [ "$response" != "200" ]; then
+            echo "ERROR: health endpoint returned HTTP $response"
+            exit 1
+          fi
+
+          last_price=$(python3 -c "import json,sys; d=json.load(open('/tmp/health.json')); print(d.get('last_price_date','none'))")
+          echo "Last price date in DB: $last_price"
+
+          today=$(date -u +%Y-%m-%d)
+          yesterday=$(date -u -d "yesterday" +%Y-%m-%d)
+
+          if [ "$last_price" != "$today" ] && [ "$last_price" != "$yesterday" ]; then
+            echo "ERROR: DB last price date ($last_price) is stale — expected $today or $yesterday"
+            exit 1
+          fi
+
+          echo "Data freshness check passed."
+
       - name: Send failure email
         if: failure()
         uses: dawidd6/action-send-mail@v17
@@ -65,5 +93,7 @@ jobs:
 
             Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-            Check the logs above for details. You may need to manually trigger the ingest
-            or upload a fresh DB to Railway.
+            Check the Railway logs for ERROR lines from ingest_all, run_live_signals, or _snapshot_top10.
+            Common causes: yfinance API change, DB volume issue, or rate limiting.
+
+            You may need to manually trigger the ingest or upload a fresh DB to Railway.

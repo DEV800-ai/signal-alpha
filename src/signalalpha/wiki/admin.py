@@ -206,13 +206,26 @@ async def ingest_endpoint(
         return JSONResponse({"error": "unauthorized"}, status_code=401)
 
     def _run():
+        import traceback as _tb
         from signalalpha.ingest_prices import ingest_all
         from signalalpha.ingest_fundamentals import ingest_all as ingest_fundamentals
         from signalalpha.live_signals import run_live_signals
-        ingest_all()
-        ingest_fundamentals()
-        run_live_signals()
-        _snapshot_top10()
+        try:
+            ingest_all()
+        except Exception:
+            print("ERROR in ingest_all:\n" + _tb.format_exc(), flush=True)
+        try:
+            ingest_fundamentals()
+        except Exception:
+            print("ERROR in ingest_fundamentals:\n" + _tb.format_exc(), flush=True)
+        try:
+            run_live_signals()
+        except Exception:
+            print("ERROR in run_live_signals:\n" + _tb.format_exc(), flush=True)
+        try:
+            _snapshot_top10()
+        except Exception:
+            print("ERROR in _snapshot_top10:\n" + _tb.format_exc(), flush=True)
 
     background_tasks.add_task(_run)
     return JSONResponse({"ok": True, "status": "ingestion + signal re-run started in background"})
@@ -230,6 +243,28 @@ async def restore_db(
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
     DB_PATH.write_bytes(data)
     return JSONResponse({"ok": True, "bytes": len(data), "path": str(DB_PATH)})
+
+
+@router.get("/admin/health")
+async def health_endpoint(authorization: str | None = Header(default=None)):
+    """Return last price date and signal run date. Requires Authorization: Bearer <secret>."""
+    if not _check_admin(authorization):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    db = _open_db()
+    try:
+        last_price = db.execute("SELECT MAX(date) FROM prices").fetchone()[0]
+        last_signal = db.execute("SELECT MAX(run_date) FROM signal_runs").fetchone()[0]
+        last_snapshot = db.execute("SELECT MAX(snapshot_date) FROM top10_snapshots").fetchone()[0]
+    except Exception as e:
+        return JSONResponse({"ok": False, "error": str(e)}, status_code=500)
+    finally:
+        db.close()
+    return JSONResponse({
+        "ok": True,
+        "last_price_date": str(last_price) if last_price else None,
+        "last_signal_run": str(last_signal) if last_signal else None,
+        "last_snapshot_date": str(last_snapshot) if last_snapshot else None,
+    })
 
 
 @router.post("/autogen")
