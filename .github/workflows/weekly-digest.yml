@@ -1,0 +1,70 @@
+name: Weekly digest email (Friday close)
+
+on:
+  schedule:
+    - cron: "0 21 * * 5"  # 17:00 ET Friday — after market close
+  workflow_dispatch:       # Allow manual trigger from GitHub UI
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Fetch digest
+        run: |
+          response=$(curl -s -o /tmp/digest.json -w "%{http_code}" \
+            -H "Authorization: Bearer ${{ secrets.ADMIN_SECRET }}" \
+            "https://signal-alpha-production.up.railway.app/admin/digest")
+
+          echo "Digest response (HTTP $response):"
+          python3 -c "import json; d=json.load(open('/tmp/digest.json')); print('snapshot_date:', d.get('snapshot_date')); print('ok:', d.get('ok'))"
+          echo ""
+
+          if [ "$response" != "200" ]; then
+            echo "ERROR: digest endpoint returned HTTP $response"
+            cat /tmp/digest.json
+            exit 1
+          fi
+
+          ok=$(python3 -c "import json; print(json.load(open('/tmp/digest.json')).get('ok'))")
+          if [ "$ok" != "True" ]; then
+            echo "ERROR: digest endpoint returned ok=false"
+            cat /tmp/digest.json
+            exit 1
+          fi
+
+          python3 -c "import json; open('/tmp/digest.html','w').write(json.load(open('/tmp/digest.json'))['html'])"
+          echo "Digest HTML written."
+
+      - name: Send digest email
+        uses: dawidd6/action-send-mail@v17
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_USER }}
+          password: ${{ secrets.GMAIL_PASSWORD }}
+          subject: "SignalAlpha Weekly Digest"
+          to: pinto2004@gmail.com
+          from: SignalAlpha <${{ secrets.GMAIL_USER }}>
+          html_body: file:///tmp/digest.html
+
+      - name: Send failure email
+        if: failure()
+        uses: dawidd6/action-send-mail@v17
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_USER }}
+          password: ${{ secrets.GMAIL_PASSWORD }}
+          subject: "SignalAlpha — weekly digest failed (${{ github.run_id }})"
+          to: pinto2004@gmail.com
+          from: SignalAlpha Actions <${{ secrets.GMAIL_USER }}>
+          body: |
+            The weekly SignalAlpha digest job failed.
+
+            Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+            Check the Railway logs or the /admin/digest endpoint directly.

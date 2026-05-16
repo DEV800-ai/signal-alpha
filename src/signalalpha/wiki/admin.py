@@ -267,6 +267,127 @@ async def health_endpoint(authorization: str | None = Header(default=None)):
     })
 
 
+@router.get("/admin/digest")
+async def digest_endpoint(authorization: str | None = Header(default=None)):
+    """Return an HTML weekly digest email body. Requires Authorization: Bearer <secret>."""
+    if not _check_admin(authorization):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    db = _open_db()
+    try:
+        snapshot_date = db.execute(
+            "SELECT MAX(snapshot_date) FROM top10_snapshots"
+        ).fetchone()[0]
+        if not snapshot_date:
+            return JSONResponse({"ok": False, "error": "no snapshot data"}, status_code=500)
+
+        picks: dict[str, list] = {}
+        for direction in ("long", "midterm", "opportunity"):
+            rows = db.execute(
+                """SELECT rank, ticker, score, last_signal, n_signals, avg_alpha
+                   FROM top10_snapshots
+                   WHERE direction = ? AND snapshot_date = ?
+                   ORDER BY rank""",
+                [direction, snapshot_date],
+            ).fetchall()
+            picks[direction] = rows
+
+        since = db.execute(
+            "SELECT MAX(snapshot_date) FROM top10_snapshots WHERE snapshot_date < ?",
+            [snapshot_date],
+        ).fetchone()[0]
+        changes: dict[str, list] = {"entered": [], "exited": [], "moved_up": [], "moved_down": []}
+        if since:
+            rows = db.execute(
+                """SELECT direction, ticker, change_type, old_rank, new_rank
+                   FROM top10_changes
+                   WHERE snapshot_date = ?
+                   ORDER BY direction, change_type, new_rank NULLS LAST""",
+                [snapshot_date],
+            ).fetchall()
+            for direction, ticker, change_type, old_rank, new_rank in rows:
+                changes[change_type].append((direction, ticker, old_rank, new_rank))
+    except Exception as e:
+        return JSONResponse({"ok": False, "error": str(e)}, status_code=500)
+    finally:
+        db.close()
+
+    label = {"long": "Long", "midterm": "Mid-Term", "opportunity": "Opportunity"}
+    html = _render_digest_html(snapshot_date, picks, changes, label, since)
+    return JSONResponse({"ok": True, "snapshot_date": str(snapshot_date), "html": html})
+
+
+def _render_digest_html(snapshot_date, picks, changes, label, prev_date) -> str:
+    td = "padding:6px 10px;border-bottom:1px solid #eee;"
+    th = "padding:6px 10px;background:#f5f5f5;text-align:left;font-size:12px;color:#555;"
+    sections = []
+
+    for direction, rows in picks.items():
+        if not rows:
+            continue
+        rows_html = ""
+        for rank, ticker, score, last_signal, n_signals, avg_alpha in rows:
+            ls = str(last_signal)[:10] if last_signal else "—"
+            aa = f"{float(avg_alpha)*100:+.1f}%" if avg_alpha is not None else "—"
+            rows_html += (
+                f"<tr>"
+                f"<td style='{td}'>{rank}</td>"
+                f"<td style='{td}'><strong>{ticker}</strong></td>"
+                f"<td style='{td}'>{ls}</td>"
+                f"<td style='{td}'>{n_signals}</td>"
+                f"<td style='{td}'>{aa}</td>"
+                f"</tr>"
+            )
+        sections.append(f"""
+<h3 style="margin:24px 0 8px;color:#333;">{label[direction]} — Top {len(rows)}</h3>
+<table style="border-collapse:collapse;width:100%;font-size:14px;">
+  <thead><tr>
+    <th style="{th}">#</th>
+    <th style="{th}">Ticker</th>
+    <th style="{th}">Last Signal</th>
+    <th style="{th}">N Signals</th>
+    <th style="{th}">Avg Alpha</th>
+  </tr></thead>
+  <tbody>{rows_html}</tbody>
+</table>""")
+
+    change_lines = []
+    icons = {"entered": "🟢 Entered", "exited": "🔴 Exited", "moved_up": "⬆️ Moved up", "moved_down": "⬇️ Moved down"}
+    for ctype, icon in icons.items():
+        for direction, ticker, old_rank, new_rank in changes.get(ctype, []):
+            if ctype == "entered":
+                detail = f"→ #{new_rank} in {label[direction]}"
+            elif ctype == "exited":
+                detail = f"left {label[direction]} (was #{old_rank})"
+            elif ctype == "moved_up":
+                detail = f"#{old_rank} → #{new_rank} in {label[direction]}"
+            else:
+                detail = f"#{old_rank} → #{new_rank} in {label[direction]}"
+            change_lines.append(f"<li style='margin:4px 0'><strong>{ticker}</strong> — {icon}: {detail}</li>")
+
+    changes_html = ""
+    if change_lines:
+        prev_str = f" vs {str(prev_date)[:10]}" if prev_date else ""
+        changes_html = f"""
+<h3 style="margin:24px 0 8px;color:#333;">Changes{prev_str}</h3>
+<ul style="font-size:14px;line-height:1.6;padding-left:20px;">
+{''.join(change_lines)}
+</ul>"""
+    else:
+        changes_html = "<p style='color:#888;font-size:13px;'>No changes from previous snapshot.</p>"
+
+    return f"""<!DOCTYPE html>
+<html><body style="font-family:sans-serif;max-width:600px;margin:auto;color:#222;padding:20px;">
+<h2 style="border-bottom:2px solid #333;padding-bottom:8px;">
+  SignalAlpha Weekly Digest — {str(snapshot_date)[:10]}
+</h2>
+{''.join(sections)}
+{changes_html}
+<p style="margin-top:32px;font-size:12px;color:#aaa;">
+  Generated from snapshot on {str(snapshot_date)[:10]} · SignalAlpha
+</p>
+</body></html>"""
+
+
 @router.post("/autogen")
 async def autogen_endpoint():
     results = run_autogen()
