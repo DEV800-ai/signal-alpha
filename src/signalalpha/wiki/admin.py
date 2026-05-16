@@ -253,7 +253,7 @@ async def health_endpoint(authorization: str | None = Header(default=None)):
     db = _open_db()
     try:
         last_price = db.execute("SELECT MAX(date) FROM prices").fetchone()[0]
-        last_signal = db.execute("SELECT MAX(run_date) FROM signal_runs").fetchone()[0]
+        last_signal = db.execute("SELECT MAX(run_at) FROM signal_runs").fetchone()[0]
         last_snapshot = db.execute("SELECT MAX(snapshot_date) FROM top10_snapshots").fetchone()[0]
     except Exception as e:
         return JSONResponse({"ok": False, "error": str(e)}, status_code=500)
