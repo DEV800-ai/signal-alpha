@@ -388,6 +388,24 @@ def _render_digest_html(snapshot_date, picks, changes, label, prev_date) -> str:
 </body></html>"""
 
 
+@router.get("/admin/db-stats")
+async def db_stats_endpoint(authorization: str | None = Header(default=None)):
+    """Return table names and row counts. Requires Authorization: Bearer <secret>."""
+    if not _check_admin(authorization):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    db = _open_db()
+    try:
+        tables = db.execute("SHOW TABLES").fetchall()
+        counts = {}
+        for (t,) in tables:
+            counts[t] = db.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
+    except Exception as e:
+        return JSONResponse({"ok": False, "error": str(e)}, status_code=500)
+    finally:
+        db.close()
+    return JSONResponse({"ok": True, "tables": counts})
+
+
 @router.post("/autogen")
 async def autogen_endpoint():
     results = run_autogen()
