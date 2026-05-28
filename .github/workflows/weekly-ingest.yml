@@ -63,27 +63,23 @@ jobs:
             exit 1
           fi
 
-          python3 - <<'EOF'
+          python3 -c "
 import json, datetime, sys
 d = json.load(open('/tmp/health.json'))
 last_price = d.get('last_price_date', 'none')
-print(f"Last price date in DB: {last_price}")
-
+print(f'Last price date in DB: {last_price}')
 today = datetime.date.today()
-# Walk back to find the most recent weekday (Mon–Fri), up to 4 days
-last_trading_day = None
-for i in range(5):
-    candidate = today - datetime.timedelta(days=i)
-    if candidate.weekday() < 5:
-        last_trading_day = candidate
-        break
-
+last_trading_day = next(
+    today - datetime.timedelta(days=i)
+    for i in range(5)
+    if (today - datetime.timedelta(days=i)).weekday() < 5
+)
 acceptable = {today.strftime('%Y-%m-%d'), last_trading_day.strftime('%Y-%m-%d')}
 if last_price not in acceptable:
-    print(f"ERROR: DB last price date ({last_price}) is stale — expected one of {sorted(acceptable)}")
+    print(f'ERROR: DB last price date ({last_price}) is stale -- expected one of {sorted(acceptable)}')
     sys.exit(1)
-print("Data freshness check passed.")
-EOF
+print('Data freshness check passed.')
+"
 
       - name: Send failure email
         if: failure()
