@@ -63,18 +63,27 @@ jobs:
             exit 1
           fi
 
-          last_price=$(python3 -c "import json,sys; d=json.load(open('/tmp/health.json')); print(d.get('last_price_date','none'))")
-          echo "Last price date in DB: $last_price"
+          python3 - <<'EOF'
+import json, datetime, sys
+d = json.load(open('/tmp/health.json'))
+last_price = d.get('last_price_date', 'none')
+print(f"Last price date in DB: {last_price}")
 
-          today=$(date -u +%Y-%m-%d)
-          yesterday=$(date -u -d "yesterday" +%Y-%m-%d)
+today = datetime.date.today()
+# Walk back to find the most recent weekday (Mon–Fri), up to 4 days
+last_trading_day = None
+for i in range(5):
+    candidate = today - datetime.timedelta(days=i)
+    if candidate.weekday() < 5:
+        last_trading_day = candidate
+        break
 
-          if [ "$last_price" != "$today" ] && [ "$last_price" != "$yesterday" ]; then
-            echo "ERROR: DB last price date ($last_price) is stale — expected $today or $yesterday"
-            exit 1
-          fi
-
-          echo "Data freshness check passed."
+acceptable = {today.strftime('%Y-%m-%d'), last_trading_day.strftime('%Y-%m-%d')}
+if last_price not in acceptable:
+    print(f"ERROR: DB last price date ({last_price}) is stale — expected one of {sorted(acceptable)}")
+    sys.exit(1)
+print("Data freshness check passed.")
+EOF
 
       - name: Send failure email
         if: failure()
