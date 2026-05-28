@@ -63,23 +63,7 @@ jobs:
             exit 1
           fi
 
-          python3 -c "
-import json, datetime, sys
-d = json.load(open('/tmp/health.json'))
-last_price = d.get('last_price_date', 'none')
-print(f'Last price date in DB: {last_price}')
-today = datetime.date.today()
-last_trading_day = next(
-    today - datetime.timedelta(days=i)
-    for i in range(5)
-    if (today - datetime.timedelta(days=i)).weekday() < 5
-)
-acceptable = {today.strftime('%Y-%m-%d'), last_trading_day.strftime('%Y-%m-%d')}
-if last_price not in acceptable:
-    print(f'ERROR: DB last price date ({last_price}) is stale -- expected one of {sorted(acceptable)}')
-    sys.exit(1)
-print('Data freshness check passed.')
-"
+          python3 -c "import json,datetime,sys; d=json.load(open('/tmp/health.json')); lp=d.get('last_price_date',''); print('Last price date in DB:', lp); today=datetime.date.today(); ltd=next(today-datetime.timedelta(days=i) for i in range(5) if (today-datetime.timedelta(days=i)).weekday()<5); ok={today.strftime('%Y-%m-%d'),ltd.strftime('%Y-%m-%d')}; (print('ERROR: stale, expected one of', sorted(ok)) or sys.exit(1)) if lp not in ok else print('Data freshness check passed.')"
 
       - name: Send failure email
         if: failure()
