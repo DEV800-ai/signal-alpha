@@ -2395,7 +2395,7 @@ async def stock_detail(ticker: str):
               ON lr.signal_name = sr.signal_name AND lr.latest_run_id = sr.run_id
             WHERE se.ticker = ?
               AND se.event_date >= CURRENT_DATE - INTERVAL '18 months'
-            ORDER BY se.in_flight DESC, se.event_date DESC
+            ORDER BY (se.exit_date IS NULL) DESC, se.event_date DESC
             LIMIT 100
         """, [ticker]).fetchall()
 
