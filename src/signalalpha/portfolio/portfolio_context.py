@@ -59,9 +59,7 @@ _TICKER_THEMES: dict[str, list[str]] = {
     "CALX": ["Broadband", "Networks"],
     "SHEN": ["Telecom", "Rural Broadband"],
     "LUMN": ["Telecom", "Fiber"],
-    "FYBR": ["Fiber", "Broadband"],
     "CABO": ["Cable", "Broadband"],
-    "USM":  ["Telecom", "Wireless"],
     "GSAT": ["Satellite", "Connectivity"],
 }
 

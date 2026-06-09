@@ -55,18 +55,14 @@ telecom,VZ,Verizon Communications,2000-06-30,,US wireless carrier
 telecom,T,AT&T,1983-11-21,,US wireless carrier
 telecom,CHTR,Charter Communications,2009-12-02,,Cable / broadband
 telecom,CMCSA,Comcast,1980-01-01,,Cable / broadband
-telecom,JNPR,Juniper Networks,1999-06-25,,Routing (HPE acquisition pending)
 telecom,CIEN,Ciena,1997-02-07,,Optical networking
-telecom,COMM,CommScope,2013-10-25,,Network infrastructure
 telecom,VIAV,Viavi Solutions,1993-11-01,,Network test & measurement
 telecom,LITE,Lumentum Holdings,2015-08-04,,Optical components
 telecom,LBRDK,Liberty Broadband,2014-11-04,,Charter holding
 telecom,TDS,Telephone & Data Systems,1981-01-01,,Regional wireless / fiber
 telecom,SATS,EchoStar,2008-01-01,,Satellite + wireless spectrum
-telecom,USM,United States Cellular,1988-01-01,,Regional wireless
 telecom,IDCC,InterDigital,1980-01-01,,Wireless IP licensing
 telecom,LUMN,Lumen Technologies,1980-01-01,,Fiber / enterprise
-telecom,FYBR,Frontier Communications,2021-05-04,,Fiber (Verizon acquisition pending)
 benchmark,SOXX,iShares Semiconductor ETF,2001-07-13,,AI infra benchmark
 benchmark,IGV,iShares Expanded Tech-Software ETF,2001-07-13,,AI infra (software) benchmark
 benchmark,ITA,iShares U.S. Aerospace & Defense ETF,2006-05-05,,Space / Defense benchmark
