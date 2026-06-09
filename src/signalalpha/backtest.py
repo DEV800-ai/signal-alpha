@@ -48,6 +48,7 @@ class BacktestResult:
     p_value_vs_zero: float
     p_value_vs_sector: float
     events: pd.DataFrame = field(repr=False)
+    inflight_events: pd.DataFrame = field(repr=False, default_factory=pd.DataFrame)
 
     def summary(self) -> str:
         if self.n_events == 0:
@@ -86,7 +87,9 @@ def _load_sector_map(con) -> dict[str, str]:
 
 def _entry_exit(prices: pd.DataFrame, event_date: pd.Timestamp, hold_days: int) -> tuple | None:
     """Return (entry_date, entry_open, exit_date, exit_open) or None if not feasible.
-    Entry is the first trading day strictly AFTER event_date."""
+    Entry is the first trading day strictly AFTER event_date.
+    Returns (entry_date, entry_open, None, None) when entry is available but
+    the hold period extends beyond available price history (in-flight signal)."""
     after = prices[prices["date"] > event_date]
     if after.empty:
         return None
@@ -94,7 +97,7 @@ def _entry_exit(prices: pd.DataFrame, event_date: pd.Timestamp, hold_days: int) 
     entry_tday = int(entry_row["tday"])
     exit_tday = entry_tday + hold_days
     if exit_tday >= len(prices):
-        return None
+        return (entry_row["date"], float(entry_row["open"]), None, None)
     exit_row = prices.iloc[exit_tday]
     return (
         entry_row["date"],
@@ -154,6 +157,7 @@ def backtest(
         con.close()
 
     rows = []
+    inflight_rows = []
     n_dropped = 0
     for r in ev.itertuples(index=False):
         tkr = r.ticker
@@ -166,6 +170,18 @@ def backtest(
             n_dropped += 1
             continue
         entry_date, entry_px, exit_date, exit_px = stock
+        if exit_date is None:
+            # In-flight: entry is available but hold period extends beyond price history
+            sector = sector_map.get(tkr)
+            bench_tkr = SECTOR_BENCHMARKS.get(sector) if sector else None
+            inflight_rows.append({
+                "ticker": tkr,
+                "event_date": d,
+                "entry_date": entry_date,
+                "entry_px": entry_px,
+                "sector_benchmark": bench_tkr,
+            })
+            continue
         gross = exit_px / entry_px - 1.0
         net = _gross_to_net(gross, slippage_bps)
 
@@ -191,6 +207,7 @@ def backtest(
         )
 
     detail = pd.DataFrame(rows)
+    inflight = pd.DataFrame(inflight_rows)
     n = len(detail)
     if n == 0:
         return BacktestResult(
@@ -202,6 +219,7 @@ def backtest(
             hit_rate_vs_sector=float("nan"),
             p_value_vs_zero=float("nan"), p_value_vs_sector=float("nan"),
             events=detail,
+            inflight_events=inflight,
         )
 
     nr = detail["net_return"].to_numpy()
@@ -243,6 +261,7 @@ def backtest(
         p_value_vs_zero=p_zero,
         p_value_vs_sector=p_sec,
         events=detail,
+        inflight_events=inflight,
     )
     if n < min_n:
         result.signal_name = f"{signal_name} [WARN: N<{min_n}, treat with skepticism]"
@@ -318,6 +337,32 @@ def record_result(result: BacktestResult, params: dict | None = None, notes: str
                     alpha_sector, alpha_spy
                 ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                 rows,
+            )
+
+        if not result.inflight_events.empty:
+            inf = result.inflight_events.copy()
+            inflight_rows = [
+                (
+                    run_id,
+                    str(r.ticker),
+                    r.event_date.date() if hasattr(r.event_date, "date") else r.event_date,
+                    r.entry_date.date() if hasattr(r.entry_date, "date") else r.entry_date,
+                    None,  # exit_date
+                    _f(r.entry_px), None,  # exit_px
+                    None, None,  # gross_return, net_return
+                    str(r.sector_benchmark) if r.sector_benchmark and str(r.sector_benchmark) != "nan" else None,
+                    None, None, None, None,  # sector_return, spy_return, alpha_sector, alpha_spy
+                )
+                for r in inf.itertuples(index=False)
+            ]
+            con.executemany(
+                """INSERT INTO signal_events (
+                    run_id, ticker, event_date, entry_date, exit_date,
+                    entry_px, exit_px, gross_return, net_return,
+                    sector_benchmark, sector_return, spy_return,
+                    alpha_sector, alpha_spy
+                ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                inflight_rows,
             )
 
         return int(run_id)

@@ -1621,13 +1621,23 @@ async function openStockDetail(ticker, name) {
         <th>Date</th><th>Signal</th><th>Hold</th><th>Net Return</th><th>Alpha vs Sector</th>
       </tr></thead><tbody>`;
       events.forEach(e => {
-        tbl += `<tr>
-          <td class="neu">${e.event_date}</td>
-          <td style="color:var(--text-muted);font-size:.72rem">${escHtml(_sigLabel(e.signal_name))}</td>
-          <td class="neu">${e.hold_days}d</td>
-          <td><span class="${e.net_return >= 0 ? 'pos' : 'neg'}">${e.net_return >= 0 ? '+' : ''}${(e.net_return * 100).toFixed(2)}%</span></td>
-          <td><span class="${e.alpha_sector >= 0 ? 'pos' : 'neg'}">${e.alpha_sector >= 0 ? '+' : ''}${(e.alpha_sector * 100).toFixed(2)}%</span></td>
-        </tr>`;
+        if (e.in_flight) {
+          tbl += `<tr style="opacity:.9">
+            <td class="neu">${e.event_date} <span style="color:#f59e0b;font-size:.65rem;font-weight:600">ACTIVE</span></td>
+            <td style="color:var(--text-muted);font-size:.72rem">${escHtml(_sigLabel(e.signal_name))}</td>
+            <td class="neu">${e.hold_days}d</td>
+            <td><span style="color:#f59e0b;font-size:.75rem">⏳ in progress</span></td>
+            <td><span style="color:#f59e0b;font-size:.75rem">⏳ in progress</span></td>
+          </tr>`;
+        } else {
+          tbl += `<tr>
+            <td class="neu">${e.event_date}</td>
+            <td style="color:var(--text-muted);font-size:.72rem">${escHtml(_sigLabel(e.signal_name))}</td>
+            <td class="neu">${e.hold_days}d</td>
+            <td><span class="${e.net_return >= 0 ? 'pos' : 'neg'}">${e.net_return >= 0 ? '+' : ''}${(e.net_return * 100).toFixed(2)}%</span></td>
+            <td><span class="${e.alpha_sector >= 0 ? 'pos' : 'neg'}">${e.alpha_sector >= 0 ? '+' : ''}${(e.alpha_sector * 100).toFixed(2)}%</span></td>
+          </tr>`;
+        }
       });
       tbl += '</tbody></table></div>';
       document.getElementById('modal-signals').innerHTML = tbl;
@@ -2369,11 +2379,15 @@ async def stock_detail(ticker: str):
     ticker = ticker.upper()
     db = _open_db()
     try:
-        # Signal events last 18 months across all validated runs
+        # Signal events last 18 months across all validated runs (includes in-flight)
         event_rows = db.execute("""
             SELECT se.event_date, sr.signal_name,
-                   (se.exit_date - se.entry_date) AS hold_days,
-                   se.net_return, se.alpha_sector
+                   CASE WHEN se.exit_date IS NULL
+                        THEN sr.hold_days
+                        ELSE (se.exit_date - se.entry_date) END AS hold_days,
+                   se.net_return, se.alpha_sector,
+                   se.exit_date IS NULL AS in_flight,
+                   se.entry_date
             FROM signal_events se
             JOIN signal_runs sr ON sr.run_id = se.run_id
             JOIN (SELECT signal_name, MAX(run_id) AS latest_run_id
@@ -2381,7 +2395,7 @@ async def stock_detail(ticker: str):
               ON lr.signal_name = sr.signal_name AND lr.latest_run_id = sr.run_id
             WHERE se.ticker = ?
               AND se.event_date >= CURRENT_DATE - INTERVAL '18 months'
-            ORDER BY se.event_date DESC
+            ORDER BY se.in_flight DESC, se.event_date DESC
             LIMIT 100
         """, [ticker]).fetchall()
 
@@ -2393,6 +2407,8 @@ async def stock_detail(ticker: str):
                 "hold_days":    r[2],
                 "net_return":   round(float(r[3]), 4) if r[3] is not None else None,
                 "alpha_sector": round(float(r[4]), 4) if r[4] is not None else None,
+                "in_flight":    bool(r[5]),
+                "entry_date":   str(r[6])[:10] if r[6] else None,
             })
 
         # Rank history from snapshots
